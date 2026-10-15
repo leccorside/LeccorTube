@@ -1,0 +1,182 @@
+{
+ "_sleepy": {
+  "kind": "i2v",
+  "width": 1280,
+  "height": 704,
+  "frames": 121,
+  "fps": 24,
+  "note": "Wan 2.2 TI2V 5B, Apache 2.0. Official ComfyUI template settings: 20 steps, cfg 5, uni_pc, shift 8."
+ },
+ "37": {
+  "class_type": "UNETLoader",
+  "inputs": {
+   "unet_name": "wan2.2_ti2v_5B_fp16.safetensors",
+   "weight_dtype": "default"
+  },
+  "_meta": {
+   "title": "Load Diffusion Model"
+  }
+ },
+ "38": {
+  "class_type": "CLIPLoader",
+  "inputs": {
+   "clip_name": "umt5_xxl_fp8_e4m3fn_scaled.safetensors",
+   "type": "wan",
+   "device": "default"
+  },
+  "_meta": {
+   "title": "Load CLIP"
+  }
+ },
+ "39": {
+  "class_type": "VAELoader",
+  "inputs": {
+   "vae_name": "wan2.2_vae.safetensors"
+  },
+  "_meta": {
+   "title": "Load VAE"
+  }
+ },
+ "48": {
+  "class_type": "ModelSamplingSD3",
+  "inputs": {
+   "shift": 8,
+   "model": [
+    "37",
+    0
+   ]
+  },
+  "_meta": {
+   "title": "ModelSamplingSD3"
+  }
+ },
+ "6": {
+  "class_type": "CLIPTextEncode",
+  "inputs": {
+   "text": "%PROMPT%",
+   "clip": [
+    "38",
+    0
+   ]
+  },
+  "_meta": {
+   "title": "Positive"
+  }
+ },
+ "7": {
+  "class_type": "CLIPTextEncode",
+  "inputs": {
+   "text": "%NEGATIVE%",
+   "clip": [
+    "38",
+    0
+   ]
+  },
+  "_meta": {
+   "title": "Negative"
+  }
+ },
+ "56": {
+  "class_type": "LoadImage",
+  "inputs": {
+   "image": "%IMAGE%"
+  },
+  "_meta": {
+   "title": "Start image"
+  }
+ },
+ "55": {
+  "class_type": "Wan22ImageToVideoLatent",
+  "inputs": {
+   "width": "%WIDTH%",
+   "height": "%HEIGHT%",
+   "length": "%FRAMES%",
+   "batch_size": 1,
+   "vae": [
+    "39",
+    0
+   ],
+   "start_image": [
+    "56",
+    0
+   ]
+  },
+  "_meta": {
+   "title": "Wan22ImageToVideoLatent"
+  }
+ },
+ "3": {
+  "class_type": "KSampler",
+  "inputs": {
+   "seed": "%SEED%",
+   "steps": 20,
+   "cfg": 5,
+   "sampler_name": "uni_pc",
+   "scheduler": "simple",
+   "denoise": 1,
+   "model": [
+    "48",
+    0
+   ],
+   "positive": [
+    "6",
+    0
+   ],
+   "negative": [
+    "7",
+    0
+   ],
+   "latent_image": [
+    "55",
+    0
+   ]
+  },
+  "_meta": {
+   "title": "KSampler"
+  }
+ },
+ "8": {
+  "class_type": "VAEDecode",
+  "inputs": {
+   "samples": [
+    "3",
+    0
+   ],
+   "vae": [
+    "39",
+    0
+   ]
+  },
+  "_meta": {
+   "title": "VAE Decode"
+  }
+ },
+ "57": {
+  "class_type": "CreateVideo",
+  "inputs": {
+   "fps": 24,
+   "images": [
+    "8",
+    0
+   ]
+  },
+  "_meta": {
+   "title": "Create Video"
+  }
+ },
+ "58": {
+  "class_type": "SaveVideo",
+  "inputs": {
+   "filename_prefix": "video/sleepy",
+   "format": "auto",
+   "codec": "auto",
+   "video": [
+    "57",
+    0
+   ]
+  },
+  "_meta": {
+   "title": "Save Video"
+  }
+ }
+}

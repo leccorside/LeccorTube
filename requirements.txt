@@ -1,0 +1,4 @@
+-r requirements-base.txt
+kokoro>=0.9.4
+edge-tts>=7
+faster-whisper>=1.0

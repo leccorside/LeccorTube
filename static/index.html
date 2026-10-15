@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="pt-BR" data-theme="crimson">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LECCORTUBE · Leccorside Ai</title>
+<link rel="icon" href="/static/brand/favicon.png">
+<script>try{var t=localStorage.getItem("ot_theme");document.documentElement.dataset.theme=["crimson","matte","ember"].indexOf(t)>=0?t:"crimson";var l=localStorage.getItem("ot_lang");document.documentElement.lang=l||"pt-BR";}catch(e){}</script>
+<link rel="stylesheet" href="/static/style.css?v=1.4.2">
+</head>
+<body>
+<script>try{if(localStorage.getItem("ot_side")==="1")document.body.classList.add("collapsed")}catch(e){}</script>
+<div class="titlebar" id="titlebar">
+  <div class="tb-drag" id="tbDrag">
+    <img class="tb-logo" src="/static/brand/app_icon.png" alt="" draggable="false">
+    <span class="tb-name">LECCOR<b>TUBE</b></span><span class="tb-ver" id="tbVer"></span>
+    <span class="tb-where" id="tbWhere"></span>
+  </div>
+  <button class="tb-upd" id="tbUpd" onclick="openUpdate()"></button>
+  <div class="tb-ctl">
+    <button id="tbMin" onclick="winMin()" title="Minimise"></button>
+    <button id="tbMax" onclick="winMax()" title="Maximise"></button>
+    <button id="tbClose" class="x" onclick="winClose()" title="Close"></button>
+  </div>
+</div>
+<div class="rz rz-l" data-e="l"></div><div class="rz rz-r" data-e="r"></div><div class="rz rz-t" data-e="t"></div><div class="rz rz-b" data-e="b"></div>
+<div class="rz rz-tl" data-e="tl"></div><div class="rz rz-tr" data-e="tr"></div><div class="rz rz-bl" data-e="bl"></div><div class="rz rz-br" data-e="br"></div>
+<div class="bg"><i class="b1"></i><i class="b2"></i><i class="b3"></i><div class="grain"></div></div>
+<div class="app">
+  <aside class="side glass">
+    <div class="side-top">
+      <div class="brand" onclick="go('new')" title="LECCORTUBE">
+        <img class="brand-logo" src="/static/brand/app_icon.png" alt="">
+        <div class="brand-text">
+          <div class="wordmark" role="img" aria-label="LECCORTUBE">LECCOR<b>TUBE</b></div>
+          <div class="haris" onclick="event.stopPropagation();openLink('instagram')" title="Follow Leccorside Ai on Instagram (@leccorsideai)" style="cursor:pointer"><span>by</span><b>Leccorside <i>Ai</i></b></div>
+        </div>
+      </div>
+      <button class="btn ghost icon collapse-btn" id="collapseBtn" onclick="toggleSide()" title="Collapse sidebar"></button>
+    </div>
+    <button class="btn primary wide newbtn" onclick="go('new')" id="newBtn"></button>
+    <nav class="nav" id="nav"></nav>
+    <div class="side-h"><span>Projects</span><span class="grow"></span><a class="qlink" onclick="openBatch()" title="Build several videos one after another">Batch</a><span id="pcount"></span></div>
+    <div class="plist" id="plist"></div>
+    <div class="side-foot">
+      <div class="themes" id="themes"></div>
+      <div class="ver" id="ver"></div>
+    </div>
+  </aside>
+  <section class="content">
+    <header class="top glass">
+      <button class="btn ghost icon only-mobile" id="menuBtn" onclick="document.body.classList.toggle('menu')"></button>
+      <div class="gpu" id="gpuChip" onclick="go('setup')" title="Your hardware"></div>
+      <div class="pills" id="pills"></div>
+      <div class="grow"></div>
+      <div class="actions" id="jobChip"></div>
+      <div id="updChip"></div>
+      <button class="btn ghost icon" id="refreshBtn" onclick="refreshAll()" title="Refresh"></button>
+    </header>
+    <main id="main"></main>
+  </section>
+</div>
+
+<div class="modal" id="settingsModal"><div class="sheet glass" id="settingsBody"></div></div>
+<div class="modal" id="pickModal"><div class="sheet glass wide" id="pickBody"></div></div>
+<div class="modal" id="voiceModal"><div class="sheet glass wide" id="voiceBody"></div></div>
+<div class="modal" id="shotModal"><div class="sheet glass wide" id="shotBody"></div></div>
+<div class="modal" id="updModal"><div class="sheet glass narrow" id="updBody"></div></div>
+<div class="updating" id="updating"><div class="glass"><img src="/static/brand/app_icon.png" alt=""><h2>Installing update</h2><p id="updatingMsg">LECCORTUBE restarts in a few seconds. Your projects and settings are safe.</p><div class="progress run"><div style="width:100%"></div></div></div></div>
+<div class="modal" id="confirmModal"><div class="sheet glass narrow" id="confirmBody"></div></div>
+<audio id="player" style="display:none"></audio>
+<div class="toast glass" id="toast"></div>
+<script src="/static/i18n.js?v=1.4.2"></script>
+<script src="/static/app.js?v=1.4.2"></script>
+<script src="/static/docu.js?v=1.4.2"></script>
+<script src="/static/doctl.js?v=1.4.2"></script>
+<script src="/static/nle.js?v=1.4.2"></script>
+</body>
+</html>

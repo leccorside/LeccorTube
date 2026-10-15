@@ -1,0 +1,12 @@
+fastapi
+uvicorn
+python-multipart
+requests
+numpy
+opencv-python
+pillow
+soundfile
+psutil
+imageio-ffmpeg
+scipy
+pywebview>=5.4; sys_platform == "win32"

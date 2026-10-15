@@ -1,0 +1,250 @@
+{
+ "9": {
+  "inputs": {
+   "filename_prefix": "sleepystudio_ref2",
+   "images": [
+    "65",
+    0
+   ]
+  },
+  "class_type": "SaveImage"
+ },
+ "1": {
+  "inputs": {
+   "image": "%REF_IMAGE%"
+  },
+  "class_type": "LoadImage"
+ },
+ "2": {
+  "inputs": {
+   "image": "%REF_IMAGE_2%"
+  },
+  "class_type": "LoadImage"
+ },
+ "61": {
+  "inputs": {
+   "sampler_name": "euler"
+  },
+  "class_type": "KSamplerSelect"
+ },
+ "70": {
+  "inputs": {
+   "unet_name": "flux-2-klein-4b-fp8.safetensors",
+   "weight_dtype": "default"
+  },
+  "class_type": "UNETLoader"
+ },
+ "71": {
+  "inputs": {
+   "clip_name": "qwen_3_4b.safetensors",
+   "type": "flux2",
+   "device": "default"
+  },
+  "class_type": "CLIPLoader"
+ },
+ "72": {
+  "inputs": {
+   "vae_name": "flux2-vae.safetensors"
+  },
+  "class_type": "VAELoader"
+ },
+ "11": {
+  "inputs": {
+   "upscale_method": "nearest-exact",
+   "megapixels": 1,
+   "resolution_steps": 1,
+   "image": [
+    "1",
+    0
+   ]
+  },
+  "class_type": "ImageScaleToTotalPixels"
+ },
+ "12": {
+  "inputs": {
+   "upscale_method": "nearest-exact",
+   "megapixels": 1,
+   "resolution_steps": 1,
+   "image": [
+    "2",
+    0
+   ]
+  },
+  "class_type": "ImageScaleToTotalPixels"
+ },
+ "21": {
+  "inputs": {
+   "pixels": [
+    "11",
+    0
+   ],
+   "vae": [
+    "72",
+    0
+   ]
+  },
+  "class_type": "VAEEncode"
+ },
+ "22": {
+  "inputs": {
+   "pixels": [
+    "12",
+    0
+   ],
+   "vae": [
+    "72",
+    0
+   ]
+  },
+  "class_type": "VAEEncode"
+ },
+ "74": {
+  "inputs": {
+   "text": "%PROMPT%",
+   "clip": [
+    "71",
+    0
+   ]
+  },
+  "class_type": "CLIPTextEncode"
+ },
+ "82": {
+  "inputs": {
+   "conditioning": [
+    "74",
+    0
+   ]
+  },
+  "class_type": "ConditioningZeroOut"
+ },
+ "31": {
+  "inputs": {
+   "conditioning": [
+    "74",
+    0
+   ],
+   "latent": [
+    "21",
+    0
+   ]
+  },
+  "class_type": "ReferenceLatent"
+ },
+ "32": {
+  "inputs": {
+   "conditioning": [
+    "31",
+    0
+   ],
+   "latent": [
+    "22",
+    0
+   ]
+  },
+  "class_type": "ReferenceLatent"
+ },
+ "41": {
+  "inputs": {
+   "conditioning": [
+    "82",
+    0
+   ],
+   "latent": [
+    "21",
+    0
+   ]
+  },
+  "class_type": "ReferenceLatent"
+ },
+ "42": {
+  "inputs": {
+   "conditioning": [
+    "41",
+    0
+   ],
+   "latent": [
+    "22",
+    0
+   ]
+  },
+  "class_type": "ReferenceLatent"
+ },
+ "63": {
+  "inputs": {
+   "cfg": 1,
+   "model": [
+    "70",
+    0
+   ],
+   "positive": [
+    "32",
+    0
+   ],
+   "negative": [
+    "42",
+    0
+   ]
+  },
+  "class_type": "CFGGuider"
+ },
+ "66": {
+  "inputs": {
+   "width": "%WIDTH%",
+   "height": "%HEIGHT%",
+   "batch_size": 1
+  },
+  "class_type": "EmptyFlux2LatentImage"
+ },
+ "62": {
+  "inputs": {
+   "steps": 4,
+   "width": "%WIDTH%",
+   "height": "%HEIGHT%"
+  },
+  "class_type": "Flux2Scheduler"
+ },
+ "73": {
+  "inputs": {
+   "noise_seed": "%SEED%"
+  },
+  "class_type": "RandomNoise"
+ },
+ "64": {
+  "inputs": {
+   "noise": [
+    "73",
+    0
+   ],
+   "guider": [
+    "63",
+    0
+   ],
+   "sampler": [
+    "61",
+    0
+   ],
+   "sigmas": [
+    "62",
+    0
+   ],
+   "latent_image": [
+    "66",
+    0
+   ]
+  },
+  "class_type": "SamplerCustomAdvanced"
+ },
+ "65": {
+  "inputs": {
+   "samples": [
+    "64",
+    0
+   ],
+   "vae": [
+    "72",
+    0
+   ]
+  },
+  "class_type": "VAEDecode"
+ }
+}

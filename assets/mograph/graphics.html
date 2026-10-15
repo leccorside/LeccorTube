@@ -1,0 +1,433 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+@font-face{font-family:Anton;src:url(../fonts/Anton-Regular.ttf)}
+@font-face{font-family:Bebas;src:url(../fonts/BebasNeue-Regular.ttf)}
+@font-face{font-family:Mont;src:url(../fonts/Montserrat-VF.ttf);font-weight:100 900}
+@font-face{font-family:Lora;src:url(../fonts/Lora-VF.ttf);font-weight:400 700}
+@font-face{font-family:Play;src:url(../fonts/PlayfairDisplay-Italic-VF.ttf);font-style:italic}
+@font-face{font-family:Typer;src:url(../fonts/SpecialElite-Regular.ttf)}
+@font-face{font-family:Cinzel;src:url(../fonts/Cinzel-VF.ttf);font-weight:400 900}
+@font-face{font-family:Hand;src:url(../fonts/PatrickHand-Regular.ttf)}
+@font-face{font-family:PopBlack;src:url(../fonts/Poppins-Black.ttf)}
+@font-face{font-family:PopBold;src:url(../fonts/Poppins-ExtraBold.ttf)}
+@font-face{font-family:PopSemi;src:url(../fonts/Poppins-SemiBold.ttf)}
+@font-face{font-family:Nunito;src:url(../fonts/Nunito-VF.ttf);font-weight:200 1000}
+@font-face{font-family:Naskh;src:url(../fonts/NotoNaskhArabic-VF.ttf);font-weight:400 700}
+:root{--accent:#e8323c;--text:#fff;--ink:#141414;--paper:#efe7d6;--bg:#0d0d10;--hi:#ffe14a;--display:Anton;--body:Mont,Naskh;--mono:Typer;--case:uppercase}
+html,body{margin:0;width:1920px;height:1080px;overflow:hidden;background:transparent}
+#stage{position:absolute;inset:0;font-family:var(--body);color:var(--text)}
+.abs{position:absolute}
+.clip{overflow:hidden}
+</style>
+</head>
+<body>
+<div id="stage"></div>
+<script>
+// Every graphic is a pure function of time t (seconds): window.__seek(t) sets all styles, so frames are repeatable.
+const E = {
+  out3: x => 1 - Math.pow(1 - c01(x), 3), out5: x => 1 - Math.pow(1 - c01(x), 5),
+  in3: x => Math.pow(c01(x), 3), io: x => { x = c01(x); return x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2; },
+  back: x => { x = c01(x); const c = 1.70158, d = c + 1; return 1 + d * Math.pow(x - 1, 3) + c * Math.pow(x - 1, 2); },
+};
+function c01(x) { return Math.max(0, Math.min(1, x)); }
+function seg(t, a, b) { return c01((t - a) / (b - a)); }
+function el(tag, css, html, parent) { const e = document.createElement(tag); e.style.cssText = css || ""; if (html != null) e.innerHTML = html; (parent || S).appendChild(e); return e; }
+function esc(s) { return String(s == null ? "" : s).replace(/[&<>"]/g, c => ({"&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;"}[c])); }
+const S = document.getElementById("stage");
+let G = null;   // the current graphic: {seek(t), dur, inT, outT}
+
+function theme(th) {
+  const r = document.documentElement.style;
+  for (const [k, v] of Object.entries(th || {})) r.setProperty("--" + k, v);
+}
+// common in/out envelope: 0..1 in, 1 hold, 1..0 out
+function env(t, g, inT, outT) { return Math.min(seg(t, 0, inT || g.inT), 1 - seg(t, g.dur - (outT || g.outT), g.dur)); }
+
+const T = {};
+
+// 1) Lower-third label: name + role, accent bar
+T.label = (p, g) => {
+  const box = el("div", `left:110px;bottom:${p.y || 150}px;display:flex;gap:22px;align-items:stretch`, null); box.className = "abs";
+  const bar = el("div", "width:10px;background:var(--accent);transform-origin:bottom", null, box);
+  const col = el("div", "display:flex;flex-direction:column;justify-content:center", null, box);
+  const n1 = el("div", "overflow:hidden", null, col);
+  const name = el("div", `font:400 ${p.size || 74}px/1.02 var(--display);letter-spacing:1.5px;text-transform:var(--case);white-space:nowrap;text-shadow:0 4px 24px rgba(0,0,0,.55)`, esc(p.text), n1);
+  const n2 = el("div", "overflow:hidden;margin-top:6px", null, col);
+  const sub = el("div", `font:600 30px/1.2 var(--body);letter-spacing:4px;text-transform:uppercase;color:var(--sub,rgba(255,255,255,.82));white-space:nowrap;text-shadow:0 3px 14px rgba(0,0,0,.6)`, esc(p.sub || ""), n2);
+  if (p.boxed) { box.style.background = "rgba(10,10,12,.78)"; box.style.padding = "18px 34px 18px 0"; }
+  if (p.style === "tag") { n1.style.background = "var(--accent)"; n1.style.padding = "8px 22px 2px"; bar.style.display = "none"; }
+  if (p.style === "line") { bar.style.display = "none"; n1.style.borderBottom = "5px solid var(--accent)"; n1.style.paddingBottom = "6px"; }
+  if (p.style === "hud") { box.style.border = "2px solid var(--accent)"; box.style.padding = "14px 26px"; box.style.background = "rgba(4,20,28,.7)"; bar.style.display = "none"; name.style.color = "var(--accent)"; }
+  g.inT = .7; g.outT = .35;
+  g.seek = t => {
+    const o = 1 - seg(t, g.dur - g.outT, g.dur);
+    bar.style.transform = `scaleY(${E.out3(seg(t, 0, .3)) * o})`;
+    name.style.transform = `translateY(${(1 - E.out5(seg(t, .12, .55))) * 110 + (1 - o) * -110}%)`;
+    sub.style.transform = `translateY(${(1 - E.out5(seg(t, .28, .7))) * 110 + (1 - o) * -110}%)`;
+    box.style.opacity = o > 0 ? 1 : 0;
+  };
+};
+
+// 2) Year stamp: big numerals that roll in digit by digit, a line and a caption
+T.year = (p, g) => {
+  const box = el("div", `right:${p.left ? "auto" : "120px"};left:${p.left ? "120px" : "auto"};top:110px;text-align:${p.left ? "left" : "right"}`); box.className = "abs";
+  const row = el("div", "display:flex;gap:2px;justify-content:" + (p.left ? "flex-start" : "flex-end"), null, box);
+  const digits = String(p.text).split("").map(ch => { const w = el("div", "overflow:hidden;height:1.05em;font:400 190px/1.05 var(--display);text-shadow:0 8px 40px rgba(0,0,0,.5)", null, row); return el("div", "", esc(ch), w); });
+  const line = el("div", `height:6px;background:var(--accent);margin:10px 0 14px;transform-origin:${p.left ? "left" : "right"}`, null, box);
+  const cap = el("div", "font:700 30px/1.2 var(--body);letter-spacing:6px;text-transform:uppercase;color:rgba(255,255,255,.88);text-shadow:0 3px 14px rgba(0,0,0,.7)", esc(p.sub || ""), box);
+  g.inT = .9; g.outT = .35;
+  g.seek = t => {
+    const o = 1 - seg(t, g.dur - g.outT, g.dur);
+    digits.forEach((d, i) => { d.style.transform = `translateY(${(1 - E.out5(seg(t, .05 + i * .08, .5 + i * .08))) * 105}%)`; });
+    line.style.transform = `scaleX(${E.out3(seg(t, .3, .8))})`;
+    cap.style.opacity = E.out3(seg(t, .45, .9));
+    box.style.opacity = o;
+    box.style.transform = `translateY(${(1 - o) * -30}px)`;
+  };
+};
+
+// 3) Number counter: counts up to the value, with prefix/suffix and a caption
+T.number = (p, g) => {
+  const box = el("div", "left:0;right:0;top:50%;transform:translateY(-50%);text-align:center"); box.className = "abs";
+  const num = el("div", `font:400 ${p.size || 210}px/1 var(--display);letter-spacing:2px;color:var(--text);text-shadow:0 10px 50px rgba(0,0,0,.55)`, "", box);
+  const cap = el("div", "font:700 34px/1.2 var(--body);letter-spacing:7px;text-transform:uppercase;color:var(--accent);margin-top:16px;text-shadow:0 3px 14px rgba(0,0,0,.6)", esc(p.sub || ""), box);
+  const val = Number(p.value) || 0, dec = Math.min(2, Math.max(0, p.decimals || 0));
+  const fmt = v => (p.prefix || "") + v.toLocaleString("en-US", {minimumFractionDigits: dec, maximumFractionDigits: dec}) + (p.suffix || "");
+  g.inT = 1.5; g.outT = .35;
+  g.seek = t => {
+    const o = 1 - seg(t, g.dur - g.outT, g.dur);
+    num.textContent = fmt(val * E.out5(seg(t, .1, 1.4)));
+    box.style.opacity = Math.min(E.out3(seg(t, 0, .25)), o);
+    num.style.transform = `scale(${.92 + .08 * E.back(seg(t, 0, .45))})`;
+    cap.style.opacity = E.out3(seg(t, .5, 1));
+  };
+};
+
+// 4) Kinetic word: one big word slams in on an accent block
+T.kinetic = (p, g) => {
+  const box = el("div", "left:0;right:0;top:50%;text-align:center;transform:translateY(-50%)"); box.className = "abs";
+  const blk = el("span", `display:inline-block;padding:6px 40px 0;background:${p.plain ? "transparent" : "var(--accent)"};font:400 ${p.size || 230}px/1.05 var(--display);letter-spacing:4px;text-transform:uppercase;color:#fff;text-shadow:${p.plain ? "0 10px 50px rgba(0,0,0,.6)" : "none"}`, esc(p.text), box);
+  g.inT = .35; g.outT = .25;
+  g.seek = t => {
+    const a = seg(t, 0, .22), o = 1 - seg(t, g.dur - g.outT, g.dur);
+    const shake = t > .2 && t < .45 ? Math.sin(t * 90) * 6 * (1 - seg(t, .2, .45)) : 0;
+    blk.style.transform = `translate(${shake}px,0) scale(${1.7 - .7 * E.out5(a) + .03 * seg(t, .3, g.dur)}) rotate(${p.rot || -2}deg)`;
+    blk.style.opacity = Math.min(1, a * 3) * o;
+    blk.style.filter = `blur(${(1 - E.out3(a)) * 14}px)`;
+    if (p.glitch) {
+      const j = Math.floor(t * 24), r = (Math.sin(j * 12.9898) * 43758.5453) % 1, on = t < .5 || r > .82;
+      const dx = on ? (r * 26 - 13) : 0;
+      blk.style.textShadow = on ? `${dx}px 0 #ff2a4f, ${-dx}px 0 #19e6ff` : "none";
+      blk.style.clipPath = on && r > .5 ? `inset(${(r * 60) | 0}% 0 ${((1 - r) * 30) | 0}% 0)` : "none";
+    }
+  };
+};
+
+// 5) Chapter card: full frame, number and title with a mask reveal
+T.chapter = (p, g) => {
+  const bg = el("div", "inset:0;background:var(--bg)"); bg.className = "abs";
+  if (p.texture) { bg.style.backgroundImage = `url(${p.texture})`; bg.style.backgroundSize = "cover"; }
+  const grid = el("div", "inset:0;background-image:linear-gradient(rgba(255,255,255,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.06) 1px,transparent 1px);background-size:80px 80px", null, bg); grid.className = "abs";
+  if (p.nogrid) grid.style.display = "none";
+  const box = el("div", "left:160px;right:160px;top:50%;transform:translateY(-50%)"); box.className = "abs";
+  const k = el("div", "font:700 34px/1 var(--body);letter-spacing:10px;text-transform:uppercase;color:var(--accent);margin-bottom:26px", esc(p.kicker || ""), box);
+  const w = el("div", "overflow:hidden", null, box);
+  const ttl = el("div", `font:400 ${p.size || 150}px/1.02 var(--display);text-transform:var(--case);letter-spacing:2px;color:var(--chapter,var(--text))`, esc(p.text), w);
+  const ln = el("div", "height:8px;width:420px;background:var(--accent);margin-top:34px;transform-origin:left", null, box);
+  if (p.style === "number" && p.n) { const big = el("div", `left:120px;top:50%;transform:translateY(-50%);font:400 520px/1 var(--display);color:var(--accent);opacity:.18`, String(p.n).padStart(2, "0")); big.className = "abs"; S.insertBefore(big, box); }
+  if (p.style === "center") { box.style.textAlign = "center"; ln.style.margin = "34px auto 0"; ln.style.transformOrigin = "center"; }
+  g.inT = .9; g.outT = .45;
+  g.seek = t => {
+    const o = 1 - seg(t, g.dur - g.outT, g.dur);
+    bg.style.opacity = Math.min(E.out3(seg(t, 0, .3)), o);
+    k.style.opacity = E.out3(seg(t, .15, .5)) * o;
+    ttl.style.transform = `translateY(${(1 - E.out5(seg(t, .2, .8))) * 105}%)`;
+    ttl.style.opacity = o;
+    ln.style.transform = `scaleX(${E.out3(seg(t, .45, .95)) * o})`;
+    box.style.transform = `translateY(-50%) scale(${1 + .03 * seg(t, 0, g.dur)})`;
+  };
+};
+
+// 6) Article card: a torn paper clipping (encyclopedia, newspaper or web page) with the keyword highlighted
+T.article = (p, g) => {
+  const scrim = el("div", "inset:0;background:radial-gradient(ellipse at center,rgba(0,0,0,.45),rgba(0,0,0,.82))"); scrim.className = "abs";
+  const card = el("div", `left:50%;top:50%;width:${p.w || 1180}px;background:var(--paper);color:var(--ink);padding:70px 90px 80px;box-shadow:0 40px 90px rgba(0,0,0,.6);font-family:Lora,serif`); card.className = "abs";
+  // torn top and bottom edges
+  const pts = []; const n = 34;
+  for (let i = 0; i <= n; i++) pts.push(`${(i / n * 100).toFixed(2)}% ${(Math.abs(Math.sin(i * 7.3 + (p.seed || 1))) * 1.8).toFixed(2)}%`);
+  for (let i = n; i >= 0; i--) pts.push(`${(i / n * 100).toFixed(2)}% ${(100 - Math.abs(Math.cos(i * 5.1 + (p.seed || 1))) * 1.8).toFixed(2)}%`);
+  card.style.clipPath = `polygon(${pts.join(",")})`;
+  const src = el("div", "font:600 22px/1 var(--body);letter-spacing:5px;text-transform:uppercase;color:#6d6455;border-bottom:2px solid rgba(0,0,0,.18);padding-bottom:18px;margin-bottom:28px;display:flex;justify-content:space-between", `<span>${esc(p.source || "")}</span><span>${esc(p.date || "")}</span>`, card);
+  const mark = s => { const kw = (p.keyword || "").trim(); if (!kw) return esc(s); const i = s.toLowerCase().indexOf(kw.toLowerCase()); if (i < 0) return esc(s); return esc(s.slice(0, i)) + `<span class="kw" style="position:relative;white-space:nowrap"><i class="hl" style="position:absolute;left:-6px;right:-6px;top:12%;bottom:4%;background:var(--hi);transform-origin:left;z-index:-1;opacity:.9"></i>${esc(s.slice(i, i + kw.length))}</span>` + esc(s.slice(i + kw.length)); };
+  const h = el("div", `position:relative;z-index:1;font:700 ${p.hsize || 64}px/1.12 Lora,serif;margin-bottom:26px`, mark(p.title || ""), card);
+  const body = el("div", "position:relative;z-index:1;font:400 30px/1.6 Lora,serif;color:#2b2722", mark(p.text || ""), card);
+  const hls = [...card.querySelectorAll(".hl")];
+  g.inT = 1.3; g.outT = .4;
+  const rot = p.rot != null ? p.rot : -1.6;
+  g.seek = t => {
+    const a = E.out5(seg(t, 0, .6)), o = 1 - E.in3(seg(t, g.dur - g.outT, g.dur));
+    scrim.style.opacity = Math.min(seg(t, 0, .35), 1 - seg(t, g.dur - g.outT, g.dur));
+    const push = 1 + .035 * seg(t, .6, g.dur);
+    card.style.transform = `translate(-50%,-50%) translateY(${(1 - a) * 700 + (1 - o) * 800}px) rotate(${rot + (1 - a) * 4}deg) scale(${push})`;
+    hls.forEach((x, i) => { x.style.transform = `scaleX(${E.io(seg(t, .75 + i * .15, 1.25 + i * .15))})`; });
+  };
+};
+
+// 7) Quote card: words of a person, centered, with attribution
+T.quote = (p, g) => {
+  const scrim = el("div", "inset:0;background:rgba(8,8,10,.78)"); scrim.className = "abs";
+  const box = el("div", "left:240px;right:240px;top:50%;transform:translateY(-50%);text-align:center"); box.className = "abs";
+  const q = el("div", "font:400 220px/0.6 Play,serif;color:var(--accent);height:110px", "&ldquo;", box);
+  const txt = el("div", `font:italic 400 ${p.size || 60}px/1.35 Play,serif;color:#fff`, esc(p.text), box);
+  const who = el("div", "font:700 26px/1 var(--body);letter-spacing:6px;text-transform:uppercase;color:rgba(255,255,255,.75);margin-top:40px", esc(p.sub ? "— " + p.sub : ""), box);
+  g.inT = .8; g.outT = .4;
+  g.seek = t => {
+    const o = 1 - seg(t, g.dur - g.outT, g.dur);
+    scrim.style.opacity = Math.min(seg(t, 0, .35), o);
+    q.style.opacity = E.out3(seg(t, .1, .5)) * o;
+    txt.style.opacity = E.out3(seg(t, .25, .8)) * o;
+    txt.style.transform = `translateY(${(1 - E.out5(seg(t, .25, .8))) * 30}px)`;
+    who.style.opacity = E.out3(seg(t, .6, 1.1)) * o;
+  };
+};
+
+// 8) Place pin: a pin drops and the place name types beside it
+T.place = (p, g) => {
+  const box = el("div", `left:${p.x || 50}%;top:${p.yp || 46}%;display:flex;align-items:center;gap:20px`); box.className = "abs";
+  const pin = el("div", "width:38px;height:38px;border-radius:50% 50% 50% 0;background:var(--accent);transform:rotate(-45deg);box-shadow:0 0 0 10px rgba(255,255,255,.18)", null, box);
+  const ring = el("div", "left:-31px;top:-31px;width:100px;height:100px;border-radius:50%;border:4px solid var(--accent)", null, box); ring.className = "abs";
+  const lab = el("div", "background:rgba(10,10,12,.82);padding:14px 26px;font:400 54px/1 var(--display);letter-spacing:2px;text-transform:uppercase;white-space:nowrap;overflow:hidden", "", box);
+  const name = String(p.text || "");
+  g.inT = .9; g.outT = .3;
+  g.seek = t => {
+    const o = 1 - seg(t, g.dur - g.outT, g.dur);
+    pin.style.transform = `rotate(-45deg) translate(${(1 - E.back(seg(t, 0, .4))) * -60}px,${(1 - E.back(seg(t, 0, .4))) * 60}px)`;
+    pin.style.opacity = Math.min(1, seg(t, 0, .1) * 10) * o;
+    const r = seg(t, .3, 1.1); ring.style.transform = `scale(${.4 + r * 1.2})`; ring.style.opacity = (1 - r) * o;
+    lab.textContent = name.slice(0, Math.round(name.length * seg(t, .35, .35 + name.length * .035)));
+    lab.style.opacity = o * (seg(t, .3, .36) > 0 ? 1 : 0);
+  };
+};
+
+// 9) Typewriter stamp: date / place line at the bottom left
+T.stamp = (p, g) => {
+  const box = el("div", "left:110px;bottom:120px;font:400 46px/1.3 Typer,monospace;color:#fff;text-shadow:0 2px 12px rgba(0,0,0,.8);white-space:pre"); box.className = "abs";
+  const txt = String(p.text || "");
+  g.inT = Math.min(2.2, .2 + txt.length * .045); g.outT = .3;
+  g.seek = t => {
+    const o = 1 - seg(t, g.dur - g.outT, g.dur);
+    const n = Math.round(txt.length * seg(t, .1, g.inT));
+    box.textContent = txt.slice(0, n) + (n < txt.length && Math.floor(t * 4) % 2 ? "_" : "");
+    box.style.opacity = o;
+  };
+};
+
+// 10) Title: the video title over the opening shot
+T.title = (p, g) => {
+  const box = el("div", "left:0;right:0;top:50%;transform:translateY(-50%);text-align:center"); box.className = "abs";
+  const w = el("div", "overflow:hidden;display:inline-block", null, box);
+  const ttl = el("div", `font:400 ${p.size || 140}px/1.02 var(--display);text-transform:var(--case);letter-spacing:3px;text-shadow:0 10px 60px rgba(0,0,0,.6);padding:0 40px`, esc(p.text), w);
+  const ln = el("div", "height:6px;width:300px;background:var(--accent);margin:26px auto 0;transform-origin:center", null, box);
+  const sub = el("div", "font:700 30px/1 var(--body);letter-spacing:9px;text-transform:uppercase;color:rgba(255,255,255,.8);margin-top:24px", esc(p.sub || ""), box);
+  g.inT = 1.1; g.outT = .5;
+  g.seek = t => {
+    const o = 1 - seg(t, g.dur - g.outT, g.dur);
+    ttl.style.transform = `translateY(${(1 - E.out5(seg(t, .1, .8))) * 105}%) scale(${1 + .04 * seg(t, 0, g.dur)})`;
+    ttl.style.opacity = o;
+    ln.style.transform = `scaleX(${E.out3(seg(t, .5, 1)) * o})`;
+    sub.style.opacity = E.out3(seg(t, .7, 1.2)) * o;
+  };
+};
+
+
+// 11) Newspaper clipping: masthead, date line, big headline, columns of text, cut-out edges
+T.newspaper = (p, g) => {
+  const scrim = el("div", "inset:0;background:rgba(0,0,0,.55)"); scrim.className = "abs";
+  const card = el("div", `left:50%;top:50%;width:1100px;background:#ece4cf;color:#1b1914;padding:46px 64px 56px;box-shadow:0 40px 90px rgba(0,0,0,.65);font-family:Lora,serif;filter:sepia(.25)`); card.className = "abs";
+  el("div", "font:900 76px/1 Cinzel,serif;text-align:center;letter-spacing:2px;border-bottom:3px double #1b1914;padding-bottom:12px", esc(p.source || "The Daily Chronicle"), card);
+  el("div", "display:flex;justify-content:space-between;font:600 18px/1 var(--body);letter-spacing:3px;text-transform:uppercase;padding:10px 0;border-bottom:1px solid #1b1914;margin-bottom:24px", `<span>${esc(p.date || "")}</span><span>${esc(p.section || "")}</span>`, card);
+  const kw = (p.keyword || "").trim(), title = String(p.title || "");
+  const hi = s => { const i = kw ? s.toLowerCase().indexOf(kw.toLowerCase()) : -1; return i < 0 ? esc(s) : esc(s.slice(0, i)) + `<span style="position:relative"><i class="hl" style="position:absolute;left:-4px;right:-4px;top:15%;bottom:5%;background:var(--hi);opacity:.85;z-index:-1;transform-origin:left"></i>${esc(s.slice(i, i + kw.length))}</span>` + esc(s.slice(i + kw.length)); };
+  el("div", "position:relative;z-index:1;font:900 70px/1.05 Cinzel,serif;text-transform:uppercase;text-align:center;margin-bottom:24px", hi(title), card);
+  el("div", "position:relative;z-index:1;column-count:2;column-gap:44px;font:400 25px/1.5 Lora,serif;text-align:justify", hi(String(p.text || "")), card);
+  const hls = [...card.querySelectorAll(".hl")];
+  g.inT = 1.2; g.outT = .4;
+  g.seek = t => {
+    const a = E.out5(seg(t, 0, .55)), o = 1 - E.in3(seg(t, g.dur - g.outT, g.dur));
+    scrim.style.opacity = Math.min(seg(t, 0, .3), o);
+    card.style.transform = `translate(-50%,-50%) rotate(${(p.rot || 1.4) + (1 - a) * -8}deg) scale(${(.55 + .45 * a) * (1 + .03 * seg(t, .6, g.dur))})`;
+    card.style.opacity = Math.min(1, a * 2) * o;
+    hls.forEach((x, i) => { x.style.transform = `scaleX(${E.io(seg(t, .7 + i * .15, 1.2 + i * .15))})`; });
+  };
+};
+
+// 12) Evidence board: name cards pinned on cork / dark board, joined by red strings
+T.board = (p, g) => {
+  const items = (p.items || []).slice(0, 5); if (!items.length) items.push(p.text || "?");
+  const bg = el("div", `inset:0;background:${p.cork ? "radial-gradient(ellipse at center,#9a7348,#5e4224)" : "radial-gradient(ellipse at center,rgba(20,20,24,.92),rgba(5,5,8,.97))"}`); bg.className = "abs";
+  const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg"); svg.setAttribute("width", 1920); svg.setAttribute("height", 1080); svg.style.cssText = "position:absolute;inset:0"; S.appendChild(svg);
+  const pos = [[960, 300], [520, 640], [1400, 640], [760, 900], [1180, 900]];
+  const cards = items.map((txt, i) => {
+    const c = el("div", `left:${pos[i][0]}px;top:${pos[i][1]}px;padding:22px 34px;background:#f4efe2;color:#1b1914;font:400 46px/1.05 var(--display);text-transform:uppercase;box-shadow:0 18px 40px rgba(0,0,0,.55);white-space:nowrap`); c.className = "abs";
+    c.innerHTML = esc(txt) + (p.subs && p.subs[i] ? `<div style="font:600 20px/1.2 var(--body);letter-spacing:3px;margin-top:8px;color:#6d6455">${esc(p.subs[i])}</div>` : "");
+    el("div", "left:50%;top:-14px;width:26px;height:26px;margin-left:-13px;border-radius:50%;background:var(--accent);box-shadow:0 3px 6px rgba(0,0,0,.5)", null, c).className = "abs";
+    return c;
+  });
+  const lines = items.slice(1).map((_, i) => { const l = document.createElementNS("http://www.w3.org/2000/svg", "line"); l.setAttribute("stroke", getComputedStyle(document.documentElement).getPropertyValue("--accent") || "#e8323c"); l.setAttribute("stroke-width", "5"); svg.appendChild(l); return l; });
+  g.inT = .6 + items.length * .35; g.outT = .4;
+  g.seek = t => {
+    const o = 1 - seg(t, g.dur - g.outT, g.dur);
+    bg.style.opacity = Math.min(seg(t, 0, .3), o) * (p.cork ? 1 : .9);
+    cards.forEach((c, i) => { const a = E.back(seg(t, .15 + i * .35, .55 + i * .35)); c.style.transform = `translate(-50%,-50%) scale(${a}) rotate(${(i % 2 ? 2 : -2.5)}deg)`; c.style.opacity = Math.min(1, a) * o; });
+    lines.forEach((l, i) => {
+      const a = cards[0].getBoundingClientRect(), b = cards[i + 1].getBoundingClientRect();
+      const x1 = a.left + a.width / 2, y1 = a.top + 6, x2 = b.left + b.width / 2, y2 = b.top + 6, k = E.io(seg(t, .5 + (i + 1) * .35, .9 + (i + 1) * .35));
+      l.setAttribute("x1", x1); l.setAttribute("y1", y1); l.setAttribute("x2", x1 + (x2 - x1) * k); l.setAttribute("y2", y1 + (y2 - y1) * k); l.style.opacity = o;
+    });
+  };
+};
+
+// 13) Forum / social post: a recreated post card (user, time, text), Fern / Pezle style
+T.post = (p, g) => {
+  const dark = p.dark !== false;
+  const card = el("div", `left:50%;top:50%;width:1150px;background:${dark ? "#16181c" : "#ffffff"};color:${dark ? "#e7e9ea" : "#0f1419"};border-radius:${p.square ? 4 : 22}px;padding:40px 48px;box-shadow:0 30px 80px rgba(0,0,0,.6);font-family:var(--body)`); card.className = "abs";
+  const head = el("div", "display:flex;align-items:center;gap:20px;margin-bottom:22px", null, card);
+  el("div", `width:78px;height:78px;border-radius:${p.square ? "6px" : "50%"};background:linear-gradient(135deg,var(--accent),#333)`, null, head);
+  el("div", "", `<div style="font:800 34px/1.1 var(--body)">${esc(p.user || "Anonymous")}</div><div style="font:500 24px/1.4 var(--body);opacity:.6">${esc(p.handle || "")} · ${esc(p.date || "")}</div>`, head);
+  const body = el("div", "font:500 40px/1.4 var(--body);white-space:pre-wrap", "", card);
+  const txt = String(p.text || "");
+  // engagement numbers only when they are real (given); never invented
+  const foot = el("div", "display:flex;gap:60px;margin-top:26px;font:600 24px/1 var(--body);opacity:.55", p.likes ? `<span>&#9825; ${esc(p.likes)}</span>` + (p.shares ? `<span>&#8634; ${esc(p.shares)}</span>` : "") + (p.replies ? `<span>&#128172; ${esc(p.replies)}</span>` : "") : "", card);
+  g.inT = Math.min(2.4, .5 + txt.length * .02); g.outT = .35;
+  g.seek = t => {
+    const a = E.out5(seg(t, 0, .45)), o = 1 - seg(t, g.dur - g.outT, g.dur);
+    card.style.transform = `translate(-50%,-50%) translateY(${(1 - a) * 120}px) scale(${.96 + .04 * a + .025 * seg(t, .5, g.dur)})`;
+    card.style.opacity = a * o;
+    body.textContent = txt.slice(0, Math.round(txt.length * seg(t, .35, g.inT)));
+    foot.style.opacity = .55 * seg(t, g.inT - .2, g.inT + .2);
+  };
+};
+
+// 14) HUD callout: corner brackets, a leader line to a point and a label with small data lines (Neo, BluePawPrint)
+T.hud = (p, g) => {
+  const x = (p.x || 62) * 19.2, y = (p.yp || 40) * 10.8;
+  const ring = el("div", `left:${x - 46}px;top:${y - 46}px;width:92px;height:92px;border:3px solid var(--accent);border-radius:50%;box-shadow:0 0 22px var(--accent)`); ring.className = "abs";
+  const dot = el("div", `left:${x - 7}px;top:${y - 7}px;width:14px;height:14px;background:var(--accent);border-radius:50%;box-shadow:0 0 16px var(--accent)`); dot.className = "abs";
+  const right = x > 1200, lx = x + (right ? -560 : 160), ly = Math.max(60, y - 230);
+  const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg"); svg.setAttribute("width", 1920); svg.setAttribute("height", 1080); svg.style.cssText = "position:absolute;inset:0;overflow:visible"; S.appendChild(svg);
+  const pl = document.createElementNS("http://www.w3.org/2000/svg", "polyline");
+  const ex = right ? lx + 400 : lx, ey = ly + 40, mx = x + (right ? -60 : 60);
+  pl.setAttribute("points", `${x},${y} ${mx},${ey} ${ex},${ey}`); pl.setAttribute("fill", "none"); pl.setAttribute("stroke", "var(--accent)"); pl.setAttribute("stroke-width", "3");
+  pl.style.filter = "drop-shadow(0 0 6px var(--accent))"; svg.appendChild(pl);
+  const plen = Math.hypot(mx - x, ey - y) + Math.abs(ex - mx); pl.style.strokeDasharray = plen;
+  const line = {style: {}};
+  const box = el("div", `left:${lx}px;top:${ly}px;width:400px;padding:16px 22px;border:2px solid var(--accent);background:rgba(4,20,28,.72);color:#e9fffd;font:600 24px/1.35 var(--body);box-shadow:0 0 30px rgba(46,230,214,.25) inset`); box.className = "abs";
+  box.innerHTML = `<div style="font:400 50px/1 var(--display);letter-spacing:2px;text-transform:uppercase;color:var(--accent)">${esc(p.text || "")}</div>` +
+    (p.lines || [p.sub || ""]).filter(Boolean).slice(0, 3).map(l => `<div style="opacity:.85;margin-top:6px;letter-spacing:2px;text-transform:uppercase;font-size:20px">${esc(l)}</div>`).join("");
+  g.inT = 1.0; g.outT = .3;
+  g.seek = t => {
+    const o = 1 - seg(t, g.dur - g.outT, g.dur), blink = Math.floor(t * 12) % 2 ? 1 : .5;
+    ring.style.transform = `scale(${2.2 - 1.2 * E.out3(seg(t, 0, .35))}) rotate(${t * 40}deg)`; ring.style.opacity = E.out3(seg(t, 0, .35)) * o;
+    dot.style.opacity = (t < .4 ? blink : 1) * o;
+    pl.style.strokeDashoffset = plen * (1 - E.io(seg(t, .25, .6))); pl.style.opacity = o;
+    box.style.clipPath = `inset(0 ${100 - 100 * E.out3(seg(t, .5, .95))}% 0 0)`; box.style.opacity = o;
+  };
+};
+
+// 15) Spec sheet: blueprint panel with key numbers (Mustard, Engineering Impossible)
+T.spec = (p, g) => {
+  const panel = el("div", `right:110px;top:140px;width:640px;padding:34px 40px;background:rgba(14,58,96,.9);border:2px solid rgba(220,240,255,.75);color:#eaf6ff;font-family:var(--body);background-image:linear-gradient(rgba(255,255,255,.08) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.08) 1px,transparent 1px);background-size:32px 32px`); panel.className = "abs";
+  el("div", "font:400 56px/1 var(--display);letter-spacing:3px;text-transform:uppercase;margin-bottom:18px", esc(p.text || "Specifications"), panel);
+  const rows = (p.rows || []).slice(0, 5).map(r => el("div", "display:flex;justify-content:space-between;gap:30px;border-top:1px dashed rgba(220,240,255,.45);padding:14px 0;font:600 28px/1.2 var(--body)", `<span style="opacity:.75;text-transform:uppercase;letter-spacing:2px;font-size:22px">${esc(r[0])}</span><span style="font:400 40px/1 var(--display);letter-spacing:1px">${esc(r[1])}</span>`, panel));
+  g.inT = .5 + rows.length * .18; g.outT = .35;
+  g.seek = t => {
+    const o = 1 - seg(t, g.dur - g.outT, g.dur);
+    panel.style.clipPath = `inset(0 0 ${100 - 100 * E.out3(seg(t, 0, .45))}% 0)`; panel.style.opacity = o;
+    rows.forEach((r, i) => { r.style.opacity = E.out3(seg(t, .3 + i * .18, .6 + i * .18)); r.style.transform = `translateX(${(1 - E.out5(seg(t, .3 + i * .18, .6 + i * .18))) * 40}px)`; });
+  };
+};
+
+// 16) Circle highlight: a hand-drawn ring around a spot with a label (The Space Race)
+T.circle = (p, g) => {
+  const x = (p.x || 55) * 19.2, y = (p.yp || 45) * 10.8, r = p.r || 150;
+  const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg"); svg.setAttribute("width", 1920); svg.setAttribute("height", 1080); svg.style.cssText = "position:absolute;inset:0"; S.appendChild(svg);
+  const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+  let d = ""; for (let i = 0; i <= 64; i++) { const a = -Math.PI / 2 + i / 64 * Math.PI * 2.15, rr = r * (1 + .06 * Math.sin(i * .9)); d += (i ? "L" : "M") + (x + Math.cos(a) * rr * 1.25).toFixed(1) + " " + (y + Math.sin(a) * rr).toFixed(1); }
+  path.setAttribute("d", d); path.setAttribute("fill", "none"); path.setAttribute("stroke", "var(--accent)"); path.setAttribute("stroke-width", "9"); path.setAttribute("stroke-linecap", "round");
+  path.style.filter = "drop-shadow(0 4px 10px rgba(0,0,0,.6))"; svg.appendChild(path);
+  const len = path.getTotalLength(); path.style.strokeDasharray = len;
+  const lab = el("div", `left:${x + r * 1.3 + 20}px;top:${y - r - 20}px;font:400 84px/1 Hand,var(--display);color:var(--accent);-webkit-text-stroke:8px rgba(0,0,0,.75);paint-order:stroke fill;white-space:nowrap`, esc(p.text || "")); lab.className = "abs";
+  if (x > 1200) { lab.style.left = "auto"; lab.style.right = (1920 - x + r * 1.3 + 20) + "px"; }
+  g.inT = .9; g.outT = .3;
+  g.seek = t => {
+    const o = 1 - seg(t, g.dur - g.outT, g.dur);
+    path.style.strokeDashoffset = len * (1 - E.io(seg(t, 0, .6))); path.style.opacity = o;
+    lab.style.opacity = E.out3(seg(t, .5, .85)) * o;
+  };
+};
+
+// 17) Timeline bar: a line of years with a marker that slides to this moment (Bobby Broccoli, So Basically)
+T.timeline = (p, g) => {
+  const ys = (p.years || []).map(Number).filter(Boolean).sort((a, b) => a - b), cur = Number(p.text) || ys[ys.length - 1] || 2000;
+  const lo = Math.min(...ys, cur) - 2, hi = Math.max(...ys, cur) + 2;
+  const box = el("div", "left:160px;right:160px;bottom:130px;height:150px"); box.className = "abs";
+  const bar = el("div", "left:0;right:0;top:80px;height:6px;background:rgba(255,255,255,.85);transform-origin:left;box-shadow:0 2px 12px rgba(0,0,0,.6)", null, box); bar.className = "abs";
+  const X = y => ((y - lo) / (hi - lo)) * 1600;
+  ys.forEach(y => { const tk = el("div", `left:${X(y)}px;top:64px;width:4px;height:38px;background:#fff`, null, box); tk.className = "abs tk"; const lb = el("div", `left:${X(y) - 60}px;top:108px;width:120px;text-align:center;font:700 26px/1 var(--body);color:rgba(255,255,255,.85);text-shadow:0 2px 8px #000`, String(y), box); lb.className = "abs tk"; });
+  const mk = el("div", "top:0;width:180px;margin-left:-90px;text-align:center", `<div style="font:400 64px/1 var(--display);color:var(--accent);text-shadow:0 4px 16px #000">${esc(p.text || cur)}</div><div style="width:0;height:0;margin:4px auto 0;border:16px solid transparent;border-top-color:var(--accent)"></div>`, box); mk.className = "abs";
+  const ticks = [...box.querySelectorAll(".tk")];
+  g.inT = 1.4; g.outT = .35;
+  g.seek = t => {
+    const o = 1 - seg(t, g.dur - g.outT, g.dur);
+    bar.style.transform = `scaleX(${E.out3(seg(t, 0, .5))})`; box.style.opacity = o;
+    ticks.forEach(k => k.style.opacity = seg(t, .3, .6));
+    mk.style.left = (X(lo + 2) + (X(cur) - X(lo + 2)) * E.io(seg(t, .5, 1.3))) + "px"; mk.style.opacity = seg(t, .45, .6);
+  };
+};
+
+// 18) Source card: "Source: ..." small citation, bottom left (Nitish Rajput, Magnates)
+T.source = (p, g) => {
+  const box = el("div", "left:70px;bottom:70px;max-width:760px;padding:16px 22px;background:rgba(250,246,236,.95);color:#1b1914;border-left:8px solid var(--accent);box-shadow:0 12px 30px rgba(0,0,0,.5);font:600 22px/1.35 var(--body)"); box.className = "abs";
+  box.innerHTML = `<div style="font:800 18px/1 var(--body);letter-spacing:4px;text-transform:uppercase;color:var(--accent);margin-bottom:8px">Source</div><div>${esc(p.text || "")}</div>` + (p.sub ? `<div style="opacity:.65;margin-top:6px;font-size:19px">${esc(p.sub)}</div>` : "");
+  g.inT = .5; g.outT = .3;
+  g.seek = t => { const o = 1 - seg(t, g.dur - g.outT, g.dur); box.style.transform = `translateX(${(1 - E.out5(seg(t, 0, .45))) * -60}px)`; box.style.opacity = E.out3(seg(t, 0, .3)) * o; };
+};
+
+// 19) Speech bubble: what someone said, over the picture (Nitish Rajput)
+T.bubble = (p, g) => {
+  const x = (p.x || 58) * 19.2, y = (p.yp || 22) * 10.8;
+  const b = el("div", `left:${x}px;top:${y}px;max-width:620px;padding:26px 34px;background:#fff;color:#111;border-radius:36px;font:600 38px/1.3 Nunito,var(--body);box-shadow:0 16px 40px rgba(0,0,0,.5)`, esc(p.text || "")); b.className = "abs";
+  el("div", "left:60px;bottom:-26px;width:0;height:0;border:24px solid transparent;border-top-color:#fff;border-left-color:#fff", null, b).className = "abs";
+  g.inT = .45; g.outT = .25;
+  g.seek = t => { const o = 1 - seg(t, g.dur - g.outT, g.dur); b.style.transform = `scale(${E.back(seg(t, 0, .4)) * (o > 0 ? 1 : 0)})`; b.style.transformOrigin = "60px 100%"; b.style.opacity = o; };
+};
+
+// 20) Transcript: lines of a recording or log, typed with a speaker tag (If You Wonder, Fern)
+T.transcript = (p, g) => {
+  const box = el("div", "left:180px;right:180px;bottom:120px;padding:26px 34px;background:rgba(0,0,0,.72);border-top:4px solid var(--accent);font:400 38px/1.45 var(--mono),monospace;color:#f2f2f2"); box.className = "abs";
+  const lines = (p.lines || [String(p.text || "")]).slice(0, 4).map(l => { const d = el("div", "", "", box); return [d, String(l)]; });
+  const total = lines.reduce((a, [, l]) => a + l.length, 0);
+  g.inT = Math.min(3.5, .3 + total * .035); g.outT = .3;
+  g.seek = t => {
+    const o = 1 - seg(t, g.dur - g.outT, g.dur); let n = Math.round(total * seg(t, .2, g.inT));
+    lines.forEach(([d, l]) => { const k = Math.max(0, Math.min(l.length, n)); n -= l.length; d.textContent = l.slice(0, k) + (k > 0 && k < l.length && Math.floor(t * 4) % 2 ? "_" : ""); });
+    box.style.opacity = E.out3(seg(t, 0, .2)) * o;
+  };
+};
+
+window.__setup = spec => {
+  S.innerHTML = "";
+  theme(spec.theme);
+  G = {dur: spec.dur || 3, inT: .6, outT: .3, seek: () => {}};
+  (T[spec.type] || T.label)(spec, G);
+  return {inT: G.inT, outT: G.outT, dur: G.dur};
+};
+window.__seek = t => { G.seek(t); return true; };
+Promise.all(["Anton", "Bebas", "Mont", "Lora", "Typer", "Cinzel", "Hand", "PopBlack", "PopBold", "PopSemi", "Nunito", "Naskh"].map(f => document.fonts.load(`40px ${f}`)).concat([document.fonts.load("italic 40px Play")]))
+  .catch(() => {}).then(() => document.fonts.ready).then(() => { window.__ready = true; });
+</script>
+</body>
+</html>

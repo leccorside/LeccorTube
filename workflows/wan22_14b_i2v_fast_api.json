@@ -1,0 +1,277 @@
+{
+ "_sleepy": {
+  "kind": "i2v",
+  "width": 832,
+  "height": 480,
+  "frames": 81,
+  "fps": 16,
+  "note": "Wan 2.2 14B I2V fp8 + lightx2v 4-step LoRAs (official ComfyUI template, fast mode). Needs ~32 GB system RAM."
+ },
+ "95": {
+  "class_type": "UNETLoader",
+  "inputs": {
+   "unet_name": "wan2.2_i2v_high_noise_14B_fp8_scaled.safetensors",
+   "weight_dtype": "default"
+  },
+  "_meta": {
+   "title": "High noise model"
+  }
+ },
+ "96": {
+  "class_type": "UNETLoader",
+  "inputs": {
+   "unet_name": "wan2.2_i2v_low_noise_14B_fp8_scaled.safetensors",
+   "weight_dtype": "default"
+  },
+  "_meta": {
+   "title": "Low noise model"
+  }
+ },
+ "101": {
+  "class_type": "LoraLoaderModelOnly",
+  "inputs": {
+   "lora_name": "wan2.2_i2v_lightx2v_4steps_lora_v1_high_noise.safetensors",
+   "strength_model": 1.0,
+   "model": [
+    "95",
+    0
+   ]
+  },
+  "_meta": {
+   "title": "4-step LoRA high"
+  }
+ },
+ "102": {
+  "class_type": "LoraLoaderModelOnly",
+  "inputs": {
+   "lora_name": "wan2.2_i2v_lightx2v_4steps_lora_v1_low_noise.safetensors",
+   "strength_model": 1.0,
+   "model": [
+    "96",
+    0
+   ]
+  },
+  "_meta": {
+   "title": "4-step LoRA low"
+  }
+ },
+ "104": {
+  "class_type": "ModelSamplingSD3",
+  "inputs": {
+   "shift": 5.0,
+   "model": [
+    "101",
+    0
+   ]
+  },
+  "_meta": {
+   "title": "Shift high"
+  }
+ },
+ "103": {
+  "class_type": "ModelSamplingSD3",
+  "inputs": {
+   "shift": 5.0,
+   "model": [
+    "102",
+    0
+   ]
+  },
+  "_meta": {
+   "title": "Shift low"
+  }
+ },
+ "84": {
+  "class_type": "CLIPLoader",
+  "inputs": {
+   "clip_name": "umt5_xxl_fp8_e4m3fn_scaled.safetensors",
+   "type": "wan",
+   "device": "default"
+  },
+  "_meta": {
+   "title": "Load CLIP"
+  }
+ },
+ "90": {
+  "class_type": "VAELoader",
+  "inputs": {
+   "vae_name": "wan_2.1_vae.safetensors"
+  },
+  "_meta": {
+   "title": "Load VAE"
+  }
+ },
+ "93": {
+  "class_type": "CLIPTextEncode",
+  "inputs": {
+   "text": "%PROMPT%",
+   "clip": [
+    "84",
+    0
+   ]
+  },
+  "_meta": {
+   "title": "Positive"
+  }
+ },
+ "89": {
+  "class_type": "CLIPTextEncode",
+  "inputs": {
+   "text": "%NEGATIVE%",
+   "clip": [
+    "84",
+    0
+   ]
+  },
+  "_meta": {
+   "title": "Negative"
+  }
+ },
+ "97": {
+  "class_type": "LoadImage",
+  "inputs": {
+   "image": "%IMAGE%"
+  },
+  "_meta": {
+   "title": "Start image"
+  }
+ },
+ "98": {
+  "class_type": "WanImageToVideo",
+  "inputs": {
+   "width": "%WIDTH%",
+   "height": "%HEIGHT%",
+   "length": "%FRAMES%",
+   "batch_size": 1,
+   "positive": [
+    "93",
+    0
+   ],
+   "negative": [
+    "89",
+    0
+   ],
+   "vae": [
+    "90",
+    0
+   ],
+   "start_image": [
+    "97",
+    0
+   ]
+  },
+  "_meta": {
+   "title": "WanImageToVideo"
+  }
+ },
+ "86": {
+  "class_type": "KSamplerAdvanced",
+  "inputs": {
+   "add_noise": "enable",
+   "noise_seed": "%SEED%",
+   "steps": 4,
+   "cfg": 1,
+   "sampler_name": "euler",
+   "scheduler": "simple",
+   "start_at_step": 0,
+   "end_at_step": 2,
+   "return_with_leftover_noise": "enable",
+   "model": [
+    "104",
+    0
+   ],
+   "positive": [
+    "98",
+    0
+   ],
+   "negative": [
+    "98",
+    1
+   ],
+   "latent_image": [
+    "98",
+    2
+   ]
+  },
+  "_meta": {
+   "title": "KSampler high"
+  }
+ },
+ "85": {
+  "class_type": "KSamplerAdvanced",
+  "inputs": {
+   "add_noise": "disable",
+   "noise_seed": 0,
+   "steps": 4,
+   "cfg": 1,
+   "sampler_name": "euler",
+   "scheduler": "simple",
+   "start_at_step": 2,
+   "end_at_step": 10000,
+   "return_with_leftover_noise": "disable",
+   "model": [
+    "103",
+    0
+   ],
+   "positive": [
+    "98",
+    0
+   ],
+   "negative": [
+    "98",
+    1
+   ],
+   "latent_image": [
+    "86",
+    0
+   ]
+  },
+  "_meta": {
+   "title": "KSampler low"
+  }
+ },
+ "87": {
+  "class_type": "VAEDecode",
+  "inputs": {
+   "samples": [
+    "85",
+    0
+   ],
+   "vae": [
+    "90",
+    0
+   ]
+  },
+  "_meta": {
+   "title": "VAE Decode"
+  }
+ },
+ "94": {
+  "class_type": "CreateVideo",
+  "inputs": {
+   "fps": 16,
+   "images": [
+    "87",
+    0
+   ]
+  },
+  "_meta": {
+   "title": "Create Video"
+  }
+ },
+ "108": {
+  "class_type": "SaveVideo",
+  "inputs": {
+   "filename_prefix": "video/sleepy",
+   "format": "auto",
+   "codec": "auto",
+   "video": [
+    "94",
+    0
+   ]
+  },
+  "_meta": {
+   "title": "Save Video"
+  }
+ }
+}

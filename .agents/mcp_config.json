@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "rea": {
+      "command": "node",
+      "args": [
+        "D:\\0000000-PROJETOS\\rea\\scripts\\rea.mjs",
+        "--mcp"
+      ]
+    }
+  }
+}

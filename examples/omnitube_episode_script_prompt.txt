@@ -1,0 +1,71 @@
+OMNITUBE SEASON EPISODE SCRIPT PROMPT
+Copy everything below the line into ChatGPT / Claude / Gemini. Fill the 6 parts in CAPITALS first.
+-----------------------------------------------------------------------------------------------
+
+You are a professional YouTube series writer. Write ONE episode of a narrated animated series.
+The script goes straight into a video tool, so follow the FORMAT rules exactly.
+
+=== SERIES INFO ===
+Season name: [SEASON NAME]
+Episode number: [EPISODE NUMBER]
+Video type: [Short Story / Bedtime Story / Sleep History / Documentary / Horror & Mystery / Relax]
+Target length: [MINUTES] minutes of narration
+Episode idea: [WHAT HAPPENS IN THIS EPISODE, 2 TO 5 LINES]
+
+Characters (use these exact names, never rename them):
+[PASTE YOUR CHARACTER FILE HERE]
+
+Story so far (previous episodes):
+[PASTE THE "STORY SO FAR" FROM THE LAST EPISODE, OR WRITE "This is episode 1"]
+
+=== STORY RULES ===
+1. Hook: the first 2 sentences must create a question, danger or mystery. No slow intro, no "welcome back".
+2. If this is not episode 1, give a 1 to 2 sentence recap woven into the story, not a list.
+3. Keep continuity: same names, ages, places, relationships and rules as the story so far. Do not contradict earlier episodes.
+4. One clear goal or problem for this episode, rising tension, a turning point, and an ending that resolves this episode's problem but opens a bigger question (a cliffhanger for the next episode).
+5. Show feelings through actions and short dialogue. Simple, spoken English that sounds good read aloud.
+6. Every episode must feel original: new place, new problem or new reveal. Do not repeat earlier scenes.
+7. Length: about 150 words per minute of narration. [MINUTES] minutes = about [MINUTES x 150] words of narration.
+
+=== FORMAT RULES (very important) ===
+A. First two lines of the script:
+   [TITLE: a curiosity title under 70 characters]
+   [THUMBNAIL: 2 to 4 punchy words]
+B. Chapters: split the episode into 3 to 6 parts. Each part starts with a line like:
+   # Part title
+   (For a Short Story, 2 to 3 parts is enough.)
+C. Pictures: before each new moment, write ONE line:
+   [IMG: picture description]
+   Then the narration for that moment below it, then a blank line.
+   How often to put an [IMG:] line, by video type:
+   - Short Story: every 15 to 30 words
+   - Documentary or Horror & Mystery: every 25 to 50 words
+   - Bedtime Story: every 40 to 80 words
+   - Sleep History: every 60 to 120 words
+   - Relax: every 80 to 160 words
+D. Inside an [IMG:] line:
+   - Put @Name for every character visible in the picture, for example: [IMG: @Farid and @Laila inside the clock shop at night, candle light, close-up of their hands on the broken clock]
+   - Maximum 2 characters with @ in one picture. For a crowd, describe the others without names.
+   - Describe place, time of day, light, weather, action, emotion and camera shot (wide shot, close-up, over the shoulder, from above).
+   - Do NOT describe the characters' face, hair or clothes (the tool already knows how they look).
+   - Do NOT add art style words (anime, realistic, painting). The tool adds the style.
+   - No text, signs, letters or logos in the picture.
+E. Narration: plain paragraphs. When you name a character in narration, write the normal name (Farid), no @.
+F. Dialogue: a line spoken by a character goes on its own line like this:
+   @Laila: Grandfather, the clock is moving again!
+   Keep dialogue lines short (1 to 2 sentences). Everything else is told by the narrator.
+G. Not allowed inside the script: markdown, bold, bullet points, stage directions, (sound effects), [music cues], emojis, em dashes, notes to me, "Narrator:" labels.
+
+=== OUTPUT ===
+Give me exactly 3 separate code blocks and nothing else:
+
+BLOCK 1: SCRIPT
+The full episode script in the format above (this is pasted into the Script box).
+
+BLOCK 2: NEW CHARACTERS
+Only characters who appear for the FIRST time in this episode, one per line:
+Name = age, gender, face, hair, skin tone, body type, clothes, one signature item
+(Same detail level as my character file. Write "None" if there are no new characters.)
+
+BLOCK 3: STORY SO FAR
+A summary of ALL episodes up to and including this one, max 150 words, plus one line "Open threads:" listing unresolved questions. (I paste this into the next episode prompt.)

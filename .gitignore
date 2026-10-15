@@ -1,0 +1,60 @@
+# Python caches
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyd.tmp
+
+# Environments & runtimes
+.venv/
+venv/
+venv_voice/
+runtime/cache/
+runtime/python/
+runtime/webview/
+runtime/uv.exe
+
+# ComfyUI portable (motor externo, vários GB — instalar separadamente)
+ComfyUI_windows_portable/
+
+# Binários compilados / executáveis (gerados ou de terceiros)
+*.pyd
+*.exe
+*.dll
+*.so
+
+# Wheels and downloads
+downloads/
+wheels/
+*.whl
+
+# Logs and user data
+logs/
+*.log
+cache/
+projects/*
+!projects/.gitkeep
+seasons/*
+!seasons/.gitkeep
+library/characters/*
+!library/characters/.gitkeep
+
+# Segredos e configuração local
+.env
+.env.*
+!.env.example
+
+# Modelos e mídias pesadas geradas
+*.safetensors
+*.ckpt
+*.pt
+*.pth
+*.onnx
+*.mp4
+*.wav
+
+# IDE and OS
+.vscode/
+.idea/
+Thumbs.db
+Desktop.ini
+.DS_Store
