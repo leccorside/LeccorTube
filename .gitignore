@@ -42,6 +42,7 @@ library/characters/*
 .env
 .env.*
 !.env.example
+config.json
 
 # Modelos e mídias pesadas geradas
 *.safetensors
