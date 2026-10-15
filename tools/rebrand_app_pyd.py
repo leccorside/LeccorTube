@@ -4,8 +4,9 @@ O app.pyd é um módulo Nuitka: os textos ficam na tabela de constantes em .rdat
 sequência de blocos <nome do módulo>\\0 <uint32 tamanho> <dados>. O Nuitka localiza cada bloco pelo
 nome percorrendo a tabela, então os blocos podem mudar de tamanho desde que a tabela inteira mantenha
 o tamanho original (o saldo negativo vira zeros no fim). Só textos exibidos ao usuário são trocados;
-identificadores (strings 'a'), variáveis de ambiente, cabeçalhos HTTP, user-agents, URLs, extensões
-de arquivo e a entropia DPAPI do secretstore ficam como estão.
+identificadores (strings 'a'), variáveis de ambiente, cabeçalhos HTTP, extensões de arquivo e a
+entropia DPAPI do secretstore ficam como estão. URLs do autor original passam a apontar para o site e
+o Instagram da Leccorside, exceto o Gumroad (licença Pro) e o servidor de atualização.
 
 Os offsets valem para o app.cp312-win_amd64.pyd da versão 1.4.2 original.
 
@@ -17,6 +18,11 @@ import sys
 
 BLOB_OFF = 0xd77c50
 APP, AUTHOR = 'LeccorTube', 'Leccorside Ai'
+SITE = 'https://leccorside.com.br'
+INSTAGRAM = 'https://www.instagram.com/negociosleccorside/'
+OLD_SITE = 'https://theharisai.com/omnitube'
+UA_OLD = 'OMNITUBE/1.2 (documentary research; https://theharisai.com/omnitube)'
+UA_NEW = f'{APP}/1.2 (documentary research; {SITE})'
 
 
 def brand(s):
@@ -30,6 +36,7 @@ REPL = {
         'OMNITUBE documentary - CapCut project (best effort)\n\n',
     ],
     'app.cloud': [
+        (OLD_SITE, SITE),  # HTTP-Referer enviado ao OpenRouter
         ('Approximate list prices, paid directly to your own provider account (OpenRouter, ElevenLabs). '
          'OMNITUBE adds nothing.',
          f'Approximate list prices, paid directly to your own provider account (OpenRouter, ElevenLabs). '
@@ -45,6 +52,7 @@ REPL = {
         ('Haris Ai', AUTHOR),
     ],
     'app.docu': [
+        (UA_OLD, UA_NEW),
         ('OMNITUBE charges nothing. Cloud costs go to your own accounts.',
          f'{APP} charges nothing. Cloud costs go to your own accounts.'),
     ],
@@ -60,6 +68,10 @@ REPL = {
          f'Cloud check needs {APP} Pro with OpenRouter or a Script AI key (Pro page).'),
     ],
     'app.main': [
+        # dicionário de links (instagram, website, discord); 'pro' (Gumroad) fica: a licença Pro é verificada lá
+        ('https://www.instagram.com/theharisai/', INSTAGRAM),
+        (OLD_SITE + '/', SITE + '/'),
+        (OLD_SITE + '/#community', SITE + '/'),
         ('The automation API is an OMNITUBE Pro feature.', f'The automation API is a {APP} Pro feature.'),
         ('Build in cloud is an OMNITUBE Pro feature.', f'Build in cloud is a {APP} Pro feature.'),
         ('Cloud sheets are an OMNITUBE Pro feature. Open Pro in the menu to unlock it.',
@@ -70,6 +82,12 @@ REPL = {
     'app.nlexport': [
         ' (OMNITUBE)</name><duration>',
         None,  # texto longo do Premiere: tratado abaixo
+    ],
+    'app.openrouter': [
+        (OLD_SITE, SITE),  # HTTP-Referer enviado ao OpenRouter
+    ],
+    'app.research': [
+        (UA_OLD, UA_NEW),
     ],
     'app.pro': [
         (' is an OMNITUBE Pro feature. Open Pro in the menu to unlock it.',
