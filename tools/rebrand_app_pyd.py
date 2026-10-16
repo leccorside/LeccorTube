@@ -6,7 +6,8 @@ nome percorrendo a tabela, então os blocos podem mudar de tamanho desde que a t
 o tamanho original (o saldo negativo vira zeros no fim). Só textos exibidos ao usuário são trocados;
 identificadores (strings 'a'), variáveis de ambiente, cabeçalhos HTTP, extensões de arquivo e a
 entropia DPAPI do secretstore ficam como estão. URLs do autor original passam a apontar para o site e
-o Instagram da Leccorside, exceto o Gumroad (licença Pro) e o servidor de atualização.
+o Instagram da Leccorside, exceto o Gumroad (licença Pro). A busca de atualizações passa a ler o
+manifesto local static/update.json em vez do servidor do OMNITUBE original.
 
 Os offsets valem para o app.cp312-win_amd64.pyd da versão 1.4.2 original.
 
@@ -136,6 +137,10 @@ REPL = {
     'app.updater': [
         ('Close OMNITUBE and start it again from OMNITUBE.exe to finish the update.',
          f'Close {APP} and start it again from LECCORTUBE.exe to finish the update.'),
+        # UPDATE_URL: em vez do servidor do OMNITUBE original (cujas atualizações desfariam os patches de
+        # marca), lê o manifesto local static/update.json, que anuncia a própria versão atual. O campo
+        # "update_url" do config.json continua tendo prioridade, para apontar a um servidor próprio no futuro.
+        ('https://omnitube-app.vercel.app/update.json', 'http://127.0.0.1:7860/static/update.json'),
     ],
 }
 
