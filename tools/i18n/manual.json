@@ -1,0 +1,13 @@
+{
+ "_comentario": "Traduções manuais de textos que o extrator não encontra sozinho (palavras soltas montadas no HTML). Entram como 'exact' no build_dict.py.",
+ "scenes": {"pt": "cenas", "es": "escenas"},
+ "scene": {"pt": "cena", "es": "escena"},
+ "characters": {"pt": "personagens", "es": "personajes"},
+ "places": {"pt": "locais", "es": "lugares"},
+ "pictures": {"pt": "imagens", "es": "imágenes"},
+ "chapters": {"pt": "capítulos", "es": "capítulos"},
+ "voice": {"pt": "voz", "es": "voz"},
+ "images": {"pt": "imagens", "es": "imágenes"},
+ "video scenes": {"pt": "cenas de vídeo", "es": "escenas de video"},
+ "by": {"pt": "por", "es": "por"}
+}

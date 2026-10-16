@@ -1,0 +1,7008 @@
+{
+ "\" Today is": [
+  "app.cloudscript"
+ ],
+ "\" for a YouTube documentary, in time order:": [
+  "app.docu"
+ ],
+ "\" for a YouTube video. [S3] marks say which source supports a line.": [
+  "app.cloudscript"
+ ],
+ "\" is in your projects list.": [
+  "app.capcut"
+ ],
+ "\" is too short (": [
+  "app.docu"
+ ],
+ "\" narration about:": [
+  "app.cloudscript"
+ ],
+ "\" needs real photos, maps and archive footage. Facts:": [
+  "app.docu"
+ ],
+ "\" of the documentary \"": [
+  "app.docu"
+ ],
+ "\" sourcelang:english": [
+  "app.research"
+ ],
+ "\" video about:": [
+  "app.cloudscript"
+ ],
+ "\") so it grips: a hook in the first line, vary sentence length, use cause and effect, contrast and small cliffhangers into the next beat. Keep EVERY fact, name, number and date exactly; add NO new facts, no opinions and no guesses about feelings. Remove repeats of what earlier chapters said. Keep each beat's \"visuals\".": [
+  "app.docu"
+ ],
+ "\". Check the internet connection.": [
+  "app.research"
+ ],
+ "\". Choose OpenRouter as the research AI to search the whole web (news, websites, social profiles), or write the full name.": [
+  "app.research"
+ ],
+ "\". Rewrite it, YouTube treats near copies as reused or mass-produced content.": [
+  "app.creator"
+ ],
+ "\". The other chapters (": [
+  "app.docu"
+ ],
+ "\". Try the full name, or add a few words about who or what it is.": [
+  "app.research"
+ ],
+ "\"But here's the part nobody tells you.\" A cause and effect chain: this led to this, which led to this.": [
+  "app.main"
+ ],
+ "\"Let me walk you through one day ...\" in the second person: morning to night, back then.": [
+  "app.main"
+ ],
+ "' for": [
+  "app.comfy"
+ ],
+ "' not found in assets/voices": [
+  "app.tts"
+ ],
+ "'%s' object is not a mapping": [
+  "app"
+ ],
+ "', the image is used": [
+  "app.stock"
+ ],
+ "'. Update ComfyUI (update folder > update_comfyui.bat).": [
+  "app.comfy"
+ ],
+ "(ComfyUI's PyTorch does not fit this graphics card or driver. Update the NVIDIA driver in Setup Center, then Repair.)": [
+  "app.comfy"
+ ],
+ "(GPU out of memory: close other apps, or use a smaller video size / fewer frames in Settings)": [
+  "app.comfy"
+ ],
+ "(Get-CimInstance Win32_Processor | Select-Object -First 1).Name": [
+  "app.system"
+ ],
+ "(Settings > Check models)": [
+  "app.main"
+ ],
+ "(character sheet, used as the reference in every scene)": [
+  "app.jobs"
+ ],
+ "(choose from the full list)": [
+  "app.cloudscript"
+ ],
+ "(cloud, billed by fal.ai)": [
+  "app.jobs"
+ ],
+ "(cloud, your own key)": [
+  "app.jobs"
+ ],
+ "(could not read:": [
+  "app.support"
+ ],
+ "(credit needed)": [
+  "app.docu"
+ ],
+ "(damaged file, a clean copy is downloaded)": [
+  "app.setup_center"
+ ],
+ "(ducks under the voice)": [
+  "app.render"
+ ],
+ "(fast, a bit robotic)": [
+  "app.tts"
+ ],
+ "(flag[ _]of|logo|icon|symbol|emblem|coat[ _]of[ _]arms|signature|commons-|wikiquote|wiktionary|edit-clear|question[ _]book|padlock|ambox|portal|crystal[ _]clear|map[ _]marker|red[ _]pog)": [
+  "app.docu"
+ ],
+ "(no Wikipedia page: searching the whole web)": [
+  "app.research"
+ ],
+ "(no documents: build the story from what the pictures show)": [
+  "app.docu"
+ ],
+ "(no pictures: every scene will get an AI picture)": [
+  "app.docu"
+ ],
+ "(none given, say \"historians think\" when unsure)": [
+  "app.main"
+ ],
+ "(none yet)": [
+  "app.docu"
+ ],
+ "(nothing yet)": [
+  "app.docu"
+ ],
+ "(nothing yet, this is the first line of the video)": [
+  "app.main"
+ ],
+ "(pick ComfyUI first)": [
+  "app.setup_center"
+ ],
+ "(put it in ComfyUI/models/": [
+  "app.comfy"
+ ],
+ "(round white head, dot eyes)": [
+  "app.catalog"
+ ],
+ "(spelling fixed from \"": [
+  "app.research"
+ ],
+ "(this is the opening: start with a strong hook)": [
+  "app.docu"
+ ],
+ "(use Regen on those scenes)": [
+  "app.jobs"
+ ],
+ ") > Audio: upload audio_": [
+  "app.dub"
+ ],
+ ") are written separately, so do not tell their part here. Story so far (end):": [
+  "app.docu"
+ ],
+ ") skipped:": [
+  "app.doculook"
+ ],
+ ") with exactly the same shape, colours, face and details as in image": [
+  "app.project"
+ ],
+ "), about": [
+  "app.jobs"
+ ],
+ "), billed by your provider": [
+  "app.jobs"
+ ],
+ "), downloading instead": [
+  "app.setup_center"
+ ],
+ "), exterior view, the same building as before": [
+  "app.project"
+ ],
+ "), interior view, the same room as before": [
+  "app.project"
+ ],
+ "), reusing it": [
+  "app.setup_center"
+ ],
+ "), the same place as before": [
+  "app.project"
+ ],
+ "), using the library sound": [
+  "app.sfx"
+ ],
+ "), using the loudness of the voice instead": [
+  "app.lyricsync"
+ ],
+ "), with a": [
+  "app.docu"
+ ],
+ "). Check it on the Pro page.": [
+  "app.cloud"
+ ],
+ "). Click Install again and choose Yes.": [
+  "app.setup_center"
+ ],
+ "). Install 'Smart Director' in Setup Center, or write the face details yourself.": [
+  "app.main"
+ ],
+ "). Open Setup Center > Natural human voices > Install to repair it, then click Retry. Or pick a Kokoro voice in Voice & basics.": [
+  "app.tts"
+ ],
+ "). Press Build again.": [
+  "app.docu"
+ ],
+ "). See the log below.": [
+  "app.setup_center"
+ ],
+ "). Setup Center > AI engine > Install (repair).": [
+  "app.main"
+ ],
+ "). Start ComfyUI first.": [
+  "app.comfy"
+ ],
+ "). The file may have moved:": [
+  "app.downloader"
+ ],
+ "). This Short uses moving images instead. Install 'Wan 2.2 5B' in Setup Center for real motion.": [
+  "app.jobs"
+ ],
+ "); give none when such footage is unlikely to exist\"]} Every search must be about this story's own people, places, objects and events, never generic.": [
+  "app.docu"
+ ],
+ ", \"best_style\": \"the style that fits this material best, one of": [
+  "app.docu"
+ ],
+ ", about": [
+  "app.docu",
+  "app.jobs",
+  "app.research",
+  "app.tts"
+ ],
+ ", about:": [
+  "app.jobs"
+ ],
+ ", age and clothes as in image": [
+  "app.project"
+ ],
+ ", age and clothes of the": [
+  "app.project"
+ ],
+ ", and the one detail history forgot.": [
+  "app.creator"
+ ],
+ ", clean picture with no text, no letters, no signs, no captions, no logos": [
+  "app.docu"
+ ],
+ ", clean picture with no text, no letters, no signs, no logos": [
+  "app.docu_samples"
+ ],
+ ", clear english vocals": [
+  "app.song"
+ ],
+ ", click Dub again to retry them": [
+  "app.jobs"
+ ],
+ ", drawn only once; any people around it are ordinary people who do not look like the": [
+  "app.project"
+ ],
+ ", each drawn only once": [
+  "app.project"
+ ],
+ ", each drawn only once, at their real size": [
+  "app.project"
+ ],
+ ", each with exactly the same face, hair, body and clothes as in image": [
+  "app.project"
+ ],
+ ", expected": [
+  "app.render"
+ ],
+ ", featuring": [
+  "app.project"
+ ],
+ ", grade:": [
+  "app.render"
+ ],
+ ", look": [
+  "app.docu"
+ ],
+ ", no download needed": [
+  "app.setup_center"
+ ],
+ ", no people and no figures in this picture": [
+  "app.project"
+ ],
+ ", no text": [
+  "app.cinema"
+ ],
+ ", nobody else": [
+  "app.project"
+ ],
+ ", poster composition": [
+  "app.jobs"
+ ],
+ ", repo_type='model', revision='main', allow_patterns=": [
+  "app.tts"
+ ],
+ ", scheduled": [
+  "app.jobs"
+ ],
+ ", seen from outside at eye level across the street or yard, the front wall with the entrance door and windows, warm light inside the windows, the whole building and its surroundings visible, outdoors": [
+  "app.jobs"
+ ],
+ ", seen from the same side as image": [
+  "app.project"
+ ],
+ ", skipped": [
+  "app.sfx"
+ ],
+ ", standing in the doorway at eye level, the left wall, the far wall and the right wall all visible in one picture": [
+  "app.jobs"
+ ],
+ ", the": [
+  "app.project"
+ ],
+ ", the person seen from behind or as a silhouette, face not visible": [
+  "app.docu"
+ ],
+ ", then restart ComfyUI)": [
+  "app.comfy"
+ ],
+ ", variation": [
+  "app.jobs"
+ ],
+ ", wait until it shows Installed, then click Retry.": [
+  "app.comfy"
+ ],
+ ", which has no image": [
+  "app.jobs"
+ ],
+ ", with": [
+  "app.exporter"
+ ],
+ ", with the same walls, windows, door, colours and light as image": [
+  "app.project"
+ ],
+ ", with the same walls, windows, furniture, colours and light": [
+  "app.project"
+ ],
+ "1. Copy the folder inside \"CapCut draft\" to CapCut's draft folder (CapCut > Settings > Draft location), then open CapCut.": [
+  "app.capcut"
+ ],
+ "1. Open CapCut. The draft \"": [
+  "app.capcut"
+ ],
+ "10 to 12 GB VRAM: full images, lighter video settings": [
+  "app.system"
+ ],
+ "10 years": [
+  "app.docu_samples"
+ ],
+ "11 years ago": [
+  "app.docu_samples"
+ ],
+ "135mm telephoto lens, compressed background, strong bokeh": [
+  "app.cinema"
+ ],
+ "14mm ultra wide": [
+  "app.cinema"
+ ],
+ "14mm ultra wide lens, dramatic perspective": [
+  "app.cinema"
+ ],
+ "16 GB VRAM: full image quality, Wan 2.2 5B video at 720p": [
+  "app.system"
+ ],
+ "16mm film": [
+  "app.cinema"
+ ],
+ "1990s VHS camcorder footage look, scanlines, color bleed, low resolution": [
+  "app.cinema"
+ ],
+ "2 years ago": [
+  "app.docu_samples"
+ ],
+ "20 knots": [
+  "app.docu_samples"
+ ],
+ "24 GB+ VRAM: everything at full quality, Wan 2.2 14B video": [
+  "app.system"
+ ],
+ "24mm wide": [
+  "app.cinema"
+ ],
+ "24mm wide angle lens": [
+  "app.cinema"
+ ],
+ "2D cartoon scenes drawn on old paper maps, calm eerie storytelling.": [
+  "app.docu_presets"
+ ],
+ "2D flat cartoon illustration, simple characters, muted colors, drawn on old paper map texture": [
+  "app.docu_presets"
+ ],
+ "3 TITLE OPTIONS (try one, or test them)": [
+  "app.exporter"
+ ],
+ "3 titles, 3 thumbnails, subtitles and checklist ready": [
+  "app.jobs"
+ ],
+ "3 years ago": [
+  "app.docu_samples"
+ ],
+ "30 second loops, cheapest": [
+  "app.cloudmusic"
+ ],
+ "35mm film": [
+  "app.cinema"
+ ],
+ "35mm lens, natural perspective": [
+  "app.cinema"
+ ],
+ "35mm natural": [
+  "app.cinema"
+ ],
+ "3D Science": [
+  "app.docu_presets"
+ ],
+ "3D animated cinematic still, Unreal Engine look, dramatic realistic lighting, war film": [
+  "app.docu_presets"
+ ],
+ "3D animated movie": [
+  "app.catalog"
+ ],
+ "3D cutaway and cross-section views, cyan highlights, how things work inside.": [
+  "app.docu_presets"
+ ],
+ "3D cutaway technical illustration, cross-section view, clean studio lighting, cyan highlights": [
+  "app.docu_presets"
+ ],
+ "3D reconstructions of buildings and places, floor plans with red labels, reflective tone.": [
+  "app.docu_presets"
+ ],
+ "3D toy world": [
+  "app.catalog"
+ ],
+ "4 to 6 GB VRAM: smaller images, short low-resolution video (slow). Pro cloud mode makes it fast": [
+  "app.system"
+ ],
+ "4K export": [
+  "app.jobs",
+  "app.pro"
+ ],
+ "4K export failed:": [
+  "app.jobs"
+ ],
+ "4K master ready": [
+  "app.jobs"
+ ],
+ "5 s clips (up to 3 chained), fits 8 to 16 GB GPUs": [
+  "app.castkit"
+ ],
+ "50mm lens": [
+  "app.cinema"
+ ],
+ "50mm standard": [
+  "app.cinema"
+ ],
+ "6 to 8 GB VRAM: images OK, video at 480p with fewer frames": [
+  "app.system"
+ ],
+ "600 LIGHT YEARS": [
+  "app.docu_samples"
+ ],
+ "600 light years away": [
+  "app.docu_samples"
+ ],
+ "77K: We are at four thousand... we have lost the horizon.": [
+  "app.docu_samples"
+ ],
+ "85mm portrait": [
+  "app.cinema"
+ ],
+ "85mm portrait lens, shallow depth of field, creamy bokeh": [
+  "app.cinema"
+ ],
+ ": A Story You Won't Forget": [
+  "app.creator"
+ ],
+ ": already dubbed, skipped": [
+  "app.jobs"
+ ],
+ ": character sheet": [
+  "app.jobs"
+ ],
+ ": done": [
+  "app.docu_samples"
+ ],
+ ": failed (": [
+  "app.jobs"
+ ],
+ ": images and video need an NVIDIA RTX card with CUDA.": [
+  "app.system"
+ ],
+ ": it does not talk about": [
+  "app.research"
+ ],
+ ": making": [
+  "app.jobs"
+ ],
+ ": no stock clip found for '": [
+  "app.stock"
+ ],
+ ": option": [
+  "app.jobs"
+ ],
+ ": research": [
+  "app.docu"
+ ],
+ ": scene sheet ready": [
+  "app.jobs"
+ ],
+ ": sheet ready": [
+  "app.jobs"
+ ],
+ ": that video model is not installed, using the normal one": [
+  "app.jobs"
+ ],
+ ": the account has no credit left. Add credit, then try again.": [
+  "app.scriptai"
+ ],
+ ": the back": [
+  "app.jobs"
+ ],
+ ": the outside": [
+  "app.jobs"
+ ],
+ ": the polished version changed facts or lost text, kept the first version": [
+  "app.docu"
+ ],
+ ": the whole place": [
+  "app.jobs"
+ ],
+ ": this needs about": [
+  "app.setup_center"
+ ],
+ ": too little about": [
+  "app.research"
+ ],
+ ": translated": [
+  "app.dub"
+ ],
+ ": translation already done": [
+  "app.dub"
+ ],
+ ": translation failed (": [
+  "app.jobs"
+ ],
+ ": value '": [
+  "app.comfy"
+ ],
+ "? The answer is stranger than you think.": [
+  "app.creator"
+ ],
+ "A YouTube Short of 30 to 60 seconds. First line is a scroll-stopping hook. Very short sentences. One idea per line. End with a twist or a punchline.": [
+  "app.cloudscript"
+ ],
+ "A YouTube creator typed this topic for a \"": [
+  "app.cloudscript"
+ ],
+ "A city in orbit": [
+  "app.docu_samples"
+ ],
+ "A documentary about \"": [
+  "app.docu",
+  "app.research"
+ ],
+ "A documentary, {length} long. Sit back and explore the story behind it.": [
+  "app.exporter"
+ ],
+ "A download part is incomplete. Click Install again to continue.": [
+  "app.downloader"
+ ],
+ "A full documentary from a topic (researched, with sources) or from your own folder of photos and clips": [
+  "app.pro"
+ ],
+ "A gentle bedtime story, {length} long. Get cozy, close your eyes and listen.": [
+  "app.exporter"
+ ],
+ "A job is already running for this project": [
+  "app.main"
+ ],
+ "A model file is damaged (usually a download that stopped half way). Open Setup Center > Model Doctor > Fix models: it moves the bad file aside and downloads a clean copy. Details:": [
+  "app.comfy"
+ ],
+ "A purple pill slides under the spoken word. Clean and modern.": [
+  "app.captions"
+ ],
+ "A short animated story with 1 to 3 recurring characters, dialogue-free narration, a clear hook in the first line, rising tension, a satisfying ending.": [
+  "app.cloudscript"
+ ],
+ "A short recap, then \"You ... They ...\" contrasts, and a callback to the very first line.": [
+  "app.main"
+ ],
+ "A stuck ComfyUI was closed": [
+  "app.support"
+ ],
+ "A unique sound for every scene (ElevenLabs)": [
+  "app.pro"
+ ],
+ "A user typed this topic for a YouTube documentary: \"": [
+  "app.research"
+ ],
+ "A video is still being made. Install the update when it finishes.": [
+  "app.main"
+ ],
+ "A video needs at least one scene": [
+  "app.main"
+ ],
+ "AI Music (ACE-Step 3.5B)": [
+  "app.setup_center"
+ ],
+ "AI engine (PyTorch + Kokoro voice)": [
+  "app.setup_center"
+ ],
+ "AI illustration": [
+  "app.exporter"
+ ],
+ "AI model files": [
+  "app.support"
+ ],
+ "AI music not installed: using music from assets/music (if any)": [
+  "app.jobs"
+ ],
+ "AI music:": [
+  "app.render"
+ ],
+ "AI picture:": [
+  "app.docu"
+ ],
+ "AI pictures in the cloud (": [
+  "app.docu"
+ ],
+ "AI pictures made on this PC": [
+  "app.docu"
+ ],
+ "AI research system": [
+  "app.docu_samples"
+ ],
+ "AI sound effects": [
+  "app.pro"
+ ],
+ "AI sound for": [
+  "app.sfx"
+ ],
+ "ARRI Alexa": [
+  "app.cinema"
+ ],
+ "ASMR whisper": [
+  "app.catalog"
+ ],
+ "About": [
+  "app.cloudmusic"
+ ],
+ "About this video: made from our own photos and footage": [
+  "app.exporter"
+ ],
+ "About this video: researched from public sources. Archive photos and footage from the sources credited below": [
+  "app.exporter"
+ ],
+ "About this video: script researched and edited by the channel. Narration uses a synthetic voice and the visuals are AI-generated illustrations": [
+  "app.exporter"
+ ],
+ "Account deleted": [
+  "app.docu_samples"
+ ],
+ "Action (quality model)": [
+  "app.cinema"
+ ],
+ "Action cam": [
+  "app.cinema"
+ ],
+ "Add a character in Project settings > Cast first.": [
+  "app.jobs"
+ ],
+ "Add a description or a photo for": [
+  "app.jobs"
+ ],
+ "Add your": [
+  "app.scriptai"
+ ],
+ "Add your Google AI Studio key (Voice tab > Cloud > Google Gemini).": [
+  "app.cloudvoice"
+ ],
+ "Add your OpenAI key (Voice tab > Cloud > OpenAI).": [
+  "app.cloudvoice"
+ ],
+ "Added": [
+  "app.sfx"
+ ],
+ "Aerial drone": [
+  "app.cinema"
+ ],
+ "Aerial establishing": [
+  "app.cinema"
+ ],
+ "After posting": [
+  "app.creator"
+ ],
+ "All": [
+  "app.setup_center"
+ ],
+ "Almost nobody remembers": [
+  "app.creator"
+ ],
+ "Already told (do not repeat it, continue smoothly): ...": [
+  "app.cloudscript"
+ ],
+ "Already used (avoid):": [
+  "app.docu"
+ ],
+ "Altered or synthetic content": [
+  "app.creator"
+ ],
+ "Alvaro (Spanish)": [
+  "app.tts"
+ ],
+ "An animated story with original characters.": [
+  "app.exporter"
+ ],
+ "An expert or old records, a year or one specific number, then a modern comparison the viewer feels. Only names and numbers you are sure of, otherwise \"historians think\".": [
+  "app.main"
+ ],
+ "Ana (US, child)": [
+  "app.tts"
+ ],
+ "Anamorphic night": [
+  "app.cinema"
+ ],
+ "Andrew (US, warm)": [
+  "app.tts"
+ ],
+ "Animating": [
+  "app.jobs"
+ ],
+ "Anime classic": [
+  "app.catalog"
+ ],
+ "Anime movie": [
+  "app.catalog"
+ ],
+ "Anime vivid": [
+  "app.grade"
+ ],
+ "Anthropic Claude": [
+  "app.cloud"
+ ],
+ "Antique engraving": [
+  "app.catalog"
+ ],
+ "Apikey": [
+  "app.cloud",
+  "app.main"
+ ],
+ "App packages checked": [
+  "app.support"
+ ],
+ "Applying voice effect to": [
+  "app.jobs"
+ ],
+ "Approximate list prices, paid directly to your own provider account (OpenRouter, ElevenLabs). LeccorTube adds nothing.": [
+  "app.cloud"
+ ],
+ "Arc left": [
+  "app.cinema"
+ ],
+ "Arc right": [
+  "app.cinema"
+ ],
+ "Architectural Reconstruction": [
+  "app.docu_presets"
+ ],
+ "Archival news collage, maps and timelines, fast and clear with a wink.": [
+  "app.docu_presets"
+ ],
+ "Archive Desk": [
+  "app.docu_presets"
+ ],
+ "Archive mission footage on deep navy, yellow circles around what matters, measured awe.": [
+  "app.docu_presets"
+ ],
+ "Archive portraits on a dark red grid, big capital names, red and blue, years on a timeline.": [
+  "app.docu_presets"
+ ],
+ "Aria (US)": [
+  "app.tts"
+ ],
+ "Arjun Mehta": [
+  "app.docu_samples"
+ ],
+ "Art director: a picture for every line": [
+  "app.jobs"
+ ],
+ "Asad (Urdu)": [
+  "app.tts"
+ ],
+ "Attack submarine": [
+  "app.docu_samples"
+ ],
+ "Audio mix failed:": [
+  "app.dub"
+ ],
+ "Audio mux failed:": [
+  "app.render"
+ ],
+ "Auto publish": [
+  "app.cloud"
+ ],
+ "Auto publish (coming soon)": [
+  "app.pro"
+ ],
+ "Automatic ComfyUI install is for Windows. On other systems install ComfyUI yourself and pick its folder.": [
+  "app.setup_center"
+ ],
+ "Automation API (coming soon)": [
+  "app.pro"
+ ],
+ "Ava (US, warm)": [
+  "app.tts"
+ ],
+ "Background music made on your PC for every chapter. Apache 2.0, safe for YouTube.": [
+  "app.setup_center"
+ ],
+ "Background music:": [
+  "app.render"
+ ],
+ "Bad documentary id": [
+  "app.docu"
+ ],
+ "Bangers (comic)": [
+  "app.captions"
+ ],
+ "Bearer": [
+  "app.castkit",
+  "app.cloud",
+  "app.cloudscript",
+  "app.cloudvoice",
+  "app.main",
+  "app.openrouter",
+  "app.scriptai"
+ ],
+ "Bebas Neue": [
+  "app.captions"
+ ],
+ "Bedtime Story": [
+  "app.catalog"
+ ],
+ "Bedtime storyteller": [
+  "app.catalog"
+ ],
+ "Bell chime": [
+  "app.sfx"
+ ],
+ "Best quality. Clone your own voice.": [
+  "app.cloudvoice"
+ ],
+ "Big and dramatic, with a hall echo": [
+  "app.catalog"
+ ],
+ "Big heavy capitals, the spoken word turns green. The top creator look.": [
+  "app.captions"
+ ],
+ "Big, present trailer-style voice with a soft hall": [
+  "app.voicefx"
+ ],
+ "Biography / life story": [
+  "app.docu"
+ ],
+ "Bird's eye": [
+  "app.cinema"
+ ],
+ "Black & white": [
+  "app.grade"
+ ],
+ "Black and white, heavy grain, money counters, numbered chapter cards, true crime mood. Real photos only.": [
+  "app.docu_presets"
+ ],
+ "Bleach bypass": [
+  "app.grade"
+ ],
+ "Blockbuster look: teal shadows, warm skin": [
+  "app.grade"
+ ],
+ "Blue hour": [
+  "app.cinema"
+ ],
+ "Bobby Broccoli": [
+  "app.docu_presets"
+ ],
+ "Body check": [
+  "app.jobs"
+ ],
+ "Body check done:": [
+  "app.jobs"
+ ],
+ "Body check done: all bodies look fine": [
+  "app.jobs"
+ ],
+ "Body check:": [
+  "app.jobs"
+ ],
+ "Body check: looking at": [
+  "app.jobs"
+ ],
+ "Body problems:": [
+  "app.jobs"
+ ],
+ "Body-mounted (snorricam)": [
+  "app.cinema"
+ ],
+ "Bold History": [
+  "app.docu_presets"
+ ],
+ "Bold white text with a soft shadow. Readable on every video.": [
+  "app.captions"
+ ],
+ "Breathy, calm": [
+  "app.cloudvoice"
+ ],
+ "Breezy, female": [
+  "app.cloudvoice"
+ ],
+ "Brian (US, calm)": [
+  "app.tts"
+ ],
+ "Bright female": [
+  "app.cloudvoice"
+ ],
+ "Bright, close and punchy, like a pro creator mic": [
+  "app.voicefx"
+ ],
+ "Bright, punchy and close. Explainers and top 10s": [
+  "app.catalog"
+ ],
+ "British storyteller": [
+  "app.cloudvoice"
+ ],
+ "Build in cloud is a LeccorTube Pro feature.": [
+  "app.main"
+ ],
+ "Building project:": [
+  "app.docu"
+ ],
+ "Built in": [
+  "app.docu_samples"
+ ],
+ "Built-in narrator": [
+  "app.tts"
+ ],
+ "Business Empire": [
+  "app.docu_presets"
+ ],
+ "But here's the part nobody tells you. [Cause]. That meant [effect]. And that is why [link to today].": [
+  "app.main"
+ ],
+ "CPU encoding": [
+  "app.render"
+ ],
+ "CREATOR NOTES:": [
+  "app.cloudscript"
+ ],
+ "Calm & warm": [
+  "app.voicefx"
+ ],
+ "Calm (fast model)": [
+  "app.cinema"
+ ],
+ "Calm (sleep, relax)": [
+  "app.sfx"
+ ],
+ "Calm ambient": [
+  "app.music"
+ ],
+ "Calm and spacious, with a soft echo": [
+  "app.catalog"
+ ],
+ "Calm female": [
+  "app.cloudvoice"
+ ],
+ "Calm history, bedtime stories and relaxing journeys. Slow voice, soft music, chapters.": [
+  "app.catalog"
+ ],
+ "Calm relaxation, guided breathing and peaceful nature journeys.": [
+  "app.catalog"
+ ],
+ "Calm, slow, warm narration for falling asleep. Gentle second person is fine (\"you\"). No shocks, no cliffhangers, no exclamation marks. Soft sensory detail. Long flowing sentences.": [
+  "app.cloudscript"
+ ],
+ "Camera shutter": [
+  "app.sfx"
+ ],
+ "Cancel requested": [
+  "app.jobs"
+ ],
+ "Cannot open clip": [
+  "app.render"
+ ],
+ "Cannot use that folder:": [
+  "app.main"
+ ],
+ "Canon DSLR": [
+  "app.cinema"
+ ],
+ "CapCut draft": [
+  "app.capcut"
+ ],
+ "CapCut draft added to CapCut's project list:": [
+  "app.capcut"
+ ],
+ "Capt. Erik Sand": [
+  "app.docu_samples"
+ ],
+ "Captions spread over the song (the timing helper was not available)": [
+  "app.jobs"
+ ],
+ "Captions timed to the real singing": [
+  "app.jobs"
+ ],
+ "Cast options ready": [
+  "app.jobs"
+ ],
+ "Cast: generating options for": [
+  "app.jobs"
+ ],
+ "Cast: making": [
+  "app.jobs"
+ ],
+ "Cast: stick figures are drawn from their description, no character sheets needed": [
+  "app.jobs"
+ ],
+ "Chapter": [
+  "app.docu",
+  "app.doculook"
+ ],
+ "Chapter 1": [
+  "app.docu_samples"
+ ],
+ "Chapter 2": [
+  "app.docu_samples"
+ ],
+ "Chapter 3": [
+  "app.docu_samples"
+ ],
+ "Chapter 4": [
+  "app.docu_samples"
+ ],
+ "Character": [
+  "app.main"
+ ],
+ "Character not found": [
+  "app.jobs",
+  "app.main",
+  "app.season"
+ ],
+ "Character not in library": [
+  "app.characters",
+  "app.main"
+ ],
+ "Character sheet for": [
+  "app.jobs"
+ ],
+ "Character sheet ready": [
+  "app.jobs"
+ ],
+ "Characters move their lips to the dialogue": [
+  "app.pro"
+ ],
+ "Characters: start with up to 3 lines like [CAST: Leo = a 10 year old boy, curly black hair, red hoodie] and use @Leo inside the [IMG: ...] prompts where he appears.": [
+  "app.cloudscript"
+ ],
+ "Charcoal and red, black and white cut-outs, words that slam in, names, counters and sources. Very fast start.": [
+  "app.docu_presets"
+ ],
+ "Chase shot": [
+  "app.cinema"
+ ],
+ "Chatterbox Multilingual for auto-dubbing (Hindi, Arabic, Spanish, French and more) in your narrator's voice. Install Natural voices first. Downloads once, then works offline.": [
+  "app.setup_center"
+ ],
+ "Chatterbox Turbo": [
+  "app.tts"
+ ],
+ "Cheapest. 70+ languages. Free tier in AI Studio.": [
+  "app.cloudvoice"
+ ],
+ "Check Studio > Analytics > Audience > 'When your viewers are on YouTube'. Post 1 to 2 hours earlier.": [
+  "app.creator"
+ ],
+ "Checking facts across the sources": [
+  "app.cloudscript"
+ ],
+ "Chibi cute": [
+  "app.catalog"
+ ],
+ "Chief pilot": [
+  "app.docu_samples"
+ ],
+ "Choose a folder": [
+  "app.main",
+  "app.setup_center"
+ ],
+ "Christopher (US, deep)": [
+  "app.tts"
+ ],
+ "Chunk": [
+  "app.research"
+ ],
+ "Cinematic realistic": [
+  "app.catalog"
+ ],
+ "Cinematic story": [
+  "app.docu"
+ ],
+ "Cinzel (epic)": [
+  "app.captions"
+ ],
+ "Classic monochrome with contrast": [
+  "app.grade"
+ ],
+ "Claude Haiku (fast, cheaper)": [
+  "app.routes_pro"
+ ],
+ "Claude Sonnet (best writing, default)": [
+  "app.routes_pro"
+ ],
+ "Claude web search": [
+  "app.cloudscript",
+  "app.scriptai"
+ ],
+ "Claude, ChatGPT, Gemini, Groq, DeepSeek or Grok with your own key": [
+  "app.pro"
+ ],
+ "Clean 3D renders, cyan HUD labels, glowing pins and numbers on deep blue.": [
+  "app.docu_presets"
+ ],
+ "Clean, bright and colourful, crisp contrast": [
+  "app.grade"
+ ],
+ "Cleaned": [
+  "app.setup_center"
+ ],
+ "Clear male": [
+  "app.cloudvoice"
+ ],
+ "Clear, confident explainer about history, science or places.": [
+  "app.catalog"
+ ],
+ "Clear, engaging narration for YouTube.": [
+  "app.cloudscript"
+ ],
+ "Clicks and data": [
+  "app.sfx"
+ ],
+ "Clip": [
+  "app.jobs",
+  "app.render"
+ ],
+ "Clip must be one of": [
+  "app.main"
+ ],
+ "Clock ticking": [
+  "app.sfx"
+ ],
+ "Close LeccorTube and start it again from LECCORTUBE.exe to finish the update.": [
+  "app.updater"
+ ],
+ "Close Wikipedia matches:": [
+  "app.research"
+ ],
+ "Cloud AI is a LeccorTube Pro feature. Activate Pro, or set the provider back to 'On my PC'.": [
+  "app.jobs"
+ ],
+ "Cloud check needs LeccorTube Pro with OpenRouter or a Script AI key (Pro page).": [
+  "app.llm"
+ ],
+ "Cloud images": [
+  "app.cloud",
+  "app.pro"
+ ],
+ "Cloud images / video": [
+  "app.cloud"
+ ],
+ "Cloud is on but no image model is picked. Connect a key on the Pro page and pick a model.": [
+  "app.jobs"
+ ],
+ "Cloud model:": [
+  "app.jobs"
+ ],
+ "Cloud music is a LeccorTube Pro feature. Set the Music tab back to 'On my PC'.": [
+  "app.jobs"
+ ],
+ "Cloud pictures and clips are a LeccorTube Pro feature. Open Pro in the menu to unlock it.": [
+  "app.main"
+ ],
+ "Cloud script AI": [
+  "app.pro"
+ ],
+ "Cloud script writer": [
+  "app.pro"
+ ],
+ "Cloud sheets are a LeccorTube Pro feature. Open Pro in the menu to unlock it.": [
+  "app.main"
+ ],
+ "Cloud video": [
+  "app.jobs",
+  "app.pro"
+ ],
+ "Cloud video:": [
+  "app.jobs"
+ ],
+ "Cloud videos done in": [
+  "app.jobs"
+ ],
+ "Cold blue-grey, deep blacks, almost no colour. Scary, not green": [
+  "app.grade"
+ ],
+ "Cold noir": [
+  "app.grade"
+ ],
+ "Cold open": [
+  "app.main"
+ ],
+ "Collect done:": [
+  "app.docu"
+ ],
+ "Colours as generated": [
+  "app.grade"
+ ],
+ "ComfyUI (image and video generator)": [
+  "app.setup_center"
+ ],
+ "ComfyUI already found, nothing to download": [
+  "app.setup_center"
+ ],
+ "ComfyUI closed while starting. See logs/": [
+  "app.setup_center"
+ ],
+ "ComfyUI closed while working (often: not enough memory for this video model). Click Resume: finished scenes are kept. If it happens again, choose lighter video settings in Settings.": [
+  "app.comfy"
+ ],
+ "ComfyUI did not accept the job (it is not answering). It may still be busy: wait a minute and click Resume.": [
+  "app.comfy"
+ ],
+ "ComfyUI did not answer in time. See logs/": [
+  "app.setup_center"
+ ],
+ "ComfyUI error:": [
+  "app.comfy"
+ ],
+ "ComfyUI has no node '": [
+  "app.comfy"
+ ],
+ "ComfyUI has not answered for": [
+  "app.comfy"
+ ],
+ "ComfyUI is already running": [
+  "app.setup_center"
+ ],
+ "ComfyUI is busy, waiting for it": [
+  "app.jobs"
+ ],
+ "ComfyUI is installed and starts automatically when a job needs it": [
+  "app.main"
+ ],
+ "ComfyUI lost this job (it probably restarted). Click Resume: finished scenes are kept.": [
+  "app.comfy"
+ ],
+ "ComfyUI not found. Open Setup Center to install it or pick its folder.": [
+  "app.setup_center"
+ ],
+ "ComfyUI not reachable at": [
+  "app.comfy",
+  "app.setup_center"
+ ],
+ "ComfyUI not running, starting it": [
+  "app.jobs"
+ ],
+ "ComfyUI rejected the workflow:": [
+  "app.comfy"
+ ],
+ "ComfyUI running (": [
+  "app.comfy"
+ ],
+ "ComfyUI started": [
+  "app.setup_center"
+ ],
+ "ComfyUI was extracted but its folder was not recognised": [
+  "app.setup_center"
+ ],
+ "ComfyUI was not found. Install it or pick its folder in Setup Center first.": [
+  "app.setup_center"
+ ],
+ "Comic book": [
+  "app.catalog"
+ ],
+ "Composing": [
+  "app.jobs"
+ ],
+ "Confident, deep and clear. History and science": [
+  "app.catalog"
+ ],
+ "Connect Google AI": [
+  "app.cloud"
+ ],
+ "Connect Higgsfield": [
+  "app.cloud"
+ ],
+ "Connect OpenRouter, Google AI or a Script AI key on the Pro page first.": [
+  "app.routes_pro"
+ ],
+ "Connect OpenRouter, Google AI or a Script AI key on the Pro page to write in the cloud.": [
+  "app.cloudscript"
+ ],
+ "Conrad (German)": [
+  "app.tts"
+ ],
+ "Copied to": [
+  "app.jobs"
+ ],
+ "Cost estimator": [
+  "app.pro"
+ ],
+ "Could not check for updates (": [
+  "app.updater"
+ ],
+ "Could not convert the Edge voice audio (FFmpeg).": [
+  "app.tts"
+ ],
+ "Could not convert the audio (FFmpeg).": [
+  "app.cloud"
+ ],
+ "Could not convert the music (FFmpeg).": [
+  "app.cloudmusic"
+ ],
+ "Could not convert the voice audio (FFmpeg).": [
+  "app.cloudvoice"
+ ],
+ "Could not copy the draft into CapCut's folder:": [
+  "app.capcut"
+ ],
+ "Could not copy to the output folder": [
+  "app.jobs"
+ ],
+ "Could not download the dubbing voice model. Check the internet connection and try again (it resumes where it stopped).": [
+  "app.tts"
+ ],
+ "Could not download the finished file from ComfyUI. Click Resume to try again.": [
+  "app.comfy"
+ ],
+ "Could not download the result from the AI provider. Click Resume.": [
+  "app.cloud"
+ ],
+ "Could not extract ComfyUI:": [
+  "app.setup_center"
+ ],
+ "Could not find ComfyUI's Python. Start ComfyUI yourself.": [
+  "app.setup_center"
+ ],
+ "Could not install the Edge voice package. Check the internet connection.": [
+  "app.tts"
+ ],
+ "Could not load the sample.": [
+  "app.cloudvoice"
+ ],
+ "Could not mix the song (FFmpeg failed). Press Build again.": [
+  "app.jobs"
+ ],
+ "Could not reach Gumroad. Check the internet connection and try again.": [
+  "app.pro"
+ ],
+ "Could not reach OpenRouter (": [
+  "app.openrouter"
+ ],
+ "Could not read image": [
+  "app.render"
+ ],
+ "Could not read that audio file:": [
+  "app.main"
+ ],
+ "Could not read that image": [
+  "app.main"
+ ],
+ "Could not read that sound file (FFmpeg).": [
+  "app.main"
+ ],
+ "Could not read that video": [
+  "app.main"
+ ],
+ "Could not read the Wikipedia page \"": [
+  "app.research"
+ ],
+ "Could not read the reference image": [
+  "app.grade"
+ ],
+ "Could not reuse it (": [
+  "app.setup_center"
+ ],
+ "Could not upload reference image to ComfyUI:": [
+  "app.comfy"
+ ],
+ "Count": [
+  "app.support"
+ ],
+ "Crane down": [
+  "app.cinema"
+ ],
+ "Crane up": [
+  "app.cinema"
+ ],
+ "Crash zoom in": [
+  "app.cinema"
+ ],
+ "Crash zoom out": [
+  "app.cinema"
+ ],
+ "Creaking door": [
+  "app.sfx"
+ ],
+ "Creating the project": [
+  "app.docu"
+ ],
+ "Creator notes:": [
+  "app.cloudscript"
+ ],
+ "Creepster (horror)": [
+  "app.captions"
+ ],
+ "Creepy Internet": [
+  "app.docu_presets"
+ ],
+ "Creepy tales, legends and unsolved mysteries, slow and dark.": [
+  "app.catalog"
+ ],
+ "Crowds filled the main square through the night as the results came in from every province.": [
+  "app.docu_samples"
+ ],
+ "Current script (chapter, beat, visuals):": [
+  "app.docu"
+ ],
+ "Custom (OpenAI-compatible URL)": [
+  "app.cloud"
+ ],
+ "Cutaway Explainer": [
+  "app.docu_presets"
+ ],
+ "Cuts, mixes and encodes the final video. Uses your GPU (NVENC).": [
+  "app.setup_center"
+ ],
+ "Cyberpunk neon": [
+  "app.catalog"
+ ],
+ "DESCRIPTION (": [
+  "app.dub"
+ ],
+ "DPAPI failed": [
+  "app.secretstore"
+ ],
+ "Damaged, repair started in Setup Center": [
+  "app.support"
+ ],
+ "Dance & move": [
+  "app.song"
+ ],
+ "Daniel Hart": [
+  "app.docu_samples"
+ ],
+ "Dark & mysterious": [
+  "app.voicefx"
+ ],
+ "Dark anime": [
+  "app.catalog"
+ ],
+ "Dark drone": [
+  "app.sfx"
+ ],
+ "Dark fantasy": [
+  "app.catalog"
+ ],
+ "Dark night-time reconstructions, route maps, transcript text, minute by minute tension.": [
+  "app.docu_presets"
+ ],
+ "Dark photoreal 3D scenes, HUD labels and spec panels, very fast cuts, awe and scale.": [
+  "app.docu_presets"
+ ],
+ "Dark, cold, almost monochrome": [
+  "app.grade"
+ ],
+ "Dark, slow and a little scary": [
+  "app.catalog"
+ ],
+ "Deep narrator": [
+  "app.voicefx"
+ ],
+ "Deep rumble": [
+  "app.sfx"
+ ],
+ "Deep, calm male": [
+  "app.cloudvoice"
+ ],
+ "Deep, slow and warm. The classic sleep history voice": [
+  "app.catalog"
+ ],
+ "DeepSeek Flash (cheapest)": [
+  "app.routes_pro"
+ ],
+ "Describe this person's face for an AI image generator so the same face can be drawn again. Only facial geometry and features: face shape, forehead, eyebrows, eye shape and color, nose, lips, jawline, cheekbones, skin tone, hair style and color, facial hair, age range, any marks. One dense paragraph, no names, no opinions.": [
+  "app.characters"
+ ],
+ "Det. Ray Cole": [
+  "app.docu_samples"
+ ],
+ "DevTools connection closed": [
+  "app.cdp"
+ ],
+ "DevTools handshake failed": [
+  "app.cdp"
+ ],
+ "DevTools refused the connection": [
+  "app.cdp"
+ ],
+ "Director done": [
+  "app.jobs"
+ ],
+ "Documentary 35mm": [
+  "app.cinema"
+ ],
+ "Documentary Studio": [
+  "app.pro"
+ ],
+ "Documentary look:": [
+  "app.doculook"
+ ],
+ "Documentary not found": [
+  "app.docu"
+ ],
+ "Documentary pro": [
+  "app.catalog"
+ ],
+ "Documentary sound effects skipped:": [
+  "app.render"
+ ],
+ "Documents and blueprints on a desk, old CRT screens, archive investigation.": [
+  "app.docu_presets"
+ ],
+ "Dolly / Track": [
+  "app.cinema"
+ ],
+ "Dolly in": [
+  "app.cinema"
+ ],
+ "Dolly out": [
+  "app.cinema"
+ ],
+ "Double agent": [
+  "app.docu_samples"
+ ],
+ "Download failed (": [
+  "app.downloader"
+ ],
+ "Download the update first.": [
+  "app.updater"
+ ],
+ "Downloading": [
+  "app.setup_center"
+ ],
+ "Downloading PyTorch for NVIDIA (about 3 GB). It continues where it stopped if the internet drops.": [
+  "app.setup_center"
+ ],
+ "Downloading the": [
+  "app.setup_center"
+ ],
+ "Downloading the 23-language dubbing model (about 3.2 GB, resumes if stopped)": [
+  "app.setup_center"
+ ],
+ "Downloading the dubbing voice model (one time):": [
+  "app.tts"
+ ],
+ "Drama close-up": [
+  "app.cinema"
+ ],
+ "Draws the LeccorTube window. Built into Windows 11, sometimes missing on Windows 10.": [
+  "app.setup_center"
+ ],
+ "Drone / Crane": [
+  "app.cinema"
+ ],
+ "Drone aerial": [
+  "app.catalog"
+ ],
+ "Drone pull back": [
+  "app.cinema"
+ ],
+ "Drone push in": [
+  "app.cinema"
+ ],
+ "Drone shots, satellite maps with yellow highlights, big 3D-style numbers and spec panels.": [
+  "app.docu_presets"
+ ],
+ "Dubbing": [
+  "app.jobs"
+ ],
+ "Dubbing failed:": [
+  "app.jobs"
+ ],
+ "Dubbing model downloaded": [
+  "app.setup_center"
+ ],
+ "Dubbing needs 'Natural voices' from Setup Center (it speaks 23 languages).": [
+  "app.tts"
+ ],
+ "Dubbing needs 'Natural voices' from Setup Center first.": [
+  "app.tts"
+ ],
+ "Dubbing ready (": [
+  "app.jobs"
+ ],
+ "Dubbing voice model ready": [
+  "app.tts"
+ ],
+ "Dubbing voices (18 languages)": [
+  "app.setup_center"
+ ],
+ "Dutch tilt": [
+  "app.cinema"
+ ],
+ "Earth zoom out": [
+  "app.cinema"
+ ],
+ "Eastern / desert": [
+  "app.music"
+ ],
+ "Edge voice failed (it needs internet):": [
+  "app.tts"
+ ],
+ "Editor export (": [
+  "app.nlexport"
+ ],
+ "Editor export works for Pro documentaries (Documentary Studio).": [
+  "app.jobs"
+ ],
+ "Effect": [
+  "app.jobs"
+ ],
+ "Elegant italic serif, low and calm. Films and sleep stories.": [
+  "app.captions"
+ ],
+ "Elena Varga": [
+  "app.docu_samples"
+ ],
+ "Eleven Music v1": [
+  "app.cloudmusic"
+ ],
+ "Eleven Music v2": [
+  "app.cloudmusic"
+ ],
+ "Eleven Music v2.5": [
+  "app.cloudmusic"
+ ],
+ "ElevenLabs did not accept the key.": [
+  "app.cloudvoice"
+ ],
+ "ElevenLabs did not accept this key.": [
+  "app.cloudvoice"
+ ],
+ "ElevenLabs error": [
+  "app.cloud",
+  "app.cloudvoice"
+ ],
+ "ElevenLabs music error": [
+  "app.cloudmusic"
+ ],
+ "ElevenLabs narration,": [
+  "app.docu"
+ ],
+ "ElevenLabs sound effect error": [
+  "app.cloud"
+ ],
+ "ElevenLabs voice clone error": [
+  "app.cloud"
+ ],
+ "ElevenLabs voices": [
+  "app.pro"
+ ],
+ "Elias Moor": [
+  "app.docu_samples"
+ ],
+ "Emma (US)": [
+  "app.tts"
+ ],
+ "Emotional & inspirational": [
+  "app.docu"
+ ],
+ "Empty line": [
+  "app.main"
+ ],
+ "Encoding with": [
+  "app.render"
+ ],
+ "Engineering Impossible": [
+  "app.docu_presets"
+ ],
+ "Engineering Marvels": [
+  "app.docu_presets"
+ ],
+ "Epic & history": [
+  "app.sfx"
+ ],
+ "Epic IMAX wide": [
+  "app.cinema"
+ ],
+ "Epic Sci-Fi": [
+  "app.docu_presets"
+ ],
+ "Epic cinematic AI visuals of space and the future, minimal text, big slow moves.": [
+  "app.docu_presets"
+ ],
+ "Epic fantasy": [
+  "app.catalog"
+ ],
+ "Epic heroic": [
+  "app.music"
+ ],
+ "Episode": [
+  "app.exporter",
+  "app.trailer"
+ ],
+ "Error": [
+  "app.docu",
+  "app.routes_pro"
+ ],
+ "Every downloaded file, where it came from and its licence. GREEN = free to use. YELLOW = give credit in the video description, or check: some photos are public domain in Pakistan or India but still protected in the USA (YouTube follows US law). RED = not downloaded.": [
+  "app.docu"
+ ],
+ "Every picture understood": [
+  "app.docu"
+ ],
+ "Every scene has a camera now": [
+  "app.jobs"
+ ],
+ "Every scene, voice line, sound effect and the music on one timeline. Check and fix before the render": [
+  "app.pro"
+ ],
+ "Everyone told me it was impossible. So I stopped telling them my plans.": [
+  "app.docu_samples"
+ ],
+ "Everything is installed": [
+  "app.setup_center"
+ ],
+ "Evidence Board": [
+  "app.docu_presets"
+ ],
+ "Evidence with a twist: \"Take a guess ...\" and the answer is the opposite of what people expect.": [
+  "app.main"
+ ],
+ "Explainer: writing": [
+  "app.jobs"
+ ],
+ "Export ready": [
+  "app.jobs"
+ ],
+ "Extracting FFmpeg": [
+  "app.setup_center"
+ ],
+ "Extreme close-up": [
+  "app.cinema"
+ ],
+ "Extreme wide": [
+  "app.cinema"
+ ],
+ "Eye level": [
+  "app.cinema"
+ ],
+ "FACTS / DOCUMENTS:": [
+  "app.docu"
+ ],
+ "FACTS FOR THIS CHAPTER (tell ALL of them, in this order; link them with cause and effect, do not pad):": [
+  "app.docu"
+ ],
+ "FFmpeg (video encoder)": [
+  "app.setup_center"
+ ],
+ "FFmpeg already installed": [
+  "app.setup_center"
+ ],
+ "FFmpeg encode failed:": [
+  "app.doculook",
+  "app.render"
+ ],
+ "FFmpeg found (": [
+  "app.render"
+ ],
+ "FFmpeg is missing: Setup Center > FFmpeg > Install.": [
+  "app.main",
+  "app.tts"
+ ],
+ "FFmpeg not found. Install it from Setup Center (one click)": [
+  "app.render"
+ ],
+ "FFmpeg stopped:": [
+  "app.doculook",
+  "app.render"
+ ],
+ "FLUX.1 Schnell": [
+  "app.castkit"
+ ],
+ "FLUX.1 Schnell (alternative image model)": [
+  "app.setup_center"
+ ],
+ "FLUX.2 Klein 4B": [
+  "app.castkit"
+ ],
+ "FLUX.2 Klein 4B (default image model)": [
+  "app.setup_center"
+ ],
+ "FORMAT (plain text, no markdown, no bold): - Before every 2 to 3 sentences (about": [
+  "app.cloudscript"
+ ],
+ "Face describer not ready (": [
+  "app.main"
+ ],
+ "Fact check done:": [
+  "app.cloudscript"
+ ],
+ "Fact check, chapter": [
+  "app.cloudscript"
+ ],
+ "Fact-check this narration against the fact sheet. FACT SHEET (the only true facts):": [
+  "app.cloudscript"
+ ],
+ "Facts about \"": [
+  "app.docu"
+ ],
+ "Facts for this chapter:": [
+  "app.cloudscript"
+ ],
+ "Facts in order, dates and places, calm authority": [
+  "app.docu"
+ ],
+ "Faded blacks, yellow-green tint": [
+  "app.grade"
+ ],
+ "Family vanishes without a trace": [
+  "app.docu_samples"
+ ],
+ "Fast zoom in": [
+  "app.cinema"
+ ],
+ "Fast zoom out": [
+  "app.cinema"
+ ],
+ "Fast, sharp images (about 5 s each on an RTX 5060 Ti). Apache 2.0.": [
+  "app.setup_center"
+ ],
+ "Film noir": [
+  "app.catalog",
+  "app.cinema"
+ ],
+ "Final Documentary": [
+  "app.docu"
+ ],
+ "Finding stock footage": [
+  "app.jobs"
+ ],
+ "Firm, clear": [
+  "app.cloudvoice"
+ ],
+ "Firm, male": [
+  "app.cloudvoice"
+ ],
+ "First 30 seconds of narration:": [
+  "app.creator"
+ ],
+ "First-person view (FPV)": [
+  "app.cinema"
+ ],
+ "Flash v2.5 (half price, fast)": [
+  "app.cloudvoice"
+ ],
+ "Flat cartoon": [
+  "app.catalog"
+ ],
+ "Flight 77K": [
+  "app.docu_samples"
+ ],
+ "Flight director": [
+  "app.docu_samples"
+ ],
+ "Floating Screens": [
+  "app.docu_presets"
+ ],
+ "Folder not found. Paste the full path of a folder with .wav or .mp3 files.": [
+  "app.main"
+ ],
+ "Folder not found:": [
+  "app.sfx"
+ ],
+ "Follow / over the shoulder": [
+  "app.cinema"
+ ],
+ "Footage and screenshots floating on a dark stage, slow push-ins, quiet tension, evidence piece by piece.": [
+  "app.docu_presets"
+ ],
+ "Forum Romanum": [
+  "app.docu_samples"
+ ],
+ "Forum moderator": [
+  "app.docu_samples"
+ ],
+ "Forum posts, browser windows, old desktops, news clips and memes, dry humour.": [
+  "app.docu_presets"
+ ],
+ "Forum screenshots, glitching words and crosshairs, unsettling slow reveals.": [
+  "app.docu_presets"
+ ],
+ "Found": [
+  "app.cloudscript",
+  "app.docu"
+ ],
+ "Found a PyTorch without NVIDIA support (CPU only). Replacing it with the GPU version.": [
+  "app.setup_center"
+ ],
+ "Found footage": [
+  "app.catalog"
+ ],
+ "Founder, Hart Motors": [
+  "app.docu_samples"
+ ],
+ "Frame not found": [
+  "app.main"
+ ],
+ "Frank Doyle": [
+  "app.docu_samples"
+ ],
+ "Free to use": [
+  "app.docu"
+ ],
+ "Friendly and cheerful for children": [
+  "app.catalog"
+ ],
+ "Friendly man": [
+  "app.song"
+ ],
+ "From the document": [
+  "app.docu"
+ ],
+ "Front page": [
+  "app.docu_samples"
+ ],
+ "Full body": [
+  "app.cinema"
+ ],
+ "Full body, all sides": [
+  "app.main"
+ ],
+ "Full story on the channel.": [
+  "app.shorts"
+ ],
+ "Full-screen cinematic 3D scenes, letterbox, typewriter date and place stamps, tense action.": [
+  "app.docu_presets"
+ ],
+ "Fun & memes": [
+  "app.sfx"
+ ],
+ "Funny and memes": [
+  "app.sfx"
+ ],
+ "GB RAM.": [
+  "app.system"
+ ],
+ "GB RAM. LeccorTube needs at least 8 GB (16 GB recommended).": [
+  "app.system"
+ ],
+ "GB RAM: images work, video scenes need 16 GB or more.": [
+  "app.system"
+ ],
+ "GB RAM: images, video, voices and music all run on your GPU.": [
+  "app.system"
+ ],
+ "GB VRAM": [
+  "app.comfy"
+ ],
+ "GB VRAM,": [
+  "app.system"
+ ],
+ "GB VRAM. Images and video need 4 GB or more.": [
+  "app.system"
+ ],
+ "GB free on this drive. Models need about 40 GB.": [
+  "app.system"
+ ],
+ "GB free on this drive. New downloads need space: about 25 GB for the basics, 80 GB for images and video.": [
+  "app.system"
+ ],
+ "GB is free. Free up space (or move the app / ComfyUI to a bigger drive), then click Install.": [
+  "app.setup_center"
+ ],
+ "GB system RAM. 16 GB is the minimum, 32 GB is recommended for video.": [
+  "app.system"
+ ],
+ "GB ·": [
+  "app.setup_center"
+ ],
+ "GB, only": [
+  "app.setup_center"
+ ],
+ "GET /": [
+  "app.cdp"
+ ],
+ "GPU: False": [
+  "app.setup_center"
+ ],
+ "Generated clip": [
+  "app.render"
+ ],
+ "Generating": [
+  "app.jobs"
+ ],
+ "Gentle and kind, like a parent reading at night": [
+  "app.catalog"
+ ],
+ "Gentle fairy tales and cozy stories for kids and adults.": [
+  "app.catalog"
+ ],
+ "Getting the dubbing voice model ready": [
+  "app.jobs"
+ ],
+ "Ghibli style": [
+  "app.catalog"
+ ],
+ "Ghost whispers": [
+  "app.sfx"
+ ],
+ "Give the season a name": [
+  "app.season"
+ ],
+ "Glowing tube letters, pink on the spoken word. Night, gaming, music.": [
+  "app.captions"
+ ],
+ "GoPro action": [
+  "app.cinema"
+ ],
+ "GoPro action camera, wide fisheye, dynamic": [
+  "app.cinema"
+ ],
+ "God rays": [
+  "app.cinema"
+ ],
+ "Golden epic": [
+  "app.grade"
+ ],
+ "Golden hour": [
+  "app.cinema"
+ ],
+ "Good quality, your OpenAI key.": [
+  "app.cloudvoice"
+ ],
+ "Google AI": [
+  "app.cloud"
+ ],
+ "Google AI Studio": [
+  "app.castkit",
+  "app.cloudmusic",
+  "app.scriptai"
+ ],
+ "Google AI connected": [
+  "app.cloud"
+ ],
+ "Google AI did not accept this key.": [
+  "app.cloudvoice"
+ ],
+ "Google AI error": [
+  "app.cloudscript"
+ ],
+ "Google AI rejected the key. Check it on the Pro page.": [
+  "app.cloudmusic"
+ ],
+ "Google AI returned no picture (the prompt may have been blocked). Try other words.": [
+  "app.cloud"
+ ],
+ "Google AI returned no video (the picture or prompt may have been blocked).": [
+  "app.cloud"
+ ],
+ "Google AI says the quota is used up for now (free tier limit). Wait a little and press Resume, or turn on billing in Google AI Studio.": [
+  "app.cloudvoice"
+ ],
+ "Google AI says the quota is used up. Add billing in Google AI Studio, then click Resume.": [
+  "app.cloud",
+  "app.cloudmusic"
+ ],
+ "Google AI video failed:": [
+  "app.cloud"
+ ],
+ "Google AI video took too long. Click Resume.": [
+  "app.cloud"
+ ],
+ "Google Gemini": [
+  "app.cloud",
+  "app.cloudvoice"
+ ],
+ "Google Search": [
+  "app.cloudscript"
+ ],
+ "Google Search error": [
+  "app.cloudscript"
+ ],
+ "Google returned no audio for this line. Press Resume to try again.": [
+  "app.cloudvoice"
+ ],
+ "Google voice error": [
+  "app.cloudvoice"
+ ],
+ "Gothic ink": [
+  "app.catalog"
+ ],
+ "Graphic": [
+  "app.doculook",
+  "app.nlexport"
+ ],
+ "Graphics script error:": [
+  "app.cdp"
+ ],
+ "Gritty, low saturation, high contrast": [
+  "app.grade"
+ ],
+ "Grok Image 2": [
+  "app.castkit"
+ ],
+ "Groq (very fast)": [
+  "app.cloud"
+ ],
+ "Guy (US)": [
+  "app.tts"
+ ],
+ "HOW TO ADD THIS LANGUAGE ON YOUTUBE Studio > Languages > Add language (": [
+  "app.dub"
+ ],
+ "HOW TO POST Upload the .mp4 as a Short. In the YouTube app pick the cover image as the thumbnail, and set 'Related video' to the full video.": [
+  "app.shorts"
+ ],
+ "Hamed (Arabic)": [
+  "app.tts"
+ ],
+ "Happy nursery rhyme": [
+  "app.song"
+ ],
+ "Harsh noon": [
+  "app.cinema"
+ ],
+ "Helicopter shot": [
+  "app.cinema"
+ ],
+ "Henri (French)": [
+  "app.tts"
+ ],
+ "Higgsfield answered": [
+  "app.cloud"
+ ],
+ "Higgsfield connected": [
+  "app.cloud"
+ ],
+ "Higgsfield error": [
+  "app.cloud"
+ ],
+ "Higgsfield rejected the key": [
+  "app.cloud"
+ ],
+ "Higgsfield rejected the key. Check KEY_ID:KEY_SECRET on the Pro page.": [
+  "app.cloud"
+ ],
+ "Higgsfield returned no picture.": [
+  "app.cloud"
+ ],
+ "Higgsfield returned no video.": [
+  "app.cloud"
+ ],
+ "Higgsfield took too long. Click Resume.": [
+  "app.cloud"
+ ],
+ "Higgsfield upload error": [
+  "app.cloud"
+ ],
+ "Higgsfield upload failed (": [
+  "app.cloud"
+ ],
+ "Higgsfield: the request": [
+  "app.cloud"
+ ],
+ "High angle": [
+  "app.cinema"
+ ],
+ "Higher quality 4-step video. Needs 32 GB system RAM. Apache 2.0.": [
+  "app.setup_center"
+ ],
+ "Highlight pill": [
+  "app.captions"
+ ],
+ "Historical documentary": [
+  "app.docu"
+ ],
+ "Hook (first 30 seconds)": [
+  "app.creator"
+ ],
+ "Horror & Mystery": [
+  "app.catalog"
+ ],
+ "Horror & mystery": [
+  "app.sfx"
+ ],
+ "Horror cinematic": [
+  "app.catalog"
+ ],
+ "Horror cold": [
+  "app.grade"
+ ],
+ "Horror green": [
+  "app.grade"
+ ],
+ "Horror low angle": [
+  "app.cinema"
+ ],
+ "Horror narrator": [
+  "app.catalog"
+ ],
+ "Horror sting": [
+  "app.sfx"
+ ],
+ "Human camera": [
+  "app.cinema"
+ ],
+ "Human-like narration, voice cloning from your own sample. Reuses the engine's PyTorch. MIT.": [
+  "app.setup_center"
+ ],
+ "Hundreds are feared dead after two airliners collided on a fog-covered runway, officials said last night.": [
+  "app.docu_samples"
+ ],
+ "I think I found something nobody was supposed to see. Not posting the rest here.": [
+  "app.docu_samples"
+ ],
+ "IMAX 70mm": [
+  "app.cinema"
+ ],
+ "Ideogram 4.0": [
+  "app.castkit"
+ ],
+ "If You Wonder": [
+  "app.docu_presets"
+ ],
+ "Illustrated Mysteries": [
+  "app.docu_presets"
+ ],
+ "Image": [
+  "app.jobs"
+ ],
+ "Image not found": [
+  "app.main"
+ ],
+ "Images and video need a recent NVIDIA driver (570 or newer for RTX 50 cards). Opens NVIDIA's official download page.": [
+  "app.setup_center"
+ ],
+ "Images done": [
+  "app.jobs"
+ ],
+ "Images done in": [
+  "app.jobs"
+ ],
+ "Images with 2 references": [
+  "app.main"
+ ],
+ "Images with reference": [
+  "app.main"
+ ],
+ "Images: cloud AI (": [
+  "app.jobs"
+ ],
+ "Images: nothing to do": [
+  "app.jobs"
+ ],
+ "Impact boom": [
+  "app.sfx"
+ ],
+ "Improve script uses the local AI. Install 'Smart Director (Ollama)' in Setup Center.": [
+  "app.creator"
+ ],
+ "Improve story": [
+  "app.docu"
+ ],
+ "Improve this documentary script. Fix the weaknesses and apply the suggestions: a stronger opening hook, clear time order, short context between chapters, a satisfying ending.": [
+  "app.docu"
+ ],
+ "Improving the script": [
+  "app.creator"
+ ],
+ "Improving the story": [
+  "app.docu"
+ ],
+ "Infinite zoom": [
+  "app.cinema"
+ ],
+ "Informative, deep": [
+  "app.cloudvoice"
+ ],
+ "Ink wash": [
+  "app.catalog"
+ ],
+ "Insert detail": [
+  "app.cinema"
+ ],
+ "Install 'Natural human voices' first.": [
+  "app.setup_center"
+ ],
+ "Install ComfyUI first (or pick your ComfyUI folder), models go into its models folder.": [
+  "app.setup_center"
+ ],
+ "Install Natural voices first": [
+  "app.setup_center"
+ ],
+ "Install Ollama from ollama.com, then click Install again to download the model.": [
+  "app.setup_center"
+ ],
+ "Install the 'AI engine' (Core) first. Natural voices reuse its PyTorch, which saves a 3.5 GB download.": [
+  "app.setup_center"
+ ],
+ "Installed ✓": [
+  "app.setup_center"
+ ],
+ "Installed. Windows wants a restart, do it when convenient.": [
+  "app.setup_center"
+ ],
+ "Installing": [
+  "app.setup_center"
+ ],
+ "Installing Kokoro and app packages": [
+  "app.setup_center"
+ ],
+ "Installing Ollama (a setup window may appear)...": [
+  "app.setup_center"
+ ],
+ "Installing PyTorch (a few minutes, no download)": [
+  "app.setup_center"
+ ],
+ "Installing PyTorch (about 3 GB, please wait)": [
+  "app.setup_center"
+ ],
+ "Installing natural voices (reuses PyTorch, about 10 minutes the first time)": [
+  "app.setup_center"
+ ],
+ "Installing the lyrics timing helper (one time, about 60 MB)": [
+  "app.lyricsync"
+ ],
+ "Internet Culture": [
+  "app.docu_presets"
+ ],
+ "Internet problem, trying again in": [
+  "app.setup_center"
+ ],
+ "Interrupted (app restarted). Run the step again.": [
+  "app.jobs"
+ ],
+ "Interrupted by restart": [
+  "app.jobs"
+ ],
+ "Intimate close-mic feel, smooth and quiet, no harsh edges": [
+  "app.voicefx"
+ ],
+ "James Jani": [
+  "app.docu_presets"
+ ],
+ "Jenny (US)": [
+  "app.tts"
+ ],
+ "Joining clips failed:": [
+  "app.render"
+ ],
+ "KB, the download did not finish": [
+  "app.setup_center"
+ ],
+ "Kaito Bridge": [
+  "app.docu_samples"
+ ],
+ "Keep the same length (about": [
+  "app.docu"
+ ],
+ "Kenji Arai": [
+  "app.docu_samples"
+ ],
+ "Key": [
+  "app.cloud",
+  "app.main"
+ ],
+ "Kids & bedtime": [
+  "app.sfx"
+ ],
+ "Kids Rhyme (song)": [
+  "app.catalog"
+ ],
+ "Kids choir": [
+  "app.song"
+ ],
+ "Kids story": [
+  "app.catalog"
+ ],
+ "Kids storybook": [
+  "app.catalog"
+ ],
+ "Kodak warm film": [
+  "app.grade"
+ ],
+ "Kokoro": [
+  "app.tts"
+ ],
+ "Kokoro (fast, clear, a bit robotic)": [
+  "app.tts"
+ ],
+ "Kokoro installed (": [
+  "app.tts"
+ ],
+ "Kokoro missing": [
+  "app.setup_center"
+ ],
+ "Kokoro not installed:": [
+  "app.tts"
+ ],
+ "Kokoro returned no audio for this scene": [
+  "app.tts"
+ ],
+ "Kokoro test finished": [
+  "app.setup_center"
+ ],
+ "Language": [
+  "app.dub"
+ ],
+ "Large stone hall echo, dreamy and slow": [
+  "app.voicefx"
+ ],
+ "Last radio call 02:14": [
+  "app.docu_samples"
+ ],
+ "Last seen 14 March": [
+  "app.docu_samples"
+ ],
+ "Latest news": [
+  "app.cloudscript"
+ ],
+ "Laura Finch": [
+  "app.docu_samples"
+ ],
+ "Lead designer": [
+  "app.docu_samples"
+ ],
+ "Lead investigator": [
+  "app.docu_samples"
+ ],
+ "Learning song (ABC, numbers)": [
+  "app.song"
+ ],
+ "LeccorTube charges nothing. Cloud costs go to your own accounts.": [
+  "app.docu"
+ ],
+ "LeccorTube documentary - CapCut project (best effort)": [
+  "app.capcut"
+ ],
+ "LeccorTube needs a 64-bit Windows.": [
+  "app.system"
+ ],
+ "LeccorTube runs in Limited mode on this PC": [
+  "app.system"
+ ],
+ "LeccorTube/1.2 (documentary research; https://leccorside.com.br)": [
+  "app.docu",
+  "app.research"
+ ],
+ "Leccorside Ai": [
+  "app.config"
+ ],
+ "Left side": [
+  "app.jobs"
+ ],
+ "Length: about": [
+  "app.cloudscript",
+  "app.docu"
+ ],
+ "Let me walk you through one day. You wake up [how]. You [first thing, back then]. By noon you [second thing].": [
+  "app.main"
+ ],
+ "Lighthouse keeper": [
+  "app.docu_samples"
+ ],
+ "Lip sync": [
+  "app.cloud",
+  "app.pro"
+ ],
+ "Lip sync done. Run 4 · Render to put it in the video.": [
+  "app.jobs"
+ ],
+ "Lip sync for": [
+  "app.jobs"
+ ],
+ "Lip sync returned no video.": [
+  "app.cloud"
+ ],
+ "Lip sync:": [
+  "app.jobs"
+ ],
+ "Lip sync: no dialogue scene with a video and voice (make the video scenes first)": [
+  "app.jobs"
+ ],
+ "Listening to the song to time every word": [
+  "app.jobs"
+ ],
+ "Little boy": [
+  "app.song"
+ ],
+ "Little girl": [
+  "app.song"
+ ],
+ "Living room": [
+  "app.project"
+ ],
+ "Lo-fi chill": [
+  "app.music"
+ ],
+ "Loading the lyrics timing model (the first time it downloads about 480 MB)": [
+  "app.lyricsync"
+ ],
+ "Loading the natural voice model (first time it downloads 2 to 4 GB, please wait)": [
+  "app.jobs"
+ ],
+ "Local AI that picks camera shots for every scene and describes faces for character sheets. Installs Ollama and the Qwen2.5-VL 7B model.": [
+  "app.setup_center"
+ ],
+ "Looks original.": [
+  "app.creator"
+ ],
+ "Lora (book)": [
+  "app.captions"
+ ],
+ "Low angle (hero)": [
+  "app.cinema"
+ ],
+ "Low key dramatic": [
+  "app.cinema"
+ ],
+ "Low poly": [
+  "app.catalog"
+ ],
+ "Low tracking": [
+  "app.cinema"
+ ],
+ "Lower, darker tone with a distant echo, for mystery and horror": [
+  "app.voicefx"
+ ],
+ "Lt. Tom Barrow": [
+  "app.docu_samples"
+ ],
+ "Lyria 3 Clip": [
+  "app.cloudmusic"
+ ],
+ "Lyria error": [
+  "app.cloudmusic"
+ ],
+ "Lyria returned no music (the prompt may have been blocked). Try other mood words.": [
+  "app.cloudmusic"
+ ],
+ "Lyrics timing model failed (": [
+  "app.lyricsync"
+ ],
+ "MB ·": [
+  "app.updater"
+ ],
+ "Macro detail": [
+  "app.cinema"
+ ],
+ "Made for kids": [
+  "app.creator"
+ ],
+ "Made from a frame you pick": [
+  "app.grade"
+ ],
+ "Madhur (Hindi)": [
+  "app.tts"
+ ],
+ "Magic sparkle": [
+  "app.sfx"
+ ],
+ "Magnates Media": [
+  "app.docu_presets"
+ ],
+ "Main character": [
+  "app.project"
+ ],
+ "Main span": [
+  "app.docu_samples"
+ ],
+ "Maisie (UK, child)": [
+  "app.tts"
+ ],
+ "Make the voice first (": [
+  "app.main"
+ ],
+ "Make the voice first (1 · Voice).": [
+  "app.jobs"
+ ],
+ "Make the voice first (1 · Voice). The timeline is planned on the spoken words.": [
+  "app.routes_docu"
+ ],
+ "Make videos from a Google Sheet, n8n, Make or Zapier": [
+  "app.pro"
+ ],
+ "Manga ink": [
+  "app.catalog"
+ ],
+ "Marcus Reed": [
+  "app.docu_samples"
+ ],
+ "Match reference frame": [
+  "app.grade"
+ ],
+ "Max depth": [
+  "app.docu_samples"
+ ],
+ "Media credits": [
+  "app.docu"
+ ],
+ "Media credits:": [
+  "app.exporter"
+ ],
+ "Meditation guide": [
+  "app.catalog"
+ ],
+ "Medium close-up": [
+  "app.cinema"
+ ],
+ "Metal and swords": [
+  "app.sfx"
+ ],
+ "Microsoft Edge WebView2": [
+  "app.setup_center"
+ ],
+ "Microsoft Visual C++ Runtime": [
+  "app.setup_center"
+ ],
+ "Microsoft's free Edge voice is blocking requests for now (403). Finished lines are kept: wait 10 to 15 minutes and press Resume, or pick a Kokoro voice (runs on this PC, no internet). Also check that the Windows clock is set automatically (Settings > Time).": [
+  "app.tts"
+ ],
+ "Missing model file": [
+  "app.comfy"
+ ],
+ "Missing video workflow": [
+  "app.main"
+ ],
+ "Missing workflow": [
+  "app.main"
+ ],
+ "Money and coins": [
+  "app.sfx"
+ ],
+ "Montserrat Black": [
+  "app.captions"
+ ],
+ "Montserrat Bold": [
+  "app.captions"
+ ],
+ "Montserrat ExtraBold": [
+  "app.captions"
+ ],
+ "Moonlit, cool and deep": [
+  "app.grade"
+ ],
+ "Motion graphics": [
+  "app.doculook"
+ ],
+ "Motion graphics need Microsoft Edge or Google Chrome (Edge comes with Windows).": [
+  "app.cdp"
+ ],
+ "Motion graphics:": [
+  "app.doculook"
+ ],
+ "Moved": [
+  "app.setup_center"
+ ],
+ "Movie trailer": [
+  "app.catalog"
+ ],
+ "Multilingual v2": [
+  "app.cloudvoice"
+ ],
+ "Music & Director": [
+  "app.setup_center"
+ ],
+ "Music model not ready:": [
+  "app.jobs"
+ ],
+ "Music ready": [
+  "app.jobs"
+ ],
+ "Music section": [
+  "app.jobs"
+ ],
+ "Music workflow finished but produced no audio file (is there a SaveAudio node?)": [
+  "app.comfy"
+ ],
+ "My music:": [
+  "app.main"
+ ],
+ "My sample:": [
+  "app.tts"
+ ],
+ "My sound:": [
+  "app.main",
+  "app.sfx"
+ ],
+ "My voice": [
+  "app.main"
+ ],
+ "NASA (no copyright)": [
+  "app.docu"
+ ],
+ "NASA archive style photograph, 1960s film": [
+  "app.docu_presets"
+ ],
+ "NASA media: free to use, no NASA logo or endorsement": [
+  "app.docu"
+ ],
+ "NOVEMBER 3, 1958 | NORTH SEA": [
+  "app.docu_samples"
+ ],
+ "NVENC GPU encoding": [
+  "app.render"
+ ],
+ "NVIDIA graphics driver": [
+  "app.setup_center"
+ ],
+ "NVIDIA's download page opened in your browser. Install the newest Game Ready or Studio driver, restart the PC, then click Check again.": [
+  "app.setup_center"
+ ],
+ "Nano Banana 2.1 (best consistency)": [
+  "app.cloud"
+ ],
+ "Nano Banana or Grok Image through OpenRouter, Google AI or Higgsfield. Characters stay the same": [
+  "app.pro"
+ ],
+ "Narrated": [
+  "app.jobs"
+ ],
+ "Narrating": [
+  "app.jobs"
+ ],
+ "Narration on this PC (": [
+  "app.docu"
+ ],
+ "Narration style:": [
+  "app.docu"
+ ],
+ "Narrator voice": [
+  "app.main"
+ ],
+ "Narrow telephone voice, for calls and flashbacks": [
+  "app.voicefx"
+ ],
+ "Nasheed (voice and drum)": [
+  "app.song"
+ ],
+ "Natural female": [
+  "app.cloudvoice"
+ ],
+ "Natural film": [
+  "app.grade"
+ ],
+ "Natural human voices (Chatterbox)": [
+  "app.setup_center"
+ ],
+ "Natural male": [
+  "app.cloudvoice"
+ ],
+ "Natural voice error:": [
+  "app.tts"
+ ],
+ "Natural voice setup runs on Windows (setup_voice.bat).": [
+  "app.setup_center"
+ ],
+ "Natural voices": [
+  "app.support"
+ ],
+ "Natural voices (custom python)": [
+  "app.tts"
+ ],
+ "Natural voices are damaged or not fully installed (": [
+  "app.tts"
+ ],
+ "Natural voices are incomplete (": [
+  "app.tts"
+ ],
+ "Natural voices are not installed yet. Setup Center > Natural voices > Install, or pick a Kokoro voice.": [
+  "app.main"
+ ],
+ "Natural voices are not installed. Open Setup Center and install 'Natural voices' (one time).": [
+  "app.tts"
+ ],
+ "Natural voices not installed (Setup Center > Natural voices)": [
+  "app.tts"
+ ],
+ "Natural voices ready (Chatterbox)": [
+  "app.tts"
+ ],
+ "Natural · Chatterbox (slower, more control)": [
+  "app.tts"
+ ],
+ "Natural · Chatterbox Turbo (recommended)": [
+  "app.tts"
+ ],
+ "Natural: Chatterbox (human-like, more control, slower)": [
+  "app.tts"
+ ],
+ "Natural: Chatterbox Turbo (human-like, fast)": [
+  "app.tts"
+ ],
+ "Navigator, 8th Air Force": [
+  "app.docu_samples"
+ ],
+ "Neerja (India)": [
+  "app.tts"
+ ],
+ "Neon night": [
+  "app.cinema"
+ ],
+ "Netflix box": [
+  "app.captions"
+ ],
+ "Never found": [
+  "app.docu_samples"
+ ],
+ "New": [
+  "app.routes_pro"
+ ],
+ "New episode": [
+  "app.trailer"
+ ],
+ "News article screenshots, cut-out people and an evidence board joined by red string.": [
+  "app.docu_presets"
+ ],
+ "Night Reconstruction": [
+  "app.docu_presets"
+ ],
+ "Night blue": [
+  "app.grade"
+ ],
+ "Night crickets": [
+  "app.sfx"
+ ],
+ "Nitish Rajput": [
+  "app.docu_presets"
+ ],
+ "No NVIDIA": [
+  "app.setup_center"
+ ],
+ "No NVIDIA GPU with CUDA found. LeccorTube will run, but images and video need an NVIDIA card (RTX 20 series or newer).": [
+  "app.system"
+ ],
+ "No NVIDIA graphics card found": [
+  "app.setup_center"
+ ],
+ "No NVIDIA graphics card found. LeccorTube still makes voices and videos, but images and video clips need an NVIDIA RTX card.": [
+  "app.setup_center"
+ ],
+ "No background music (optional)": [
+  "app.main"
+ ],
+ "No curiosity word yet (secret, never, last, why, hidden...). Give viewers a reason to stay.": [
+  "app.creator"
+ ],
+ "No damaged files": [
+  "app.support"
+ ],
+ "No graphics card found": [
+  "app.system"
+ ],
+ "No images found. Run the images step first.": [
+  "app.render"
+ ],
+ "No images yet, generate images first": [
+  "app.exporter"
+ ],
+ "No model files found yet": [
+  "app.setup_center"
+ ],
+ "No module named": [
+  "app.tts"
+ ],
+ "No music yet. Compose a section first (needs AI Music from Setup Center).": [
+  "app.main"
+ ],
+ "No narration text found in script": [
+  "app.main"
+ ],
+ "No narration text found in the episode script": [
+  "app.season"
+ ],
+ "No narration text found in the script": [
+  "app.main"
+ ],
+ "No sources found about \"": [
+  "app.research"
+ ],
+ "No sources found. Connect Google AI or OpenRouter on the Pro page for web search, or write the topic more clearly.": [
+  "app.cloudscript"
+ ],
+ "No such sound": [
+  "app.main"
+ ],
+ "No usable NVIDIA GPU: voices work, images and video will be very slow": [
+  "app.system"
+ ],
+ "No vision AI available: using file names and dates only": [
+  "app.docu"
+ ],
+ "Nobody knew what was waiting inside the old forest": [
+  "app.captions"
+ ],
+ "Noir Archive": [
+  "app.docu_presets"
+ ],
+ "Not an ElevenLabs sample.": [
+  "app.cloudvoice"
+ ],
+ "Not connected": [
+  "app.routes_pro"
+ ],
+ "Not downloaded yet": [
+  "app.setup_center"
+ ],
+ "Not enough disk space on": [
+  "app.setup_center"
+ ],
+ "Not found": [
+  "app.routes_pro"
+ ],
+ "Not found. Install it here, or pick your existing ComfyUI folder.": [
+  "app.setup_center"
+ ],
+ "Not free: not downloaded": [
+  "app.docu"
+ ],
+ "Not installed": [
+  "app.setup_center"
+ ],
+ "Not needed on this system": [
+  "app.setup_center"
+ ],
+ "Not running (starts when needed)": [
+  "app.support"
+ ],
+ "Nothing chosen": [
+  "app.main"
+ ],
+ "Nothing to fix": [
+  "app.setup_center"
+ ],
+ "Nunito (round)": [
+  "app.captions"
+ ],
+ "Nursery rhymes and kids songs. Your lyrics are sung, every line gets a bright picture, bouncy captions.": [
+  "app.catalog"
+ ],
+ "Oil painting": [
+  "app.catalog"
+ ],
+ "Old photograph": [
+  "app.catalog"
+ ],
+ "Old radio": [
+  "app.catalog",
+  "app.voicefx"
+ ],
+ "Old typewriter letters, the word gets an amber line. True stories.": [
+  "app.captions"
+ ],
+ "Older, larger alternative. Apache 2.0.": [
+  "app.setup_center"
+ ],
+ "Ollama ready with": [
+  "app.setup_center"
+ ],
+ "Ollama running, model": [
+  "app.setup_center"
+ ],
+ "Ollama was installed but is not running yet. Open Ollama once, then click Install again.": [
+  "app.setup_center"
+ ],
+ "One day": [
+  "app.main"
+ ],
+ "One life from start to end: childhood, turning points, legacy": [
+  "app.docu"
+ ],
+ "One-click cloud (OpenRouter)": [
+  "app.pro"
+ ],
+ "Online · Microsoft Edge voices (free, needs internet, works on any PC)": [
+  "app.tts"
+ ],
+ "Only": [
+  "app.system"
+ ],
+ "Only the owner can make tester keys.": [
+  "app.main"
+ ],
+ "OpenAI (ChatGPT)": [
+  "app.scriptai"
+ ],
+ "OpenAI answered": [
+  "app.main"
+ ],
+ "OpenAI did not accept this key.": [
+  "app.cloudvoice"
+ ],
+ "OpenAI image error": [
+  "app.castkit",
+  "app.cloud"
+ ],
+ "OpenAI key accepted": [
+  "app.main"
+ ],
+ "OpenAI voice error": [
+  "app.cloudvoice"
+ ],
+ "OpenAI web search": [
+  "app.cloudscript",
+  "app.scriptai"
+ ],
+ "OpenRouter (300+ models)": [
+  "app.cloud"
+ ],
+ "OpenRouter did not accept the key. Click Connect OpenRouter again on the Pro page.": [
+  "app.openrouter"
+ ],
+ "OpenRouter did not accept this key.": [
+  "app.routes_pro"
+ ],
+ "OpenRouter did not answer.": [
+  "app.openrouter"
+ ],
+ "OpenRouter did not return a key. Try Connect again.": [
+  "app.openrouter"
+ ],
+ "OpenRouter is busy (rate limit). Wait a minute and click Resume.": [
+  "app.openrouter"
+ ],
+ "OpenRouter is connected. You can close this tab and go back to LeccorTube.": [
+  "app.routes_pro"
+ ],
+ "OpenRouter is not connected. Open the Pro page and click Connect OpenRouter.": [
+  "app.openrouter"
+ ],
+ "OpenRouter returned no image (the prompt may have been refused). Change the prompt and retry.": [
+  "app.openrouter"
+ ],
+ "OpenRouter video": [
+  "app.openrouter"
+ ],
+ "Opening hook idea:": [
+  "app.docu"
+ ],
+ "Opening looks fine. Try a question to test.": [
+  "app.creator"
+ ],
+ "Opening of the script:": [
+  "app.creator"
+ ],
+ "Opposition sweeps to power": [
+  "app.docu_samples"
+ ],
+ "Option not found": [
+  "app.main"
+ ],
+ "Orbit clockwise": [
+  "app.cinema"
+ ],
+ "Orbit counterclockwise": [
+  "app.cinema"
+ ],
+ "Over the shoulder": [
+  "app.cinema"
+ ],
+ "Overcast soft": [
+  "app.cinema"
+ ],
+ "PRO · ElevenLabs (your account)": [
+  "app.tts"
+ ],
+ "PRO · Google Gemini voices": [
+  "app.tts"
+ ],
+ "PRO · OpenAI voices": [
+  "app.tts"
+ ],
+ "Painted or animated style: not required. Tick YES if any scene looks real.": [
+  "app.creator"
+ ],
+ "Painting": [
+  "app.jobs"
+ ],
+ "Pan / Tilt": [
+  "app.cinema"
+ ],
+ "Pan left": [
+  "app.cinema"
+ ],
+ "Pan right": [
+  "app.cinema"
+ ],
+ "Paper Archive": [
+  "app.docu_presets"
+ ],
+ "Paper and pages": [
+  "app.sfx"
+ ],
+ "Paper cut-out": [
+  "app.catalog"
+ ],
+ "Part": [
+  "app.main",
+  "app.project"
+ ],
+ "Party leader": [
+  "app.docu_samples"
+ ],
+ "Pass-through objects": [
+  "app.cinema"
+ ],
+ "Paste the PC ID from the tester's Pro page.": [
+  "app.main"
+ ],
+ "Paste the whole API key.": [
+  "app.cloudvoice",
+  "app.scriptai"
+ ],
+ "Paste your license key from the Gumroad email.": [
+  "app.pro"
+ ],
+ "Pastel dream": [
+  "app.grade"
+ ],
+ "Paused. Click Install again to continue from where it stopped.": [
+  "app.setup_center"
+ ],
+ "Paused. Click Install everything to continue.": [
+  "app.setup_center"
+ ],
+ "Pedestal down": [
+  "app.cinema"
+ ],
+ "Pedestal up": [
+  "app.cinema"
+ ],
+ "Pexels API key is not valid. Check it in Settings > Stock footage.": [
+  "app.stock"
+ ],
+ "Phone call": [
+  "app.voicefx"
+ ],
+ "Phone vlog": [
+  "app.cinema"
+ ],
+ "Photoreal cinematic reconstructions, source cards, big numbers, speech bubbles, warm studio feel.": [
+  "app.docu_presets"
+ ],
+ "Physical moves": [
+  "app.cinema"
+ ],
+ "Pick a cloud model on the Cast tab first.": [
+  "app.castkit"
+ ],
+ "Pick a style first": [
+  "app.main"
+ ],
+ "Pick a style to paint a sample picture, or make at least one image first": [
+  "app.main"
+ ],
+ "Pick a voice first.": [
+  "app.cloudvoice"
+ ],
+ "Pick an option for": [
+  "app.jobs"
+ ],
+ "Pick at least one language": [
+  "app.jobs"
+ ],
+ "Pick your favourite for": [
+  "app.jobs"
+ ],
+ "Picking the best": [
+  "app.jobs"
+ ],
+ "Picks the grade that fits your story": [
+  "app.grade"
+ ],
+ "Pictures and moves": [
+  "app.nlexport"
+ ],
+ "Pictures ready": [
+  "app.jobs"
+ ],
+ "Pictures, video clips, music and scripts are made in the cloud, so any graphics card works.": [
+  "app.setup_center"
+ ],
+ "Pixel art": [
+  "app.catalog"
+ ],
+ "Place": [
+  "app.main"
+ ],
+ "Place not found": [
+  "app.jobs",
+  "app.main"
+ ],
+ "Places: making the scene sheet for": [
+  "app.jobs"
+ ],
+ "Planning the chapters": [
+  "app.cloudscript"
+ ],
+ "Planning the story": [
+  "app.docu"
+ ],
+ "Playfair italic": [
+  "app.captions"
+ ],
+ "Podcast / YouTuber": [
+  "app.voicefx"
+ ],
+ "Point of view": [
+  "app.cinema"
+ ],
+ "Police say there were no signs of a struggle at the house on Elm Road, and the car was never found.": [
+  "app.docu_samples"
+ ],
+ "Poppins Black": [
+  "app.captions"
+ ],
+ "Poppins ExtraBold": [
+  "app.captions"
+ ],
+ "Port": [
+  "app.setup_center"
+ ],
+ "Post 1 Short a day for the next days. In each Short, set 'Related video' to this video.": [
+  "app.creator"
+ ],
+ "Prabhat (India)": [
+  "app.tts"
+ ],
+ "Premiere Pro": [
+  "app.jobs"
+ ],
+ "Premium voices and voice cloning from your own sample": [
+  "app.pro"
+ ],
+ "Preview failed:": [
+  "app.main"
+ ],
+ "Preview ready": [
+  "app.jobs"
+ ],
+ "Preview ready: check it in Output, then Build everything": [
+  "app.jobs"
+ ],
+ "Preview render": [
+  "app.jobs"
+ ],
+ "Primal Space": [
+  "app.docu_presets"
+ ],
+ "Project": [
+  "app.docu"
+ ],
+ "Project not found": [
+  "app.main",
+  "app.routes_docu"
+ ],
+ "Project ready:": [
+  "app.docu"
+ ],
+ "Push past": [
+  "app.cinema"
+ ],
+ "PyTorch and Kokoro found": [
+  "app.setup_center"
+ ],
+ "PyTorch cannot use your NVIDIA card yet.": [
+  "app.setup_center"
+ ],
+ "PyTorch for your GPU (CUDA 12.8, works with RTX 20 to RTX 50) and the fast Kokoro narrator.": [
+  "app.setup_center"
+ ],
+ "PyTorch is missing or damaged: Setup Center > AI engine > Install": [
+  "app.support"
+ ],
+ "PyTorch missing": [
+  "app.setup_center"
+ ],
+ "PyTorch without NVIDIA support was found. Click Install to replace it with the GPU version.": [
+  "app.setup_center"
+ ],
+ "Questions first, evidence step by step, what is known and what is not": [
+  "app.docu"
+ ],
+ "Quick History": [
+  "app.docu_presets"
+ ],
+ "Qwen Image 3": [
+  "app.castkit"
+ ],
+ "RED cinema": [
+  "app.cinema"
+ ],
+ "RTX 50 series detected: PyTorch with CUDA 12.8 is used (installed automatically).": [
+  "app.system"
+ ],
+ "Read": [
+  "app.research"
+ ],
+ "Read Wikipedia:": [
+  "app.cloudscript"
+ ],
+ "Read the full Wikipedia article (": [
+  "app.research"
+ ],
+ "Reading": [
+  "app.sfx"
+ ],
+ "Real breathy whisper, no voice tone. For ASMR and sleep": [
+  "app.voicefx"
+ ],
+ "Real horror: slow dread, unease that grows, small wrong details, sounds in the dark, a reveal near the end. Never silly. Present the scary parts through what is seen and heard, not by saying 'it was scary'.": [
+  "app.cloudscript"
+ ],
+ "Real people: never describe the face of a real person in an [IMG: ...] prompt; show them from behind, as a silhouette, or show the place, the objects and the moment instead.": [
+  "app.cloudscript"
+ ],
+ "Real photos and clips, captions, music, sound effects, editing and render": [
+  "app.docu"
+ ],
+ "Real whisper, very soft. For ASMR and deep sleep": [
+  "app.catalog"
+ ],
+ "Realistic documentary": [
+  "app.catalog"
+ ],
+ "Reference match": [
+  "app.grade"
+ ],
+ "Reference problem:": [
+  "app.jobs"
+ ],
+ "Render done in": [
+  "app.jobs"
+ ],
+ "Render started": [
+  "app.jobs"
+ ],
+ "Render the episode first (4 · Render), the trailer is cut from the finished video.": [
+  "app.trailer"
+ ],
+ "Render the video first (4 · Render).": [
+  "app.jobs"
+ ],
+ "Render the video first, then dub it.": [
+  "app.dub",
+  "app.jobs"
+ ],
+ "Render the video first.": [
+  "app.jobs"
+ ],
+ "Rendering": [
+  "app.doculook",
+  "app.render"
+ ],
+ "Rendering the preview": [
+  "app.jobs"
+ ],
+ "Repair finished": [
+  "app.support"
+ ],
+ "Reply to comments in the first hour, add the video to a playlist and an end screen.": [
+  "app.creator"
+ ],
+ "Research done:": [
+  "app.docu"
+ ],
+ "Research notes about \"": [
+  "app.cloudscript"
+ ],
+ "Restart ComfyUI so it sees the new models (the app does this when it starts ComfyUI).": [
+  "app.setup_center"
+ ],
+ "Restart the PC, then click Repair.": [
+  "app.setup_center"
+ ],
+ "Restarting ComfyUI and trying again.": [
+  "app.jobs"
+ ],
+ "Reverse tracking (walk and talk)": [
+  "app.cinema"
+ ],
+ "Rhythmic pulse": [
+  "app.music"
+ ],
+ "Right side": [
+  "app.jobs"
+ ],
+ "Rim light": [
+  "app.cinema"
+ ],
+ "Round bubbly letters with a purple outline. Rhymes and kids songs.": [
+  "app.captions"
+ ],
+ "Running normally": [
+  "app.support"
+ ],
+ "Ryan (UK)": [
+  "app.tts"
+ ],
+ "SEARCH \"": [
+  "app.cloudscript"
+ ],
+ "SOUL V2": [
+  "app.castkit"
+ ],
+ "SOURCE S1 (Wikipedia):": [
+  "app.cloudscript"
+ ],
+ "SOURCES DISAGREE ON:": [
+  "app.cloudscript"
+ ],
+ "STORY DIRECTIONS:": [
+  "app.cloudscript"
+ ],
+ "Sample Name": [
+  "app.docu_samples"
+ ],
+ "Sample is only": [
+  "app.main"
+ ],
+ "Sample script missing": [
+  "app.main"
+ ],
+ "Sample: The Red Kite": [
+  "app.main"
+ ],
+ "Saw a light": [
+  "app.docu_samples"
+ ],
+ "Say what the viewer is probably thinking, promise proof, then two or three short mystery questions.": [
+  "app.main"
+ ],
+ "Scan done:": [
+  "app.docu"
+ ],
+ "Scan the folder first.": [
+  "app.docu"
+ ],
+ "Scanning": [
+  "app.docu"
+ ],
+ "Scene": [
+  "app.render"
+ ],
+ "Scene count mismatch (": [
+  "app.docu"
+ ],
+ "Scene not found": [
+  "app.jobs",
+  "app.main"
+ ],
+ "Scene sheet for": [
+  "app.jobs"
+ ],
+ "Scene sheet ready": [
+  "app.jobs"
+ ],
+ "Scenes reference each other in a loop:": [
+  "app.jobs"
+ ],
+ "Score": [
+  "app.creator"
+ ],
+ "Script AI answered:": [
+  "app.main"
+ ],
+ "Script AI key is missing (Pro page > Script AI).": [
+  "app.cloud"
+ ],
+ "Script AI, cloud images and cloud video from one OpenRouter account": [
+  "app.pro"
+ ],
+ "Script is empty": [
+  "app.main"
+ ],
+ "Script ready": [
+  "app.cloudscript"
+ ],
+ "Sea waves": [
+  "app.sfx"
+ ],
+ "Seamless": [
+  "app.sfx"
+ ],
+ "Search Google for reliable, recent sources about:": [
+  "app.cloudscript"
+ ],
+ "Search failed:": [
+  "app.cloudscript"
+ ],
+ "Search the web for reliable sources about:": [
+  "app.docu"
+ ],
+ "Search the web for reliable, recent sources about:": [
+  "app.cloudscript",
+  "app.scriptai"
+ ],
+ "Searching": [
+  "app.cloudscript"
+ ],
+ "Searching the web:": [
+  "app.research"
+ ],
+ "Season not found": [
+  "app.main"
+ ],
+ "Sec-WebSocket-Version: 13": [
+  "app.cdp"
+ ],
+ "Select NO for videos made for adults (sleep, history, mystery). Avoid kid words like 'for kids' or 'lullaby' in title and thumbnail, YouTube can mark it as kids content by itself.": [
+  "app.creator"
+ ],
+ "Select your ComfyUI folder (the one with ComfyUI or run_nvidia_gpu.bat)": [
+  "app.main"
+ ],
+ "Sentences already narrated (NEVER repeat or rephrase any of them):": [
+  "app.docu"
+ ],
+ "Server not reachable:": [
+  "app.downloader"
+ ],
+ "Settle in for {length} of calm storytelling. Dim the lights, get comfortable and drift off.": [
+  "app.exporter"
+ ],
+ "Settle in, and let your breathing slow down. Tonight we travel far back in time, to a quiet village on the banks of a great river, where the day is ending and the first lamps are glowing.": [
+  "app.tts"
+ ],
+ "Sharpened 3840x2160 master for YouTube": [
+  "app.pro"
+ ],
+ "Ship cabin": [
+  "app.project"
+ ],
+ "Short Story": [
+  "app.catalog"
+ ],
+ "Short animated story with recurring characters and fast cuts.": [
+  "app.catalog"
+ ],
+ "Short encode failed:": [
+  "app.shorts"
+ ],
+ "Shorts & creator": [
+  "app.sfx"
+ ],
+ "Shorts need the narration first. Run 1 · Voice (or Build everything).": [
+  "app.shorts"
+ ],
+ "Shorts ready": [
+  "app.jobs"
+ ],
+ "Sickly green-cyan, crushed shadows": [
+  "app.grade"
+ ],
+ "Side tracking": [
+  "app.cinema"
+ ],
+ "Silent scene ready": [
+  "app.jobs"
+ ],
+ "Size check failed. Click Install again.": [
+  "app.downloader"
+ ],
+ "Skipped": [
+  "app.docu",
+  "app.research"
+ ],
+ "Sleep / bedtime": [
+  "app.cloudvoice"
+ ],
+ "Sleep drone": [
+  "app.music"
+ ],
+ "Sleep narrator": [
+  "app.catalog"
+ ],
+ "Sleep videos: a calm promise works best, for example what the listener will feel or learn.": [
+  "app.creator"
+ ],
+ "Sleep, Bedtime & Relax": [
+  "app.catalog"
+ ],
+ "Slider left": [
+  "app.cinema"
+ ],
+ "Slider right": [
+  "app.cinema"
+ ],
+ "Slightly lower, fuller voice, documentary style": [
+  "app.voicefx"
+ ],
+ "Slow zoom in": [
+  "app.cinema"
+ ],
+ "Slow zoom out": [
+  "app.cinema"
+ ],
+ "Smart Director + Face describer (Ollama)": [
+  "app.setup_center"
+ ],
+ "Smart Director on this PC": [
+  "app.docu"
+ ],
+ "Smart director (Ollama)": [
+  "app.jobs"
+ ],
+ "Smooth, female": [
+  "app.cloudvoice"
+ ],
+ "So Basically Explained": [
+  "app.docu_presets"
+ ],
+ "So let's recap. You [modern]. They [past]. You [modern]. They [past]. [Callback to the first line].": [
+  "app.main"
+ ],
+ "So nothing new is missed": [
+  "app.cloudscript"
+ ],
+ "Soft & close (ASMR)": [
+  "app.voicefx"
+ ],
+ "Soft female": [
+  "app.cloudvoice"
+ ],
+ "Soft golden light, gentle colours, cozy": [
+  "app.grade"
+ ],
+ "Soft painterly": [
+  "app.catalog"
+ ],
+ "Soft storybook": [
+  "app.cinema"
+ ],
+ "Soft whoosh": [
+  "app.sfx"
+ ],
+ "Soft woman (smooth)": [
+  "app.song"
+ ],
+ "Soft, bright, pink-lilac": [
+  "app.grade"
+ ],
+ "Soft, expressive": [
+  "app.cloudvoice"
+ ],
+ "Some Natural voice files are damaged. Click Install to repair them.": [
+  "app.tts"
+ ],
+ "Some files are still open in another program. Close it and delete again.": [
+  "app.project"
+ ],
+ "Some items need attention, see the red messages below": [
+  "app.setup_center"
+ ],
+ "Some lines repeat \"": [
+  "app.creator"
+ ],
+ "Song ready (": [
+  "app.jobs"
+ ],
+ "Song ready,": [
+  "app.jobs"
+ ],
+ "Sonia (UK)": [
+  "app.tts"
+ ],
+ "Sorry, this PC does not meet the requirements for LeccorTube": [
+  "app.system"
+ ],
+ "Sound effects": [
+  "app.capcut"
+ ],
+ "Sound effects skipped:": [
+  "app.render"
+ ],
+ "Sound effects:": [
+  "app.render"
+ ],
+ "Space Race": [
+  "app.docu_presets"
+ ],
+ "Speed change failed:": [
+  "app.tts"
+ ],
+ "Spoken in": [
+  "app.docu"
+ ],
+ "Start with a strong hook.": [
+  "app.cloudscript"
+ ],
+ "Started with nothing": [
+  "app.docu_samples"
+ ],
+ "Starting ComfyUI": [
+  "app.main"
+ ],
+ "Starting ComfyUI (first start takes about a minute)": [
+  "app.jobs"
+ ],
+ "Starting download": [
+  "app.updater"
+ ],
+ "Starting render": [
+  "app.jobs"
+ ],
+ "Static shot": [
+  "app.cinema"
+ ],
+ "Station Helios": [
+  "app.docu_samples"
+ ],
+ "Step 2 of 3: dubbing voice model (downloads about 3 GB the first time, then never again)": [
+  "app.jobs"
+ ],
+ "Stick animation": [
+  "app.catalog"
+ ],
+ "Stock footage": [
+  "app.jobs",
+  "app.stock"
+ ],
+ "Stock footage added to": [
+  "app.jobs"
+ ],
+ "Stock footage needs a free Pexels or Pixabay API key. Add one in Settings > Stock footage (pexels.com/api, pixabay.com/api/docs).": [
+  "app.stock"
+ ],
+ "Stock footage:": [
+  "app.jobs"
+ ],
+ "Story & adventure": [
+  "app.sfx"
+ ],
+ "Story Reconstruction": [
+  "app.docu_presets"
+ ],
+ "Story directions:": [
+  "app.cloudscript"
+ ],
+ "Story ready:": [
+  "app.docu"
+ ],
+ "Storybook warm": [
+  "app.grade"
+ ],
+ "Storyteller room": [
+  "app.voicefx"
+ ],
+ "Suggested visuals for this chapter:": [
+  "app.docu"
+ ],
+ "Super 8": [
+  "app.cinema"
+ ],
+ "Super 8 home movie look, warm faded color, heavy grain, soft focus": [
+  "app.cinema"
+ ],
+ "Swara (Hindi)": [
+  "app.tts"
+ ],
+ "System files PyTorch and ComfyUI need. Fresh Windows often does not have them. Windows asks for permission once.": [
+  "app.setup_center"
+ ],
+ "THE FORUM": [
+  "app.docu_samples"
+ ],
+ "THE FULL STORY": [
+  "app.creator"
+ ],
+ "THE LAST NIGHT": [
+  "app.creator"
+ ],
+ "THE TRUTH?": [
+  "app.creator"
+ ],
+ "TITLE \"": [
+  "app.grade"
+ ],
+ "TITLE (": [
+  "app.dub"
+ ],
+ "TOWER: 77K, climb immediately.": [
+  "app.docu_samples"
+ ],
+ "TOWER: 77K, say your altitude.": [
+  "app.docu_samples"
+ ],
+ "Take a guess. [A yes/no question about the past]? It's the opposite. [The surprising true answer].": [
+  "app.main"
+ ],
+ "Talk to the viewer as \"you\" about something they do today that is linked to the topic. Then \"Now, rewind ...\" to the past or the other side of the story, and end on one sharp question.": [
+  "app.main"
+ ],
+ "Tall pale letters in the dark, the word turns blood red.": [
+  "app.captions"
+ ],
+ "Tea house": [
+  "app.project"
+ ],
+ "Teal & Orange": [
+  "app.grade"
+ ],
+ "Tech HUD": [
+  "app.docu_presets"
+ ],
+ "Tell the story that the user's own material shows. Use facts only from the documents, the speech and what the pictures clearly show. Never invent names, dates or events; when something is unclear, describe what we see instead.": [
+  "app.docu"
+ ],
+ "Tense build": [
+  "app.music"
+ ],
+ "Tension riser": [
+  "app.sfx"
+ ],
+ "Text cards:": [
+  "app.jobs"
+ ],
+ "That does not look like an OpenRouter key (it starts with sk-or-).": [
+  "app.routes_pro"
+ ],
+ "That folder does not exist. Pick the folder with your photos and clips.": [
+  "app.docu"
+ ],
+ "That folder does not look like ComfyUI. Pick the folder that contains main.py, the ComfyUI folder, or a 'models' folder.": [
+  "app.main"
+ ],
+ "That picture is not in this project": [
+  "app.routes_docu"
+ ],
+ "That scene has no image yet": [
+  "app.main"
+ ],
+ "The AI could not improve the story this time. Your story is unchanged.": [
+  "app.docu"
+ ],
+ "The AI could not plan the story. Press Write again.": [
+  "app.docu"
+ ],
+ "The AI did not return a script. Try again, or a simpler topic.": [
+  "app.main"
+ ],
+ "The AI did not return a script. Try again.": [
+  "app.cloudscript"
+ ],
+ "The AI did not return lyrics. Try again with a simpler topic.": [
+  "app.main"
+ ],
+ "The AI found too few facts in the sources. Try again, or connect OpenRouter for stronger research.": [
+  "app.docu"
+ ],
+ "The AI model is not installed yet (": [
+  "app.comfy"
+ ],
+ "The AI wrote nothing usable. Press Write again.": [
+  "app.docu"
+ ],
+ "The AI's answer was cut off. Press the button again (it usually works the second time).": [
+  "app.docu"
+ ],
+ "The Daily Courier": [
+  "app.docu_samples"
+ ],
+ "The Documentary Studio needs an AI writer: install 'Smart Director' in Setup Center (free, runs on this PC) or connect OpenRouter on the Pro page.": [
+  "app.docu"
+ ],
+ "The Evening Post": [
+  "app.docu_samples"
+ ],
+ "The Higgsfield key needs both parts: KEY_ID:KEY_SECRET (from console.higgsfield.ai).": [
+  "app.cloud"
+ ],
+ "The Pro subscription has ended. Renew it on Gumroad.": [
+  "app.pro"
+ ],
+ "The PyTorch download was damaged (size check failed). Click Install again.": [
+  "app.setup_center"
+ ],
+ "The Space Race": [
+  "app.docu_presets"
+ ],
+ "The Untold Story of": [
+  "app.creator"
+ ],
+ "The automation API is a LeccorTube Pro feature.": [
+  "app.main"
+ ],
+ "The browser stopped while starting": [
+  "app.cdp"
+ ],
+ "The car": [
+  "app.docu_samples"
+ ],
+ "The chapter \"": [
+  "app.docu"
+ ],
+ "The double game": [
+  "app.docu_samples"
+ ],
+ "The doubt": [
+  "app.main"
+ ],
+ "The download was damaged (checksum mismatch). Try again.": [
+  "app.updater"
+ ],
+ "The ending": [
+  "app.main"
+ ],
+ "The engine that runs the image and video models. Already have ComfyUI? Pick its folder instead.": [
+  "app.setup_center"
+ ],
+ "The first lines describe instead of asking a question or opening a mystery.": [
+  "app.creator"
+ ],
+ "The first sentence is long. Viewers decide in about 5 seconds, keep it under 15 words.": [
+  "app.creator"
+ ],
+ "The folder is gone. Start again and pick the folder.": [
+  "app.docu"
+ ],
+ "The human side: courage, sacrifice, what we learn": [
+  "app.docu"
+ ],
+ "The last mission": [
+  "app.docu_samples"
+ ],
+ "The man behind the company": [
+  "app.docu_samples"
+ ],
+ "The opening line is the same as another video. Change it, openings are what viewers notice.": [
+  "app.creator"
+ ],
+ "The point of no return": [
+  "app.docu_samples"
+ ],
+ "The port is used by another program": [
+  "app.support"
+ ],
+ "The proof": [
+  "app.main"
+ ],
+ "The river moved slowly under the evening sky. On the far bank, a small village was settling in for the night. Lamps were lit one by one, and the air smelled of fresh bread and wood smoke. Somewhere far away a dog barked once, and then everything was quiet again.": [
+  "app.tts"
+ ],
+ "The saved key no longer works. Connect again.": [
+  "app.openrouter"
+ ],
+ "The script is empty.": [
+  "app.creator"
+ ],
+ "The singing model is not ready:": [
+  "app.jobs"
+ ],
+ "The spoken word lights up yellow. The classic story look.": [
+  "app.captions"
+ ],
+ "The text just before this passage ends with: \"": [
+  "app.creator"
+ ],
+ "The turn": [
+  "app.main"
+ ],
+ "The twist": [
+  "app.main"
+ ],
+ "The video took too long at OpenRouter. Click Resume to try again.": [
+  "app.openrouter"
+ ],
+ "The viewer asked for this angle:": [
+  "app.docu"
+ ],
+ "The voice engine is not installed yet: Setup Center > AI engine > Install.": [
+  "app.tts"
+ ],
+ "The voice exactly as the model made it": [
+  "app.voicefx"
+ ],
+ "The web search did not work:": [
+  "app.cloudscript",
+  "app.research"
+ ],
+ "This AI has no web search (add OpenRouter or Google AI for it): using Wikipedia only": [
+  "app.cloudscript"
+ ],
+ "This PC has no NVIDIA RTX card, so images and video cannot be made on it. LeccorTube Pro makes them with cloud AI, or switch the scenes to stock footage.": [
+  "app.setup_center"
+ ],
+ "This connect link expired. Click Connect OpenRouter again.": [
+  "app.openrouter"
+ ],
+ "This documentary is already working. Wait or press Stop.": [
+  "app.docu"
+ ],
+ "This documentary is set to research in the cloud: connect OpenRouter on the Pro page, or choose \"This PC\" as the research AI.": [
+  "app.docu"
+ ],
+ "This documentary uses your Script AI key: add it on the Pro page (Script AI), or choose another AI.": [
+  "app.docu"
+ ],
+ "This episode is too short for a trailer (needs at least 3 scenes of 2 seconds).": [
+  "app.trailer"
+ ],
+ "This is the story of": [
+  "app.creator"
+ ],
+ "This key was already used on another PC. Each key works on one PC only.": [
+  "app.pro"
+ ],
+ "This key was made for another PC. Send your PC ID (shown below) to get a key for this PC.": [
+  "app.pro"
+ ],
+ "This license key is not valid.": [
+  "app.pro"
+ ],
+ "This license was refunded.": [
+  "app.pro"
+ ],
+ "This project does not use the Pro documentary look.": [
+  "app.routes_docu"
+ ],
+ "This provider has no web search.": [
+  "app.scriptai"
+ ],
+ "This scene has no image yet": [
+  "app.main"
+ ],
+ "This step took longer than": [
+  "app.comfy"
+ ],
+ "This workflow needs": [
+  "app.comfy"
+ ],
+ "This workflow needs a value for %": [
+  "app.comfy"
+ ],
+ "This writing job is gone. Start again.": [
+  "app.cloudscript"
+ ],
+ "Thomas (UK)": [
+  "app.tts"
+ ],
+ "Throne room": [
+  "app.project"
+ ],
+ "Thumbnail Test & Compare": [
+  "app.creator"
+ ],
+ "Tick YES in YouTube Studio (Details > Altered content): this video has realistic AI images or clips.": [
+  "app.creator"
+ ],
+ "Tilt down": [
+  "app.cinema"
+ ],
+ "Tilt up": [
+  "app.cinema"
+ ],
+ "Timing the captions to the singing": [
+  "app.jobs"
+ ],
+ "Tiny diorama": [
+  "app.catalog"
+ ],
+ "Title is longer than 100 characters (YouTube limit).": [
+  "app.exporter"
+ ],
+ "Title length": [
+  "app.creator"
+ ],
+ "Told like a film: scenes, tension, a strong ending": [
+  "app.docu"
+ ],
+ "Tom Finch": [
+  "app.docu_samples"
+ ],
+ "Tracking shot": [
+  "app.cinema"
+ ],
+ "Trailer": [
+  "app.trailer"
+ ],
+ "Trailer encode failed:": [
+  "app.trailer"
+ ],
+ "Translate these narration lines into natural spoken": [
+  "app.dub"
+ ],
+ "Translate this YouTube title and description into": [
+  "app.dub"
+ ],
+ "Translating to": [
+  "app.dub"
+ ],
+ "Translation failed for every language:": [
+  "app.jobs"
+ ],
+ "Translation uses the local AI. Install 'Smart Director (Ollama)' in Setup Center.": [
+  "app.dub"
+ ],
+ "Truck left": [
+  "app.cinema"
+ ],
+ "Truck right": [
+  "app.cinema"
+ ],
+ "True colours with a gentle film contrast": [
+  "app.grade"
+ ],
+ "Try other words.": [
+  "app.cloud"
+ ],
+ "Trying again": [
+  "app.setup_center"
+ ],
+ "Turns scene images into 5 s clips. Best fit for 8 to 16 GB GPUs. Apache 2.0.": [
+  "app.setup_center"
+ ],
+ "Two huge words at a time that pop in. Made for Shorts and Reels.": [
+  "app.captions"
+ ],
+ "Two jets collide in fog": [
+  "app.docu_samples"
+ ],
+ "Type a topic: spelling fixed, Google research in the directions you pick, facts checked across sources, then the script": [
+  "app.pro"
+ ],
+ "UPLOAD CHECKLIST": [
+  "app.exporter"
+ ],
+ "Understanding": [
+  "app.docu"
+ ],
+ "Understanding done": [
+  "app.docu"
+ ],
+ "Understanding the topic": [
+  "app.docu"
+ ],
+ "Understanding the topic:": [
+  "app.research"
+ ],
+ "Unexpected sample rate": [
+  "app.tts"
+ ],
+ "Unknown ElevenLabs model": [
+  "app.routes_pro"
+ ],
+ "Unknown Frequencies": [
+  "app.docu_presets"
+ ],
+ "Unknown Kokoro voice": [
+  "app.tts"
+ ],
+ "Unknown account": [
+  "app.cloud"
+ ],
+ "Unknown component": [
+  "app.main"
+ ],
+ "Unknown life stage": [
+  "app.main"
+ ],
+ "Unknown link": [
+  "app.main"
+ ],
+ "Unknown look": [
+  "app.routes_docu"
+ ],
+ "Unknown provider": [
+  "app.scriptai"
+ ],
+ "Unknown sound": [
+  "app.main"
+ ],
+ "Unknown step": [
+  "app.docu",
+  "app.main"
+ ],
+ "Unknown uploader": [
+  "app.docu_samples"
+ ],
+ "Unknown voice provider.": [
+  "app.cloudvoice"
+ ],
+ "Upgrade: websocket Connection: Upgrade Sec-WebSocket-Key:": [
+  "app.cdp"
+ ],
+ "Upload a photo of the character first": [
+  "app.main"
+ ],
+ "Upload subtitles.srt in Studio > Subtitles. Helps search and YouTube's auto dubbing.": [
+  "app.creator"
+ ],
+ "Upload thumbnails A, B and C in Studio > Test & Compare. YouTube keeps the one people click most.": [
+  "app.creator"
+ ],
+ "Upload-Post answered": [
+  "app.main"
+ ],
+ "Upload-Post error": [
+  "app.cloud"
+ ],
+ "Upload-Post key accepted": [
+  "app.main"
+ ],
+ "Upload-Post profile name is missing (Pro page > Auto publish).": [
+  "app.cloud"
+ ],
+ "Uploading to": [
+  "app.jobs"
+ ],
+ "Use a NEW angle and new facts, do not repeat earlier parts. Start with a re-hook.": [
+  "app.main"
+ ],
+ "Use a picture or a video clip": [
+  "app.main"
+ ],
+ "Use with credit (or check: public domain at home, may not be in the US)": [
+  "app.docu"
+ ],
+ "User Data": [
+  "app.capcut"
+ ],
+ "Uzma (Urdu)": [
+  "app.tts"
+ ],
+ "VISUAL MATERIAL (id, what it shows):": [
+  "app.docu"
+ ],
+ "VISUAL MATERIAL:": [
+  "app.docu"
+ ],
+ "Variations for": [
+  "app.jobs"
+ ],
+ "Variations ready": [
+  "app.jobs"
+ ],
+ "Vehicle tracking": [
+  "app.cinema"
+ ],
+ "Veo 3.1 Lite via OpenRouter (cheapest)": [
+  "app.cloud"
+ ],
+ "Veo 3.1 or Kling through OpenRouter, Google AI or Higgsfield. Works on any PC, no GPU": [
+  "app.pro"
+ ],
+ "Version": [
+  "app.setup_center",
+  "app.updater"
+ ],
+ "Vertical 30 to 60 second story. Fast cuts, every scene is a moving AI video clip, big captions.": [
+  "app.catalog"
+ ],
+ "Victor Lang": [
+  "app.docu_samples"
+ ],
+ "Video clip": [
+  "app.jobs"
+ ],
+ "Video clips on every NVIDIA card in the PC at the same time": [
+  "app.pro"
+ ],
+ "Video model not ready:": [
+  "app.jobs"
+ ],
+ "Video mux failed:": [
+  "app.dub"
+ ],
+ "Video ready": [
+  "app.jobs",
+  "app.render"
+ ],
+ "Video scenes": [
+  "app.main"
+ ],
+ "Video scenes need their image first (": [
+  "app.jobs"
+ ],
+ "Video scenes workflow:": [
+  "app.main"
+ ],
+ "Video workflow finished but produced no video file (is there a SaveVideo node?)": [
+  "app.comfy"
+ ],
+ "Videos done": [
+  "app.jobs"
+ ],
+ "Videos done in": [
+  "app.jobs"
+ ],
+ "Videos: nothing to do (no scenes tagged as video, or all done)": [
+  "app.jobs"
+ ],
+ "Vintage 70s": [
+  "app.grade"
+ ],
+ "Vintage broadcast for history clips": [
+  "app.catalog"
+ ],
+ "Vintage broadcast sound for history clips": [
+  "app.voicefx"
+ ],
+ "Vintage home movie": [
+  "app.cinema"
+ ],
+ "Vintage paper, newspaper clippings with yellow highlighter, blueprints and teal cards.": [
+  "app.docu_presets"
+ ],
+ "Visual C++ Runtime": [
+  "app.setup_center"
+ ],
+ "Vlog phone": [
+  "app.cinema"
+ ],
+ "Voice done in": [
+  "app.jobs"
+ ],
+ "Voice effect failed:": [
+  "app.voicefx"
+ ],
+ "Voice effect:": [
+  "app.jobs"
+ ],
+ "Voice engine not installed.": [
+  "app.main"
+ ],
+ "Voice engine part missing (": [
+  "app.main"
+ ],
+ "Voice sample '": [
+  "app.tts"
+ ],
+ "Voice setup failed, see the log.": [
+  "app.setup_center"
+ ],
+ "Voice worker did not answer in": [
+  "app.tts"
+ ],
+ "Voice worker stopped unexpectedly. Last log lines:": [
+  "app.tts"
+ ],
+ "Voices still work on the CPU in the meantime.": [
+  "app.setup_center"
+ ],
+ "Voices, scripts, captions, music and editing work. LeccorTube Pro can make images and video with cloud AI on this PC.": [
+  "app.system"
+ ],
+ "WATCH THIS": [
+  "app.creator",
+  "app.exporter"
+ ],
+ "Waiting for the AI engine (PyTorch) to finish first...": [
+  "app.setup_center"
+ ],
+ "Waiting for the GPU": [
+  "app.jobs"
+ ],
+ "Waiting in queue": [
+  "app.docu",
+  "app.jobs"
+ ],
+ "Wan 2.2 14B FAST (better motion)": [
+  "app.setup_center"
+ ],
+ "Wan 2.2 5B (video scenes)": [
+  "app.setup_center"
+ ],
+ "Wan 2.2 5B scenes": [
+  "app.jobs"
+ ],
+ "War Cinematic": [
+  "app.docu_presets"
+ ],
+ "Warm book letters, the word glows gold. Bedtime and fairy tales.": [
+  "app.captions"
+ ],
+ "Warm female": [
+  "app.cloudvoice"
+ ],
+ "Warm heroic gold highlights": [
+  "app.grade"
+ ],
+ "Warm male": [
+  "app.cloudvoice"
+ ],
+ "Warm voice in a small cosy room": [
+  "app.voicefx"
+ ],
+ "Warm, soft contrast, lifted blacks": [
+  "app.grade"
+ ],
+ "Warmer lows, softer highs, gentle compression. Best for sleep": [
+  "app.voicefx"
+ ],
+ "Warning: video model not ready (": [
+  "app.jobs"
+ ],
+ "We are not a scam. Every single investor will be paid back by Friday.": [
+  "app.docu_samples"
+ ],
+ "Web search failed for '": [
+  "app.research"
+ ],
+ "What really happened in": [
+  "app.creator"
+ ],
+ "What the cloud AI will cost before you start": [
+  "app.pro"
+ ],
+ "When to post": [
+  "app.creator"
+ ],
+ "Where should finished videos be saved?": [
+  "app.main"
+ ],
+ "Where sources disagree, say so briefly:": [
+  "app.cloudscript"
+ ],
+ "Whip pan left": [
+  "app.cinema"
+ ],
+ "Whip pan right": [
+  "app.cinema"
+ ],
+ "Whisper (ASMR)": [
+  "app.voicefx"
+ ],
+ "Whisper / ASMR": [
+  "app.cloudvoice"
+ ],
+ "White text on a dark box, like streaming subtitles.": [
+  "app.captions"
+ ],
+ "Whole place": [
+  "app.jobs"
+ ],
+ "Whole room": [
+  "app.jobs"
+ ],
+ "Wide-spaced capitals on a lower band, gold line under the word.": [
+  "app.captions"
+ ],
+ "Wikimedia Commons": [
+  "app.docu"
+ ],
+ "Wikipedia article (": [
+  "app.research"
+ ],
+ "Wikipedia article (Wikimedia Commons)": [
+  "app.docu"
+ ],
+ "Wikipedia has no page about \"": [
+  "app.research"
+ ],
+ "William (Australia)": [
+  "app.tts"
+ ],
+ "Windows": [
+  "app.system"
+ ],
+ "Windows essentials": [
+  "app.setup_center"
+ ],
+ "Woodblock print": [
+  "app.catalog"
+ ],
+ "Workflow file not found:": [
+  "app.comfy"
+ ],
+ "Workflow finished but produced no image (is there a SaveImage node?)": [
+  "app.comfy"
+ ],
+ "Workflow has no %PROMPT% placeholder": [
+  "app.comfy"
+ ],
+ "Worm's eye": [
+  "app.cinema"
+ ],
+ "Write a description for": [
+  "app.jobs"
+ ],
+ "Write an ORIGINAL nursery rhyme for small children about:": [
+  "app.main"
+ ],
+ "Write and approve the story first.": [
+  "app.docu"
+ ],
+ "Write chapter": [
+  "app.cloudscript",
+  "app.docu"
+ ],
+ "Write like a": [
+  "app.docu"
+ ],
+ "Write what the rhyme is about": [
+  "app.main"
+ ],
+ "Write what the video is about": [
+  "app.main"
+ ],
+ "Writing chapter": [
+  "app.cloudscript",
+  "app.docu"
+ ],
+ "Writing lyrics needs Smart Director (Setup Center). You can also paste your own lyrics.": [
+  "app.main"
+ ],
+ "Writing the script needs Smart Director (Setup Center). You can also paste your own script.": [
+  "app.main"
+ ],
+ "Wrong or missing X-OMNITUBE-Key (Pro page > API).": [
+  "app.main"
+ ],
+ "You [do an everyday modern thing linked to the topic]. Now, rewind [how far] years. [One short line about life back then]. So [one sharp question]?": [
+  "app.main"
+ ],
+ "You use ComfyUI Desktop: open the ComfyUI app yourself (it runs on port 8000, set that URL in Settings).": [
+  "app.setup_center"
+ ],
+ "YouTube needs at least 3 chapters, first at 0:00, each 10s+. Add '# Chapter' headings to your script.": [
+  "app.exporter"
+ ],
+ "YouTube, TikTok and Instagram upload on a schedule": [
+  "app.pro"
+ ],
+ "YouTuber / podcast": [
+  "app.catalog"
+ ],
+ "Your ElevenLabs credits are used up. Add credits, then click Resume.": [
+  "app.cloudmusic"
+ ],
+ "Your Higgsfield credits are used up. Add credits, then click Resume.": [
+  "app.cloud"
+ ],
+ "Your OpenAI account has no credit left. Add credit at platform.openai.com (Billing), then press Resume, or pick a Gemini or ElevenLabs voice.": [
+  "app.cloudvoice"
+ ],
+ "Your OpenAI account has no credit. Add credit on platform.openai.com or pick another model.": [
+  "app.castkit"
+ ],
+ "Your OpenRouter balance is empty. Add credit at openrouter.ai/credits, then click Resume.": [
+  "app.openrouter"
+ ],
+ "Your PC can run LeccorTube (low disk space)": [
+  "app.system"
+ ],
+ "Your PC is ready for LeccorTube": [
+  "app.system"
+ ],
+ "Your PC is ready for LeccorTube Pro": [
+  "app.setup_center"
+ ],
+ "Your brain is already fighting this. [What the viewer assumes], right? Stick with me. [Mystery question 1]? [Mystery question 2]?": [
+  "app.main"
+ ],
+ "Your last videos all use the same style, voice and intro. Change one of them now and then so the channel does not look like a template.": [
+  "app.creator"
+ ],
+ "Your own file": [
+  "app.docu"
+ ],
+ "Zoom / Lens": [
+  "app.cinema"
+ ],
+ "^(\\d{1,4}s?|(january|february|march|april|may|june|july|august|september|october|november|december)( \\d+)?|list of .*|.*\\(disambiguation\\)|english language|united states|united kingdom|india|pakistan|china|russia|france|germany|japan|wikipedia|isbn.*|doi.*)$": [
+  "app.research"
+ ],
+ "^(list of|outline of|index of)\\b": [
+  "app.research"
+ ],
+ "^(see also|references|external links|further reading|notes|bibliography|sources|citations|footnotes|gallery|filmography|discography|awards and nominations)$": [
+  "app.research"
+ ],
+ "a 1960s rocket on the launch pad at dawn, steam rising": [
+  "app.docu_samples"
+ ],
+ "a 1970s police car parked on a rainy street at night": [
+  "app.docu_samples"
+ ],
+ "a 1990s video game studio office with CRT monitors and young developers at desks": [
+  "app.docu_samples"
+ ],
+ "a 3D cutaway of a submarine showing its rooms and machinery inside": [
+  "app.docu_samples"
+ ],
+ "a World War Two bomber crew walking towards their bomber on a misty airfield at dawn": [
+  "app.docu_samples"
+ ],
+ "a big ! over his head": [
+  "app.jobs"
+ ],
+ "a big ? over his head": [
+  "app.jobs"
+ ],
+ "a boy and a robot friend skateboarding through a sunny city park": [
+  "app.catalog"
+ ],
+ "a boy on a grassy hill looking up at a huge glowing sky full of clouds and a comet": [
+  "app.catalog"
+ ],
+ "a busy spice market in an old city, a seller weighing saffron for a customer": [
+  "app.catalog"
+ ],
+ "a calm lake at dawn with mist, a small wooden boat, soft pastel sky, lotus flowers": [
+  "app.catalog"
+ ],
+ "a canal in an old european town with boats and flower boxes": [
+  "app.catalog"
+ ],
+ "a cheerful kids illustration of:": [
+  "app.song"
+ ],
+ "a chibi girl and a fat orange cat in a tiny flower shop": [
+  "app.catalog"
+ ],
+ "a clay boy and his dog having breakfast in a cozy kitchen": [
+  "app.catalog"
+ ],
+ "a colossal space station orbiting the Earth, sun rising behind the planet": [
+  "app.docu_samples"
+ ],
+ "a confident businessman in a dark suit standing in front of a glass skyscraper at dusk": [
+  "app.docu_samples"
+ ],
+ "a cozy child's bedroom at night, a teddy bear on the bed, a glowing lantern, stars outside the window": [
+  "app.catalog"
+ ],
+ "a curious little girl with a yellow backpack in a colorful toy shop full of shelves": [
+  "app.catalog"
+ ],
+ "a dark forest path at night lit by a flashlight, a pale shape between the trees": [
+  "app.catalog"
+ ],
+ "a detective in a trench coat under a streetlamp on a rainy night": [
+  "app.catalog"
+ ],
+ "a determined young hero running through a busy market street, speed lines": [
+  "app.catalog"
+ ],
+ "a family standing in front of their farmhouse in the 1950s": [
+  "app.catalog"
+ ],
+ "a fox walking through a calm autumn forest with a small cabin": [
+  "app.catalog"
+ ],
+ "a futuristic data center corridor with rows of glowing servers": [
+  "app.docu_samples"
+ ],
+ "a giant ringed planet seen from orbit, a small spacecraft in front of it": [
+  "app.docu_samples"
+ ],
+ "a giant suspension bridge under construction across a deep gorge": [
+  "app.docu_samples"
+ ],
+ "a girl in a hooded jacket walking down a rainy neon street": [
+  "app.catalog"
+ ],
+ "a girl with a red scarf on a train platform at sunset, cherry blossoms drifting": [
+  "app.catalog"
+ ],
+ "a girl with an umbrella walking through a layered paper forest at night": [
+  "app.catalog"
+ ],
+ "a happy little red bus with big eyes driving past a farm, children singing, music notes in the air, bright colours": [
+  "app.catalog"
+ ],
+ "a hooded figure at the gate of a ruined gothic castle under a storm": [
+  "app.catalog"
+ ],
+ "a knight walking toward a castle on a hill, sunset sky": [
+  "app.catalog"
+ ],
+ "a large crowd at a 1980s political rally in a city square": [
+  "app.docu_samples"
+ ],
+ "a little bear reading a book under a big oak tree with a rabbit friend": [
+  "app.catalog"
+ ],
+ "a little girl and her grandmother walking to a small farmhouse in green hills, fluffy clouds": [
+  "app.catalog"
+ ],
+ "a lone fisherman on a small boat between misty mountains": [
+  "app.catalog"
+ ],
+ "a lone swordsman in a rainy alley at night, neon reflections, cold light": [
+  "app.catalog"
+ ],
+ "a lone traveler in a long red coat standing on a cliff path above the sea, a white lighthouse far away": [
+  "app.cinema"
+ ],
+ "a lonely lighthouse on a cliff during a storm at night": [
+  "app.docu_samples"
+ ],
+ "a long dark empty hallway lit by one flickering ceiling light": [
+  "app.docu_samples"
+ ],
+ "a long dark hallway in an abandoned hospital, a pale figure standing far away at the end": [
+  "app.catalog"
+ ],
+ "a man alone in a dark room lit only by a computer monitor, late at night": [
+  "app.docu_samples"
+ ],
+ "a modern guy": [
+  "app.jobs"
+ ],
+ "a modern guy, no hair, round glasses, plain t-shirt": [
+  "app.main"
+ ],
+ "a person": [
+  "app.docu"
+ ],
+ "a quiet detail from the same scene": [
+  "app.project"
+ ],
+ "a quiet medieval village at night under a huge full moon, warm window lights, a sleeping cat on a wall": [
+  "app.catalog"
+ ],
+ "a quiet memorial with flowers and candles": [
+  "app.docu"
+ ],
+ "a quiet suburban house at night under a street light, autumn leaves": [
+  "app.docu_samples"
+ ],
+ "a quiet village by a river at dusk, a traveler walking with a lantern, mountains in the distance": [
+  "app.catalog"
+ ],
+ "a real": [
+  "app.characters"
+ ],
+ "a royal court gathered in a candlelit throne room": [
+  "app.catalog"
+ ],
+ "a sailing ship arriving at an old port town with stone houses": [
+  "app.catalog"
+ ],
+ "a small fishing village under a snowy mountain at sunrise, cranes flying over the bay": [
+  "app.catalog"
+ ],
+ "a stick figure": [
+  "app.catalog"
+ ],
+ "a stick figure caveman with messy brown hair and a fur outfit sitting by a small campfire in a sandy desert, a crossed out alarm clock floating beside him": [
+  "app.catalog"
+ ],
+ "a teenager at an old laptop in a dark bedroom, early 2000s, glow of the screen": [
+  "app.docu_samples"
+ ],
+ "a tiny busy harbour town with boats and little people on the pier": [
+  "app.catalog"
+ ],
+ "a tiny cozy island village with a lighthouse and little toy people": [
+  "app.catalog"
+ ],
+ "a traveler in a long red coat on a cliff path above the sea at golden hour, a white lighthouse behind": [
+  "app.cinema"
+ ],
+ "a traveler in a long red coat on a cliff path above the sea, a white lighthouse behind": [
+  "app.cinema"
+ ],
+ "a traveler in a long red coat standing in front of an old stone cottage by the sea": [
+  "app.cinema"
+ ],
+ "a victorian mansion on a hill with one lit window and twisted dead trees": [
+  "app.catalog"
+ ],
+ "a vintage four-engine airliner on a runway, 1970s": [
+  "app.docu_samples"
+ ],
+ "a winding river cutting through an autumn forest and a small village": [
+  "app.catalog"
+ ],
+ "a young boy flying a bright red kite on a hill at sunset, city in the distance, hopeful": [
+  "app.catalog"
+ ],
+ "a young girl detective with a red scarf leaping between rooftops above a busy city, original character": [
+  "app.catalog"
+ ],
+ "a young mage on a cliff facing a giant dragon over a glowing valley": [
+  "app.catalog"
+ ],
+ "a young man on a rooftop looking at a big city skyline at night": [
+  "app.docu_samples"
+ ],
+ "aerial drone flies forward toward the subject": [
+  "app.cinema"
+ ],
+ "aerial drone photograph, epic scale, golden hour": [
+  "app.docu_presets"
+ ],
+ "aerial drone pulls back and rises, revealing the landscape": [
+  "app.cinema"
+ ],
+ "aerial drone view from high above": [
+  "app.cinema"
+ ],
+ "after merging duplicates": [
+  "app.research"
+ ],
+ "airline \\1": [
+  "app.docu"
+ ],
+ "ambience, no music, for this place:": [
+  "app.sfx"
+ ],
+ "ambient, soft piano, warm pads, slow tempo, 60 bpm, peaceful, relaxing, instrumental": [
+  "app.music"
+ ],
+ "an abandoned foggy mansion at night with one lit window, twisted trees, eerie": [
+  "app.catalog"
+ ],
+ "an ancient Roman city reconstructed, forum with temples and columns, people walking": [
+  "app.docu_samples"
+ ],
+ "an old European city street in the 1940s at night, fog and wet cobblestones": [
+  "app.docu_samples"
+ ],
+ "an old fisherman mending his nets at a quiet harbour at dawn": [
+  "app.catalog"
+ ],
+ "an old scholar reading by candlelight in a small stone room": [
+  "app.catalog"
+ ],
+ "anamorphic lens, oval bokeh, horizontal lens flares, cinematic widescreen": [
+  "app.cinema"
+ ],
+ "ancient pyramids at golden hour, an explorer with a map in the foreground, epic landscape": [
+  "app.catalog"
+ ],
+ "and clips": [
+  "app.exporter"
+ ],
+ "and downloading a clean copy": [
+  "app.setup_center"
+ ],
+ "animated story": [
+  "app.exporter"
+ ],
+ "anime style illustration, clean confident line art, soft cel shading, expressive faces, vibrant warm colors, detailed painted background, cinematic composition, no text": [
+  "app.catalog"
+ ],
+ "antique copper engraving illustration, fine crosshatching, sepia ink on aged paper, 18th century book plate, detailed, no text": [
+  "app.catalog"
+ ],
+ "architectural 3D reconstruction render, muted daylight, realistic materials": [
+  "app.docu_presets"
+ ],
+ "archival news photograph": [
+  "app.docu_presets"
+ ],
+ "archival style portrait photograph, vintage print": [
+  "app.docu_presets"
+ ],
+ "archive photograph, 1970s film grain": [
+  "app.docu_presets"
+ ],
+ "are a YouTube Shorts editor. From these": [
+  "app.shorts"
+ ],
+ "are a YouTube packaging expert. Video type:": [
+  "app.creator"
+ ],
+ "are a YouTube retention expert. Video type:": [
+  "app.creator"
+ ],
+ "are a documentary director. Plan a": [
+  "app.docu"
+ ],
+ "are a script editor for a YouTube video titled \"": [
+  "app.creator"
+ ],
+ "as a teenager around 15 years old": [
+  "app.characters"
+ ],
+ "as a young adult around 23 years old": [
+  "app.characters"
+ ],
+ "as a young child around 8 years old": [
+  "app.characters"
+ ],
+ "as an adult around 40 years old": [
+  "app.characters"
+ ],
+ "as an elderly person around 75 years old, grey hair, wrinkles": [
+  "app.characters"
+ ],
+ "as image": [
+  "app.project"
+ ],
+ "as reference, but": [
+  "app.jobs"
+ ],
+ "at eye level, the whole place visible from left to right": [
+  "app.jobs"
+ ],
+ "atmospheric documentary scene,": [
+  "app.docu"
+ ],
+ "atmospheric haze": [
+  "app.cinema"
+ ],
+ "authentic vintage photograph, faded colors, soft focus, light leaks and film grain, worn paper edges, nostalgic historical moment, no text": [
+  "app.catalog"
+ ],
+ "bad project id": [
+  "app.project"
+ ],
+ "bad season id": [
+  "app.season"
+ ],
+ "banners wave, soldiers shift in formation, dramatic slow push-in": [
+  "app.project"
+ ],
+ "bed ?room": [
+  "app.project"
+ ],
+ "bedtime story": [
+  "app.exporter"
+ ],
+ "below the surface": [
+  "app.docu_samples"
+ ],
+ "better motion, needs 32 GB RAM": [
+  "app.castkit"
+ ],
+ "biography background": [
+  "app.research"
+ ],
+ "bird's eye view, directly overhead": [
+  "app.cinema"
+ ],
+ "birds glide slowly across the frame, gentle wing movement": [
+  "app.project"
+ ],
+ "black and white film noir still, hard low-key lighting, deep shadows, venetian blind light patterns, rain-slick streets, 1940s mood, high contrast, film grain, no text": [
+  "app.catalog"
+ ],
+ "black and white manga page panel, bold ink lines, screentone shading, dramatic speed lines, high contrast, detailed pen work, no color, no text, no speech bubbles": [
+  "app.catalog"
+ ],
+ "blue hour twilight, cool soft light": [
+  "app.cinema"
+ ],
+ "body error": [
+  "app.jobs"
+ ],
+ "body, not a person in a costume": [
+  "app.characters"
+ ],
+ "body-mounted snorricam, subject fixed in frame while the world moves": [
+  "app.cinema"
+ ],
+ "breathtaking aerial drone photograph from high above, vast landscape, natural colors, golden hour light, ultra detailed, sense of scale, no text": [
+  "app.catalog"
+ ],
+ "but then|until|silence|reveal|mysterious|shadow|darkness|watching|secret|truth": [
+  "app.sfx"
+ ],
+ "calm and steady": [
+  "app.docu"
+ ],
+ "calm narration": [
+  "app.exporter"
+ ],
+ "calm, clear and authoritative, like a museum documentary": [
+  "app.docu"
+ ],
+ "calm, curious science narration: scale, numbers that amaze, how it works step by step.": [
+  "app.docu_presets"
+ ],
+ "calm, detailed architecture history; how places were built, used and lost; reflective.": [
+  "app.docu_presets"
+ ],
+ "calm, eerie storyteller for unexplained events; precise about what is known and what is not.": [
+  "app.docu_presets"
+ ],
+ "calm, ominous investigative essay: builds the case piece by piece, asks the moral question, lets facts land in silence.": [
+  "app.docu_presets"
+ ],
+ "calm, slow, soothing sleep-history narration with soft sensory detail": [
+  "app.creator"
+ ],
+ "camera arcs to the left around the subject": [
+  "app.cinema"
+ ],
+ "camera arcs to the right around the subject": [
+  "app.cinema"
+ ],
+ "camera flies through a window or gap into the next space": [
+  "app.cinema"
+ ],
+ "camera follows behind the subject over the shoulder": [
+  "app.cinema"
+ ],
+ "camera lowers straight down vertically": [
+  "app.cinema"
+ ],
+ "camera moves backward in front of the walking subject, face to camera": [
+  "app.cinema"
+ ],
+ "camera orbits clockwise 180 degrees around the subject": [
+  "app.cinema"
+ ],
+ "camera orbits counterclockwise around the subject": [
+  "app.cinema"
+ ],
+ "camera pans slowly to the left on a fixed tripod": [
+  "app.cinema"
+ ],
+ "camera pans slowly to the right on a fixed tripod": [
+  "app.cinema"
+ ],
+ "camera physically moves backward away from the subject, smooth dolly pull out": [
+  "app.cinema"
+ ],
+ "camera physically moves forward in a straight line toward the subject, smooth dolly push in": [
+  "app.cinema"
+ ],
+ "camera pushes forward past a foreground object toward the subject": [
+  "app.cinema"
+ ],
+ "camera rises straight up vertically": [
+  "app.cinema"
+ ],
+ "camera slides sideways to the left": [
+  "app.cinema"
+ ],
+ "camera slides sideways to the right": [
+  "app.cinema"
+ ],
+ "camera tilts down slowly": [
+  "app.cinema"
+ ],
+ "camera tilts up slowly revealing the scene above": [
+  "app.cinema"
+ ],
+ "camera tracks a moving vehicle from a car mount": [
+  "app.cinema"
+ ],
+ "camera tracks alongside the moving subject at the same speed": [
+  "app.cinema"
+ ],
+ "camera tracks sideways parallel to the subject": [
+  "app.cinema"
+ ],
+ "cancelled (the download continues from here next time)": [
+  "app.tts"
+ ],
+ "cannot be read (": [
+  "app.setup_center"
+ ],
+ "chapters in a clear order (usually time order), a strong hook first and a real ending. shares add up to 1. Give every chapter its own facts (F ids): together the chapters use the important facts once, in order.": [
+  "app.docu"
+ ],
+ "character art": [
+  "app.characters"
+ ],
+ "character design reference on a plain flat solid mid grey background": [
+  "app.characters"
+ ],
+ "character reference sheet of": [
+  "app.characters"
+ ],
+ "character reference sheet, one single character, full body, standing straight, front view, neutral friendly expression, plain light grey background, no text, no letters": [
+  "app.jobs"
+ ],
+ "characters. Under 70 is best so it is not cut on phones.": [
+  "app.creator"
+ ],
+ "children's nasheed, vocals with soft frame drum only, warm, gentle, 96 bpm": [
+  "app.song"
+ ],
+ "children's picture book illustration, gouache and colored pencil, soft rounded friendly characters, warm gentle colors, cozy whimsical details, paper texture, no text": [
+  "app.catalog"
+ ],
+ "children's song, nursery rhyme, happy, bright, ukulele, xylophone, glockenspiel, soft hand claps, simple catchy melody, 108 bpm": [
+  "app.song"
+ ],
+ "cinematic documentary": [
+  "app.grade"
+ ],
+ "cinematic film still, natural soft lighting, shallow depth of field, 35mm film grain, muted realistic colors, highly detailed, historically accurate, calm mood, no text": [
+  "app.catalog"
+ ],
+ "cinematic photograph": [
+  "app.cinema"
+ ],
+ "cinematic rhythmic pulse, ticking percussion, synth bass, modern documentary, 100 bpm, instrumental": [
+  "app.music"
+ ],
+ "cinematic tension, pulsing strings, low drums, rising, suspense, 90 bpm, instrumental": [
+  "app.music"
+ ],
+ "cinematic war storytelling, character-driven, tense present-tense action scenes, then the aftermath.": [
+  "app.docu_presets"
+ ],
+ "class ?room": [
+  "app.project"
+ ],
+ "classic comic book art, bold black ink outlines, halftone dot shading, vivid primary colors, dynamic heroic poses, dramatic panel composition, no text, no speech bubbles": [
+  "app.catalog"
+ ],
+ "clean 3D render, dark blue background, glowing cyan accents, infographic style": [
+  "app.docu_presets"
+ ],
+ "clean colours for a flat style": [
+  "app.grade"
+ ],
+ "clean, bright": [
+  "app.cinema"
+ ],
+ "clear and neutral like a news report": [
+  "app.docu"
+ ],
+ "clear, confident documentary narration with concrete facts": [
+  "app.creator"
+ ],
+ "clear, confident explainer on engineering and geopolitics; big numbers, cause and effect.": [
+  "app.docu_presets"
+ ],
+ "clips (": [
+  "app.docu"
+ ],
+ "clips of": [
+  "app.jobs"
+ ],
+ "clips of one video, choose the": [
+  "app.shorts"
+ ],
+ "clips saved (": [
+  "app.docu"
+ ],
+ "clock|tick|midnight|hours? passed|minutes? later|countdown|deadline": [
+  "app.sfx"
+ ],
+ "close soft whisper, very slow, intimate": [
+  "app.cloudvoice"
+ ],
+ "close up": [
+  "app.characters"
+ ],
+ "close-up head and shoulders portrait, neutral expression, looking at the camera": [
+  "app.characters"
+ ],
+ "close-up of the face of the {r}, front view": [
+  "app.characters"
+ ],
+ "close-up on the faces and hands, emotional detail": [
+  "app.project"
+ ],
+ "close-up shot on the face, emotional detail": [
+  "app.cinema"
+ ],
+ "closer medium shot from a different angle": [
+  "app.project"
+ ],
+ "closer view of the same moment": [
+  "app.project"
+ ],
+ "cloud (your OpenRouter account)": [
+  "app.docu"
+ ],
+ "clouds drift slowly across the sky, soft changing light, slow tilt": [
+  "app.project"
+ ],
+ "cockpit|cabin of the ship|ship's cabin": [
+  "app.project"
+ ],
+ "cold noir true-crime narration: facts first, slow build, dry irony, money and motive.": [
+  "app.docu_presets"
+ ],
+ "cold weather in the story": [
+  "app.grade"
+ ],
+ "confident documentary narrator, clear, measured, serious": [
+  "app.cloudvoice"
+ ],
+ "confirmed by 2 or more websites,": [
+  "app.cloudscript"
+ ],
+ "confirmed by 2+ websites). Enough for about": [
+  "app.docu"
+ ],
+ "continuous infinite zoom into the scene": [
+  "app.cinema"
+ ],
+ "cookie|subscribe|sign up|newsletter|all rights reserved|advertisement": [
+  "app.research"
+ ],
+ "cool moonlight, night atmosphere": [
+  "app.cinema"
+ ],
+ "couple of": [
+  "app.project"
+ ],
+ "cozy story": [
+  "app.exporter"
+ ],
+ "crane shot descending down toward the subject": [
+  "app.cinema"
+ ],
+ "crane shot rising up and back, revealing the whole scene": [
+  "app.cinema"
+ ],
+ "creepy internet mystery: slow, unsettling reveals, dark humour, never sensational about victims.": [
+  "app.docu_presets"
+ ],
+ "creepy stories": [
+  "app.exporter"
+ ],
+ "crisp, epic scale": [
+  "app.cinema"
+ ],
+ "cuda error": [
+  "app.comfy"
+ ],
+ "curious and precise, careful with claims": [
+  "app.docu"
+ ],
+ "cute 3D render of a toy world, soft rounded vinyl toy characters, glossy plastic and felt materials, pastel colors, soft shadows, isometric diorama feel, octane render, no text": [
+  "app.catalog"
+ ],
+ "cute chibi anime illustration, big round heads and small bodies, huge sparkling eyes, pastel colors, soft shading, playful and adorable, clean simple background, no text": [
+  "app.catalog"
+ ],
+ "cyberpunk city scene, rain-soaked streets, glowing neon signs in pink and cyan, futuristic tech, reflective puddles, moody night atmosphere, cinematic, no readable text": [
+  "app.catalog"
+ ],
+ "damaged file(s) aside, downloading clean copies": [
+  "app.setup_center"
+ ],
+ "damaged file(s) moved aside, clean copies are downloading in Setup Center": [
+  "app.support"
+ ],
+ "damaged file(s) removed": [
+  "app.support"
+ ],
+ "damaged file(s): Install downloads a clean copy.": [
+  "app.setup_center"
+ ],
+ "dark ambient, cello, low strings, mysterious, suspense, slow, cinematic, instrumental": [
+  "app.music"
+ ],
+ "dark fantasy painting, gothic ruins, ominous storm clouds, cold moonlight and flickering torches, ancient mystery, rich deep colors, highly detailed, epic and eerie, no text": [
+  "app.catalog"
+ ],
+ "dark history": [
+  "app.exporter"
+ ],
+ "dark night-time cinematic reconstruction, moody blue lighting, realistic": [
+  "app.docu_presets"
+ ],
+ "dark seinen anime illustration, sharp line art, heavy shadows, moody cold palette with one warm accent light, dramatic angles, mature serious tone, detailed background, no text": [
+  "app.catalog"
+ ],
+ "deep ambient drone, soft synth pads, very slow, dreamy, lullaby, 50 bpm, instrumental": [
+  "app.music"
+ ],
+ "delicate watercolor painting, soft wet edges, transparent washes, white paper showing through, light airy colors, loose brush strokes, no text": [
+  "app.catalog"
+ ],
+ "desaturated cold tones": [
+  "app.cinema"
+ ],
+ "deserializing header": [
+  "app.comfy",
+  "app.setup_center"
+ ],
+ "detailed 16-bit pixel art, retro video game scene, crisp pixels, limited color palette, small sprite characters, parallax background, no text": [
+  "app.catalog"
+ ],
+ "dialogue scenes (cloud, billed by fal.ai)": [
+  "app.jobs"
+ ],
+ "did not accept the key. Check it and paste it again.": [
+  "app.scriptai"
+ ],
+ "did not install (": [
+  "app.setup_center"
+ ],
+ "direct storytelling to the viewer: dramatic pauses, 'imagine this' moments, every claim backed by a named source, simple words.": [
+  "app.docu_presets"
+ ],
+ "document.fonts.ready.then(() => true)": [
+  "app.mograph"
+ ],
+ "documentary photograph": [
+  "app.docu_samples"
+ ],
+ "does anyone else remember this site? it just vanished one day and nobody talks about it": [
+  "app.docu_samples"
+ ],
+ "doodle pictures with the Smart Director": [
+  "app.jobs"
+ ],
+ "dramatic and intense": [
+  "app.docu"
+ ],
+ "dramatic black and white cinematic photo, high contrast, 35mm": [
+  "app.docu_presets"
+ ],
+ "dry, ironic, internet-savvy narration; conversational, dark humour, never mean to victims.": [
+  "app.docu_presets"
+ ],
+ "dummy TTS (test mode)": [
+  "app.tts"
+ ],
+ "dust drifts in beams of light, subtle movement, slow cinematic push-in": [
+  "app.project"
+ ],
+ "dutch angle, tilted horizon, tension": [
+  "app.cinema"
+ ],
+ "e></parameter><parameter authoringApp=\"PremierePro\"><parameterid>center</parameterid><name>Center</name><value><horiz>": [
+  "app.nlexport"
+ ],
+ "editor export": [
+  "app.jobs"
+ ],
+ "educational kids song, cheerful, simple melody, piano, xylophone, clear vocals, 100 bpm": [
+  "app.song"
+ ],
+ "emotional piano, strings, heartfelt, cinematic, slow, touching, instrumental": [
+  "app.music"
+ ],
+ "emotional story": [
+  "app.exporter"
+ ],
+ "empty, no people, no characters, no animals, no text": [
+  "app.jobs"
+ ],
+ "energetic and excited YouTube host, fast and punchy": [
+  "app.cloudvoice"
+ ],
+ "enthusiastic aviation and engineering storyteller: sets up the ambition, then 'but there was a problem', explains the engineering in plain words.": [
+  "app.docu_presets"
+ ],
+ "epic cinematic sci-fi concept art, photoreal, dramatic scale, volumetric light": [
+  "app.docu_presets"
+ ],
+ "epic fantasy concept art, grand scale, glowing magical light, majestic landscapes, heroic figures, rich saturated colors, highly detailed digital painting, no text": [
+  "app.catalog"
+ ],
+ "epic orchestral, big drums, brass, choir, heroic, powerful, 110 bpm, trailer, instrumental": [
+  "app.music"
+ ],
+ "epic, awe-inspiring big-picture narration about science, space and the future; slow and grand.": [
+  "app.docu_presets"
+ ],
+ "even soft light": [
+  "app.jobs"
+ ],
+ "every character is a cute chibi with a big head and a tiny body": [
+  "app.catalog"
+ ],
+ "every character is a cute rounded 3D vinyl toy figure": [
+  "app.catalog"
+ ],
+ "every character is a flat 2D cartoon character with thick outlines": [
+  "app.catalog"
+ ],
+ "every character is a flat paper cut-out figure": [
+  "app.catalog"
+ ],
+ "every character is a handmade clay figure with visible clay texture": [
+  "app.catalog"
+ ],
+ "every character is a simple low poly 3D figure": [
+  "app.catalog"
+ ],
+ "every character is a small pixel art sprite": [
+  "app.catalog"
+ ],
+ "every character is a soft rounded picture book character": [
+  "app.catalog"
+ ],
+ "every character is a stylized 3D animated movie character": [
+  "app.catalog"
+ ],
+ "every character is drawn in black and white manga ink": [
+  "app.catalog"
+ ],
+ "every character is drawn in bold comic book ink": [
+  "app.catalog"
+ ],
+ "every person at true real-life size for their age, characters from the reference images are the same height and scale as the other people and the room around them, never oversized": [
+  "app.project"
+ ],
+ "every person drawn in exactly the same art style as the rest of the picture": [
+  "app.catalog"
+ ],
+ "every person is a simple stick figure: perfectly round white head, two small dot eyes, thin single-line arms, legs and body, clothes and hair only as flat doodle shapes": [
+  "app.project"
+ ],
+ "every person is a tiny painted miniature figurine": [
+  "app.catalog"
+ ],
+ "everyone from image": [
+  "app.project"
+ ],
+ "exact length for every part": [
+  "app.cloudmusic"
+ ],
+ "exact length, older model": [
+  "app.cloudmusic"
+ ],
+ "exactly as in image": [
+  "app.project"
+ ],
+ "excited but clear engineering explainer: scale, records, the problem and the clever solution.": [
+  "app.docu_presets"
+ ],
+ "explo|crash|smash|burst|slam|struck|strike|hit the|blast|collapsed|shatter|bang\\b": [
+  "app.sfx"
+ ],
+ "expressive natural character motion, smooth cinematic camera": [
+  "app.project"
+ ],
+ "exterior view of the building that contains": [
+  "app.jobs"
+ ],
+ "extreme close": [
+  "app.characters"
+ ],
+ "extreme close-up, eyes or small detail filling the frame": [
+  "app.cinema"
+ ],
+ "extreme wide establishing shot, tiny figures in a vast landscape": [
+  "app.cinema"
+ ],
+ "extremely slow floating camera, soft breathing light, tranquil": [
+  "app.project"
+ ],
+ "eye level angle": [
+  "app.cinema"
+ ],
+ "facts from": [
+  "app.docu"
+ ],
+ "facts read,": [
+  "app.research"
+ ],
+ "facts: enough for about": [
+  "app.docu"
+ ],
+ "failed (": [
+  "app.sfx"
+ ],
+ "fair use": [
+  "app.docu"
+ ],
+ "fairy tale": [
+  "app.exporter"
+ ],
+ "fal.ai key accepted": [
+  "app.main"
+ ],
+ "fal.ai rejected the API key.": [
+  "app.cloud"
+ ],
+ "fal.ai rejected the key": [
+  "app.main"
+ ],
+ "fall asleep": [
+  "app.exporter"
+ ],
+ "fast and dynamic": [
+  "app.cinema"
+ ],
+ "fast and sharp, keeps characters with references": [
+  "app.castkit"
+ ],
+ "fast chase camera behind the running subject, dynamic": [
+  "app.cinema"
+ ],
+ "fast motion, shaky camera, flicker, morphing, distorted faces, extra limbs, deformed hands, text, subtitles, watermark, logo, low quality, blurry, overexposed, static frozen image": [
+  "app.config"
+ ],
+ "fast whip pan to the left with motion blur": [
+  "app.cinema"
+ ],
+ "fast whip pan to the right with motion blur": [
+  "app.cinema"
+ ],
+ "fast zoom in toward the subject": [
+  "app.cinema"
+ ],
+ "fast zoom out": [
+  "app.cinema"
+ ],
+ "fast, clear history explainer, a little witty, always connects cause and effect.": [
+  "app.docu_presets"
+ ],
+ "file '": [
+  "app.nlexport"
+ ],
+ "file not fully covered": [
+  "app.setup_center"
+ ],
+ "file(s) already on this PC, skipped": [
+  "app.setup_center"
+ ],
+ "files present": [
+  "app.setup_center"
+ ],
+ "film still": [
+  "app.characters"
+ ],
+ "fine sand drifts across the dunes in the wind, heat haze shimmers, slow pan": [
+  "app.project"
+ ],
+ "first person FPV drone flying fast through the scene": [
+  "app.cinema"
+ ],
+ "first person point of view shot": [
+  "app.cinema"
+ ],
+ "fisheye lens, curved distortion": [
+  "app.cinema"
+ ],
+ "fits most stories": [
+  "app.grade"
+ ],
+ "flames flicker softly and cast moving warm light, subtle smoke rises": [
+  "app.project"
+ ],
+ "float | None": [
+  "app.castkit"
+ ],
+ "found footage horror frame, night vision camcorder look, grainy low light video, harsh flashlight beam, motion blur, washed out colors, something barely visible in the dark, no text, no timestamp": [
+  "app.catalog"
+ ],
+ "found on this PC (": [
+  "app.setup_center"
+ ],
+ "frames, workflow": [
+  "app.jobs"
+ ],
+ "free, on this PC": [
+  "app.docu"
+ ],
+ "friendly, nerdy and detailed, a little humour, clear time order, explains every name the first time.": [
+  "app.docu_presets"
+ ],
+ "from Earth": [
+  "app.docu_samples"
+ ],
+ "from above": [
+  "app.characters"
+ ],
+ "from image": [
+  "app.project"
+ ],
+ "from the front, side and back: draw the": [
+  "app.project"
+ ],
+ "full body back view, standing, seen from behind": [
+  "app.characters"
+ ],
+ "full body front view waving one hand with a warm smile, whole body from head to shoes visible": [
+  "app.characters"
+ ],
+ "full body side profile view, standing": [
+  "app.characters"
+ ],
+ "full body side view walking, mid step, whole body from head to shoes visible": [
+  "app.characters"
+ ],
+ "full body sitting on a simple stool, three-quarter view, whole body from head to shoes visible": [
+  "app.characters"
+ ],
+ "full body three-quarter view, standing, turned slightly to the side": [
+  "app.characters"
+ ],
+ "full body, standing straight facing the camera, arms relaxed at the sides": [
+  "app.characters"
+ ],
+ "full shot": [
+  "app.characters"
+ ],
+ "full shot, subject head to toe": [
+  "app.cinema"
+ ],
+ "full songs of about 2 to 3 minutes, looped to fit each part": [
+  "app.cloudmusic"
+ ],
+ "full story": [
+  "app.shorts"
+ ],
+ "general YouTube viewers": [
+  "app.docu"
+ ],
+ "gentle waves roll and sparkle, the boat rocks softly, slow drifting camera": [
+  "app.project"
+ ],
+ "gentle, warm bedtime-story narration": [
+  "app.creator"
+ ],
+ "get an AI picture. Open it and press Build everything.": [
+  "app.docu"
+ ],
+ "golden hour": [
+  "app.characters"
+ ],
+ "golden hour sunlight, long warm shadows": [
+  "app.cinema"
+ ],
+ "gothic horror ink illustration, black ink and wash on old paper, fine crosshatching, victorian mansion and twisted trees, candle light, creepy and elegant, limited sepia and black palette, no text": [
+  "app.catalog"
+ ],
+ "grain, fog, vignette": [
+  "app.cinema"
+ ],
+ "grainy found-footage still, eerie, low light": [
+  "app.docu_presets"
+ ],
+ "graphics cards make clips at the same time": [
+  "app.jobs"
+ ],
+ "graphics in": [
+  "app.nlexport"
+ ],
+ "graphics, fast opening until": [
+  "app.doculook"
+ ],
+ "guided meditation": [
+  "app.exporter"
+ ],
+ "hand-painted 2D anime film style, lush watercolor-like painted backgrounds, soft natural sunlight, gentle warm colors, whimsical detailed countryside, fluffy clouds, simple expressive characters, nostalgic and peaceful, no text": [
+  "app.catalog"
+ ],
+ "handheld camera, subtle natural shake, documentary feel": [
+  "app.cinema"
+ ],
+ "harsh midday sun, hard shadows": [
+  "app.cinema"
+ ],
+ "has no description, skipped (add one on the Cast tab)": [
+  "app.jobs"
+ ],
+ "has no frames": [
+  "app.render"
+ ],
+ "has no image yet": [
+  "app.jobs"
+ ],
+ "has no image, reusing previous one": [
+  "app.render"
+ ],
+ "has no narration yet. Run the voice step first.": [
+  "app.render"
+ ],
+ "has sample rate": [
+  "app.render"
+ ],
+ "head and shoulders": [
+  "app.characters"
+ ],
+ "heart of the city": [
+  "app.docu_samples"
+ ],
+ "heavy build": [
+  "app.project"
+ ],
+ "heavy grain, smoke": [
+  "app.cinema"
+ ],
+ "high angle shot looking down": [
+  "app.cinema"
+ ],
+ "high contrast monochrome": [
+  "app.cinema"
+ ],
+ "history documentary": [
+  "app.exporter"
+ ],
+ "history for sleep": [
+  "app.exporter"
+ ],
+ "history timeline": [
+  "app.research"
+ ],
+ "horizontal lens flares, bokeh": [
+  "app.cinema"
+ ],
+ "horror ambient, dissonant strings, eerie drones, creepy, dark, instrumental": [
+  "app.music"
+ ],
+ "http 5": [
+  "app.setup_center"
+ ],
+ "image 1": [
+  "app.project"
+ ],
+ "images (": [
+  "app.cloud"
+ ],
+ "in civilian airline crew clothing": [
+  "app.docu"
+ ],
+ "in image": [
+  "app.project"
+ ],
+ "in the middle": [
+  "app.project"
+ ],
+ "incomplete metadata": [
+  "app.comfy",
+  "app.setup_center"
+ ],
+ "indoor: inside views and the outside": [
+  "app.jobs"
+ ],
+ "insert shot of a small object detail": [
+  "app.cinema"
+ ],
+ "installer stopped (code": [
+  "app.setup_center"
+ ],
+ "invalid header": [
+  "app.setup_center"
+ ],
+ "invalid load key": [
+  "app.comfy",
+  "app.setup_center"
+ ],
+ "investigative history told through documents and evidence, measured and precise.": [
+  "app.docu_presets"
+ ],
+ "is a": [
+  "app.jobs"
+ ],
+ "is a LeccorTube Pro feature. Open Pro in the menu to unlock it.": [
+  "app.pro"
+ ],
+ "is busy or the quota is used up (rate limit). Wait a minute and try again.": [
+  "app.scriptai"
+ ],
+ "is not available in your ComfyUI": [
+  "app.comfy"
+ ],
+ "is not supported": [
+  "app.dub"
+ ],
+ "is old for AI video. Update to 570 or newer.": [
+  "app.setup_center"
+ ],
+ "is outdoors on the ground at its real size, never inside a room": [
+  "app.project"
+ ],
+ "is ready. Restart to finish.": [
+  "app.updater"
+ ],
+ "is tagged video but has no video yet, using its image": [
+  "app.render"
+ ],
+ "is too old. LeccorTube needs Windows 10 or 11 (64-bit).": [
+  "app.system"
+ ],
+ "is used by another program that is not answering. Close it or restart the PC, then try again.": [
+  "app.setup_center"
+ ],
+ "it was": [
+  "app.creator"
+ ],
+ "k characters)": [
+  "app.research"
+ ],
+ "keep the face, body shape": [
+  "app.project"
+ ],
+ "keep the shape, colours, face and details of the": [
+  "app.project"
+ ],
+ "keeps exactly the same faces, hair, bodies and clothes as in image": [
+  "app.project"
+ ],
+ "key is missing. Add it on the Pro page (": [
+  "app.cloud"
+ ],
+ "key is missing. Add it on the Pro page.": [
+  "app.cloudmusic"
+ ],
+ "key on the Create page (Cloud).": [
+  "app.scriptai"
+ ],
+ "keywords must be strings": [
+  "app"
+ ],
+ "kids adventure song, orchestral pop, marching drums, brass, cheerful, 118 bpm": [
+  "app.song"
+ ],
+ "kids dance song, upbeat pop, bouncy bass, claps, fun, energetic, 124 bpm": [
+  "app.song"
+ ],
+ "language(s): step 1 of 3, translating": [
+  "app.jobs"
+ ],
+ "latest news": [
+  "app.cloudscript",
+  "app.research"
+ ],
+ "layered paper cut-out craft art, flat paper shapes with soft drop shadows, visible paper texture, simple stylized figures, gentle pastel colors, handmade feel, no text": [
+  "app.catalog"
+ ],
+ "le app.capcut>": [
+  "app.capcut"
+ ],
+ "le app.captions>": [
+  "app.captions"
+ ],
+ "le app.cards>": [
+  "app.cards"
+ ],
+ "le app.catalog>": [
+  "app.catalog"
+ ],
+ "le app.cdp>": [
+  "app.cdp"
+ ],
+ "le app.characters>": [
+  "app.characters"
+ ],
+ "le app.cinema>": [
+  "app.cinema"
+ ],
+ "le app.cloud>": [
+  "app.cloud"
+ ],
+ "le app.cloudscript>": [
+  "app.cloudscript"
+ ],
+ "le app.cloudvoice>": [
+  "app.cloudvoice"
+ ],
+ "le app.comfy>": [
+  "app.comfy"
+ ],
+ "le app.config>": [
+  "app.config"
+ ],
+ "le app.creator>": [
+  "app.creator"
+ ],
+ "le app.docu>": [
+  "app.docu"
+ ],
+ "le app.docu_presets>": [
+  "app.docu_presets"
+ ],
+ "le app.docu_samples>": [
+  "app.docu_samples"
+ ],
+ "le app.doculook>": [
+  "app.doculook"
+ ],
+ "le app.downloader>": [
+  "app.downloader"
+ ],
+ "le app.dub>": [
+  "app.dub"
+ ],
+ "le app.exporter>": [
+  "app.exporter"
+ ],
+ "le app.grade>": [
+  "app.grade"
+ ],
+ "le app.jobs>": [
+  "app.jobs"
+ ],
+ "le app.llm>": [
+  "app.llm"
+ ],
+ "le app.lyricsync>": [
+  "app.lyricsync"
+ ],
+ "le app.main>": [
+  "app.main"
+ ],
+ "le app.mograph>": [
+  "app.mograph"
+ ],
+ "le app.music>": [
+  "app.music"
+ ],
+ "le app.nlexport>": [
+  "app.nlexport"
+ ],
+ "le app.openrouter>": [
+  "app.openrouter"
+ ],
+ "le app.pro>": [
+  "app.pro"
+ ],
+ "le app.project>": [
+  "app.project"
+ ],
+ "le app.render>": [
+  "app.render"
+ ],
+ "le app.research>": [
+  "app.research"
+ ],
+ "le app.routes_docu>": [
+  "app.routes_docu"
+ ],
+ "le app.routes_pro>": [
+  "app.routes_pro"
+ ],
+ "le app.scriptai>": [
+  "app.scriptai"
+ ],
+ "le app.season>": [
+  "app.season"
+ ],
+ "le app.secretstore>": [
+  "app.secretstore"
+ ],
+ "le app.setup_center>": [
+  "app.setup_center"
+ ],
+ "le app.sfx>": [
+  "app.sfx"
+ ],
+ "le app.sfxgen>": [
+  "app.sfxgen"
+ ],
+ "le app.shorts>": [
+  "app.shorts"
+ ],
+ "le app.song>": [
+  "app.song"
+ ],
+ "le app.stock>": [
+  "app.stock"
+ ],
+ "le app.support>": [
+  "app.support"
+ ],
+ "le app.system>": [
+  "app.system"
+ ],
+ "le app.trailer>": [
+  "app.trailer"
+ ],
+ "le app.tts>": [
+  "app.tts"
+ ],
+ "le app.updater>": [
+  "app.updater"
+ ],
+ "le app.voicefx>": [
+  "app.voicefx"
+ ],
+ "le app>": [
+  "app"
+ ],
+ "leaves and grass sway in a gentle breeze, light shifts through the branches": [
+  "app.project"
+ ],
+ "left over file(s)": [
+  "app.setup_center"
+ ],
+ "left over from a stopped copy": [
+  "app.setup_center"
+ ],
+ "light leaks, heavy grain": [
+  "app.cinema"
+ ],
+ "line(s) corrected or removed": [
+  "app.cloudscript"
+ ],
+ "lines repeated earlier text, writing it again": [
+  "app.docu"
+ ],
+ "living room": [
+  "app.project"
+ ],
+ "lofi hip hop, mellow keys, vinyl crackle, soft drums, chill, 75 bpm, instrumental": [
+  "app.music"
+ ],
+ "look frames in": [
+  "app.docu_samples"
+ ],
+ "low angle shot looking up, heroic and powerful": [
+  "app.cinema"
+ ],
+ "low angle shot, dramatic": [
+  "app.project"
+ ],
+ "low camera close to the ground tracking forward": [
+  "app.cinema"
+ ],
+ "low key lighting, chiaroscuro, dramatic contrast": [
+  "app.cinema"
+ ],
+ "low poly 3D art, flat shaded geometric facets, simple clean shapes, soft gradient lighting, minimal stylized world, calm colors, no text": [
+  "app.catalog"
+ ],
+ "low, tense and ominous, slow, quiet dread, slight whisper on scary words": [
+  "app.cloudvoice"
+ ],
+ "lullaby, gentle, soft, music box, warm piano, slow, soothing, 70 bpm": [
+  "app.song"
+ ],
+ "macro lens, extreme detail": [
+  "app.cinema"
+ ],
+ "made in": [
+  "app.doculook"
+ ],
+ "measured space history: technical clarity, the people behind the missions, awe without hype.": [
+  "app.docu_presets"
+ ],
+ "medium close-up, chest up": [
+  "app.cinema"
+ ],
+ "medium shot, waist up": [
+  "app.cinema"
+ ],
+ "meme|funny|laugh|quack|eagle|sneeze|shocked|bruh|fart|censor|cartoon|boing|crowd cheer|rewind": [
+  "app.sfx"
+ ],
+ "middle eastern ambient, oud, ney flute, frame drum, desert, cinematic, instrumental": [
+  "app.music"
+ ],
+ "min left": [
+  "app.docu",
+  "app.research",
+  "app.tts"
+ ],
+ "min, about": [
+  "app.docu"
+ ],
+ "min, narration length": [
+  "app.jobs"
+ ],
+ "minutes and seems stuck. Click Resume: finished scenes are kept.": [
+  "app.comfy"
+ ],
+ "minutes so nothing is padded or repeated.": [
+  "app.docu"
+ ],
+ "minutes, not": [
+  "app.docu"
+ ],
+ "minutes. Click Resume to continue, or use lighter video settings in Settings.": [
+  "app.comfy"
+ ],
+ "minutes. Click Resume.": [
+  "app.cloud"
+ ],
+ "missing character": [
+  "app.project"
+ ],
+ "missing place": [
+  "app.project"
+ ],
+ "missing). Click Install to repair, it keeps what is already downloaded.": [
+  "app.tts"
+ ],
+ "missing). Open Setup Center, install": [
+  "app.comfy"
+ ],
+ "mist rolls slowly through the valley, clouds move over the peaks, wide slow pan": [
+  "app.project"
+ ],
+ "mode must be topic or folder": [
+  "app.docu"
+ ],
+ "model files": [
+  "app.setup_center"
+ ],
+ "model files are healthy": [
+  "app.setup_center"
+ ],
+ "modern anime feature film still, breathtaking detailed sky, dramatic clouds, light rays and lens flare, vivid saturated colors, highly detailed background art, emotional, no text": [
+  "app.catalog"
+ ],
+ "modern flat 2D cartoon illustration, bold simple shapes, thick clean outlines, bright cheerful colors, simple shading, expressive characters, animated TV series look, no text": [
+  "app.catalog"
+ ],
+ "money|gold coins?|coins?\\b|price|dollars?|rupees?|bank|wealth|rich\\b|treasure|profit|tax": [
+  "app.sfx"
+ ],
+ "moody cinematic still, dark background, soft rim light": [
+  "app.docu_presets"
+ ],
+ "moody, rich blacks": [
+  "app.cinema"
+ ],
+ "more (see credits.txt)": [
+  "app.exporter"
+ ],
+ "motion energy": [
+  "app.cinema"
+ ],
+ "motivational cinematic, driving drums, piano, rising energy, inspiring, 120 bpm, instrumental": [
+  "app.music"
+ ],
+ "moving and hopeful, never melodramatic": [
+  "app.docu"
+ ],
+ "music file(s) in assets/music": [
+  "app.main"
+ ],
+ "music parts (": [
+  "app.cloud"
+ ],
+ "music sections": [
+  "app.jobs"
+ ],
+ "narrated documentary": [
+  "app.exporter"
+ ],
+ "narrated words). Topic: \"": [
+  "app.docu"
+ ],
+ "natural film grain": [
+  "app.cinema"
+ ],
+ "natural handheld": [
+  "app.cinema"
+ ],
+ "natural human anatomy and correct body proportions, two arms and two legs per person, well-formed hands": [
+  "app.project"
+ ],
+ "natural voices (test mode)": [
+  "app.tts"
+ ],
+ "nature landscape": [
+  "app.stock"
+ ],
+ "need credit);": [
+  "app.docu"
+ ],
+ "needle drop(s)": [
+  "app.render"
+ ],
+ "neon signs lighting, pink and cyan glow, night": [
+  "app.cinema"
+ ],
+ "neutral news anchor, crisp and fast": [
+  "app.cloudvoice"
+ ],
+ "news articles": [
+  "app.research"
+ ],
+ "newspaper photo, documentary photograph": [
+  "app.docu_presets"
+ ],
+ "night|moon|midnight|dark forest|crickets": [
+  "app.sfx"
+ ],
+ "no credits": [
+  "app.cloudvoice"
+ ],
+ "no derivative": [
+  "app.docu"
+ ],
+ "no hair": [
+  "app.catalog"
+ ],
+ "no kernel image": [
+  "app.comfy"
+ ],
+ "no one": [
+  "app.creator"
+ ],
+ "no people and no figures in this picture": [
+  "app.project"
+ ],
+ "none, use ordinary stick figures": [
+  "app.jobs"
+ ],
+ "not a person, no human arms, legs, hands or body": [
+  "app.characters"
+ ],
+ "not compiled with cuda": [
+  "app.comfy"
+ ],
+ "not downloaded yet": [
+  "app.setup_center"
+ ],
+ "not free, skipped": [
+  "app.docu"
+ ],
+ "not reachable": [
+  "app.setup_center"
+ ],
+ "null bytes": [
+  "app.tts"
+ ],
+ "of a YouTube \"": [
+  "app.cloudscript"
+ ],
+ "of the documentary \"": [
+  "app.docu"
+ ],
+ "old man": [
+  "app.exporter",
+  "app.project"
+ ],
+ "old woman": [
+  "app.project"
+ ],
+ "older and larger, no character references": [
+  "app.castkit"
+ ],
+ "on the left": [
+  "app.project"
+ ],
+ "on the night": [
+  "app.creator"
+ ],
+ "on the right": [
+  "app.project"
+ ],
+ "one single character": [
+  "app.characters"
+ ],
+ "only once, with the same outfit, shoes and hair from every side)": [
+  "app.project"
+ ],
+ "options for": [
+  "app.jobs"
+ ],
+ "orange firelight glow on faces": [
+  "app.cinema"
+ ],
+ "out of memory": [
+  "app.comfy"
+ ],
+ "outdoors in front of exactly the same building as image": [
+  "app.project"
+ ],
+ "over-the-shoulder shot": [
+  "app.cinema",
+  "app.project"
+ ],
+ "overcast diffused soft light": [
+  "app.cinema"
+ ],
+ "pages turn softly, the person moves slightly, candle light flickers": [
+  "app.project"
+ ],
+ "painted in the same art style, color palette and lighting as image {n}, but a new scene": [
+  "app.project"
+ ],
+ "pair of": [
+  "app.project"
+ ],
+ "pakistan|india|bangladesh|urss|ussr|government of": [
+  "app.docu"
+ ],
+ "people move calmly through the scene, cloth and banners flutter, slow dolly forward": [
+  "app.project"
+ ],
+ "photoreal skin texture": [
+  "app.cinema"
+ ],
+ "photorealistic cinematic film still, dramatic lighting, realistic people, 35mm": [
+  "app.docu_presets"
+ ],
+ "photos and": [
+  "app.docu"
+ ],
+ "photo|photograph|camera|picture of|snapshot": [
+  "app.sfx"
+ ],
+ "picture(s) made again": [
+  "app.jobs"
+ ],
+ "pictures (": [
+  "app.docu"
+ ],
+ "pictures timed to it": [
+  "app.jobs"
+ ],
+ "pictures with": [
+  "app.docu"
+ ],
+ "pictures with people": [
+  "app.jobs"
+ ],
+ "pictures written": [
+  "app.jobs"
+ ],
+ "pip failed": [
+  "app.setup_center"
+ ],
+ "pip failed (": [
+  "app.setup_center"
+ ],
+ "place ·": [
+  "app.project"
+ ],
+ "placed from the story": [
+  "app.render"
+ ],
+ "plain flat solid mid grey studio background, seamless grey backdrop, empty background, even soft studio lighting, studio photo backdrop, nothing behind the character, no text, no watermark": [
+  "app.characters"
+ ],
+ "playful orchestral, pizzicato strings, glockenspiel, light, cheerful, instrumental": [
+  "app.music"
+ ],
+ "problem(s) in": [
+  "app.setup_center"
+ ],
+ "project ready:": [
+  "app.jobs"
+ ],
+ "punchy business storytelling: short sentences, rhetorical questions, a cliffhanger before every chapter, money and power at the centre, present tense for the big moments.": [
+  "app.docu_presets"
+ ],
+ "queue.Queue[tuple[str, str, dict]]": [
+  "app.jobs"
+ ],
+ "quick forward movement, camera follows smoothly, dynamic but not shaky": [
+  "app.project"
+ ],
+ "rain falls steadily, drops ripple on surfaces, soft flashes of light": [
+  "app.project"
+ ],
+ "ready (": [
+  "app.jobs"
+ ],
+ "realistic documentary photograph, natural light, true-to-life details, candid moment, magazine travel photography, sharp focus, no text": [
+  "app.catalog"
+ ],
+ "realistic horror movie still, a feeling of dread, something is wrong in the scene, a shadowy figure half hidden in the dark, deep black shadows, a single harsh light source (flashlight, candle or flickering bulb), unsettling empty space, eerie silence, natural true colors with no color tint, film grain, no gore, no text": [
+  "app.catalog"
+ ],
+ "reference frame": [
+  "app.project"
+ ],
+ "reference image(s)": [
+  "app.comfy"
+ ],
+ "rejected the API key.": [
+  "app.cloud"
+ ],
+ "relaxing history": [
+  "app.exporter"
+ ],
+ "remote end": [
+  "app.setup_center"
+ ],
+ "returned no image.": [
+  "app.cloud"
+ ],
+ "returned no video.": [
+  "app.cloud"
+ ],
+ "riser|rise|build ?up|tension|cinematic \\d": [
+  "app.sfx"
+ ],
+ "round belly": [
+  "app.project"
+ ],
+ "running day and night": [
+  "app.docu_samples"
+ ],
+ "s (attempt": [
+  "app.setup_center"
+ ],
+ "s from": [
+  "app.trailer"
+ ],
+ "s left": [
+  "app.jobs",
+  "app.setup_center"
+ ],
+ "s of sound)": [
+  "app.cloud"
+ ],
+ "s. Record 10 to 30 seconds of clear speech.": [
+  "app.main"
+ ],
+ "same as": [
+  "app.main"
+ ],
+ "same place as": [
+  "app.main"
+ ],
+ "same place, lighting and characters as in image {n}": [
+  "app.project"
+ ],
+ "sample in the cloud": [
+  "app.main"
+ ],
+ "sample on your GPU": [
+  "app.main"
+ ],
+ "sample ready": [
+  "app.main"
+ ],
+ "scary stories": [
+  "app.exporter"
+ ],
+ "scenes (": [
+  "app.jobs"
+ ],
+ "scenes (with character voices)": [
+  "app.jobs"
+ ],
+ "scenes happen here)": [
+  "app.jobs"
+ ],
+ "scenes have it). The timeline is laid out on the spoken words.": [
+  "app.main"
+ ],
+ "scenes need an AI picture": [
+  "app.docu"
+ ],
+ "scenes use your material,": [
+  "app.docu"
+ ],
+ "scenes with": [
+  "app.jobs"
+ ],
+ "scenes, about": [
+  "app.docu",
+  "app.jobs"
+ ],
+ "screenshot style, early 2000s internet aesthetic": [
+  "app.docu_presets"
+ ],
+ "sections with": [
+  "app.jobs"
+ ],
+ "see the facts": [
+  "app.docu"
+ ],
+ "server ignored range (HTTP": [
+  "app.downloader"
+ ],
+ "set at the": [
+  "app.project"
+ ],
+ "set in exactly the same": [
+  "app.project"
+ ],
+ "set inside the": [
+  "app.project"
+ ],
+ "shallow depth of field": [
+  "app.cinema"
+ ],
+ "sharp, vivid": [
+  "app.cinema"
+ ],
+ "short smooth slider move to the left, parallax": [
+  "app.cinema"
+ ],
+ "short smooth slider move to the right, parallax": [
+  "app.cinema"
+ ],
+ "short story": [
+  "app.exporter"
+ ],
+ "shot on 16mm film, heavy grain, vintage documentary feel": [
+  "app.cinema"
+ ],
+ "shot on 35mm Kodak film, organic film grain, rich color": [
+  "app.cinema"
+ ],
+ "shot on ARRI Alexa, cinematic digital, soft highlight roll-off, natural skin tones": [
+  "app.cinema"
+ ],
+ "shot on Canon full frame DSLR, clean sharp photo, natural colors": [
+  "app.cinema"
+ ],
+ "shot on IMAX 70mm film camera, epic scale, ultra sharp, rich tonal range": [
+  "app.cinema"
+ ],
+ "shot on RED cinema camera, crisp high contrast digital cinema": [
+  "app.cinema"
+ ],
+ "shows this ONE": [
+  "app.project"
+ ],
+ "side profile angle": [
+  "app.cinema"
+ ],
+ "simple 2D doodle composition, the main subject drawn large and clear": [
+  "app.project"
+ ],
+ "size check": [
+  "app.setup_center"
+ ],
+ "skipped in the export:": [
+  "app.nlexport"
+ ],
+ "sleep meditation": [
+  "app.exporter"
+ ],
+ "sleep story": [
+  "app.exporter"
+ ],
+ "slice of life": [
+  "app.characters"
+ ],
+ "slow and smooth": [
+  "app.cinema"
+ ],
+ "slow breathing, very subtle movement, soft light slowly changes": [
+  "app.project"
+ ],
+ "slow creeping camera movement, drifting fog, flickering shadows": [
+  "app.project"
+ ],
+ "slow smooth optical zoom in toward the subject": [
+  "app.cinema"
+ ],
+ "slow smooth optical zoom out revealing more of the scene": [
+  "app.cinema"
+ ],
+ "slow, tense minute-by-minute reconstruction of real events, factual, respectful to the people involved.": [
+  "app.docu_presets"
+ ],
+ "small children's choir, soft blended kids voices singing gently together": [
+  "app.song"
+ ],
+ "smartphone vlog footage, natural handheld look": [
+  "app.cinema"
+ ],
+ "smooth vocals, warm mellow mix, soft high end, gentle, clean studio recording": [
+  "app.song"
+ ],
+ "snowflakes drift slowly down, breath mist in cold air, calm slow pan": [
+  "app.project"
+ ],
+ "soft gentle movement, cozy warm atmosphere, smooth motion": [
+  "app.project"
+ ],
+ "soft glow": [
+  "app.cinema"
+ ],
+ "soft halation, shallow depth of field": [
+  "app.cinema"
+ ],
+ "soft painterly illustration, warm candlelight, muted earthy colors, gentle film grain, calm and cozy atmosphere, highly detailed, cinematic composition, no text": [
+  "app.catalog"
+ ],
+ "soft warm female vocal, smooth gentle singing voice, sweet and calm": [
+  "app.song"
+ ],
+ "sound effect, cinematic, for this moment:": [
+  "app.sfx"
+ ],
+ "sources (": [
+  "app.docu"
+ ],
+ "sources for": [
+  "app.cloudscript"
+ ],
+ "spoken words (": [
+  "app.cloudscript"
+ ],
+ "spoken words. Style:": [
+  "app.cloudscript"
+ ],
+ "static locked-off camera, no camera movement, only the subject moves": [
+  "app.cinema"
+ ],
+ "steady cinematic camera move, natural realistic motion": [
+  "app.project"
+ ],
+ "steady medium speed": [
+  "app.cinema"
+ ],
+ "steady riding motion, animals move at a calm pace, slow tracking camera": [
+  "app.project"
+ ],
+ "stop-motion claymation still, handmade plasticine characters and sets, visible fingerprints and clay texture, soft studio lighting, miniature handcrafted props, warm and charming, no text": [
+  "app.catalog"
+ ],
+ "stories for kids": [
+  "app.exporter"
+ ],
+ "story time": [
+  "app.exporter"
+ ],
+ "stress relief": [
+  "app.exporter"
+ ],
+ "strong rim light separating the subject from a dark background": [
+  "app.cinema"
+ ],
+ "style image": [
+  "app.project"
+ ],
+ "subtle film grain, atmospheric haze": [
+  "app.cinema"
+ ],
+ "subtle natural facial movement and gestures, slight camera drift": [
+  "app.project"
+ ],
+ "subtle natural movement, soft shifting light, slow cinematic push-in": [
+  "app.project"
+ ],
+ "sudden crash zoom in, dramatic punch-in": [
+  "app.cinema"
+ ],
+ "sudden crash zoom out": [
+  "app.cinema"
+ ],
+ "suddenly|scream|behind (him|her|them|me)|it was there|a face|blood|dead\\b|corpse|ghost|demon": [
+  "app.sfx"
+ ],
+ "sudden|rushed|flew|flying|swept|swift|dash|leap|jump|vanish|appear|swoosh|wind blew|arrow": [
+  "app.sfx"
+ ],
+ "sweeping helicopter aerial shot circling high above": [
+  "app.cinema"
+ ],
+ "sweet young boy vocal, soft and gentle child singer": [
+  "app.song"
+ ],
+ "sweet young girl vocal, soft and gentle child singer": [
+  "app.song"
+ ],
+ "te documentary (": [
+  "app.docu"
+ ],
+ "tea ?house": [
+  "app.project"
+ ],
+ "technical how-it-works explainer, step by step, with a quiet sense of mystery.": [
+  "app.docu_presets"
+ ],
+ "teddy bear": [
+  "app.project"
+ ],
+ "tense, atmospheric horror and mystery narration that builds suspense without gore": [
+  "app.creator"
+ ],
+ "the AI model for this step": [
+  "app.comfy"
+ ],
+ "the character": [
+  "app.project"
+ ],
+ "the cockpit of a small plane at night, instruments glowing, storm outside": [
+  "app.docu_samples"
+ ],
+ "the figure walks slowly forward, camera tracks gently alongside": [
+  "app.project"
+ ],
+ "the file is cut off": [
+  "app.setup_center"
+ ],
+ "the file is cut off (": [
+  "app.setup_center"
+ ],
+ "the outside of the": [
+  "app.project"
+ ],
+ "the place where it happened": [
+  "app.docu"
+ ],
+ "the same person from image 1 with the same face, hair and clothes, cut out and placed on a plain grey background, the original background removed": [
+  "app.characters"
+ ],
+ "the same place as image 1 and image 2 seen from high above, an aerial top-down view": [
+  "app.jobs"
+ ],
+ "the same place as image 1, but now seen from the other side, looking back the way the camera came, the same ground, buildings, colours, light and style": [
+  "app.jobs"
+ ],
+ "the same room as image 1 and image 2 seen from directly above, a top-down view with no ceiling, every piece of furniture in its place": [
+  "app.jobs"
+ ],
+ "the same room as image 1, but now the camera stands at the far wall and looks back toward the doorway, the wall with the door in front of the camera, the same floor, colours, light and style": [
+  "app.jobs"
+ ],
+ "the same scene seen from a different angle": [
+  "app.project"
+ ],
+ "the style image": [
+  "app.jobs"
+ ],
+ "the web": [
+  "app.cloudscript"
+ ],
+ "the web (Claude)": [
+  "app.cloudscript"
+ ],
+ "the web (OpenAI)": [
+  "app.cloudscript"
+ ],
+ "the whole {r} moving along happily, three-quarter view": [
+  "app.characters"
+ ],
+ "the whole {r} resting, calm, three-quarter view": [
+  "app.characters"
+ ],
+ "the whole {r} seen from behind": [
+  "app.characters"
+ ],
+ "the whole {r} seen straight from the front": [
+  "app.characters"
+ ],
+ "the whole {r} with a big happy expression, front view": [
+  "app.characters"
+ ],
+ "the whole {r}, side view": [
+  "app.characters"
+ ],
+ "the whole {r}, three-quarter view from the front": [
+  "app.characters"
+ ],
+ "this is": [
+  "app.creator"
+ ],
+ "this story": [
+  "app.creator"
+ ],
+ "throne room": [
+  "app.project"
+ ],
+ "tilt-shift miniature diorama photograph, tiny handmade model world, shallow depth of field, small figurines, toy-like details, bright soft daylight, no text": [
+  "app.catalog"
+ ],
+ "tilt-shift miniature look, slow movement": [
+  "app.cinema"
+ ],
+ "time-lapse, clouds and light change fast, camera static": [
+  "app.cinema"
+ ],
+ "timed out": [
+  "app.setup_center"
+ ],
+ "to generate": [
+  "app.jobs"
+ ],
+ "too big": [
+  "app.docu"
+ ],
+ "took longer than": [
+  "app.cloud"
+ ],
+ "traditional east asian ink wash painting, flowing black ink brush strokes, misty mountains, large empty space, subtle touches of color, calm and poetic, no text": [
+  "app.catalog"
+ ],
+ "traditional japanese woodblock print, flat colors, bold outlines, stylized waves and clouds, textured washi paper, limited natural palette, no text": [
+  "app.catalog"
+ ],
+ "true crime and internet mystery, conversational, suspense built through reveals and evidence.": [
+  "app.docu_presets"
+ ],
+ "tside|outdoors?|exterior|in front of|facade|roof|rooftop|sign\\b|signboard|from above|in the distance|far away|crossing|passing|arriving|leaving|seen from)\\b": [
+  "app.project"
+ ],
+ "tside|outdoors?|exterior|in front of|out of the|courtyard|under the sky)\\b": [
+  "app.project"
+ ],
+ "tuple[bytes, str]": [
+  "app.cloudmusic"
+ ],
+ "tuple[str, float]": [
+  "app.castkit"
+ ],
+ "tuple[str, set]": [
+  "app.castkit"
+ ],
+ "tuple[str, str]": [
+  "app.castkit"
+ ],
+ "ultra fine detail": [
+  "app.cinema"
+ ],
+ "ultra-wide 180 degree panoramic view of": [
+  "app.jobs"
+ ],
+ "ultra-wide 180 degree panoramic view of the inside of": [
+  "app.jobs"
+ ],
+ "unable to load weights": [
+  "app.setup_center"
+ ],
+ "unexpected end of file": [
+  "app.comfy",
+  "app.setup_center"
+ ],
+ "unexpected eof": [
+  "app.comfy",
+  "app.setup_center"
+ ],
+ "unknown component": [
+  "app.setup_center"
+ ],
+ "unknown device": [
+  "app.tts"
+ ],
+ "unsolved mysteries": [
+  "app.exporter"
+ ],
+ "uplifting cinematic, piano and strings, hopeful, warm, 80 bpm, instrumental": [
+  "app.music"
+ ],
+ "uses itself as reference": [
+  "app.jobs"
+ ],
+ "v3 (best, most expressive)": [
+  "app.cloudvoice"
+ ],
+ "venv_voice exists but Chatterbox is missing (install Natural voices again in Setup Center)": [
+  "app.tts"
+ ],
+ "vertical shot of a girl running through a rainy neon street at night, glowing puddles, dynamic action": [
+  "app.catalog"
+ ],
+ "very calm, slow, relaxing guided narration": [
+  "app.creator"
+ ],
+ "very slow calm camera movement, peaceful atmosphere, smooth motion": [
+  "app.project"
+ ],
+ "very soft and soothing, slow, gentle pauses, like reading a bedtime story": [
+  "app.cloudvoice"
+ ],
+ "via OpenRouter": [
+  "app.castkit"
+ ],
+ "video clips,": [
+  "app.cloud"
+ ],
+ "video download": [
+  "app.openrouter"
+ ],
+ "vintage technical illustration, blueprint drawing": [
+  "app.docu_presets"
+ ],
+ "vivid and cinematic, short sentences, building tension": [
+  "app.docu"
+ ],
+ "vivid, well paced short-story narration with emotion": [
+  "app.creator"
+ ],
+ "voice, ~": [
+  "app.cloud"
+ ],
+ "voice. Never mention the style, the tone, the narrator or the narration itself in the text. Language of the narration:": [
+  "app.docu"
+ ],
+ "voices loaded": [
+  "app.main"
+ ],
+ "volumetric light rays through haze": [
+  "app.cinema"
+ ],
+ "walk|footstep|step|ran |running|stairs|march": [
+  "app.sfx"
+ ],
+ "warm and cozy for sleep": [
+  "app.grade"
+ ],
+ "warm and friendly": [
+  "app.docu"
+ ],
+ "warm and personal, close to the person": [
+  "app.docu"
+ ],
+ "warm faded colors": [
+  "app.cinema"
+ ],
+ "warm flickering candlelight, deep shadows": [
+  "app.cinema"
+ ],
+ "warm soft male vocal, smooth friendly singing voice": [
+  "app.song"
+ ],
+ "warm, natural storyteller, calm and steady pace": [
+  "app.cloudvoice"
+ ],
+ "water flows softly with shimmering reflections, slow push-in": [
+  "app.project"
+ ],
+ "web pages": [
+  "app.research"
+ ],
+ "web search (OpenRouter)": [
+  "app.cloudscript"
+ ],
+ "what if": [
+  "app.creator"
+ ],
+ "where no real picture exists": [
+  "app.exporter"
+ ],
+ "whisper|voices|someone (said|called)|her name|his name": [
+  "app.sfx"
+ ],
+ "whoo?o?sh|woosh|swoosh|swish|swing|transition|slow ?mo|sound effect \\d": [
+  "app.sfx"
+ ],
+ "wide shot": [
+  "app.characters"
+ ],
+ "wide shot showing the whole place": [
+  "app.project"
+ ],
+ "wide shot, full environment visible": [
+  "app.cinema"
+ ],
+ "wide view of the same place": [
+  "app.project"
+ ],
+ "with a cartoon face": [
+  "app.jobs"
+ ],
+ "with exactly the same face, body shape": [
+  "app.project"
+ ],
+ "with references)": [
+  "app.jobs"
+ ],
+ "words of narration (never more than": [
+  "app.docu"
+ ],
+ "words) and keep good visual choices (ids from the material list). Weaknesses:": [
+  "app.docu"
+ ],
+ "words) put one picture line: [IMG: what the viewer sees, concrete, 10 to 25 words, no text or letters in the picture] - Then the narration sentences for that picture. -": [
+  "app.cloudscript"
+ ],
+ "words). Continue it with NEW beats (do not repeat anything) that tell the facts it has not told yet, with context and tension.": [
+  "app.docu"
+ ],
+ "words, adding more": [
+  "app.docu"
+ ],
+ "worm's eye view from the ground": [
+  "app.cinema"
+ ],
+ "xAI Grok": [
+  "app.cloud"
+ ],
+ "your OpenRouter account": [
+  "app.docu"
+ ],
+ "your clone": [
+  "app.cloudvoice"
+ ],
+ "your provider account": [
+  "app.docu"
+ ],
+ "zoom out from the subject up to space, earth view": [
+  "app.cinema"
+ ],
+ "| narration:": [
+  "app.cinema"
+ ],
+ "· Edge online": [
+  "app.tts"
+ ],
+ "· ElevenLabs (Pro)": [
+  "app.tts"
+ ],
+ "· Episode": [
+  "app.season"
+ ],
+ "· Google Gemini (Pro)": [
+  "app.tts"
+ ],
+ "· Kokoro": [
+  "app.tts"
+ ],
+ "· OpenAI (Pro)": [
+  "app.tts"
+ ],
+ "· about": [
+  "app.setup_center"
+ ],
+ "· not installed (Setup Center)": [
+  "app.tts"
+ ],
+ "· scene sheet": [
+  "app.jobs"
+ ]
+}

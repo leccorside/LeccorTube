@@ -1,0 +1,6533 @@
+{
+ "exact": {
+  ", false, true": [
+   "app.js"
+  ],
+  ", look": [
+   "app.js"
+  ],
+  ", music on": [
+   "nle.js"
+  ],
+  ", or add one.": [
+   "app.js"
+  ],
+  ", same opening": [
+   "app.js"
+  ],
+  ", so the narrator reads every line.": [
+   "app.js"
+  ],
+  ", sounds on": [
+   "nle.js"
+  ],
+  ", type": [
+   "app.js"
+  ],
+  ", write the characters once and the first episode.": [
+   "app.js"
+  ],
+  ": drag to move": [
+   "nle.js"
+  ],
+  ": not a picture, video or sound": [
+   "nle.js"
+  ],
+  ": sheet uses": [
+   "app.js"
+  ],
+  "?which=": [
+   "app.js"
+  ],
+  ". After changing the lyrics press Re-split, then Build (the song is sung again).": [
+   "app.js"
+  ],
+  ". Send this file in the LECCORTUBE Discord.": [
+   "app.js"
+  ],
+  ". The preview shows it now, Render to bake it in.": [
+   "nle.js"
+  ],
+  ". The price is per picture, from your own account.": [
+   "app.js"
+  ],
+  "· action": [
+   "app.js"
+  ],
+  "· CUDA ✓": [
+   "app.js"
+  ],
+  "· default": [
+   "app.js"
+  ],
+  "· driver": [
+   "app.js"
+  ],
+  "· Episode": [
+   "app.js"
+  ],
+  "· mine": [
+   "nle.js"
+  ],
+  "· models already in there are used as they are.": [
+   "app.js"
+  ],
+  "· no CUDA": [
+   "app.js"
+  ],
+  "· not made yet": [
+   "nle.js"
+  ],
+  "· not recorded yet": [
+   "nle.js"
+  ],
+  "· reference": [
+   "app.js"
+  ],
+  "· removed": [
+   "nle.js"
+  ],
+  "· research already used about $": [
+   "docu.js"
+  ],
+  "· scene": [
+   "nle.js"
+  ],
+  "· scene sheets": [
+   "app.js"
+  ],
+  "· sheet on Build": [
+   "app.js"
+  ],
+  "· working…": [
+   "docu.js"
+  ],
+  "(8 views)": [
+   "app.js"
+  ],
+  "(9 GB, fits a 12 to 16 GB GPU).": [
+   "docu.js"
+  ],
+  "(AI on this PC)": [
+   "app.js"
+  ],
+  "(ambience)": [
+   "nle.js"
+  ],
+  "(and its output copy)": [
+   "app.js"
+  ],
+  "(auto)": [
+   "app.js"
+  ],
+  "(before colour grade)": [
+   "doctl.js"
+  ],
+  "(best)": [
+   "docu.js"
+  ],
+  "(Cloud AI)": [
+   "app.js"
+  ],
+  "(cloud, faster, better writing).": [
+   "docu.js"
+  ],
+  "(cloud)": [
+   "app.js"
+  ],
+  "(connect on the Pro page)": [
+   "docu.js"
+  ],
+  "(free, on this PC) or": [
+   "docu.js"
+  ],
+  "(live web search)": [
+   "docu.js"
+  ],
+  "(not set, inside each project folder)": [
+   "app.js"
+  ],
+  "(optional, fills the prompt)": [
+   "app.js"
+  ],
+  "(optional) one per line: Name = what they look like": [
+   "app.js"
+  ],
+  "(or": [
+   "docu.js"
+  ],
+  "(sheet on Build)": [
+   "app.js"
+  ],
+  "(your clips stay).": [
+   "app.js"
+  ],
+  "(your Script AI key)": [
+   "docu.js"
+  ],
+  "). When it is rendered, the video is copied to the Final Documentary folder too.": [
+   "docu.js"
+  ],
+  "[CAST: Leo = a 10 year old boy…]": [
+   "app.js"
+  ],
+  "[CAST: Name = look]": [
+   "app.js"
+  ],
+  "[IMG: …]": [
+   "app.js"
+  ],
+  "[PLACE: Kitchen = small wooden kitchen…]": [
+   "app.js"
+  ],
+  "@Farid fixed the clock by candle light... # Part two ...": [
+   "app.js"
+  ],
+  "@Leo": [
+   "app.js"
+  ],
+  "@Leo: line": [
+   "app.js"
+  ],
+  "@Noor: text": [
+   "app.js"
+  ],
+  "/500 characters": [
+   "app.js"
+  ],
+  "/api/cloud-script/job/": [
+   "app.js"
+  ],
+  "/api/cloud-voice/sample?url=": [
+   "app.js"
+  ],
+  "/api/docu/": [
+   "docu.js"
+  ],
+  "/api/pro/eleven/clone?name=": [
+   "app.js"
+  ],
+  "/api/pro/test/": [
+   "app.js"
+  ],
+  "/api/projects/": [
+   "app.js",
+   "nle.js"
+  ],
+  "/api/script-ai/models?provider=": [
+   "app.js"
+  ],
+  "/api/seasons/": [
+   "app.js"
+  ],
+  "/api/setup/plan?mode=": [
+   "app.js"
+  ],
+  "/api/system": [
+   "app.js"
+  ],
+  "/api/update": [
+   "app.js"
+  ],
+  "/api/voice-presets/": [
+   "app.js"
+  ],
+  "/api/voices/": [
+   "app.js"
+  ],
+  "/hour": [
+   "app.js"
+  ],
+  "/minute · hits 2.5 s, ambience 8 s": [
+   "app.js"
+  ],
+  "/picture": [
+   "app.js"
+  ],
+  "/second": [
+   "app.js"
+  ],
+  "\\s*-----\\s*\\n(?:\\(copy[^\\n]*\\)\\s*\\n)?([\\s\\S]*?)\\n\\s*-----\\s*END OF": [
+   "app.js"
+  ],
+  "#cd_": [
+   "app.js"
+  ],
+  "#cf_": [
+   "app.js"
+  ],
+  "#cmx_": [
+   "app.js"
+  ],
+  "#cn_": [
+   "app.js"
+  ],
+  "#cv_": [
+   "app.js"
+  ],
+  "#cvx_": [
+   "app.js"
+  ],
+  "#img_": [
+   "app.js"
+  ],
+  "#pcb_": [
+   "app.js"
+  ],
+  "#pd_": [
+   "app.js"
+  ],
+  "#pn_": [
+   "app.js"
+  ],
+  "#sc_": [
+   "app.js"
+  ],
+  "#scd_": [
+   "app.js"
+  ],
+  "#smb_": [
+   "app.js"
+  ],
+  "•••••••• (leave empty to keep)": [
+   "app.js"
+  ],
+  "↺ AUTO": [
+   "app.js"
+  ],
+  "↻ Try again": [
+   "app.js"
+  ],
+  "+ Add a drop at scene…": [
+   "app.js"
+  ],
+  "+ Add a sound": [
+   "nle.js"
+  ],
+  "+ Life stage…": [
+   "app.js"
+  ],
+  "+wheel zoom": [
+   "nle.js"
+  ],
+  "= animated by the video model; its motion prompt is written for you from the image prompt. Reference slots keep characters and places consistent, the": [
+   "app.js"
+  ],
+  "= still with slow camera move.": [
+   "app.js"
+  ],
+  "▶ Start ComfyUI": [
+   "app.js"
+  ],
+  "🇧🇷 Português (Brasil)": [
+   "app.js"
+  ],
+  "🇪🇸 Español": [
+   "app.js"
+  ],
+  "🇺🇸 English": [
+   "app.js"
+  ],
+  "$0.12 per minute of sound · this video ~$": [
+   "app.js"
+  ],
+  "0 is best for narration": [
+   "app.js"
+  ],
+  "0 min": [
+   "app.js"
+  ],
+  "1 · Voice": [
+   "app.js"
+  ],
+  "1 min": [
+   "app.js"
+  ],
+  "1:1 Instagram square": [
+   "app.js"
+  ],
+  "10 min": [
+   "app.js"
+  ],
+  "15 min": [
+   "app.js"
+  ],
+  "16:9 · ready for YouTube": [
+   "app.js"
+  ],
+  "16:9 video: best for YouTube.": [
+   "app.js"
+  ],
+  "16:9 YouTube": [
+   "app.js"
+  ],
+  "2 · Images": [
+   "app.js"
+  ],
+  "2 to 3 pictures per place, about $0.02 to $0.45 a sheet": [
+   "app.js"
+  ],
+  "2nd reference": [
+   "app.js"
+  ],
+  "3 · Videos": [
+   "app.js"
+  ],
+  "3 styles. Use one, or test them in YouTube Studio": [
+   "app.js"
+  ],
+  "30 seconds of the best moments with music, the season title and a \"watch now\" card. 16:9 for YouTube, 9:16 for Shorts, Reels and TikTok. The ending is never shown.": [
+   "app.js"
+  ],
+  "35mm grain, haze": [
+   "app.js"
+  ],
+  "4 · Render": [
+   "app.js"
+  ],
+  "4 options": [
+   "app.js"
+  ],
+  "4 quick options": [
+   "app.js"
+  ],
+  "40 seconds of the real mix, voice and music together.": [
+   "app.js"
+  ],
+  "4K master": [
+   "app.js"
+  ],
+  "5 · Export": [
+   "app.js"
+  ],
+  "5 min": [
+   "app.js"
+  ],
+  "5, 10 or 15 s (clips chained)": [
+   "app.js"
+  ],
+  "8 pictures per sheet": [
+   "app.js"
+  ],
+  "9:16 Shorts / Reels / TikTok": [
+   "app.js"
+  ],
+  "9:16 vertical · upload as a YouTube Short": [
+   "app.js"
+  ],
+  "a 10 year old boy, short messy black hair, yellow hoodie, dark blue shorts": [
+   "app.js"
+  ],
+  "a 70 year old man, white beard, grey sweater, blue knitted cap": [
+   "app.js"
+  ],
+  "a few": [
+   "app.js"
+  ],
+  "A few things are still missing": [
+   "app.js"
+  ],
+  "A folder window opened on your PC (it may be behind the browser).": [
+   "app.js"
+  ],
+  "A full documentary from a topic (researched, every fact checked against its sources) or from your own folder of photos and clips. Nothing is paid for before you approve the preview.": [
+   "docu.js"
+  ],
+  "a little duck who learns to swim": [
+   "app.js"
+  ],
+  "a lonely robot who finds a flower": [
+   "app.js"
+  ],
+  "a new still picture for every line (~3 s), hard cuts, hand-lettered text cards for numbers, no captions. Best with the Stick style. Applies when you Re-split.": [
+   "app.js"
+  ],
+  "A new version of LECCORTUBE is ready": [
+   "app.js"
+  ],
+  "A piece for every chapter, free on your PC or from the cloud. It gets quieter by itself while the voice speaks.": [
+   "app.js"
+  ],
+  "a point, a name or an angle you want in the script": [
+   "app.js"
+  ],
+  "A room: the sheet gets the inside views and the building from outside": [
+   "app.js"
+  ],
+  "A scene without a place word stays where the scene before it was. Change any scene's place on the Storyboard.": [
+   "app.js"
+  ],
+  "A series of episodes with the same characters. Characters are made once and used in every episode.": [
+   "app.js"
+  ],
+  "a small wooden kitchen, round window, red rug, copper pots on the wall, warm lamp light": [
+   "app.js"
+  ],
+  "A street, field or market: outdoor views only": [
+   "app.js"
+  ],
+  "A video is still being made. Closing stops it (you can continue it later).": [
+   "app.js"
+  ],
+  "About": [
+   "app.js"
+  ],
+  "About $0.01 to $0.13 per picture, 8 pictures per sheet": [
+   "app.js"
+  ],
+  "Activate": [
+   "app.js"
+  ],
+  "Activate Pro": [
+   "docu.js"
+  ],
+  "Add as a new clip after": [
+   "nle.js"
+  ],
+  "Add at the end": [
+   "nle.js"
+  ],
+  "Add before": [
+   "app.js"
+  ],
+  "Add credit": [
+   "docu.js"
+  ],
+  "Add from my PC": [
+   "nle.js"
+  ],
+  "Add pictures, video clips, sounds or music from your PC (or drag files onto the tracks)": [
+   "nle.js"
+  ],
+  "Add sounds": [
+   "app.js"
+  ],
+  "Add video or picture": [
+   "app.js"
+  ],
+  "Add your own sound folder": [
+   "app.js"
+  ],
+  "added": [
+   "nle.js"
+  ],
+  "added in front of every picture prompt": [
+   "app.js"
+  ],
+  "Advanced": [
+   "app.js"
+  ],
+  "Advanced: reference picture": [
+   "app.js"
+  ],
+  "after": [
+   "nle.js"
+  ],
+  "After": [
+   "app.js"
+  ],
+  "After the number": [
+   "doctl.js"
+  ],
+  "Again": [
+   "app.js"
+  ],
+  "Ai": [
+   "app.js",
+   "index.html"
+  ],
+  "AI picture": [
+   "docu.js"
+  ],
+  "AI picture:": [
+   "docu.js"
+  ],
+  "AI sounds in this video": [
+   "app.js"
+  ],
+  "AI: OpenRouter (your account)": [
+   "docu.js"
+  ],
+  "AI: Smart Director on this PC (free)": [
+   "docu.js"
+  ],
+  "All": [
+   "app.js"
+  ],
+  "All back to image": [
+   "app.js"
+  ],
+  "All characters have pictures.": [
+   "app.js"
+  ],
+  "All models are open-license (Apache 2.0 / MIT). If a download link has moved, the item shows an error: tell Leccorside Ai and an updated catalog.json fixes it without a new version.": [
+   "app.js"
+  ],
+  "All scenes back to image?": [
+   "app.js"
+  ],
+  "All sources": [
+   "docu.js"
+  ],
+  "Already have ComfyUI? Pick its folder and LECCORTUBE uses it and its models (nothing is downloaded twice). Don't have it? Install it below.": [
+   "app.js"
+  ],
+  "Also delete the copy in your output folder": [
+   "app.js"
+  ],
+  "Also saved to": [
+   "app.js"
+  ],
+  "Ambience (rain, wind, room)": [
+   "app.js"
+  ],
+  "Ambience under the whole scene": [
+   "nle.js"
+  ],
+  "and": [
+   "app.js"
+  ],
+  "and a new video from it": [
+   "app.js"
+  ],
+  "and all its files on this PC (images, voice, videos, final video) will be deleted. This cannot be undone.": [
+   "app.js"
+  ],
+  "and finished files are copied there automatically.": [
+   "app.js"
+  ],
+  "and new characters": [
+   "app.js"
+  ],
+  "and queued": [
+   "app.js"
+  ],
+  "Angle": [
+   "app.js"
+  ],
+  "Animate the first": [
+   "app.js"
+  ],
+  "Animate the video scenes": [
+   "app.js"
+  ],
+  "Anything special to improve? (optional, e.g. 'shorter intro, more about his childhood')": [
+   "docu.js"
+  ],
+  "API key": [
+   "app.js"
+  ],
+  "API token copied:": [
+   "app.js"
+  ],
+  "Apply": [
+   "app.js"
+  ],
+  "Approve and create the documentary": [
+   "docu.js"
+  ],
+  "Approve in your browser, then come back here.": [
+   "docu.js"
+  ],
+  "as normal videos with their pictures.": [
+   "app.js"
+  ],
+  "Asking ComfyUI…": [
+   "app.js"
+  ],
+  "ASMR": [
+   "app.js"
+  ],
+  "at": [
+   "nle.js"
+  ],
+  "at the end": [
+   "nle.js"
+  ],
+  "Audience": [
+   "docu.js"
+  ],
+  "audio": [
+   "docu.js"
+  ],
+  "Audio": [
+   "app.js"
+  ],
+  "Audio track": [
+   "app.js"
+  ],
+  "audio/*": [
+   "nle.js"
+  ],
+  "Auto": [
+   "app.js"
+  ],
+  "AUTO": [
+   "app.js",
+   "docu.js"
+  ],
+  "Auto ·": [
+   "app.js"
+  ],
+  "Auto Director": [
+   "app.js"
+  ],
+  "Auto Director off: scenes keep the camera they have": [
+   "app.js"
+  ],
+  "Auto Director on: every new picture gets a fitting camera": [
+   "app.js"
+  ],
+  "Auto from the prompt": [
+   "app.js"
+  ],
+  "Auto picks": [
+   "app.js"
+  ],
+  "Auto publish": [
+   "app.js"
+  ],
+  "Automatic": [
+   "nle.js"
+  ],
+  "Automatic again": [
+   "nle.js"
+  ],
+  "Automatic sounds again": [
+   "nle.js"
+  ],
+  "Automation API": [
+   "app.js"
+  ],
+  "Available with Pro.": [
+   "app.js"
+  ],
+  "back to 12%": [
+   "app.js"
+  ],
+  "Back to automatic: characters and place are found from the prompt": [
+   "app.js"
+  ],
+  "Background music": [
+   "app.js"
+  ],
+  "Bad JSON:": [
+   "app.js"
+  ],
+  "Balance $": [
+   "docu.js"
+  ],
+  "Batch": [
+   "index.html"
+  ],
+  "Batch build": [
+   "app.js"
+  ],
+  "Beep Beep!": [
+   "app.js"
+  ],
+  "Before": [
+   "app.js"
+  ],
+  "Before the number": [
+   "doctl.js"
+  ],
+  "Before you approve: cost": [
+   "docu.js"
+  ],
+  "Best": [
+   "app.js"
+  ],
+  "BEST": [
+   "docu.js"
+  ],
+  "BEST FOR": [
+   "app.js"
+  ],
+  "Best match": [
+   "app.js"
+  ],
+  "Best moments as vertical Shorts with captions, hook, music, a cover image, title and description": [
+   "app.js"
+  ],
+  "Best quality": [
+   "app.js"
+  ],
+  "Best value": [
+   "app.js"
+  ],
+  "Better opening lines": [
+   "app.js"
+  ],
+  "Body check": [
+   "app.js"
+  ],
+  "Bring the sound back": [
+   "nle.js"
+  ],
+  "Browse": [
+   "docu.js"
+  ],
+  "Browse all": [
+   "app.js"
+  ],
+  "Budget": [
+   "app.js"
+  ],
+  "build ≈": [
+   "app.js"
+  ],
+  "Build everything": [
+   "app.js",
+   "docu.js"
+  ],
+  "Build everything makes a sheet for every place used by 2 or more scenes": [
+   "app.js"
+  ],
+  "Build in cloud": [
+   "app.js",
+   "docu.js"
+  ],
+  "Build selected": [
+   "app.js"
+  ],
+  "Build several videos one after another": [
+   "index.html"
+  ],
+  "Build several videos one after another, for example overnight. Each runs Build everything.": [
+   "app.js"
+  ],
+  "Build them right away": [
+   "app.js"
+  ],
+  "Building…": [
+   "app.js"
+  ],
+  "by": [
+   "index.html"
+  ],
+  "C:\\Users\\you\\Pictures\\Trip to Hunza": [
+   "docu.js"
+  ],
+  "C:\\Windows\\Fonts\\georgia.ttf": [
+   "app.js"
+  ],
+  "Camera": [
+   "app.js"
+  ],
+  "Camera composition": [
+   "app.js"
+  ],
+  "Camera examples:": [
+   "app.js"
+  ],
+  "Camera move": [
+   "doctl.js",
+   "nle.js"
+  ],
+  "Camera move (46)": [
+   "app.js"
+  ],
+  "Camera move saved": [
+   "nle.js"
+  ],
+  "Camera words are added to the image prompt. Camera moves go to the video model.": [
+   "app.js"
+  ],
+  "Camera, angle, light and motion for every scene, set before the pictures are made": [
+   "app.js"
+  ],
+  "Cancel": [
+   "app.js"
+  ],
+  "CapCut": [
+   "doctl.js"
+  ],
+  "CapCut draft (best effort) with the same media": [
+   "doctl.js"
+  ],
+  "Caption": [
+   "doctl.js"
+  ],
+  "Caption text for line": [
+   "nle.js"
+  ],
+  "Caption text saved": [
+   "nle.js"
+  ],
+  "Captions": [
+   "app.js",
+   "nle.js"
+  ],
+  "Captions are off. Click to turn them on and style them.": [
+   "nle.js"
+  ],
+  "Captions on / off": [
+   "nle.js"
+  ],
+  "Captions saved. The preview shows them, Render to burn them in.": [
+   "nle.js"
+  ],
+  "Captions use the spoken words again": [
+   "nle.js"
+  ],
+  "Cast": [
+   "app.js"
+  ],
+  "Cast (same face everywhere)": [
+   "app.js"
+  ],
+  "cast:": [
+   "app.js"
+  ],
+  "Cast:": [
+   "app.js"
+  ],
+  "Change": [
+   "app.js"
+  ],
+  "Change directions and write again": [
+   "app.js"
+  ],
+  "Change it on the Pro page (Script AI)": [
+   "docu.js"
+  ],
+  "change key": [
+   "app.js"
+  ],
+  "Change key": [
+   "app.js"
+  ],
+  "Change providers": [
+   "app.js"
+  ],
+  "Change the look (re-plans the timeline)": [
+   "doctl.js"
+  ],
+  "Change the mood of each part": [
+   "app.js"
+  ],
+  "Change the place below.": [
+   "app.js"
+  ],
+  "Changes apply at the next 4 · Render (no new images or voice needed).": [
+   "app.js"
+  ],
+  "changes from video to video so the channel does not look like a template": [
+   "app.js"
+  ],
+  "Changing narration re-records this scene's voice.": [
+   "app.js"
+  ],
+  "Changing the look makes a new plan. Your unsaved edits are dropped. Continue?": [
+   "doctl.js"
+  ],
+  "Changing this records the dialogue scenes again (only those).": [
+   "app.js"
+  ],
+  "Channel style": [
+   "docu.js"
+  ],
+  "Chapter": [
+   "nle.js"
+  ],
+  "Chapter title": [
+   "doctl.js"
+  ],
+  "chapters": [
+   "app.js",
+   "docu.js"
+  ],
+  "character": [
+   "app.js"
+  ],
+  "Character": [
+   "app.js"
+  ],
+  "Character added from your library": [
+   "app.js"
+  ],
+  "Character image set": [
+   "app.js"
+  ],
+  "Character image set from": [
+   "app.js"
+  ],
+  "Character library": [
+   "app.js"
+  ],
+  "Character sheet": [
+   "app.js"
+  ],
+  "Character sheet from this image": [
+   "app.js"
+  ],
+  "Character Studio": [
+   "app.js"
+  ],
+  "characters": [
+   "app.js"
+  ],
+  "Characters": [
+   "app.js"
+  ],
+  "Characters speak with their own voices. Run 1 · Voice to record.": [
+   "app.js"
+  ],
+  "Characters without a picture get one when an episode that has them is built.": [
+   "app.js"
+  ],
+  "Characters you already have keep their pictures. New ones get a character sheet when this episode is built, then they are shared with the whole season.": [
+   "app.js"
+  ],
+  "characters,": [
+   "app.js"
+  ],
+  "characters. Build Episode 1: it makes every character sheet first.": [
+   "app.js"
+  ],
+  "chars": [
+   "app.js"
+  ],
+  "ChatGPT (OpenAI)": [
+   "app.js"
+  ],
+  "Cheapest studio voice, 30 voices, 70+ languages, you describe how it should sound. The Google AI Studio key also runs Google research, cloud pictures and Veo video.": [
+   "app.js"
+  ],
+  "Check": [
+   "app.js"
+  ],
+  "Check again / repair": [
+   "app.js"
+  ],
+  "Check for updates": [
+   "app.js"
+  ],
+  "Check in the cloud": [
+   "app.js"
+  ],
+  "Check my models": [
+   "app.js"
+  ],
+  "Check on this PC": [
+   "app.js"
+  ],
+  "check the song and scenes, then build": [
+   "app.js"
+  ],
+  "Check:": [
+   "docu.js"
+  ],
+  "Checked in the cloud.": [
+   "app.js"
+  ],
+  "Checked on this PC.": [
+   "app.js"
+  ],
+  "Checking for updates…": [
+   "app.js"
+  ],
+  "Checking…": [
+   "app.js"
+  ],
+  "Choose files": [
+   "app.js"
+  ],
+  "Choose for me": [
+   "docu.js"
+  ],
+  "choose from scenes": [
+   "app.js"
+  ],
+  "Choose the folder with your photos and clips": [
+   "docu.js"
+  ],
+  "Choose the picture": [
+   "docu.js"
+  ],
+  "Chosen automatically. Changing it makes this scene's sounds yours.": [
+   "nle.js"
+  ],
+  "Cinema bars": [
+   "app.js"
+  ],
+  "Classic": [
+   "docu.js"
+  ],
+  "Claude (Anthropic)": [
+   "app.js"
+  ],
+  "Claude / ChatGPT / Gemini key (add on the Pro page)": [
+   "docu.js"
+  ],
+  "Clear, natural voices. You describe the tone, pace and emotion in plain words.": [
+   "app.js"
+  ],
+  "clearer, closer to the original": [
+   "app.js"
+  ],
+  "Click": [
+   "app.js"
+  ],
+  "Click a block to edit it. Click the voice row to jump there.": [
+   "doctl.js"
+  ],
+  "Click a caption, picture, voice line, sound or music part": [
+   "nle.js"
+  ],
+  "Click a line to edit it. Click a picture to choose another one or an AI picture.": [
+   "docu.js"
+  ],
+  "Click a voice, press play to hear it": [
+   "app.js"
+  ],
+  "Click to choose another picture": [
+   "docu.js"
+  ],
+  "Click to choose by hand.": [
+   "app.js"
+  ],
+  "Click to edit narration": [
+   "app.js"
+  ],
+  "Click to hear it": [
+   "app.js"
+  ],
+  "click to listen": [
+   "app.js"
+  ],
+  "Click to see it big": [
+   "app.js"
+  ],
+  "clip": [
+   "doctl.js"
+  ],
+  "Clip": [
+   "app.js"
+  ],
+  "Clip added": [
+   "app.js"
+  ],
+  "Clip audio": [
+   "nle.js"
+  ],
+  "Clip length": [
+   "app.js"
+  ],
+  "Clip sound ·": [
+   "nle.js"
+  ],
+  "Clip sound is back": [
+   "nle.js"
+  ],
+  "Clip sound removed": [
+   "nle.js"
+  ],
+  "Clip volume saved": [
+   "nle.js"
+  ],
+  "Clone my voice": [
+   "app.js"
+  ],
+  "Clone your voice": [
+   "app.js"
+  ],
+  "Cloning your voice, about 30 seconds…": [
+   "app.js"
+  ],
+  "Close": [
+   "app.js",
+   "index.html"
+  ],
+  "Close anyway": [
+   "app.js"
+  ],
+  "Close LECCORTUBE and start it again from LECCORTUBE.exe to finish.": [
+   "app.js"
+  ],
+  "Close LECCORTUBE?": [
+   "app.js"
+  ],
+  "closeModal('pickModal');go('setup')": [
+   "app.js"
+  ],
+  "Cloud": [
+   "app.js"
+  ],
+  "Cloud characters": [
+   "app.js"
+  ],
+  "Cloud music": [
+   "app.js"
+  ],
+  "Cloud music: parts you make again use the model below. Music already made stays.": [
+   "app.js"
+  ],
+  "Cloud picture, a few seconds": [
+   "app.js"
+  ],
+  "Cloud pictures": [
+   "app.js"
+  ],
+  "Cloud pictures and clips": [
+   "app.js"
+  ],
+  "Cloud scene sheets": [
+   "app.js"
+  ],
+  "Cloud script and pictures": [
+   "app.js"
+  ],
+  "Cloud voice": [
+   "app.js"
+  ],
+  "Cloud voices": [
+   "app.js"
+  ],
+  "Cloud: pick the model for character sheets. Voices now come from your cloud voices.": [
+   "app.js"
+  ],
+  "Cloud: pick the model for each place's sheet.": [
+   "app.js"
+  ],
+  "Cloud: pictures and clips use the models below. Change any scene with its model button.": [
+   "app.js"
+  ],
+  "Cold open": [
+   "app.js"
+  ],
+  "Collapse sidebar": [
+   "index.html"
+  ],
+  "Color grade": [
+   "app.js"
+  ],
+  "Colour grade made from this frame": [
+   "app.js"
+  ],
+  "columns. Up to 200.": [
+   "app.js"
+  ],
+  "ComfyUI": [
+   "app.js"
+  ],
+  "ComfyUI folder": [
+   "app.js"
+  ],
+  "ComfyUI folder saved": [
+   "app.js"
+  ],
+  "ComfyUI is running": [
+   "app.js"
+  ],
+  "Coming soon": [
+   "app.js"
+  ],
+  "Compares this script with your other videos. YouTube does not pay for mass-produced, templated content": [
+   "app.js"
+  ],
+  "Composing music…": [
+   "app.js"
+  ],
+  "Confirm": [
+   "app.js"
+  ],
+  "confirmed by 2+ websites": [
+   "app.js"
+  ],
+  "Connect": [
+   "app.js"
+  ],
+  "Connect a key on the Pro page": [
+   "app.js"
+  ],
+  "Connect a key on the Pro page first": [
+   "app.js"
+  ],
+  "Connect Google AI Studio or ElevenLabs on the Pro page": [
+   "app.js"
+  ],
+  "Connect once. LECCORTUBE picks the best model on each account by itself. You pay the provider directly, nothing extra to us.": [
+   "app.js"
+  ],
+  "connect OpenRouter": [
+   "docu.js"
+  ],
+  "Connect OpenRouter": [
+   "docu.js"
+  ],
+  "Connect OpenRouter above, no key to copy.": [
+   "app.js"
+  ],
+  "Connect OpenRouter on the Pro page first (one click).": [
+   "app.js"
+  ],
+  "Connect your AI accounts": [
+   "app.js"
+  ],
+  "Connect your cloud keys": [
+   "app.js"
+  ],
+  "Connected": [
+   "app.js"
+  ],
+  "Connected. Press play on any voice to hear it.": [
+   "app.js"
+  ],
+  "Continue": [
+   "app.js"
+  ],
+  "Continue anyway": [
+   "app.js"
+  ],
+  "Continue from where it stopped. Finished voices, images and clips are kept.": [
+   "app.js"
+  ],
+  "Copied": [
+   "app.js"
+  ],
+  "Copy": [
+   "app.js"
+  ],
+  "Copy description": [
+   "app.js"
+  ],
+  "Copy tags": [
+   "app.js"
+  ],
+  "Copy title": [
+   "app.js"
+  ],
+  "Cost estimate: about $": [
+   "app.js"
+  ],
+  "cost of the AI for one script, research and fact check included": [
+   "app.js"
+  ],
+  "Cost of what is left": [
+   "app.js"
+  ],
+  "Costs nothing": [
+   "app.js"
+  ],
+  "Costs nothing, only time": [
+   "app.js"
+  ],
+  "Costs nothing, only time. The first time it may download the voice model.": [
+   "app.js"
+  ],
+  "Could not make the key": [
+   "app.js"
+  ],
+  "Could not paint the sample": [
+   "app.js"
+  ],
+  "Could not reach the update server. Check the internet connection.": [
+   "app.js"
+  ],
+  "Cover": [
+   "app.js"
+  ],
+  "Create": [
+   "app.js"
+  ],
+  "Create Episode": [
+   "app.js"
+  ],
+  "Create error report": [
+   "app.js"
+  ],
+  "Created": [
+   "app.js"
+  ],
+  "Creative": [
+   "app.js"
+  ],
+  "Credit needed": [
+   "docu.js"
+  ],
+  "Crimson": [
+   "app.js"
+  ],
+  "cs_": [
+   "app.js"
+  ],
+  "Ctrl": [
+   "nle.js"
+  ],
+  "Custom (OpenAI-compatible URL)": [
+   "app.js"
+  ],
+  "custom look": [
+   "app.js"
+  ],
+  "cut into shots of": [
+   "app.js"
+  ],
+  "danger solid": [
+   "app.js"
+  ],
+  "Dawood": [
+   "app.js"
+  ],
+  "Default": [
+   "app.js"
+  ],
+  "Default for new videos:": [
+   "app.js"
+  ],
+  "Default picture model": [
+   "app.js"
+  ],
+  "Del": [
+   "nle.js"
+  ],
+  "Delete": [
+   "app.js",
+   "docu.js"
+  ],
+  "Delete forever": [
+   "app.js"
+  ],
+  "Delete scene": [
+   "app.js"
+  ],
+  "Delete the damaged model files?": [
+   "app.js"
+  ],
+  "Delete this character?": [
+   "app.js"
+  ],
+  "Delete this documentary?": [
+   "docu.js"
+  ],
+  "Delete this place?": [
+   "app.js"
+  ],
+  "Delete this preset?": [
+   "app.js"
+  ],
+  "Delete this project and its files": [
+   "app.js"
+  ],
+  "Delete this project?": [
+   "app.js"
+  ],
+  "Delete this sample": [
+   "app.js"
+  ],
+  "Delete this scene from the story": [
+   "app.js"
+  ],
+  "Delete voice sample?": [
+   "app.js"
+  ],
+  "deletes this project's generated images and narration": [
+   "app.js"
+  ],
+  "Delivery": [
+   "app.js"
+  ],
+  "Describe from photo (AI)": [
+   "app.js"
+  ],
+  "Description": [
+   "app.js"
+  ],
+  "Description and tags": [
+   "app.js"
+  ],
+  "Description opening:": [
+   "app.js"
+  ],
+  "desktop ready": [
+   "app.js"
+  ],
+  "Details": [
+   "app.js"
+  ],
+  "Dialogue": [
+   "app.js"
+  ],
+  "Dialogue is set to": [
+   "app.js"
+  ],
+  "Dialogue video scenes (with @Name: lines) get moving lips. Run after 3 · Videos, then 4 · Render.": [
+   "app.js"
+  ],
+  "Direct again": [
+   "app.js"
+  ],
+  "Director": [
+   "app.js"
+  ],
+  "disabled title='Render the video first'": [
+   "nle.js"
+  ],
+  "disabled title=\"Too short for this line\"": [
+   "app.js"
+  ],
+  "disagreements mentioned": [
+   "app.js"
+  ],
+  "Discard": [
+   "app.js"
+  ],
+  "Disconnect": [
+   "app.js",
+   "docu.js"
+  ],
+  "Disconnect this account from LECCORTUBE?": [
+   "app.js"
+  ],
+  "disputed": [
+   "docu.js"
+  ],
+  "Disputed": [
+   "docu.js"
+  ],
+  "Documentary Studio": [
+   "app.js",
+   "docu.js"
+  ],
+  "Documentary style": [
+   "docu.js"
+  ],
+  "Documentary timeline": [
+   "doctl.js"
+  ],
+  "documents": [
+   "docu.js"
+  ],
+  "Done": [
+   "app.js"
+  ],
+  "Done:": [
+   "app.js"
+  ],
+  "Download": [
+   "app.js"
+  ],
+  "Download update": [
+   "app.js"
+  ],
+  "Download video": [
+   "app.js"
+  ],
+  "Downloading…": [
+   "app.js"
+  ],
+  "drag error": [
+   "app.js"
+  ],
+  "Drag files from your PC onto the tracks": [
+   "nle.js"
+  ],
+  "drag throw": [
+   "app.js"
+  ],
+  "Drag: longer or shorter pause after this line": [
+   "nle.js"
+  ],
+  "Drop a music file (mp3, wav…) on the Music track": [
+   "nle.js"
+  ],
+  "Drop a trailer or a picture. Use a frame as the style image (new pictures copy its look), or match its colours. Only for look and colour, never copy a film's scenes.": [
+   "app.js"
+  ],
+  "Drop pictures or clips on": [
+   "nle.js"
+  ],
+  "Drop pictures, video clips or sounds": [
+   "nle.js"
+  ],
+  "Dub into other languages": [
+   "app.js"
+  ],
+  "Dubbing… (a few minutes per language)": [
+   "app.js"
+  ],
+  "dust in the air": [
+   "app.js"
+  ],
+  "E:\\My sounds\\Sound Effects": [
+   "app.js"
+  ],
+  "e.g. deep and calm, like a late night radio host, slow with long pauses": [
+   "app.js"
+  ],
+  "e.g. Our trip to Hunza valley": [
+   "docu.js"
+  ],
+  "e.g. Rashid Minhas, the Pakistani pilot who died in 1971": [
+   "docu.js"
+  ],
+  "e.g. Voice: warm and wise. Tone: hopeful. Pacing: slow.": [
+   "app.js"
+  ],
+  "Edge": [
+   "app.js"
+  ],
+  "Edge · free online": [
+   "app.js"
+  ],
+  "Edit prompts, then Save.": [
+   "app.js"
+  ],
+  "Edit the words, timing, or switch it off. The preview above shows it.": [
+   "doctl.js"
+  ],
+  "Edit your video like in Premiere: a live preview, captions, pictures, voice, sound effects and music on their own tracks. Drag, trim, edit the words and drop your own files from the PC, then render.": [
+   "nle.js"
+  ],
+  "edited": [
+   "nle.js"
+  ],
+  "Effect": [
+   "app.js"
+  ],
+  "Effects volume": [
+   "app.js"
+  ],
+  "effects, your own sample, fine tuning": [
+   "app.js"
+  ],
+  "ElevenLabs · connected": [
+   "app.js"
+  ],
+  "ElevenLabs key missing": [
+   "app.js"
+  ],
+  "ElevenLabs makes a new sound for every scene, written from that scene's words.": [
+   "app.js"
+  ],
+  "ElevenLabs Sound Effects": [
+   "app.js"
+  ],
+  "elevenlabs.io (Profile, API keys)": [
+   "app.js"
+  ],
+  "Ember": [
+   "app.js"
+  ],
+  "Ending": [
+   "app.js"
+  ],
+  "Engine offline": [
+   "app.js"
+  ],
+  "EP": [
+   "app.js"
+  ],
+  "epic cinematic photography": [
+   "app.js"
+  ],
+  "episode": [
+   "app.js"
+  ],
+  "Episode": [
+   "app.js"
+  ],
+  "Episode title": [
+   "app.js"
+  ],
+  "EPISODE TITLE": [
+   "app.js"
+  ],
+  "Episode trailer": [
+   "app.js"
+  ],
+  "Episodes": [
+   "app.js"
+  ],
+  "Episodes stay": [
+   "app.js"
+  ],
+  "Error": [
+   "app.js"
+  ],
+  "Error:": [
+   "app.js",
+   "docu.js",
+   "doctl.js",
+   "nle.js"
+  ],
+  "Every AI sound is made once and kept in the project. Building the video again costs nothing. If a sound fails, the library sound is used.": [
+   "app.js"
+  ],
+  "Every character gets its own voice. Pick each one on the Cast page (3 voices are suggested for you). The narrator reads the rest.": [
+   "app.js"
+  ],
+  "Every picture follows this look. Pick one and a sample picture is painted for the colour grade below.": [
+   "app.js"
+  ],
+  "Every scene becomes a still image again. Generated videos stay on disk.": [
+   "app.js"
+  ],
+  "Every scene has a camera, lens, light and motion now. Open Shot on any scene to change it.": [
+   "app.js"
+  ],
+  "Everything after it moves right. Nothing is replaced.": [
+   "nle.js"
+  ],
+  "everything automatic, start to finish": [
+   "app.js"
+  ],
+  "example pictures": [
+   "app.js"
+  ],
+  "Explainer cuts": [
+   "app.js"
+  ],
+  "Extra details": [
+   "app.js"
+  ],
+  "extra words: flute, rain, 70 bpm…": [
+   "app.js"
+  ],
+  "Face described": [
+   "app.js"
+  ],
+  "Face geometry": [
+   "app.js"
+  ],
+  "Fact check": [
+   "app.js"
+  ],
+  "facts": [
+   "app.js"
+  ],
+  "Facts": [
+   "app.js"
+  ],
+  "Fade in": [
+   "app.js"
+  ],
+  "Fade to black": [
+   "app.js"
+  ],
+  "Farid = a 60 year old clockmaker, white beard, round glasses, brown leather apron Laila = a 10 year old girl, curly black hair, yellow dress Rustam = a tall merchant, black turban, red coat": [
+   "app.js"
+  ],
+  "Fast opening": [
+   "doctl.js"
+  ],
+  "Fast, then slow": [
+   "doctl.js"
+  ],
+  "Fill at least one PICTURE line": [
+   "app.js"
+  ],
+  "Film colour, grain, vignette and cinema bars, added when the video renders": [
+   "app.js"
+  ],
+  "Film grain": [
+   "app.js"
+  ],
+  "Final Documentary": [
+   "docu.js"
+  ],
+  "Find photos and clips": [
+   "docu.js"
+  ],
+  "Find places in my story": [
+   "app.js"
+  ],
+  "Finding voices…": [
+   "app.js"
+  ],
+  "First dub downloads the dubbing voice model once (about 3 GB, with progress). You can also get it now: Setup Center > Dubbing voices.": [
+   "app.js"
+  ],
+  "First guess, gets exact after your first build": [
+   "app.js"
+  ],
+  "First natural voice takes 1 to 3 minutes (the model loads). Next ones are fast.": [
+   "app.js"
+  ],
+  "Fit": [
+   "nle.js"
+  ],
+  "Fix a spelling or shorten it. The voice does not change.": [
+   "nle.js"
+  ],
+  "FLUX or Wan stuck, or \"Error while deserializing header\"? A model file is damaged. The doctor finds it, moves it aside and downloads a clean copy. No need to open the ComfyUI folder.": [
+   "app.js"
+  ],
+  "folder": [
+   "doctl.js"
+  ],
+  "Folder": [
+   "docu.js"
+  ],
+  "Folder on this PC": [
+   "app.js"
+  ],
+  "Folder scanned": [
+   "docu.js"
+  ],
+  "Folder:": [
+   "app.js",
+   "doctl.js"
+  ],
+  "Follow Leccorside Ai on Instagram (@leccorsideai)": [
+   "index.html"
+  ],
+  "Font": [
+   "app.js",
+   "nle.js"
+  ],
+  "For better research on this PC, install a writing model:": [
+   "docu.js"
+  ],
+  "Found automatically.": [
+   "app.js"
+  ],
+  "Frame at": [
+   "doctl.js"
+  ],
+  "Frame set as style image: new images copy its look.": [
+   "app.js"
+  ],
+  "frame(s) added": [
+   "app.js"
+  ],
+  "Framed picture on the background (inset)": [
+   "doctl.js"
+  ],
+  "Free": [
+   "app.js"
+  ],
+  "Free · 5 s clips, up to 3 chained (15 s)": [
+   "app.js"
+  ],
+  "Free · on your GPU": [
+   "app.js"
+  ],
+  "Free on your PC, or studio cloud voices with your own key.": [
+   "app.js"
+  ],
+  "Free to use": [
+   "docu.js"
+  ],
+  "Free version": [
+   "app.js"
+  ],
+  "Free, runs on this PC with Ollama.": [
+   "app.js"
+  ],
+  "Free, uses your GPU": [
+   "app.js"
+  ],
+  "Free.": [
+   "app.js"
+  ],
+  "Free. ACE-Step makes the music on your GPU, safe for YouTube.": [
+   "app.js"
+  ],
+  "Free. Kokoro, natural voices from your own sample and Microsoft Edge voices.": [
+   "app.js"
+  ],
+  "Free. Pictures with FLUX and clips with Wan on your GPU, pick a model per scene.": [
+   "app.js"
+  ],
+  "Free. Real recorded sounds from the built-in library and your own folder.": [
+   "app.js"
+  ],
+  "Free. Scene sheets on your GPU with ComfyUI.": [
+   "app.js"
+  ],
+  "Free. Sheets on your GPU with ComfyUI, voices from Kokoro, Edge and your natural voices.": [
+   "app.js"
+  ],
+  "From a folder": [
+   "docu.js"
+  ],
+  "From a topic": [
+   "docu.js"
+  ],
+  "From about $0.08 per part": [
+   "app.js"
+  ],
+  "From episode": [
+   "app.js"
+  ],
+  "From my folder": [
+   "docu.js"
+  ],
+  "From my library": [
+   "app.js"
+  ],
+  "From my PC": [
+   "app.js",
+   "nle.js"
+  ],
+  "From scene": [
+   "app.js"
+  ],
+  "from Setup Center for translation.": [
+   "app.js"
+  ],
+  "from Setup Center.": [
+   "app.js"
+  ],
+  "from your PC": [
+   "nle.js"
+  ],
+  "from your PC is on": [
+   "nle.js"
+  ],
+  "Full YouTube text file (title, description, chapters, tags, checklist)": [
+   "app.js"
+  ],
+  "Fun & memes": [
+   "app.js"
+  ],
+  "GB": [
+   "app.js"
+  ],
+  "GB RAM ·": [
+   "app.js"
+  ],
+  "GB VRAM": [
+   "app.js"
+  ],
+  "GB VRAM ·": [
+   "app.js"
+  ],
+  "Gemini": [
+   "app.js"
+  ],
+  "Generating 4 options…": [
+   "app.js"
+  ],
+  "Get driver": [
+   "app.js"
+  ],
+  "Get Pro": [
+   "app.js"
+  ],
+  "Get the key at": [
+   "app.js"
+  ],
+  "Get your key": [
+   "app.js"
+  ],
+  "Get your key from": [
+   "app.js"
+  ],
+  "gfx": [
+   "doctl.js"
+  ],
+  "Give the character a name": [
+   "app.js"
+  ],
+  "Give the season a name.": [
+   "app.js"
+  ],
+  "golden hour, long shadows": [
+   "app.js"
+  ],
+  "Google": [
+   "app.js"
+  ],
+  "Google AI": [
+   "app.js"
+  ],
+  "Google Gemini": [
+   "app.js"
+  ],
+  "Google Gemini, ElevenLabs or OpenAI on your own key. Fast on any PC.": [
+   "app.js"
+  ],
+  "GPU (CUDA)": [
+   "app.js"
+  ],
+  "Grade strength": [
+   "app.js"
+  ],
+  "graphic ·": [
+   "doctl.js"
+  ],
+  "Graphics": [
+   "doctl.js"
+  ],
+  "Grok (xAI)": [
+   "app.js"
+  ],
+  "Groq (very fast)": [
+   "app.js"
+  ],
+  "half price, fastest": [
+   "app.js"
+  ],
+  "Happy nursery rhyme": [
+   "app.js"
+  ],
+  "Happy with it? Click Build everything. Not happy? Change voice, look or captions and make the preview again.": [
+   "app.js"
+  ],
+  "Headline": [
+   "doctl.js"
+  ],
+  "Heads up": [
+   "app.js"
+  ],
+  "Hear it": [
+   "nle.js"
+  ],
+  "Hear this line": [
+   "nle.js"
+  ],
+  "Help and repair": [
+   "app.js"
+  ],
+  "Higgsfield": [
+   "app.js"
+  ],
+  "Highlighted word": [
+   "doctl.js"
+  ],
+  "Hold after the narration (s)": [
+   "app.js"
+  ],
+  "Hold last frame": [
+   "app.js"
+  ],
+  "Hook": [
+   "app.js"
+  ],
+  "Hook Doctor": [
+   "app.js"
+  ],
+  "Horror gets stings, creaks and a dark drone. Documentary gets clean whooshes, paper and camera sounds. Funny and meme sounds only play in": [
+   "app.js"
+  ],
+  "how close to the original voice": [
+   "app.js"
+  ],
+  "how it is said, never read aloud": [
+   "app.js"
+  ],
+  "How the documentary should feel.": [
+   "docu.js"
+  ],
+  "How things move": [
+   "app.js"
+  ],
+  "I have looked at your folder.": [
+   "docu.js"
+  ],
+  "I suggest:": [
+   "docu.js"
+  ],
+  "I will choose on the Cast page": [
+   "app.js"
+  ],
+  "image": [
+   "app.js"
+  ],
+  "Image": [
+   "app.js"
+  ],
+  "image 1 / image 2": [
+   "app.js"
+  ],
+  "Image prompt": [
+   "app.js"
+  ],
+  "image/*,video/*": [
+   "nle.js"
+  ],
+  "Imagery / scene": [
+   "app.js"
+  ],
+  "images": [
+   "app.js"
+  ],
+  "Images": [
+   "docu.js"
+  ],
+  "Import many scripts at once": [
+   "app.js"
+  ],
+  "Improve script": [
+   "app.js"
+  ],
+  "Improve script makes weak writing stronger. The story, names, order of events and ending stay the same. You see the new version first.": [
+   "app.js"
+  ],
+  "Improve the story": [
+   "docu.js"
+  ],
+  "improved": [
+   "docu.js"
+  ],
+  "Improved version": [
+   "app.js"
+  ],
+  "Improving… (a long script takes a few minutes)": [
+   "app.js"
+  ],
+  "in": [
+   "docu.js"
+  ],
+  "in image prompts to use a character, and": [
+   "app.js"
+  ],
+  "in Setup Center and they switch to human-like voices automatically.": [
+   "app.js"
+  ],
+  "In the cloud": [
+   "docu.js"
+  ],
+  "in the script": [
+   "app.js"
+  ],
+  "in the script to give Leo his own voice.": [
+   "app.js"
+  ],
+  "in the script, or press New character.": [
+   "app.js"
+  ],
+  "in words": [
+   "app.js"
+  ],
+  "Indoor": [
+   "app.js"
+  ],
+  "Indoor: inside views + the outside of the building": [
+   "app.js"
+  ],
+  "inset": [
+   "doctl.js"
+  ],
+  "Inspector": [
+   "nle.js"
+  ],
+  "Instagram @leccorsideai": [
+   "app.js"
+  ],
+  "Install \"Smart Director (Ollama)\" in Setup Center for smarter AI titles.": [
+   "app.js"
+  ],
+  "Install now": [
+   "app.js"
+  ],
+  "Install now and click the button again when it shows Installed. Downloads resume if the internet drops.": [
+   "app.js"
+  ],
+  "Install one in Setup Center": [
+   "app.js"
+  ],
+  "Install Smart Director (Ollama) for AI written hooks, or check in the cloud with Pro.": [
+   "app.js"
+  ],
+  "Install Smart Director in Setup Center": [
+   "docu.js"
+  ],
+  "Installing in Setup Center. You can keep working.": [
+   "app.js"
+  ],
+  "Installing update": [
+   "index.html"
+  ],
+  "is made in the cloud again.": [
+   "app.js"
+  ],
+  "Its picture, voice and clip leave the video. Re-split on the Script tab brings it back.": [
+   "nle.js"
+  ],
+  "Its picture, voice and video are deleted and the narration is removed from the video. The script is not changed, so Re-split brings it back. Render again to update the final video.": [
+   "app.js"
+  ],
+  "Its research, downloaded media and script are deleted. Your own folder and any created project are not touched.": [
+   "docu.js"
+  ],
+  "Its scenes keep their pictures but no longer share this sheet.": [
+   "app.js"
+  ],
+  "Its voice stays. Only the picture or clip changes.": [
+   "nle.js"
+  ],
+  "keep mine": [
+   "app.js"
+  ],
+  "Keeps the channel safe for monetisation": [
+   "app.js"
+  ],
+  "Keys are saved only on this PC and sent only to their own provider.": [
+   "app.js"
+  ],
+  "Kids choir": [
+   "app.js"
+  ],
+  "Kids Rhyme": [
+   "app.js"
+  ],
+  "Kling 2.6 video and Grok Image 2 pictures that keep characters the same.": [
+   "app.js"
+  ],
+  "Kokoro": [
+   "app.js"
+  ],
+  "Kokoro · free": [
+   "app.js"
+  ],
+  "Language": [
+   "docu.js"
+  ],
+  "Last render": [
+   "doctl.js"
+  ],
+  "Later": [
+   "app.js",
+   "docu.js"
+  ],
+  "Laying out the timeline...": [
+   "nle.js"
+  ],
+  "Learned from your earlier builds on this PC": [
+   "app.js"
+  ],
+  "LECCOR": [
+   "index.html"
+  ],
+  "Leccorside": [
+   "app.js",
+   "index.html"
+  ],
+  "LECCORTUBE": [
+   "index.html"
+  ],
+  "LECCORTUBE · Leccorside Ai": [
+   "index.html"
+  ],
+  "LECCORTUBE picks the style that fits the topic (history, war, business, science...).": [
+   "docu.js"
+  ],
+  "LECCORTUBE Pro": [
+   "app.js"
+  ],
+  "LECCORTUBE Pro is active. Thank you!": [
+   "app.js"
+  ],
+  "LECCORTUBE Pro is launching soon. Join the Discord to get it first.": [
+   "app.js"
+  ],
+  "LECCORTUBE researches it, checks every fact, finds free-to-use photos, maps and clips, and writes the script.": [
+   "docu.js"
+  ],
+  "LECCORTUBE restarts in a few seconds. Your projects and settings are safe.": [
+   "index.html"
+  ],
+  "LECCORTUBE updates": [
+   "app.js"
+  ],
+  "Left to make": [
+   "app.js"
+  ],
+  "Length (minutes)": [
+   "docu.js"
+  ],
+  "Length (s)": [
+   "doctl.js"
+  ],
+  "Lens": [
+   "app.js"
+  ],
+  "Let LECCORTUBE choose": [
+   "app.js"
+  ],
+  "Let LECCORTUBE look at every picture": [
+   "docu.js"
+  ],
+  "Let LECCORTUBE pick the characters and place again": [
+   "app.js"
+  ],
+  "Level of this part:": [
+   "nle.js"
+  ],
+  "Library sounds": [
+   "app.js"
+  ],
+  "License": [
+   "app.js"
+  ],
+  "License key (from your Gumroad email)": [
+   "app.js"
+  ],
+  "life in ancient rome for falling asleep": [
+   "app.js"
+  ],
+  "Light": [
+   "app.js"
+  ],
+  "Like": [
+   "docu.js"
+  ],
+  "Like character sheets, but for rooms and streets. Every scene in the same place uses its sheet, so the room keeps the same walls, furniture and light.": [
+   "app.js"
+  ],
+  "Line saved": [
+   "docu.js"
+  ],
+  "line(s) fixed by fact check": [
+   "app.js"
+  ],
+  "lines to check": [
+   "docu.js"
+  ],
+  "Lines with numbers, times or quotes that are not in your files. Check them before you approve.": [
+   "docu.js"
+  ],
+  "Lines written as": [
+   "app.js"
+  ],
+  "Linked": [
+   "nle.js"
+  ],
+  "Linked selects picture and voice together": [
+   "nle.js"
+  ],
+  "Linked to its video. Unlink (top left) to pick the sound on its own.": [
+   "nle.js"
+  ],
+  "Linked: picture and voice are selected together": [
+   "nle.js"
+  ],
+  "Linked: picture and voice of a scene are selected together. Unlinked: each on its own.": [
+   "nle.js"
+  ],
+  "Lip sync": [
+   "app.js"
+  ],
+  "Lip sync dialogue scenes": [
+   "app.js"
+  ],
+  "Listen": [
+   "app.js"
+  ],
+  "Listen: voice + music": [
+   "app.js"
+  ],
+  "Live preview": [
+   "nle.js"
+  ],
+  "Loading cloud voices…": [
+   "app.js"
+  ],
+  "Loading the models and prices…": [
+   "app.js"
+  ],
+  "Loading the models…": [
+   "app.js"
+  ],
+  "Loading the music models…": [
+   "app.js"
+  ],
+  "Loading your models…": [
+   "app.js"
+  ],
+  "Loading…": [
+   "app.js"
+  ],
+  "Local AI through Ollama (Setup Center)": [
+   "app.js"
+  ],
+  "Log": [
+   "app.js",
+   "docu.js"
+  ],
+  "Log in and click Authorize. No key to copy.": [
+   "docu.js"
+  ],
+  "Look": [
+   "app.js"
+  ],
+  "Look (optional: role, clothes, hair)": [
+   "app.js"
+  ],
+  "Look of the place": [
+   "app.js"
+  ],
+  "Look:": [
+   "doctl.js"
+  ],
+  "Looking at the photo…": [
+   "app.js"
+  ],
+  "Looks original compared with your other videos.": [
+   "app.js"
+  ],
+  "loud": [
+   "app.js"
+  ],
+  "lower = more emotion, higher = steadier": [
+   "app.js"
+  ],
+  "Lyrics": [
+   "app.js"
+  ],
+  "Lyrics written. Change any line you like.": [
+   "app.js"
+  ],
+  "Made by LECCORTUBE, free to use.": [
+   "doctl.js"
+  ],
+  "Made free on your PC. Click to make it in the cloud again.": [
+   "app.js"
+  ],
+  "Made in the cloud with the model above.": [
+   "app.js"
+  ],
+  "Made when built": [
+   "app.js"
+  ],
+  "made-up story": [
+   "app.js"
+  ],
+  "Main character": [
+   "app.js"
+  ],
+  "Make": [
+   "app.js"
+  ],
+  "Make a character sheet from this image": [
+   "app.js"
+  ],
+  "Make a new picture for this line": [
+   "docu.js"
+  ],
+  "Make a new plan from the voice? Your edits on this timeline are dropped.": [
+   "doctl.js"
+  ],
+  "Make a sheet or upload a photo": [
+   "app.js"
+  ],
+  "Make a tester key (paste the tester's PC ID)": [
+   "app.js"
+  ],
+  "Make again": [
+   "app.js"
+  ],
+  "Make character sheet": [
+   "app.js"
+  ],
+  "Make it the default for new videos": [
+   "app.js"
+  ],
+  "Make key": [
+   "app.js"
+  ],
+  "Make missing music": [
+   "app.js"
+  ],
+  "Make music for my video": [
+   "app.js"
+  ],
+  "Make my rhyme video": [
+   "app.js"
+  ],
+  "Make only this scene on your PC, free (FLUX / Wan)": [
+   "app.js"
+  ],
+  "Make scene sheet": [
+   "app.js"
+  ],
+  "Make sheet again": [
+   "app.js"
+  ],
+  "Make Shorts": [
+   "app.js"
+  ],
+  "Make the music": [
+   "app.js"
+  ],
+  "Make trailer": [
+   "app.js"
+  ],
+  "Make videos from a Google Sheet, n8n, Make or Zapier.": [
+   "app.js"
+  ],
+  "makes it for you too.": [
+   "app.js"
+  ],
+  "Making Shorts…": [
+   "app.js"
+  ],
+  "Making the character sheet (8 views)…": [
+   "app.js"
+  ],
+  "Making the preview…": [
+   "app.js"
+  ],
+  "Making the scene sheet…": [
+   "app.js"
+  ],
+  "Match colours": [
+   "app.js"
+  ],
+  "Material": [
+   "docu.js"
+  ],
+  "Matte": [
+   "app.js"
+  ],
+  "Maximise": [
+   "app.js",
+   "index.html"
+  ],
+  "Media collected": [
+   "docu.js"
+  ],
+  "min": [
+   "app.js"
+  ],
+  "Minimise": [
+   "index.html"
+  ],
+  "Mixing…": [
+   "app.js"
+  ],
+  "model": [
+   "app.js"
+  ],
+  "Model": [
+   "app.js",
+   "docu.js"
+  ],
+  "Model Doctor": [
+   "app.js"
+  ],
+  "model for": [
+   "app.js"
+  ],
+  "model for this scene": [
+   "app.js"
+  ],
+  "model:": [
+   "app.js"
+  ],
+  "Models folder:": [
+   "app.js"
+  ],
+  "models: click the Model box to pick one": [
+   "app.js"
+  ],
+  "Mood plan made from the video type": [
+   "app.js"
+  ],
+  "more uniform colours, less variety": [
+   "app.js"
+  ],
+  "More voices": [
+   "app.js"
+  ],
+  "most expressive, emotions": [
+   "app.js"
+  ],
+  "Mostly AI pictures": [
+   "docu.js"
+  ],
+  "Motion": [
+   "app.js"
+  ],
+  "Motion graphics, labels, article clippings, grid, grade, sound effects and 3 second pacing (fast start, then calmer). Every look is made by LECCORTUBE, nothing copied.": [
+   "docu.js"
+  ],
+  "Motion level (picks the video model)": [
+   "app.js"
+  ],
+  "Motion rewritten": [
+   "app.js"
+  ],
+  "Move amount": [
+   "doctl.js"
+  ],
+  "Move earlier": [
+   "app.js"
+  ],
+  "Move later": [
+   "app.js"
+  ],
+  "moved": [
+   "nle.js"
+  ],
+  "Music": [
+   "app.js",
+   "nle.js"
+  ],
+  "Music · part": [
+   "nle.js"
+  ],
+  "Music & sound": [
+   "app.js"
+  ],
+  "Music cost": [
+   "app.js"
+  ],
+  "Music drop": [
+   "nle.js"
+  ],
+  "Music drop removed": [
+   "nle.js"
+  ],
+  "Music drops out at this line": [
+   "nle.js"
+  ],
+  "Music drops out when this line starts": [
+   "nle.js"
+  ],
+  "Music ducking (music goes down under the voice)": [
+   "doctl.js"
+  ],
+  "Music is off for this video": [
+   "nle.js"
+  ],
+  "Music is off for this video.": [
+   "app.js"
+  ],
+  "Music level": [
+   "app.js"
+  ],
+  "Music level saved": [
+   "nle.js"
+  ],
+  "Music mix preview (voice + music)": [
+   "app.js"
+  ],
+  "Music model": [
+   "app.js"
+  ],
+  "Music only": [
+   "app.js"
+  ],
+  "Music style": [
+   "app.js"
+  ],
+  "Music tab": [
+   "nle.js"
+  ],
+  "Music volume (whole video):": [
+   "nle.js"
+  ],
+  "Music volume saved": [
+   "nle.js"
+  ],
+  "Mute in the preview": [
+   "nle.js"
+  ],
+  "Mute this sound": [
+   "doctl.js"
+  ],
+  "My image + animate": [
+   "app.js"
+  ],
+  "My presets": [
+   "app.js"
+  ],
+  "My voice": [
+   "app.js"
+  ],
+  "Name": [
+   "app.js"
+  ],
+  "Name (you write @Name in prompts)": [
+   "app.js"
+  ],
+  "Name for this voice": [
+   "app.js"
+  ],
+  "Name for this voice preset": [
+   "app.js"
+  ],
+  "names, a place, the ending you want": [
+   "app.js"
+  ],
+  "Narration": [
+   "docu.js"
+  ],
+  "Narrator": [
+   "app.js"
+  ],
+  "Narrator voice": [
+   "app.js"
+  ],
+  "Natural": [
+   "app.js"
+  ],
+  "Natural · free": [
+   "app.js"
+  ],
+  "Natural voices": [
+   "app.js"
+  ],
+  "Needed for Pro": [
+   "app.js"
+  ],
+  "Needle drop removed": [
+   "app.js"
+  ],
+  "Needle drop set: music cuts here for a moment": [
+   "app.js"
+  ],
+  "Needle drops": [
+   "app.js"
+  ],
+  "Needs": [
+   "app.js"
+  ],
+  "Needs \"AI Music\" from Setup Center.": [
+   "app.js"
+  ],
+  "Needs ComfyUI, about 4 minutes on your GPU.": [
+   "app.js"
+  ],
+  "Needs NVIDIA RTX for images and video": [
+   "app.js"
+  ],
+  "Needs Pro with OpenRouter or a Script AI key (Pro page)": [
+   "app.js"
+  ],
+  "Needs the narration (step 1). Takes about 1 minute per Short.": [
+   "app.js"
+  ],
+  "New character": [
+   "app.js"
+  ],
+  "NEW CHARACTERS": [
+   "app.js"
+  ],
+  "New characters in this episode": [
+   "app.js"
+  ],
+  "New episode": [
+   "app.js"
+  ],
+  "New ideas": [
+   "app.js"
+  ],
+  "New image": [
+   "app.js"
+  ],
+  "New look applied. Render to see it.": [
+   "doctl.js"
+  ],
+  "New picture": [
+   "nle.js"
+  ],
+  "New place": [
+   "app.js"
+  ],
+  "New plan": [
+   "doctl.js"
+  ],
+  "New script is in the editor. Click Re-split script when you are happy with it.": [
+   "app.js"
+  ],
+  "New season": [
+   "app.js"
+  ],
+  "New topic": [
+   "app.js"
+  ],
+  "New version available": [
+   "app.js"
+  ],
+  "Next episode": [
+   "app.js"
+  ],
+  "Next scene (→)": [
+   "nle.js"
+  ],
+  "Next: LECCORTUBE searches Wikimedia Commons, NASA and other free archives for photos, maps and clips, and saves each with its licence.": [
+   "docu.js"
+  ],
+  "Next: the AI plans the chapters and writes the narration, picking a photo or shot for every line.": [
+   "docu.js"
+  ],
+  "No AI writer yet": [
+   "docu.js"
+  ],
+  "No characters yet. Add them in Voice, look & cast > Cast.": [
+   "app.js"
+  ],
+  "No characters yet. Write": [
+   "app.js"
+  ],
+  "No cleaning": [
+   "app.js"
+  ],
+  "No fixed place": [
+   "app.js"
+  ],
+  "No frames yet.": [
+   "app.js"
+  ],
+  "No image key connected yet.": [
+   "app.js"
+  ],
+  "no image yet": [
+   "app.js"
+  ],
+  "No key connected for this yet.": [
+   "app.js"
+  ],
+  "No media yet.": [
+   "docu.js"
+  ],
+  "No model matches.": [
+   "app.js"
+  ],
+  "No music here yet. Make it on the Music tab or use your own.": [
+   "nle.js"
+  ],
+  "No music key connected yet.": [
+   "app.js"
+  ],
+  "No narration yet, so you hear the music alone. Run 1 · Voice to hear the real mix.": [
+   "app.js"
+  ],
+  "No NVIDIA GPU found": [
+   "app.js"
+  ],
+  "No other scene images yet.": [
+   "app.js"
+  ],
+  "No picture yet": [
+   "app.js",
+   "nle.js"
+  ],
+  "No places yet. Press": [
+   "app.js"
+  ],
+  "No projects to build.": [
+   "app.js"
+  ],
+  "No reference": [
+   "app.js"
+  ],
+  "No scene images yet": [
+   "app.js"
+  ],
+  "No scene images yet. Make a few images first, or Upload a style image.": [
+   "app.js"
+  ],
+  "No scene needs a sound with this mood.": [
+   "app.js"
+  ],
+  "No scripts found in those files": [
+   "app.js"
+  ],
+  "No seasons yet.": [
+   "app.js"
+  ],
+  "No sheet yet": [
+   "app.js"
+  ],
+  "No sound effects. Drop a sound file here.": [
+   "nle.js"
+  ],
+  "No voice matches.": [
+   "app.js"
+  ],
+  "No voices yet. Press reload.": [
+   "app.js"
+  ],
+  "No, keep my story": [
+   "docu.js"
+  ],
+  "None": [
+   "nle.js"
+  ],
+  "None (16:9)": [
+   "app.js"
+  ],
+  "None yet.": [
+   "app.js"
+  ],
+  "Not built yet": [
+   "app.js"
+  ],
+  "Not connected": [
+   "app.js"
+  ],
+  "Not found": [
+   "app.js"
+  ],
+  "Not free": [
+   "docu.js"
+  ],
+  "Not happy? Pick any other voice, listen first.": [
+   "app.js"
+  ],
+  "not installed": [
+   "app.js"
+  ],
+  "Not installed": [
+   "app.js"
+  ],
+  "not recorded yet": [
+   "nle.js"
+  ],
+  "not recorded yet ·": [
+   "nle.js"
+  ],
+  "Not rendered yet. Check the timeline, then click Render video.": [
+   "doctl.js"
+  ],
+  "not saved yet": [
+   "app.js"
+  ],
+  "Not sung yet. Build everything sings it first.": [
+   "app.js"
+  ],
+  "not used": [
+   "docu.js"
+  ],
+  "Not used": [
+   "docu.js"
+  ],
+  "Not valid": [
+   "app.js"
+  ],
+  "Nothing changed": [
+   "nle.js"
+  ],
+  "Nothing here": [
+   "app.js"
+  ],
+  "Nothing left to make.": [
+   "app.js"
+  ],
+  "Nothing rendered yet.": [
+   "app.js"
+  ],
+  "Nothing yet. Start with a topic or a folder above.": [
+   "docu.js"
+  ],
+  "now": [
+   "app.js"
+  ],
+  "now uses your image": [
+   "app.js"
+  ],
+  "Number": [
+   "doctl.js"
+  ],
+  "of": [
+   "app.js"
+  ],
+  "Off": [
+   "app.js",
+   "nle.js"
+  ],
+  "Off for this video": [
+   "nle.js"
+  ],
+  "Off. Turn it on to pick a caption style.": [
+   "app.js"
+  ],
+  "Old photos can be public domain in Pakistan or India but still protected in the USA, and YouTube follows US law. Those are marked \"Credit needed\". When in doubt, swap them for an AI picture in the story below.": [
+   "docu.js"
+  ],
+  "older than your edits": [
+   "doctl.js"
+  ],
+  "Ollama on this PC, free": [
+   "app.js"
+  ],
+  "ollama pull qwen3:14b": [
+   "docu.js"
+  ],
+  "On": [
+   "app.js",
+   "nle.js"
+  ],
+  "on a scene to set it by hand. Hand-set scenes are never changed.": [
+   "app.js"
+  ],
+  "On my PC": [
+   "app.js"
+  ],
+  "On my PC · ComfyUI": [
+   "app.js"
+  ],
+  "On my PC: ACE-Step makes the music, free.": [
+   "app.js"
+  ],
+  "On my PC: pictures and clips on your GPU, free.": [
+   "app.js"
+  ],
+  "On my PC: scene sheets on ComfyUI.": [
+   "app.js"
+  ],
+  "On my PC: sheets on ComfyUI, free voices.": [
+   "app.js"
+  ],
+  "On this PC": [
+   "docu.js"
+  ],
+  "on your GPU": [
+   "app.js"
+  ],
+  "On your GPU, about 20 to 60 seconds (longer the first time ComfyUI starts)": [
+   "app.js"
+  ],
+  "One click: voice, speed and effect set and played": [
+   "app.js"
+  ],
+  "one source": [
+   "docu.js"
+  ],
+  "One storyteller": [
+   "app.js"
+  ],
+  "One website": [
+   "docu.js"
+  ],
+  "Only clone a voice you own or have permission to use. Continue?": [
+   "app.js"
+  ],
+  "Only one picture for this line.": [
+   "doctl.js"
+  ],
+  "Only scene 1 is narrated again.": [
+   "app.js"
+  ],
+  "Only this line is spoken again. The rest of the voice stays as it is.": [
+   "nle.js"
+  ],
+  "Only use a voice you have the rights to.": [
+   "app.js"
+  ],
+  "Opacity": [
+   "doctl.js"
+  ],
+  "Open an episode and Build everything": [
+   "app.js"
+  ],
+  "Open Cast page to pick voices": [
+   "app.js"
+  ],
+  "Open it, check the Storyboard, then press": [
+   "docu.js"
+  ],
+  "Open output folder": [
+   "app.js"
+  ],
+  "Open project": [
+   "docu.js"
+  ],
+  "Open Setup Center": [
+   "app.js"
+  ],
+  "Open the Pro page to connect keys": [
+   "app.js"
+  ],
+  "Open the project folder": [
+   "app.js"
+  ],
+  "Opening": [
+   "app.js"
+  ],
+  "OpenRouter": [
+   "app.js",
+   "docu.js"
+  ],
+  "OpenRouter (Claude, GPT, Gemini and 300 more)": [
+   "app.js"
+  ],
+  "OpenRouter connected": [
+   "docu.js"
+  ],
+  "OpenRouter or your Script AI key": [
+   "app.js"
+  ],
+  "Option used": [
+   "app.js"
+  ],
+  "optional": [
+   "app.js"
+  ],
+  "optional, keeps the face exact": [
+   "app.js"
+  ],
+  "Optional: free voices on your PC": [
+   "app.js"
+  ],
+  "Or a new character": [
+   "app.js"
+  ],
+  "Or describe it yourself": [
+   "app.js"
+  ],
+  "Or paste a key by hand": [
+   "docu.js"
+  ],
+  "or run steps 1 to 4.": [
+   "app.js"
+  ],
+  "Original": [
+   "app.js"
+  ],
+  "Originality check": [
+   "app.js"
+  ],
+  "Other OpenRouter model…": [
+   "docu.js"
+  ],
+  "Outdoor": [
+   "app.js"
+  ],
+  "Outdoor: outdoor views only": [
+   "app.js"
+  ],
+  "Output": [
+   "app.js"
+  ],
+  "Output folder cleared": [
+   "app.js"
+  ],
+  "Output folder saved": [
+   "app.js"
+  ],
+  "oval face, high cheekbones, thick dark eyebrows, almond brown eyes, straight nose...": [
+   "app.js"
+  ],
+  "pacing, crossfades, music level, captions, sound effects and colour": [
+   "app.js"
+  ],
+  "Paid to your own account. Already made pictures and clips cost nothing again.": [
+   "app.js"
+  ],
+  "Paid to your own account. Short pieces are looped with a soft crossfade to fill each part.": [
+   "app.js"
+  ],
+  "Paid to your own ElevenLabs account.": [
+   "app.js"
+  ],
+  "Paint": [
+   "app.js"
+  ],
+  "Paint again": [
+   "app.js"
+  ],
+  "Paint one real example image for every style in the style picker (needs ComfyUI + an image model, about 1 minute).": [
+   "app.js"
+  ],
+  "Paint previews": [
+   "app.js"
+  ],
+  "Painting": [
+   "app.js"
+  ],
+  "Painting a sample": [
+   "app.js"
+  ],
+  "Painting camera examples…": [
+   "app.js"
+  ],
+  "Painting previews": [
+   "app.js"
+  ],
+  "Painting style previews": [
+   "app.js"
+  ],
+  "Painting style previews…": [
+   "app.js"
+  ],
+  "Pan left": [
+   "doctl.js"
+  ],
+  "Pan right": [
+   "doctl.js"
+  ],
+  "Part": [
+   "app.js"
+  ],
+  "Parts still to make": [
+   "app.js"
+  ],
+  "paste key": [
+   "app.js"
+  ],
+  "Paste the API key first": [
+   "app.js"
+  ],
+  "Paste the folder path first": [
+   "app.js"
+  ],
+  "Paste the key first": [
+   "app.js"
+  ],
+  "Paste the key here": [
+   "app.js"
+  ],
+  "Paste these in YouTube Studio": [
+   "app.js"
+  ],
+  "Paste your key first": [
+   "app.js"
+  ],
+  "Paste your script first.": [
+   "app.js"
+  ],
+  "Pause": [
+   "app.js"
+  ],
+  "Pausing. Click Continue to resume later.": [
+   "app.js"
+  ],
+  "per minute": [
+   "app.js"
+  ],
+  "per piece": [
+   "app.js"
+  ],
+  "Pexels API key": [
+   "app.js"
+  ],
+  "Photo": [
+   "app.js"
+  ],
+  "Photo added. Now make the character sheet.": [
+   "app.js"
+  ],
+  "Photo added. The sheet copies this face.": [
+   "app.js"
+  ],
+  "Photographic style": [
+   "app.js"
+  ],
+  "photoreal, 8k": [
+   "app.js"
+  ],
+  "photos": [
+   "docu.js"
+  ],
+  "Pick .txt files (one video each, the file name becomes the title), or one .csv / .json with": [
+   "app.js"
+  ],
+  "Pick a cloud voice first on the Voice tab": [
+   "app.js"
+  ],
+  "Pick a cloud voice, click Save voice, then 1 · Voice.": [
+   "app.js"
+  ],
+  "Pick a model": [
+   "app.js"
+  ],
+  "Pick a template or build your own voice. Everything you hear is exactly how it will sound in the video.": [
+   "app.js"
+  ],
+  "Pick at least one language": [
+   "app.js"
+  ],
+  "Pick at least one platform": [
+   "app.js"
+  ],
+  "Pick model": [
+   "app.js"
+  ],
+  "Pick my": [
+   "app.js"
+  ],
+  "picked for you": [
+   "app.js"
+  ],
+  "picture": [
+   "app.js"
+  ],
+  "Picture": [
+   "app.js",
+   "doctl.js",
+   "nle.js"
+  ],
+  "Picture ·": [
+   "nle.js"
+  ],
+  "PICTURE formula": [
+   "app.js"
+  ],
+  "Picture or clip from my PC": [
+   "nle.js"
+  ],
+  "Picture set as this place's sheet": [
+   "app.js"
+  ],
+  "pictures": [
+   "app.js"
+  ],
+  "Pictures": [
+   "nle.js"
+  ],
+  "Pictures & videos": [
+   "nle.js"
+  ],
+  "Pictures and clips are made in the cloud. Change it on the Storyboard.": [
+   "app.js"
+  ],
+  "pictures and shots. This is how it knows what to show on every line.": [
+   "docu.js"
+  ],
+  "Pictures and video clips from the models you pick, on your own key. Fast on any PC, pick a model per scene.": [
+   "app.js"
+  ],
+  "pictures per scene sheet": [
+   "app.js"
+  ],
+  "Pictures understood": [
+   "docu.js"
+  ],
+  "pictures. Build everything sings the song and makes the video.": [
+   "app.js"
+  ],
+  "Pixabay API key": [
+   "app.js"
+  ],
+  "Place": [
+   "app.js"
+  ],
+  "place(s) found. Scenes you set by hand are kept.": [
+   "app.js"
+  ],
+  "Placed by themselves from the story, only sounds that fit the video": [
+   "app.js"
+  ],
+  "Places": [
+   "app.js"
+  ],
+  "places,": [
+   "app.js"
+  ],
+  "Plan again from the voice. Your edits are dropped.": [
+   "doctl.js"
+  ],
+  "Planning the timeline...": [
+   "doctl.js"
+  ],
+  "Play": [
+   "app.js",
+   "nle.js"
+  ],
+  "play / pause": [
+   "nle.js"
+  ],
+  "Play / pause (Space)": [
+   "nle.js"
+  ],
+  "Play from here": [
+   "nle.js"
+  ],
+  "Play the song": [
+   "app.js"
+  ],
+  "Playing": [
+   "app.js"
+  ],
+  "Point to a folder with your photos, clips, audio and notes. LECCORTUBE watches everything, finds the story and builds the documentary.": [
+   "docu.js"
+  ],
+  "Position": [
+   "app.js",
+   "nle.js"
+  ],
+  "Post one Short a day. In the YouTube app pick the cover as the thumbnail and set \"Related video\" to this video.": [
+   "app.js"
+  ],
+  "Premiere": [
+   "doctl.js"
+  ],
+  "Premiere Pro": [
+   "doctl.js"
+  ],
+  "Premiere Pro XML with all pictures, motion graphics (alpha) and audio stems": [
+   "doctl.js"
+  ],
+  "Premium voices, your own cloned voice and AI sound effects.": [
+   "app.js"
+  ],
+  "Press play to listen": [
+   "app.js"
+  ],
+  "Preview": [
+   "doctl.js"
+  ],
+  "Preview (first scenes)": [
+   "app.js"
+  ],
+  "Preview first": [
+   "app.js"
+  ],
+  "previous / next scene": [
+   "nle.js"
+  ],
+  "Previous scene (←)": [
+   "nle.js"
+  ],
+  "price not listed": [
+   "app.js"
+  ],
+  "Privacy": [
+   "app.js"
+  ],
+  "private": [
+   "app.js"
+  ],
+  "PRO": [
+   "app.js",
+   "docu.js",
+   "doctl.js"
+  ],
+  "Pro active": [
+   "app.js"
+  ],
+  "Pro look": [
+   "docu.js"
+  ],
+  "Pro makes pictures, video clips, voices, music and scripts with your own accounts. One OpenRouter key covers scripts, pictures and video. Add Google AI Studio for Lyria music and Gemini voices, ElevenLabs for studio voices and sound effects.": [
+   "app.js"
+  ],
+  "Pro settings saved": [
+   "app.js"
+  ],
+  "Pro setup": [
+   "app.js"
+  ],
+  "Project created": [
+   "docu.js"
+  ],
+  "Project deleted": [
+   "app.js"
+  ],
+  "Projects": [
+   "index.html"
+  ],
+  "Prompt sent to the image model": [
+   "app.js"
+  ],
+  "Prompt written from the PICTURE formula": [
+   "app.js"
+  ],
+  "Provider": [
+   "app.js"
+  ],
+  "ps_": [
+   "app.js"
+  ],
+  "public": [
+   "app.js"
+  ],
+  "Publish": [
+   "app.js"
+  ],
+  "Published": [
+   "app.js"
+  ],
+  "Pull out": [
+   "doctl.js"
+  ],
+  "Push in": [
+   "doctl.js"
+  ],
+  "Put it in the editor": [
+   "app.js"
+  ],
+  "px": [
+   "app.js",
+   "doctl.js",
+   "nle.js"
+  ],
+  "Queued": [
+   "app.js"
+  ],
+  "quiet": [
+   "app.js"
+  ],
+  "Quote": [
+   "doctl.js"
+  ],
+  "Re-split": [
+   "app.js"
+  ],
+  "Re-split script": [
+   "app.js"
+  ],
+  "Re-split the script?": [
+   "app.js"
+  ],
+  "Re-splitting rebuilds all scenes and": [
+   "app.js"
+  ],
+  "Reading frames…": [
+   "app.js"
+  ],
+  "Reading your topic…": [
+   "app.js"
+  ],
+  "Reading…": [
+   "app.js"
+  ],
+  "Real frames from LECCORTUBE in each style. Hover a style to see its signature graphic. Names and text on the samples are made up.": [
+   "docu.js"
+  ],
+  "RECOMMENDED": [
+   "app.js"
+  ],
+  "Recommended 10 to 15%": [
+   "app.js"
+  ],
+  "Recommended for this topic:": [
+   "docu.js"
+  ],
+  "Record changed lines": [
+   "nle.js"
+  ],
+  "Record now": [
+   "nle.js"
+  ],
+  "Record the new line now?": [
+   "nle.js"
+  ],
+  "Records in the cloud now": [
+   "app.js"
+  ],
+  "ref:": [
+   "app.js"
+  ],
+  "Reference used in scenes": [
+   "app.js"
+  ],
+  "Reference: character or place": [
+   "app.js"
+  ],
+  "References are written into the prompt automatically": [
+   "app.js"
+  ],
+  "Refresh": [
+   "index.html"
+  ],
+  "Regenerating a scene costs its model's price.": [
+   "app.js"
+  ],
+  "release to listen": [
+   "app.js"
+  ],
+  "Reload voices": [
+   "app.js"
+  ],
+  "Remove": [
+   "app.js",
+   "nle.js"
+  ],
+  "Remove license from this PC": [
+   "app.js"
+  ],
+  "Remove my clip": [
+   "nle.js"
+  ],
+  "Remove season": [
+   "app.js"
+  ],
+  "Remove the Pro license from this PC?": [
+   "app.js"
+  ],
+  "remove the selected sound": [
+   "nle.js"
+  ],
+  "Remove the sound": [
+   "nle.js"
+  ],
+  "Remove this clip?": [
+   "nle.js"
+  ],
+  "Remove this scene?": [
+   "nle.js"
+  ],
+  "Remove this season?": [
+   "app.js"
+  ],
+  "Remove this shot (the shot before plays longer)": [
+   "doctl.js"
+  ],
+  "removed": [
+   "nle.js"
+  ],
+  "Removes the season. Episodes stay as normal videos.": [
+   "app.js"
+  ],
+  "Render style": [
+   "app.js"
+  ],
+  "Render video": [
+   "doctl.js",
+   "nle.js"
+  ],
+  "Rendered video": [
+   "nle.js"
+  ],
+  "Repaint": [
+   "app.js"
+  ],
+  "Repair LECCORTUBE": [
+   "app.js"
+  ],
+  "Repairing…": [
+   "app.js"
+  ],
+  "Replace first line": [
+   "app.js"
+  ],
+  "Replace the picture of": [
+   "nle.js"
+  ],
+  "Research": [
+   "app.js",
+   "docu.js"
+  ],
+  "Research and writing AI": [
+   "docu.js"
+  ],
+  "research cost $": [
+   "docu.js"
+  ],
+  "Research done": [
+   "docu.js"
+  ],
+  "Reset moods from the video type": [
+   "app.js"
+  ],
+  "Restart and update": [
+   "app.js"
+  ],
+  "Restart to update": [
+   "app.js"
+  ],
+  "Restore": [
+   "app.js"
+  ],
+  "Resume": [
+   "app.js"
+  ],
+  "Review first": [
+   "app.js"
+  ],
+  "Rewrite": [
+   "app.js"
+  ],
+  "Rhymes: one picture for every 2 lines, or one per": [
+   "app.js"
+  ],
+  "Robust": [
+   "app.js"
+  ],
+  "rule of thirds, subject left": [
+   "app.js"
+  ],
+  "Run 5 · Export": [
+   "app.js"
+  ],
+  "Run 5 · Export to write the description and tags.": [
+   "app.js"
+  ],
+  "Run 5 · Export, or click New ideas.": [
+   "app.js"
+  ],
+  "Runs on your GPU. Clip lengths always cover the narration of the scene.": [
+   "app.js"
+  ],
+  "s are": [
+   "app.js"
+  ],
+  "s per image": [
+   "app.js"
+  ],
+  "Same app, more power. Use the best cloud AI with your own API keys (you pay the providers directly, nothing extra to us), on any PC.": [
+   "app.js"
+  ],
+  "Same face in every scene: a look or a photo, then a character sheet. Every character gets its own voice.": [
+   "app.js"
+  ],
+  "Same seed for every picture": [
+   "app.js"
+  ],
+  "Same type, voice, look and characters as the season": [
+   "app.js"
+  ],
+  "Same voice, translated with your local AI. One video, more countries": [
+   "app.js"
+  ],
+  "Save": [
+   "app.js",
+   "doctl.js"
+  ],
+  "Save & new image": [
+   "app.js"
+  ],
+  "Save & regenerate": [
+   "app.js"
+  ],
+  "Save as preset": [
+   "app.js"
+  ],
+  "Save changes": [
+   "app.js"
+  ],
+  "Save key": [
+   "docu.js"
+  ],
+  "Save line": [
+   "nle.js"
+  ],
+  "Save text": [
+   "nle.js"
+  ],
+  "Save the voice, speed, effect and settings you like and use them in every video.": [
+   "app.js"
+  ],
+  "Save to library": [
+   "app.js"
+  ],
+  "Save voice": [
+   "app.js"
+  ],
+  "saved": [
+   "app.js"
+  ],
+  "Saved": [
+   "app.js"
+  ],
+  "Saved encrypted on this PC only.": [
+   "app.js"
+  ],
+  "Saved on this PC only, never shared.": [
+   "app.js"
+  ],
+  "Saved on your Desktop:": [
+   "app.js"
+  ],
+  "Saved to your character library. Use it in any project.": [
+   "app.js"
+  ],
+  "sc_": [
+   "nle.js"
+  ],
+  "Scan my folder": [
+   "docu.js"
+  ],
+  "scene": [
+   "app.js"
+  ],
+  "Scene": [
+   "nle.js"
+  ],
+  "Scene 1 updated. Run 1 · Voice to record it.": [
+   "app.js"
+  ],
+  "Scene has no fixed place now": [
+   "app.js"
+  ],
+  "Scene images": [
+   "app.js"
+  ],
+  "Scene images (same place and look)": [
+   "app.js"
+  ],
+  "Scene moved. Make its image again to see it.": [
+   "app.js"
+  ],
+  "Scene sheet": [
+   "app.js"
+  ],
+  "Scene sheets from the model you pick on your own key (OpenRouter, Google, OpenAI, Higgsfield). Fast on any PC.": [
+   "app.js"
+  ],
+  "scene:": [
+   "app.js"
+  ],
+  "scene(s) changed": [
+   "app.js"
+  ],
+  "scene(s) have no fixed place.": [
+   "app.js"
+  ],
+  "scenes": [
+   "app.js",
+   "docu.js"
+  ],
+  "scenes ·": [
+   "app.js"
+  ],
+  "Scenes are rebuilt. Generated images and narration of this project are deleted.": [
+   "app.js"
+  ],
+  "Scenes that use it lose that reference.": [
+   "app.js"
+  ],
+  "scenes. Review the prompts, then build.": [
+   "app.js"
+  ],
+  "Schedule (optional)": [
+   "app.js"
+  ],
+  "Scheduled": [
+   "app.js"
+  ],
+  "Scheduling the upload…": [
+   "app.js"
+  ],
+  "script": [
+   "app.js"
+  ],
+  "Script": [
+   "app.js"
+  ],
+  "Script AI": [
+   "app.js"
+  ],
+  "Script AI, research with live web search, Nano Banana pictures and Veo video. One account for everything.": [
+   "app.js"
+  ],
+  "Script and pictures": [
+   "docu.js"
+  ],
+  "Script written": [
+   "app.js"
+  ],
+  "Script written in the doodle explainer style, Stick style selected. Check the facts and change any line you like.": [
+   "app.js"
+  ],
+  "Search again": [
+   "docu.js"
+  ],
+  "Search models, for example: gemini, gpt, claude, llama": [
+   "app.js"
+  ],
+  "Search models: nano banana, seedream, gpt image…": [
+   "app.js"
+  ],
+  "Search models…": [
+   "app.js"
+  ],
+  "Search voices: name, accent, male, female…": [
+   "app.js"
+  ],
+  "searches · facts checked across sources ·": [
+   "app.js"
+  ],
+  "Season": [
+   "app.js"
+  ],
+  "Season created with": [
+   "app.js"
+  ],
+  "SEASON NAME": [
+   "app.js"
+  ],
+  "Seasons": [
+   "app.js"
+  ],
+  "Second line": [
+   "doctl.js"
+  ],
+  "Select a shot, a graphic or a sound in the timeline to change it.": [
+   "doctl.js"
+  ],
+  "Select at least one video": [
+   "app.js"
+  ],
+  "Selected": [
+   "app.js"
+  ],
+  "Sent as:": [
+   "app.js"
+  ],
+  "Set as default": [
+   "app.js"
+  ],
+  "Set the camera again for every scene (scenes you set by hand are kept)": [
+   "app.js"
+  ],
+  "settings": [
+   "app.js"
+  ],
+  "Settings": [
+   "app.js"
+  ],
+  "Settle in, and let your breathing slow down. Tonight we travel far back in time, to a quiet village on the banks of a great river.": [
+   "app.js"
+  ],
+  "Setup Center": [
+   "app.js",
+   "docu.js"
+  ],
+  "SFX": [
+   "nle.js"
+  ],
+  "Shared by every episode.": [
+   "app.js"
+  ],
+  "Sheet": [
+   "app.js"
+  ],
+  "Sheet model": [
+   "app.js"
+  ],
+  "Sheet model for": [
+   "app.js"
+  ],
+  "sheet on Build": [
+   "app.js"
+  ],
+  "Sheets from the model you pick on your own key (OpenRouter, Google, OpenAI, Higgsfield), studio voices for every character.": [
+   "app.js"
+  ],
+  "Short": [
+   "app.js"
+  ],
+  "Short hits (whoosh, boom, sting)": [
+   "app.js"
+  ],
+  "Shorts (9:16)": [
+   "app.js"
+  ],
+  "Shorts cover 9:16": [
+   "app.js"
+  ],
+  "shot": [
+   "doctl.js"
+  ],
+  "Shot": [
+   "app.js"
+  ],
+  "Shot Builder ·": [
+   "app.js"
+  ],
+  "Shot presets": [
+   "app.js"
+  ],
+  "Shot saved": [
+   "app.js"
+  ],
+  "Shots": [
+   "doctl.js"
+  ],
+  "Shows a small picture for every option.": [
+   "app.js"
+  ],
+  "Similar videos": [
+   "app.js"
+  ],
+  "Similarity": [
+   "app.js"
+  ],
+  "Sing it again": [
+   "app.js"
+  ],
+  "Sing it now": [
+   "app.js"
+  ],
+  "Singer": [
+   "app.js"
+  ],
+  "Size": [
+   "app.js"
+  ],
+  "Size:": [
+   "nle.js"
+  ],
+  "sk-or-...": [
+   "docu.js"
+  ],
+  "Slow zoom": [
+   "app.js"
+  ],
+  "Slow, then fast": [
+   "doctl.js"
+  ],
+  "Small line": [
+   "doctl.js"
+  ],
+  "Smart Director": [
+   "docu.js"
+  ],
+  "Smart Director (AI)": [
+   "app.js"
+  ],
+  "Smart Director (Ollama)": [
+   "app.js"
+  ],
+  "Smart Director checks pictures with people and paints them again when a body is broken. A few seconds per picture.": [
+   "app.js"
+  ],
+  "Smart Director is reading your script…": [
+   "app.js"
+  ],
+  "Smooth": [
+   "doctl.js"
+  ],
+  "Snap": [
+   "nle.js"
+  ],
+  "Something not working? Repair fixes most problems. Still stuck? Create an error report and send it in the LECCORTUBE Discord.": [
+   "app.js"
+  ],
+  "Song": [
+   "app.js"
+  ],
+  "sound": [
+   "nle.js"
+  ],
+  "Sound": [
+   "doctl.js",
+   "nle.js"
+  ],
+  "Sound changed to": [
+   "nle.js"
+  ],
+  "Sound cost": [
+   "app.js"
+  ],
+  "Sound effect ·": [
+   "doctl.js"
+  ],
+  "Sound effect at": [
+   "nle.js"
+  ],
+  "Sound effects": [
+   "app.js",
+   "nle.js"
+  ],
+  "Sound effects volume": [
+   "doctl.js"
+  ],
+  "Sound FX": [
+   "doctl.js",
+   "nle.js"
+  ],
+  "Sound model": [
+   "app.js"
+  ],
+  "Sound mood": [
+   "app.js"
+  ],
+  "Sound moved": [
+   "nle.js"
+  ],
+  "Sound of the video clip": [
+   "nle.js"
+  ],
+  "Sounds are copied into your LECCORTUBE library on this PC and sorted by kind (whoosh, riser, impact, clicks, money, glitch, funny). Only use sounds you are allowed to use on YouTube.": [
+   "app.js"
+  ],
+  "Source": [
+   "doctl.js"
+  ],
+  "sources": [
+   "app.js"
+  ],
+  "Sources": [
+   "docu.js"
+  ],
+  "Space": [
+   "nle.js"
+  ],
+  "Speaker boost": [
+   "app.js"
+  ],
+  "speaks with the storyteller's voice": [
+   "app.js"
+  ],
+  "Speed": [
+   "app.js"
+  ],
+  "Speed ramp": [
+   "doctl.js"
+  ],
+  "Spelling fixed:": [
+   "app.js"
+  ],
+  "Spoken line": [
+   "nle.js"
+  ],
+  "Spoken word": [
+   "nle.js"
+  ],
+  "Spoken word colour": [
+   "app.js"
+  ],
+  "Stability": [
+   "app.js"
+  ],
+  "Start (Home)": [
+   "nle.js"
+  ],
+  "Start ComfyUI automatically when needed": [
+   "app.js"
+  ],
+  "Start research": [
+   "docu.js"
+  ],
+  "Start the clip at (seconds, trims a bad start)": [
+   "app.js"
+  ],
+  "Started:": [
+   "app.js"
+  ],
+  "Starting": [
+   "app.js",
+   "docu.js"
+  ],
+  "Starting… (up to a minute)": [
+   "app.js"
+  ],
+  "Starts at (s)": [
+   "doctl.js"
+  ],
+  "starts with the role: \"a 10 year old boy…\", then hair, clothes": [
+   "app.js"
+  ],
+  "state": [
+   "app.js"
+  ],
+  "Steady": [
+   "app.js"
+  ],
+  "Still image": [
+   "app.js"
+  ],
+  "Stop": [
+   "app.js",
+   "docu.js"
+  ],
+  "Stop (Esc)": [
+   "app.js"
+  ],
+  "Stopped": [
+   "app.js"
+  ],
+  "Stopping… (the current image or clip finishes first)": [
+   "app.js"
+  ],
+  "Story and writing AI": [
+   "docu.js"
+  ],
+  "Story ready for review": [
+   "docu.js"
+  ],
+  "Story ready. Read it once and change anything you like.": [
+   "app.js"
+  ],
+  "Storyboard": [
+   "app.js",
+   "nle.js"
+  ],
+  "Strong": [
+   "docu.js"
+  ],
+  "Studio clean on": [
+   "app.js"
+  ],
+  "Studio clean: removes noise and hiss, softens \"s\" sounds, same loudness everywhere": [
+   "app.js"
+  ],
+  "Studio music from Google Lyria or ElevenLabs on your own key. Fast on any PC.": [
+   "app.js"
+  ],
+  "Studio voices on any PC: Google Gemini, ElevenLabs and OpenAI. Clone your own voice.": [
+   "app.js"
+  ],
+  "style": [
+   "app.js"
+  ],
+  "Style": [
+   "app.js",
+   "nle.js"
+  ],
+  "style · line": [
+   "nle.js"
+  ],
+  "Style exaggeration": [
+   "app.js"
+  ],
+  "Style image": [
+   "app.js"
+  ],
+  "Style image removed": [
+   "app.js"
+  ],
+  "Style image set": [
+   "app.js"
+  ],
+  "Style image set. Regenerate a few scenes to check it.": [
+   "app.js"
+  ],
+  "Style image: every new image copies this art style": [
+   "app.js"
+  ],
+  "Style previews": [
+   "app.js"
+  ],
+  "Style previews:": [
+   "app.js"
+  ],
+  "Style text": [
+   "app.js"
+  ],
+  "style=\"display:none\"": [
+   "app.js"
+  ],
+  "style=\"grid-column:1/-1\"": [
+   "doctl.js"
+  ],
+  "Subtitles": [
+   "app.js"
+  ],
+  "Subtitles (.srt)": [
+   "app.js"
+  ],
+  "Suggested": [
+   "app.js"
+  ],
+  "Suggestions": [
+   "docu.js"
+  ],
+  "Switch any part back to \"On my PC\" on the Pro page to make it free.": [
+   "app.js"
+  ],
+  "Switch this graphic off": [
+   "doctl.js"
+  ],
+  "Tags": [
+   "app.js"
+  ],
+  "Tags (comma separated)": [
+   "app.js"
+  ],
+  "Tags:": [
+   "app.js"
+  ],
+  "tb-upd": [
+   "app.js"
+  ],
+  "Templates": [
+   "app.js"
+  ],
+  "Templates use the fast Kokoro voices now. Install": [
+   "app.js"
+  ],
+  "Test line": [
+   "app.js"
+  ],
+  "Test text": [
+   "app.js"
+  ],
+  "Test with these settings": [
+   "app.js"
+  ],
+  "Text": [
+   "doctl.js",
+   "nle.js"
+  ],
+  "Text colour": [
+   "app.js"
+  ],
+  "That is all Pro needs on this PC. ComfyUI and the local models are only for making things free on your own GPU.": [
+   "app.js"
+  ],
+  "the AI builds the story from these": [
+   "app.js"
+  ],
+  "the boy runs, his hair blows in the wind": [
+   "app.js"
+  ],
+  "The clip you added from your PC leaves the timeline.": [
+   "nle.js"
+  ],
+  "The documentary project is ready.": [
+   "docu.js"
+  ],
+  "The Documentary Studio is part of LECCORTUBE Pro.": [
+   "docu.js"
+  ],
+  "the dyatlov pass incident": [
+   "app.js"
+  ],
+  "The first 30 seconds decide if people stay": [
+   "app.js"
+  ],
+  "The first play of a Gemini voice takes about 15 to 20 seconds.": [
+   "app.js"
+  ],
+  "The key did not work": [
+   "app.js"
+  ],
+  "the line": [
+   "nle.js"
+  ],
+  "The Little Red Bus | Nursery Rhyme for Kids": [
+   "app.js"
+  ],
+  "The little red bus goes beep beep beep Down the road and up the street Stop for Grandma, stop for me Climb aboard, one two three": [
+   "app.js"
+  ],
+  "The lyrics from the Script tab are sung by the AI Music model. Change the style or singer, then sing it again.": [
+   "app.js"
+  ],
+  "The most natural voices and the best voice cloning: upload one or two minutes of your voice and every video speaks in it.": [
+   "app.js"
+  ],
+  "The music stops for a moment at these scenes, for impact.": [
+   "app.js"
+  ],
+  "The narrator reads everything, like one person telling the story. Best for sleep and history videos.": [
+   "app.js"
+  ],
+  "The narrator reads everything. Run 1 · Voice to record.": [
+   "app.js"
+  ],
+  "The plain documentary render, no motion graphics": [
+   "docu.js"
+  ],
+  "The shared character list is removed.": [
+   "app.js"
+  ],
+  "The sound of your own video clips shows here": [
+   "nle.js"
+  ],
+  "The spoken words": [
+   "nle.js"
+  ],
+  "The Stranger": [
+   "app.js"
+  ],
+  "These details are not in your files or the checked research. The AI may have made them up. Edit the line, or keep it if you know it is right.": [
+   "docu.js"
+  ],
+  "these items": [
+   "app.js"
+  ],
+  "They were moved out of ComfyUI by the Model Doctor and are not used any more.": [
+   "app.js"
+  ],
+  "Thinking…": [
+   "app.js"
+  ],
+  "this clip": [
+   "nle.js"
+  ],
+  "This is my voice. I will say my own lines in the story.": [
+   "app.js"
+  ],
+  "This is taking long. If LECCORTUBE does not come back, start it again from LECCORTUBE.exe.": [
+   "app.js"
+  ],
+  "This is what went into the project. Change pictures and lines in the project's Storyboard now.": [
+   "docu.js"
+  ],
+  "this item": [
+   "app.js"
+  ],
+  "This key is not valid": [
+   "app.js"
+  ],
+  "This PC (Ollama, free)": [
+   "app.js"
+  ],
+  "This PC with Ollama (free)": [
+   "docu.js"
+  ],
+  "This PC's ID:": [
+   "app.js"
+  ],
+  "This place is": [
+   "app.js"
+  ],
+  "This preset uses a cloud voice (Pro).": [
+   "app.js"
+  ],
+  "This scene has its own model.": [
+   "app.js"
+  ],
+  "This story has characters. Build everything makes a character sheet for each one automatically, or set them up on the Cast tab.": [
+   "app.js"
+  ],
+  "This video ·": [
+   "app.js"
+  ],
+  "this video ~$": [
+   "app.js"
+  ],
+  "This video has no music parts. Turn music on in the Music tab.": [
+   "nle.js"
+  ],
+  "Thumbnail": [
+   "app.js"
+  ],
+  "Thumbnail image set. Run Export to rebuild it.": [
+   "app.js"
+  ],
+  "Thumbnail text": [
+   "app.js"
+  ],
+  "Thumbnails": [
+   "app.js"
+  ],
+  "Tick at least one research direction": [
+   "app.js"
+  ],
+  "Tilt down": [
+   "doctl.js"
+  ],
+  "Tilt up": [
+   "doctl.js"
+  ],
+  "Timeline": [
+   "app.js",
+   "nle.js"
+  ],
+  "Timeline saved. Click Render video to see it in the video.": [
+   "doctl.js"
+  ],
+  "Timing": [
+   "app.js"
+  ],
+  "Timing & lighting": [
+   "app.js"
+  ],
+  "Tip: choose an output folder in": [
+   "app.js"
+  ],
+  "Tip: start with 3 to 5 big languages (Hindi, Spanish, Arabic, Portuguese, French).": [
+   "app.js"
+  ],
+  "title": [
+   "app.js"
+  ],
+  "Title": [
+   "app.js"
+  ],
+  "Title + how to": [
+   "app.js"
+  ],
+  "Title card": [
+   "app.js"
+  ],
+  "Title updated. Run 5 · Export to refresh the YouTube text.": [
+   "app.js"
+  ],
+  "Title, type, opening and ending. Changes save by themselves.": [
+   "app.js"
+  ],
+  "Titles": [
+   "app.js"
+  ],
+  "to use this.": [
+   "docu.js"
+  ],
+  "To write documentaries LECCORTUBE needs an AI writer: install": [
+   "docu.js"
+  ],
+  "toast('Install Natural voices in Setup Center first.')": [
+   "app.js"
+  ],
+  "Topic": [
+   "docu.js"
+  ],
+  "Total from your accounts:": [
+   "docu.js"
+  ],
+  "translateY(-50%)": [
+   "nle.js"
+  ],
+  "Try again": [
+   "app.js",
+   "docu.js"
+  ],
+  "TUBE": [
+   "index.html"
+  ],
+  "Turn on to add whooshes, rain, horror stings and more where the story needs them.": [
+   "app.js"
+  ],
+  "Understand my pictures": [
+   "docu.js"
+  ],
+  "undo": [
+   "nle.js"
+  ],
+  "Undo": [
+   "nle.js"
+  ],
+  "Undo (Ctrl+Z)": [
+   "nle.js"
+  ],
+  "Undone": [
+   "nle.js"
+  ],
+  "Unlinked": [
+   "nle.js"
+  ],
+  "Unlinked: pick the picture or the voice on its own": [
+   "nle.js"
+  ],
+  "Unlinked: the sound is selected on its own.": [
+   "nle.js"
+  ],
+  "unlisted": [
+   "app.js"
+  ],
+  "Unlock with Pro": [
+   "nle.js"
+  ],
+  "Untitled": [
+   "app.js"
+  ],
+  "Up to date": [
+   "app.js"
+  ],
+  "Update a character": [
+   "app.js"
+  ],
+  "Update to v": [
+   "app.js"
+  ],
+  "Upload": [
+   "app.js"
+  ],
+  "Upload 1 to 2 minutes of clear speech (no music). It appears in the list as your voice.": [
+   "app.js"
+  ],
+  "Upload checklist": [
+   "app.js"
+  ],
+  "Upload my own voice (10 to 30 s)": [
+   "app.js"
+  ],
+  "Upload to YouTube, TikTok and Instagram on a schedule, straight from LECCORTUBE.": [
+   "app.js"
+  ],
+  "Uploading clip…": [
+   "app.js"
+  ],
+  "Uploading…": [
+   "app.js"
+  ],
+  "Uploads through your Upload-Post account (Pro page). The thumbnail is added for YouTube.": [
+   "app.js"
+  ],
+  "UPPERCASE": [
+   "app.js",
+   "nle.js"
+  ],
+  "Urdu viewers understand the Hindi voice.": [
+   "app.js"
+  ],
+  "Use": [
+   "app.js"
+  ],
+  "Use a picture or a video clip here": [
+   "nle.js"
+  ],
+  "Use a scene image as this character": [
+   "app.js"
+  ],
+  "Use as thumbnail": [
+   "app.js"
+  ],
+  "Use it and re-split": [
+   "app.js"
+  ],
+  "Use my own music": [
+   "nle.js"
+  ],
+  "Use of film & effects": [
+   "app.js"
+  ],
+  "Use the default again": [
+   "app.js"
+  ],
+  "Use the spoken words": [
+   "nle.js"
+  ],
+  "Use this image": [
+   "app.js"
+  ],
+  "Use this one": [
+   "app.js"
+  ],
+  "Use this voice": [
+   "app.js"
+  ],
+  "Use your own picture for this scene": [
+   "app.js"
+  ],
+  "Use your own picture of this place": [
+   "app.js"
+  ],
+  "used $": [
+   "docu.js"
+  ],
+  "Used by every scene that has no model of its own.": [
+   "app.js"
+  ],
+  "Uses Smart Director (Ollama) on this PC": [
+   "app.js"
+  ],
+  "Uses the script AI you picked for Cloud": [
+   "app.js"
+  ],
+  "Uses your connected Google AI key.": [
+   "app.js"
+  ],
+  "Uses your connected OpenRouter account.": [
+   "app.js"
+  ],
+  "Using your image…": [
+   "app.js"
+  ],
+  "v3 has three steps": [
+   "app.js"
+  ],
+  "Veo 3.1 video, Nano Banana pictures and Gemini script AI.": [
+   "app.js"
+  ],
+  "verified": [
+   "docu.js"
+  ],
+  "Verified · 2+ websites": [
+   "docu.js"
+  ],
+  "Vertical video: perfect for Shorts, TikTok and Reels.": [
+   "app.js"
+  ],
+  "very stable, 29 languages": [
+   "app.js"
+  ],
+  "Video": [
+   "app.js"
+  ],
+  "Video (animate)": [
+   "app.js"
+  ],
+  "Video clip": [
+   "nle.js"
+  ],
+  "Video not rendered yet": [
+   "app.js"
+  ],
+  "video ready": [
+   "app.js"
+  ],
+  "Video ready": [
+   "app.js"
+  ],
+  "Video scene. Motion prompt written from the image prompt, edit it if you like.": [
+   "app.js"
+  ],
+  "video scene(s)": [
+   "app.js"
+  ],
+  "video scenes": [
+   "app.js"
+  ],
+  "Video setup": [
+   "app.js"
+  ],
+  "Video type": [
+   "app.js"
+  ],
+  "video(s) queued. They build one after another.": [
+   "app.js"
+  ],
+  "Videos": [
+   "docu.js"
+  ],
+  "view": [
+   "app.js"
+  ],
+  "Vignette": [
+   "app.js"
+  ],
+  "voice": [
+   "app.js"
+  ],
+  "Voice": [
+   "app.js",
+   "doctl.js",
+   "nle.js"
+  ],
+  "Voice ·": [
+   "nle.js"
+  ],
+  "Voice cloned and selected. Press play to hear it, then Save voice.": [
+   "app.js"
+  ],
+  "Voice cloned. Pick it in any voice picker (ElevenLabs group).": [
+   "app.js"
+  ],
+  "Voice engine not ready": [
+   "app.js"
+  ],
+  "Voice for": [
+   "app.js"
+  ],
+  "Voice preview ·": [
+   "app.js"
+  ],
+  "Voice preview can't run yet.": [
+   "app.js"
+  ],
+  "Voice saved. Run 1 · Voice (or Build everything) to record it.": [
+   "app.js"
+  ],
+  "Voice saved. Run 1 · Voice or Build everything (effect-only changes take seconds).": [
+   "app.js"
+  ],
+  "Voice Studio": [
+   "app.js"
+  ],
+  "Voice, images and a short render of the first 3 scenes. Check the look, voice and captions before the long build.": [
+   "app.js"
+  ],
+  "Voice, Images, Videos, Render, Export. Finished parts are kept. Pictures and clips are made where the Storyboard says (On my PC or Cloud).": [
+   "app.js"
+  ],
+  "Voice, music and the final render stay on this PC": [
+   "app.js"
+  ],
+  "Voice:": [
+   "app.js"
+  ],
+  "voices in every voice picker": [
+   "app.js"
+  ],
+  "Voices reloaded": [
+   "app.js"
+  ],
+  "Volume": [
+   "doctl.js"
+  ],
+  "Volume:": [
+   "nle.js"
+  ],
+  "walls, furniture, colours, light. The same words go into every scene here.": [
+   "app.js"
+  ],
+  "Wan": [
+   "app.js"
+  ],
+  "Weak or missing": [
+   "docu.js"
+  ],
+  "What changed": [
+   "docu.js"
+  ],
+  "what is in the frame": [
+   "app.js"
+  ],
+  "What is it about? (optional)": [
+   "docu.js"
+  ],
+  "What moves in the scene": [
+   "app.js"
+  ],
+  "What Pro adds": [
+   "app.js"
+  ],
+  "What's new": [
+   "app.js"
+  ],
+  "Where": [
+   "app.js"
+  ],
+  "Where on the line:": [
+   "nle.js"
+  ],
+  "Where this scene happens": [
+   "app.js"
+  ],
+  "Who said it": [
+   "doctl.js"
+  ],
+  "Whole video again": [
+   "app.js"
+  ],
+  "Why": [
+   "app.js"
+  ],
+  "why octopus have 3 hearts": [
+   "app.js"
+  ],
+  "Wikipedia": [
+   "docu.js"
+  ],
+  "with pictures": [
+   "app.js"
+  ],
+  "With the voice": [
+   "app.js"
+  ],
+  "wording is added automatically.": [
+   "app.js"
+  ],
+  "Words on the video, timed to the voice. subtitles.srt is always exported for YouTube too.": [
+   "app.js"
+  ],
+  "Words per caption": [
+   "app.js"
+  ],
+  "Words per caption:": [
+   "nle.js"
+  ],
+  "Working out the cost…": [
+   "docu.js"
+  ],
+  "Works only on that PC": [
+   "app.js"
+  ],
+  "Would you like me to improve the story before making the documentary?": [
+   "docu.js"
+  ],
+  "Write": [
+   "app.js"
+  ],
+  "Write again": [
+   "docu.js"
+  ],
+  "Write into prompt": [
+   "app.js"
+  ],
+  "Write it again from the image prompt": [
+   "app.js"
+  ],
+  "Write or paste the lyrics first.": [
+   "app.js"
+  ],
+  "Write the Episode 1 script.": [
+   "app.js"
+  ],
+  "Write the episode script.": [
+   "app.js"
+  ],
+  "Write the story": [
+   "docu.js"
+  ],
+  "Write what the rhyme is about first": [
+   "app.js"
+  ],
+  "Write what the video is about": [
+   "app.js"
+  ],
+  "Write what the video is about first": [
+   "app.js"
+  ],
+  "Writing": [
+   "app.js"
+  ],
+  "Writing…": [
+   "app.js"
+  ],
+  "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx": [
+   "app.js"
+  ],
+  "XXXXXXXX-XXXXXXXX-XXXXXXXX-XXXXXXXX": [
+   "app.js"
+  ],
+  "Yes": [
+   "app.js"
+  ],
+  "Yes, improve the story": [
+   "docu.js"
+  ],
+  "You have the latest version.": [
+   "app.js"
+  ],
+  "You pay the providers directly, usually $0.50 to $2 per video.": [
+   "app.js"
+  ],
+  "Your clip": [
+   "app.js"
+  ],
+  "Your clip was removed": [
+   "nle.js"
+  ],
+  "Your direction": [
+   "app.js"
+  ],
+  "Your documentaries": [
+   "docu.js"
+  ],
+  "Your edits are kept.": [
+   "doctl.js"
+  ],
+  "Your file": [
+   "docu.js"
+  ],
+  "Your files stay where they are. Nothing leaves this PC unless you choose the cloud later.": [
+   "docu.js"
+  ],
+  "Your folder": [
+   "docu.js"
+  ],
+  "your frame": [
+   "app.js"
+  ],
+  "Your hardware": [
+   "index.html"
+  ],
+  "Your library is empty. Use \"Save to library\" on a character.": [
+   "app.js"
+  ],
+  "Your music is on the timeline": [
+   "nle.js"
+  ],
+  "Your opening:": [
+   "app.js"
+  ],
+  "Your own API key, from about $0.81 per hour of narration": [
+   "app.js"
+  ],
+  "Your own model": [
+   "app.js"
+  ],
+  "Your own music is looped and faded to fit this part. Only use music you have the rights to.": [
+   "nle.js"
+  ],
+  "Your PC must stay on. Missing parts only are made (images and voice already made are kept).": [
+   "app.js"
+  ],
+  "your pick": [
+   "app.js"
+  ],
+  "youtube_metadata.txt": [
+   "app.js"
+  ],
+  "Zara = a young traveler, short red hair, green cloak": [
+   "app.js"
+  ],
+  "Zoom": [
+   "doctl.js"
+  ],
+  "Zoom in (+)": [
+   "nle.js"
+  ],
+  "Zoom out (-)": [
+   "nle.js"
+  ]
+ },
+ "patterns": {
+  "- {0} min": [
+   "app.js"
+  ],
+  "-----\\s*{0}\\s*-----\\s*\\n(?:\\(copy[^\\n]*\\)\\s*\\n)?([\\s\\S]*?)\\n\\s*-----\\s*END OF {1}\\s*-----": [
+   "app.js"
+  ],
+  ", {0} kept as they were (the AI changed too much there)": [
+   "app.js"
+  ],
+  ", {0} made": [
+   "app.js"
+  ],
+  ", {0} new shots added": [
+   "app.js"
+  ],
+  ", {0} not free so not downloaded": [
+   "docu.js"
+  ],
+  ", {0} ready": [
+   "app.js"
+  ],
+  ", {0} skipped (empty)": [
+   "app.js"
+  ],
+  ", {0}s per image": [
+   "app.js"
+  ],
+  ": {0}% same lines": [
+   "app.js"
+  ],
+  "?which={0}": [
+   "app.js"
+  ],
+  ".nle-row[data-row=\"{0}\"]": [
+   "nle.js"
+  ],
+  "· {0} GB": [
+   "app.js"
+  ],
+  "· {0} GB on disk": [
+   "app.js"
+  ],
+  "· {0} lines ≈ {1} s song": [
+   "app.js"
+  ],
+  "· {0} plan": [
+   "app.js"
+  ],
+  "· {0} sources · AI:": [
+   "docu.js"
+  ],
+  "· {0} threads": [
+   "app.js"
+  ],
+  "· {0} tier": [
+   "app.js"
+  ],
+  "· {0} without a sheet": [
+   "app.js"
+  ],
+  "· {0} words": [
+   "app.js"
+  ],
+  "· {0} words {1}": [
+   "app.js"
+  ],
+  "· {0}{1} min ≈ {2} words · 1 to 3 minutes": [
+   "app.js"
+  ],
+  "· +{0} waiting": [
+   "app.js"
+  ],
+  "· ${0} each": [
+   "app.js"
+  ],
+  "· driver {0}": [
+   "app.js"
+  ],
+  "· research already used about ${0}": [
+   "docu.js"
+  ],
+  "\"{0}\" will be removed from this PC.": [
+   "app.js"
+  ],
+  "\"cap_{0}\", Urbanist, sans-serif": [
+   "nle.js"
+  ],
+  "(Cloud AI) {0}": [
+   "app.js"
+  ],
+  "(like {0}). {1} shots: about {2} s each in the fast opening (until {3}), {4} s after. {5} motion graphics, {6} sound effects.": [
+   "doctl.js"
+  ],
+  "(like {0}). {1} shots: about {2} s each in the fast opening (until {3}), {4} s after. {5} motion graphics, {6} sound effects.{7}": [
+   "doctl.js"
+  ],
+  "(Smart Director, free, about {0} min). Nothing leaves your computer.": [
+   "docu.js"
+  ],
+  "(your OpenRouter account, about ${0}, faster). Small copies of your pictures are sent to OpenRouter.": [
+   "docu.js"
+  ],
+  "(your OpenRouter account, about ${0}, faster). Small copies of your pictures are sent to OpenRouter.{1}": [
+   "docu.js"
+  ],
+  "[data-row=\"{0}\"], [data-hd=\"{1}\"]": [
+   "nle.js"
+  ],
+  "[data-sid=\"{0}\"]": [
+   "nle.js"
+  ],
+  "[data-va=\"{0}\"] .va-wave": [
+   "app.js"
+  ],
+  "{0} - {1} min": [
+   "app.js"
+  ],
+  "{0} · {1} GB": [
+   "app.js"
+  ],
+  "{0} · {1} sources · AI: {2}": [
+   "docu.js"
+  ],
+  "{0} · {1} tier": [
+   "app.js"
+  ],
+  "{0} · Episode {1}": [
+   "app.js"
+  ],
+  "{0} · reference {1}": [
+   "app.js"
+  ],
+  "{0} · scene {1}": [
+   "nle.js"
+  ],
+  "{0} (8 views)": [
+   "app.js"
+  ],
+  "{0} (ambience)": [
+   "nle.js"
+  ],
+  "{0} (your Script AI key)": [
+   "docu.js"
+  ],
+  "{0} {1} · {2} threads": [
+   "app.js"
+  ],
+  "{0} {1} model: {2}": [
+   "app.js"
+  ],
+  "{0} {1} searches · facts checked across sources ·": [
+   "app.js"
+  ],
+  "{0} added": [
+   "nle.js"
+  ],
+  "{0} at {1}": [
+   "nle.js"
+  ],
+  "{0} audio": [
+   "docu.js"
+  ],
+  "{0} chapters": [
+   "docu.js"
+  ],
+  "{0} character{1}{2}": [
+   "app.js"
+  ],
+  "{0} characters,": [
+   "app.js"
+  ],
+  "{0} chars": [
+   "app.js"
+  ],
+  "{0} clip{1}, {2} s": [
+   "app.js"
+  ],
+  "{0} clips · {1} shots": [
+   "docu.js"
+  ],
+  "{0} ComfyUI folder": [
+   "app.js"
+  ],
+  "{0} confirmed by 2+ websites": [
+   "app.js"
+  ],
+  "{0} Cost estimate: about ${1}": [
+   "app.js"
+  ],
+  "{0} disagreements mentioned": [
+   "app.js"
+  ],
+  "{0} disputed": [
+   "docu.js"
+  ],
+  "{0} Documentary Studio": [
+   "docu.js"
+  ],
+  "{0} documents": [
+   "docu.js"
+  ],
+  "{0} episode{1} · {2} character{3}": [
+   "app.js"
+  ],
+  "{0} example pictures": [
+   "app.js"
+  ],
+  "{0} facts": [
+   "app.js"
+  ],
+  "{0} folder": [
+   "doctl.js"
+  ],
+  "{0} frame(s) added": [
+   "app.js"
+  ],
+  "{0} from your PC": [
+   "nle.js"
+  ],
+  "{0} from your PC is on {1}": [
+   "nle.js"
+  ],
+  "{0} GB": [
+   "app.js"
+  ],
+  "{0} GB VRAM ·": [
+   "app.js"
+  ],
+  "{0} GB VRAM{1}{2}": [
+   "app.js"
+  ],
+  "{0} graphic · {1}": [
+   "doctl.js"
+  ],
+  "{0} is made in the cloud again.": [
+   "app.js"
+  ],
+  "{0} is made on your PC, free ({1}).": [
+   "app.js"
+  ],
+  "{0} language{1}: about {2} minutes on a good GPU. All are translated first, then voiced one by one. Finished languages are kept if you stop.{3}": [
+   "app.js"
+  ],
+  "{0} LECCORTUBE Pro": [
+   "app.js"
+  ],
+  "{0} line(s) fixed by fact check": [
+   "app.js"
+  ],
+  "{0} lines to check": [
+   "docu.js"
+  ],
+  "{0} min": [
+   "app.js"
+  ],
+  "{0} model for {1}": [
+   "app.js"
+  ],
+  "{0} model for this scene": [
+   "app.js"
+  ],
+  "{0} model{1}": [
+   "app.js"
+  ],
+  "{0} models: click the Model box to pick one": [
+   "app.js"
+  ],
+  "{0} moved": [
+   "nle.js"
+  ],
+  "{0} music part{1} in this video, one per chapter. Instrumental only.": [
+   "app.js"
+  ],
+  "{0} Needs ComfyUI, about 4 minutes on your GPU.": [
+   "app.js"
+  ],
+  "{0} not used": [
+   "docu.js"
+  ],
+  "{0} now": [
+   "app.js"
+  ],
+  "{0} now uses your image": [
+   "app.js"
+  ],
+  "{0} of {1}": [
+   "app.js"
+  ],
+  "{0} of {1} parts rewritten{2} · {3} → {4} words": [
+   "app.js"
+  ],
+  "{0} of {1} scenes get effects · see which": [
+   "app.js"
+  ],
+  "{0} of {1} scenes, each one written from the scene's words": [
+   "app.js"
+  ],
+  "{0} one source": [
+   "docu.js"
+  ],
+  "{0} part{1}, one per chapter{2}.": [
+   "app.js"
+  ],
+  "{0} photos": [
+   "docu.js"
+  ],
+  "{0} photos and {1} clips saved in the Images and Videos folders. {2} free to use, {3} need a credit (listed in Sources/credits.csv){4}.": [
+   "docu.js"
+  ],
+  "{0} photos and {1} clips. Hover a picture to see what LECCORTUBE understood.": [
+   "docu.js"
+  ],
+  "{0} picture{1}": [
+   "app.js"
+  ],
+  "{0} pictures and shots. This is how it knows what to show on every line.": [
+   "docu.js"
+  ],
+  "{0} pictures per scene sheet": [
+   "app.js"
+  ],
+  "{0} place(s) found. Scenes you set by hand are kept.": [
+   "app.js"
+  ],
+  "{0} Publish": [
+   "app.js"
+  ],
+  "{0} real pictures · {1} AI pictures": [
+   "docu.js"
+  ],
+  "{0} removed": [
+   "nle.js"
+  ],
+  "{0} saved": [
+   "app.js"
+  ],
+  "{0} scene(s) changed": [
+   "app.js"
+  ],
+  "{0} scene(s) have no fixed place.": [
+   "app.js"
+  ],
+  "{0} scene(s) tagged as video{1}. Motion prompts written automatically.": [
+   "app.js"
+  ],
+  "{0} scene{1}": [
+   "app.js"
+  ],
+  "{0} scenes": [
+   "app.js",
+   "docu.js"
+  ],
+  "{0} scenes · {1}": [
+   "app.js"
+  ],
+  "{0} scenes · {1} sounds{2} · captions {3}": [
+   "nle.js"
+  ],
+  "{0} settings": [
+   "app.js"
+  ],
+  "{0} sound{1}": [
+   "nle.js"
+  ],
+  "{0} sound{1} already made and cost nothing.": [
+   "app.js"
+  ],
+  "{0} sources": [
+   "app.js"
+  ],
+  "{0} speaks with the storyteller's voice": [
+   "app.js"
+  ],
+  "{0} style · line {1}": [
+   "nle.js"
+  ],
+  "{0} to {1} · {2}": [
+   "app.js",
+   "nle.js"
+  ],
+  "{0} to {1} · {2} s{3}": [
+   "nle.js"
+  ],
+  "{0} to {1} · sound of its video clip": [
+   "nle.js"
+  ],
+  "{0} to {1} · voice {2} s": [
+   "nle.js"
+  ],
+  "{0} verified": [
+   "docu.js"
+  ],
+  "{0} video scene(s){1}": [
+   "app.js"
+  ],
+  "{0} video(s) created{1}{2}.": [
+   "app.js"
+  ],
+  "{0} video(s) queued. They build one after another.": [
+   "app.js"
+  ],
+  "{0} view": [
+   "app.js"
+  ],
+  "{0} voices in every voice picker": [
+   "app.js"
+  ],
+  "{0}: {1}% same lines{2}": [
+   "app.js"
+  ],
+  "{0}: drag to move": [
+   "nle.js"
+  ],
+  "{0}: not a picture, video or sound": [
+   "nle.js"
+  ],
+  "{0}: sheet uses {1}": [
+   "app.js"
+  ],
+  "{0}. The preview shows it now, Render to bake it in.": [
+   "nle.js"
+  ],
+  "{0}. The price is per picture, from your own account.": [
+   "app.js"
+  ],
+  "{0}{1} GB RAM · {2}": [
+   "app.js"
+  ],
+  "{0}{1}px": [
+   "nle.js"
+  ],
+  "{0}/{1} examples.": [
+   "app.js"
+  ],
+  "{0}/500 characters": [
+   "app.js"
+  ],
+  "{0}Paid to your own ElevenLabs account.": [
+   "app.js"
+  ],
+  "{0}px": [
+   "app.js",
+   "doctl.js",
+   "nle.js"
+  ],
+  "{0}s · {1} shots": [
+   "docu.js"
+  ],
+  "@font-face{font-family:\"cap_{0}\";src:url(\"/capfonts/{1}\");font-weight:{2};font-display:swap}": [
+   "nle.js"
+  ],
+  "/{0} examples.": [
+   "app.js"
+  ],
+  "/api/cloud-script/job/{0}": [
+   "app.js"
+  ],
+  "/api/cloud-voice/sample?url={0}": [
+   "app.js"
+  ],
+  "/api/docu/{0}": [
+   "docu.js"
+  ],
+  "/api/docu/{0}/alts?ci={1}&bi=": [
+   "docu.js"
+  ],
+  "/api/docu/{0}/alts?ci={1}&bi={2}": [
+   "docu.js"
+  ],
+  "/api/docu/{0}/estimate": [
+   "docu.js"
+  ],
+  "/api/docu/{0}/pick": [
+   "docu.js"
+  ],
+  "/api/docu/{0}/run/": [
+   "docu.js"
+  ],
+  "/api/docu/{0}/run/{1}": [
+   "docu.js"
+  ],
+  "/api/docu/{0}/settings": [
+   "docu.js"
+  ],
+  "/api/pro/eleven/clone?name={0}": [
+   "app.js"
+  ],
+  "/api/pro/test/{0}": [
+   "app.js"
+  ],
+  "/api/projects/{0}": [
+   "app.js",
+   "nle.js"
+  ],
+  "/api/projects/{0}?exported=": [
+   "app.js"
+  ],
+  "/api/projects/{0}?exported={1}": [
+   "app.js"
+  ],
+  "/api/projects/{0}/{1}/": [
+   "app.js"
+  ],
+  "/api/projects/{0}/{1}/{2}": [
+   "app.js"
+  ],
+  "/api/projects/{0}/board": [
+   "app.js"
+  ],
+  "/api/projects/{0}/cancel": [
+   "app.js"
+  ],
+  "/api/projects/{0}/cast": [
+   "app.js"
+  ],
+  "/api/projects/{0}/cast/": [
+   "app.js"
+  ],
+  "/api/projects/{0}/cast/{1}": [
+   "app.js"
+  ],
+  "/api/projects/{0}/cast/{1}/choose": [
+   "app.js"
+  ],
+  "/api/projects/{0}/cast/{1}/describe": [
+   "app.js"
+  ],
+  "/api/projects/{0}/cast/{1}/library": [
+   "app.js"
+  ],
+  "/api/projects/{0}/cast/{1}/photo": [
+   "app.js"
+  ],
+  "/api/projects/{0}/cast/{1}/stage": [
+   "app.js"
+  ],
+  "/api/projects/{0}/cast/from-library": [
+   "app.js"
+  ],
+  "/api/projects/{0}/cast/kit": [
+   "app.js"
+  ],
+  "/api/projects/{0}/cost": [
+   "app.js"
+  ],
+  "/api/projects/{0}/cost{1}": [
+   "app.js"
+  ],
+  "/api/projects/{0}/director": [
+   "app.js"
+  ],
+  "/api/projects/{0}/docu/frame.jpg?t={1}&w=960&r=": [
+   "doctl.js"
+  ],
+  "/api/projects/{0}/docu/frame.jpg?t={1}&w=960&r={2}": [
+   "doctl.js"
+  ],
+  "/api/projects/{0}/docu/look": [
+   "doctl.js"
+  ],
+  "/api/projects/{0}/docu/open-export?kind=": [
+   "doctl.js"
+  ],
+  "/api/projects/{0}/docu/open-export?kind={1}": [
+   "doctl.js"
+  ],
+  "/api/projects/{0}/docu/timeline": [
+   "doctl.js"
+  ],
+  "/api/projects/{0}/docu/timeline{1}": [
+   "doctl.js"
+  ],
+  "/api/projects/{0}/grade/preview": [
+   "app.js"
+  ],
+  "/api/projects/{0}/grade/reference": [
+   "app.js"
+  ],
+  "/api/projects/{0}/grade/thumbs": [
+   "app.js"
+  ],
+  "/api/projects/{0}/hook": [
+   "app.js"
+  ],
+  "/api/projects/{0}/hook-doctor?engine=": [
+   "app.js"
+  ],
+  "/api/projects/{0}/hook-doctor?engine={1}": [
+   "app.js"
+  ],
+  "/api/projects/{0}/hook/apply": [
+   "app.js"
+  ],
+  "/api/projects/{0}/improve-script": [
+   "app.js"
+  ],
+  "/api/projects/{0}/kit": [
+   "app.js"
+  ],
+  "/api/projects/{0}/look/sample": [
+   "app.js"
+  ],
+  "/api/projects/{0}/motion/": [
+   "app.js"
+  ],
+  "/api/projects/{0}/motion/{1}": [
+   "app.js"
+  ],
+  "/api/projects/{0}/music/{1}/upload": [
+   "nle.js"
+  ],
+  "/api/projects/{0}/music/auto": [
+   "app.js"
+  ],
+  "/api/projects/{0}/music/drop": [
+   "app.js"
+  ],
+  "/api/projects/{0}/music/preview": [
+   "app.js"
+  ],
+  "/api/projects/{0}/open-folder": [
+   "app.js"
+  ],
+  "/api/projects/{0}/open-folder{1}": [
+   "app.js"
+  ],
+  "/api/projects/{0}/originality": [
+   "app.js"
+  ],
+  "/api/projects/{0}/places": [
+   "app.js"
+  ],
+  "/api/projects/{0}/places/": [
+   "app.js"
+  ],
+  "/api/projects/{0}/places/{1}": [
+   "app.js"
+  ],
+  "/api/projects/{0}/places/{1}/image": [
+   "app.js"
+  ],
+  "/api/projects/{0}/places/auto": [
+   "app.js"
+  ],
+  "/api/projects/{0}/places/where": [
+   "app.js"
+  ],
+  "/api/projects/{0}/preflight/": [
+   "app.js"
+  ],
+  "/api/projects/{0}/preflight/{1}": [
+   "app.js"
+  ],
+  "/api/projects/{0}/refs": [
+   "app.js"
+  ],
+  "/api/projects/{0}/refs/": [
+   "app.js"
+  ],
+  "/api/projects/{0}/refs/{1}": [
+   "app.js"
+  ],
+  "/api/projects/{0}/refs/video": [
+   "app.js"
+  ],
+  "/api/projects/{0}/resplit": [
+   "app.js"
+  ],
+  "/api/projects/{0}/run/": [
+   "app.js"
+  ],
+  "/api/projects/{0}/run/{1}": [
+   "app.js"
+  ],
+  "/api/projects/{0}/run/character": [
+   "app.js"
+  ],
+  "/api/projects/{0}/run/dub": [
+   "app.js"
+  ],
+  "/api/projects/{0}/run/music": [
+   "app.js"
+  ],
+  "/api/projects/{0}/run/nle": [
+   "doctl.js"
+  ],
+  "/api/projects/{0}/run/place_sheet": [
+   "app.js"
+  ],
+  "/api/projects/{0}/run/publish": [
+   "app.js"
+  ],
+  "/api/projects/{0}/run/regen": [
+   "app.js"
+  ],
+  "/api/projects/{0}/run/regen_video": [
+   "app.js"
+  ],
+  "/api/projects/{0}/run/sheet": [
+   "app.js"
+  ],
+  "/api/projects/{0}/run/shorts": [
+   "app.js"
+  ],
+  "/api/projects/{0}/run/variations": [
+   "app.js"
+  ],
+  "/api/projects/{0}/scenes": [
+   "app.js",
+   "nle.js"
+  ],
+  "/api/projects/{0}/scenes/": [
+   "app.js",
+   "nle.js"
+  ],
+  "/api/projects/{0}/scenes/{1}": [
+   "app.js",
+   "nle.js"
+  ],
+  "/api/projects/{0}/scenes/{1}/clip": [
+   "app.js",
+   "nle.js"
+  ],
+  "/api/projects/{0}/scenes/{1}/image": [
+   "nle.js"
+  ],
+  "/api/projects/{0}/scenes/{1}/image?animate=": [
+   "app.js"
+  ],
+  "/api/projects/{0}/scenes/{1}/image?animate={2}": [
+   "app.js"
+  ],
+  "/api/projects/{0}/scenes/{1}/move": [
+   "app.js"
+  ],
+  "/api/projects/{0}/scenes/{1}/to-character": [
+   "app.js"
+  ],
+  "/api/projects/{0}/scenes/{1}/variant": [
+   "app.js"
+  ],
+  "/api/projects/{0}/scenes/add-media?after=": [
+   "nle.js"
+  ],
+  "/api/projects/{0}/scenes/add-media?after={1}": [
+   "nle.js"
+  ],
+  "/api/projects/{0}/sfx-user": [
+   "nle.js"
+  ],
+  "/api/projects/{0}/style/image": [
+   "app.js"
+  ],
+  "/api/projects/{0}/timeline": [
+   "nle.js"
+  ],
+  "/api/projects/{0}/titles": [
+   "app.js"
+  ],
+  "/api/script-ai/models?provider={0}": [
+   "app.js"
+  ],
+  "/api/seasons/{0}": [
+   "app.js"
+  ],
+  "/api/seasons/{0}/characters": [
+   "app.js"
+  ],
+  "/api/seasons/{0}/episodes": [
+   "app.js"
+  ],
+  "/api/setup/{0}/cancel": [
+   "app.js"
+  ],
+  "/api/setup/{0}/install": [
+   "app.js"
+  ],
+  "/api/setup/plan?mode={0}": [
+   "app.js"
+  ],
+  "/api/sfx/{0}.wav?i=": [
+   "app.js"
+  ],
+  "/api/sfx/{0}.wav?i={1}": [
+   "app.js"
+  ],
+  "/api/system{0}": [
+   "app.js"
+  ],
+  "/api/update{0}": [
+   "app.js"
+  ],
+  "/api/voice-presets/{0}": [
+   "app.js"
+  ],
+  "/api/voices/{0}": [
+   "app.js"
+  ],
+  "/docufiles/{0}/": [
+   "docu.js"
+  ],
+  "/docufiles/{0}/{1}": [
+   "docu.js"
+  ],
+  "/files/{0}/": [
+   "app.js",
+   "doctl.js"
+  ],
+  "/files/{0}/{1}": [
+   "app.js",
+   "doctl.js"
+  ],
+  "/files/{0}/{1}?v=": [
+   "app.js"
+  ],
+  "/files/{0}/{1}?v={2}": [
+   "app.js"
+  ],
+  "/files/{0}/character/{1}?v=": [
+   "app.js"
+  ],
+  "/files/{0}/character/{1}?v={2}": [
+   "app.js"
+  ],
+  "/picture · ~${0}/sheet": [
+   "app.js"
+  ],
+  "/second · clips of {0} s": [
+   "app.js"
+  ],
+  "#{0}_ai": [
+   "docu.js"
+  ],
+  "#{0}_look": [
+   "docu.js"
+  ],
+  "#{0}_lookbtn": [
+   "docu.js"
+  ],
+  "#{0}_model": [
+   "docu.js"
+  ],
+  "#{0}_modelbox": [
+   "docu.js"
+  ],
+  "#cd_{0}": [
+   "app.js"
+  ],
+  "#cf_{0}": [
+   "app.js"
+  ],
+  "#cmx_{0}": [
+   "app.js"
+  ],
+  "#cn_{0}": [
+   "app.js"
+  ],
+  "#cv_{0}": [
+   "app.js"
+  ],
+  "#cvx_{0}": [
+   "app.js"
+  ],
+  "#img_{0}": [
+   "app.js"
+  ],
+  "#pcb_{0}": [
+   "app.js"
+  ],
+  "#pd_{0}": [
+   "app.js"
+  ],
+  "#pn_{0}": [
+   "app.js"
+  ],
+  "#sc_{0}": [
+   "app.js"
+  ],
+  "#scd_{0}": [
+   "app.js"
+  ],
+  "#smb_{0}": [
+   "app.js"
+  ],
+  "↺ AUTO {0}x": [
+   "app.js"
+  ],
+  "+ {0} ambience": [
+   "nle.js"
+  ],
+  "+{0}s hold": [
+   "app.js"
+  ],
+  "~${0} a sheet": [
+   "app.js"
+  ],
+  "$0.12 per minute of sound · this video ~${0}": [
+   "app.js"
+  ],
+  "4K master {0}": [
+   "app.js"
+  ],
+  "A scene without a place word stays where the scene before it was. Change any scene's place on the Storyboard. {0}": [
+   "app.js"
+  ],
+  "about {0} min": [
+   "docu.js"
+  ],
+  "Add \"{0}\"": [
+   "nle.js"
+  ],
+  "Add as a new clip after {0}": [
+   "nle.js"
+  ],
+  "Added from your PC: no narration, it plays for {0} s.": [
+   "nle.js"
+  ],
+  "Adding {0} as a new clip…": [
+   "nle.js"
+  ],
+  "Adding {0} as music part {1}…": [
+   "nle.js"
+  ],
+  "Adding {0} to {1}…": [
+   "nle.js"
+  ],
+  "Adding {0}…": [
+   "nle.js"
+  ],
+  "after {0}": [
+   "nle.js"
+  ],
+  "After {0}, the last clip.": [
+   "nle.js"
+  ],
+  "AI picture: {0}": [
+   "docu.js"
+  ],
+  "Also use it on every scene that mentions this character (or \"image {0}\")": [
+   "app.js"
+  ],
+  "Animating {0} from your image…": [
+   "app.js"
+  ],
+  "API token copied: {0}…": [
+   "app.js"
+  ],
+  "Auto · {0}": [
+   "app.js"
+  ],
+  "Auto · {0} s": [
+   "app.js"
+  ],
+  "Auto Director {0}": [
+   "app.js"
+  ],
+  "Auto publish {0}": [
+   "app.js"
+  ],
+  "Automation API {0}": [
+   "app.js"
+  ],
+  "Bad JSON: {0}": [
+   "app.js"
+  ],
+  "Balance ${0}": [
+   "docu.js"
+  ],
+  "bdpUse('{0}')": [
+   "app.js"
+  ],
+  "BEST FOR {0}": [
+   "app.js"
+  ],
+  "Camera examples: {0}": [
+   "app.js"
+  ],
+  "Caption text for line {0} {1}": [
+   "nle.js"
+  ],
+  "Cast: {0}": [
+   "app.js"
+  ],
+  "cast:{0}": [
+   "app.js"
+  ],
+  "Character {0}": [
+   "app.js"
+  ],
+  "Character image set from {0}": [
+   "app.js"
+  ],
+  "characters left this month, about {0} min of narration": [
+   "app.js"
+  ],
+  "characters left this month, about {0} min of narration{1}": [
+   "app.js"
+  ],
+  "Check in the cloud {0}": [
+   "app.js"
+  ],
+  "Check: {0}": [
+   "docu.js"
+  ],
+  "choose any of the {0} models": [
+   "app.js"
+  ],
+  "Clip sound · {0}": [
+   "nle.js"
+  ],
+  "clip{0}, {1} s": [
+   "app.js"
+  ],
+  "clips · {0} shots": [
+   "docu.js"
+  ],
+  "clips {0} s": [
+   "app.js"
+  ],
+  "Cloud {0}": [
+   "app.js"
+  ],
+  "Connect {0}": [
+   "app.js"
+  ],
+  "Connect your AI accounts {0}": [
+   "app.js"
+  ],
+  "connected · {0} models": [
+   "app.js"
+  ],
+  "Connected. {0} models found, the best one is selected.": [
+   "app.js"
+  ],
+  "contenteditable=\"true\" onblur=\"docuText({0},{1},this.innerText)\"": [
+   "docu.js"
+  ],
+  "Create Episode {0}": [
+   "app.js"
+  ],
+  "cs_{0}": [
+   "app.js"
+  ],
+  "cv|{0}|": [
+   "app.js"
+  ],
+  "cv|{0}|{1}": [
+   "app.js"
+  ],
+  "cvpUse('{0}')": [
+   "app.js"
+  ],
+  "Default {0} model": [
+   "app.js"
+  ],
+  "Default for new videos: {0}": [
+   "app.js"
+  ],
+  "Default video model · {0} video scene": [
+   "app.js"
+  ],
+  "Default video model · {0} video scene{1}": [
+   "app.js"
+  ],
+  "Delete moved files ({0} GB)": [
+   "app.js"
+  ],
+  "Delete scene {0}?": [
+   "app.js"
+  ],
+  "desktop ready {0}": [
+   "app.js"
+  ],
+  "docuSwap({0},{1})": [
+   "docu.js"
+  ],
+  "Done: {0}": [
+   "app.js"
+  ],
+  "Downloads only the changed app files ({0} MB). No reinstall.": [
+   "app.js"
+  ],
+  "drag error {0}": [
+   "app.js"
+  ],
+  "drag throw {0}": [
+   "app.js"
+  ],
+  "Dub {0} language": [
+   "app.js"
+  ],
+  "Dub {0} language{1}": [
+   "app.js"
+  ],
+  "each one is a {0} search, untick what you do not want": [
+   "app.js"
+  ],
+  "Effect {0}": [
+   "app.js"
+  ],
+  "EP {0}": [
+   "app.js"
+  ],
+  "Episode {0}": [
+   "app.js"
+  ],
+  "Episode {0} created with the season's characters.": [
+   "app.js"
+  ],
+  "Episode file read: season name, title, {0}script{1}{2}{3} are filled in. Check the voice, then create.": [
+   "app.js"
+  ],
+  "Episode file read: title, script{0} are filled in.": [
+   "app.js"
+  ],
+  "episode{0}": [
+   "app.js"
+  ],
+  "episode{0} · {1} character": [
+   "app.js"
+  ],
+  "Error: {0}": [
+   "app.js",
+   "docu.js",
+   "doctl.js",
+   "nle.js"
+  ],
+  "Fix {0} problem": [
+   "app.js"
+  ],
+  "Fix {0} problem{1}": [
+   "app.js"
+  ],
+  "Folder: {0}": [
+   "app.js",
+   "doctl.js"
+  ],
+  "for this video ({0}). It changes by itself when you change the video type or style.": [
+   "app.js"
+  ],
+  "Found ({0}):": [
+   "app.js"
+  ],
+  "Found automatically. {0}": [
+   "app.js"
+  ],
+  "free · {0} models": [
+   "app.js"
+  ],
+  "Free. {0}": [
+   "app.js"
+  ],
+  "From episode {0}": [
+   "app.js"
+  ],
+  "Get your key from {0}": [
+   "app.js"
+  ],
+  "gfx {0} {1}": [
+   "doctl.js"
+  ],
+  "Hi, I am {0}. This is how I sound in the story.": [
+   "app.js"
+  ],
+  "I suggest: {0}": [
+   "docu.js"
+  ],
+  "image {0}": [
+   "app.js"
+  ],
+  "Improve script {0}": [
+   "app.js"
+  ],
+  "is made on your PC, free ({0}).": [
+   "app.js"
+  ],
+  "Key saved on this PC ({0}) ·": [
+   "app.js"
+  ],
+  "language{0}: about {1} minutes on a good GPU. All are translated first, then voiced one by one. Finished languages are kept if you stop.": [
+   "app.js"
+  ],
+  "Last render{0}": [
+   "doctl.js"
+  ],
+  "LECCORTUBE makes 8 views on grey from this picture, then uses the character in {0} automatically.": [
+   "app.js"
+  ],
+  "LECCORTUBE v{0} · © Leccorside Ai": [
+   "app.js"
+  ],
+  "License {0}": [
+   "app.js"
+  ],
+  "Life stage added: {0}. Make its sheet.": [
+   "app.js"
+  ],
+  "Like {0}": [
+   "docu.js"
+  ],
+  "Like {0} · click to change": [
+   "docu.js"
+  ],
+  "Line {0} changed": [
+   "nle.js"
+  ],
+  "Listen ({0} sound{1})": [
+   "app.js"
+  ],
+  "Make all sheets ({0})": [
+   "app.js"
+  ],
+  "Make the {0} AI pictures in the cloud (OpenRouter) instead of on this PC": [
+   "docu.js"
+  ],
+  "Making {0} character sheet. {1} now uses this character as reference.": [
+   "app.js"
+  ],
+  "Making 4 options for {0}…": [
+   "app.js"
+  ],
+  "Making a new video for {0}…": [
+   "app.js"
+  ],
+  "Making the {0} project. You can watch the progress at the top.": [
+   "doctl.js"
+  ],
+  "Making your rhyme: the song first, then {0} pictures.": [
+   "app.js"
+  ],
+  "Making your video: {0} scenes. Characters, places, camera, music and sounds are handled for you.": [
+   "app.js"
+  ],
+  "Motion {0}": [
+   "app.js"
+  ],
+  "Motion graphics, name labels, years and numbers that animate, article clippings, a grid and colour grade, 3 second cuts and sound effects. {0} looks inspired by top documentary channels.": [
+   "docu.js"
+  ],
+  "Music · part {0}": [
+   "nle.js"
+  ],
+  "Music model: {0}. Use \"Again\" on a part to make it with this model.": [
+   "app.js"
+  ],
+  "music part{0} in this video, one per chapter. Instrumental only.": [
+   "app.js"
+  ],
+  "Narrator {0}": [
+   "app.js"
+  ],
+  "Needs about {0} GB but only {1} GB is free on this drive. Free up space first.": [
+   "app.js"
+  ],
+  "New clip {0} added": [
+   "nle.js"
+  ],
+  "New clip {0} added{1}": [
+   "nle.js"
+  ],
+  "New image{0}": [
+   "app.js"
+  ],
+  "nlCapSet({enabled:{0}})": [
+   "nle.js"
+  ],
+  "No look yet. Without it {0} can look different in every scene. Write one line below.": [
+   "app.js"
+  ],
+  "No model matches \"{0}\"": [
+   "app.js"
+  ],
+  "Nothing left to make.{0}": [
+   "app.js"
+  ],
+  "of {0} parts rewritten{1} · {2} → {3} words": [
+   "app.js"
+  ],
+  "of {0} scenes get effects · see which": [
+   "app.js"
+  ],
+  "of {0} scenes, each one written from the scene's words": [
+   "app.js"
+  ],
+  "onclick=\"pickRef('{0}',0)\"": [
+   "app.js"
+  ],
+  "onclick=\"tlSeek({0})\" title=\"{1}\"": [
+   "doctl.js"
+  ],
+  "onclick=\"tlSel(event,'g:{0}',{1})\"": [
+   "doctl.js"
+  ],
+  "onclick=\"tlSel(event,'s:{0}',{1})\" title=\"{2} · {3} · {4}%\"": [
+   "doctl.js"
+  ],
+  "Only scene 1 is narrated again. {0}": [
+   "app.js"
+  ],
+  "OpenRouter{0}": [
+   "docu.js"
+  ],
+  "Part {0}{1}": [
+   "app.js"
+  ],
+  "part{0}, one per chapter{1}.": [
+   "app.js"
+  ],
+  "Paste your {0} key": [
+   "app.js"
+  ],
+  "Pause {0} s": [
+   "nle.js"
+  ],
+  "Pause after {0}:": [
+   "nle.js"
+  ],
+  "Pause after {0}: {1} s": [
+   "nle.js"
+  ],
+  "Pause after the line: {0} s": [
+   "nle.js"
+  ],
+  "photos and {0} clips saved in the Images and Videos folders. {1} free to use, {2} need a credit (listed in Sources/credits.csv){3}.": [
+   "docu.js"
+  ],
+  "photos and {0} clips. Hover a picture to see what LECCORTUBE understood.": [
+   "docu.js"
+  ],
+  "Picked from the topic. Click to see all {0} styles": [
+   "docu.js"
+  ],
+  "Place {0}": [
+   "app.js"
+  ],
+  "poster=\"{0}?v={1}\"": [
+   "app.js"
+  ],
+  "poster=\"/files/{0}/{1}?v={2}\"": [
+   "app.js"
+  ],
+  "Preset \"{0}\" applied. Run 1 · Voice to record.": [
+   "app.js"
+  ],
+  "Preset \"{0}\" saved. It is here in every project.": [
+   "app.js"
+  ],
+  "Pro active{0}": [
+   "app.js"
+  ],
+  "Project deleted{0}": [
+   "app.js"
+  ],
+  "ps_{0}": [
+   "app.js"
+  ],
+  "Publish {0}": [
+   "app.js"
+  ],
+  "Put @{0} in the script": [
+   "app.js"
+  ],
+  "real pictures · {0} AI pictures": [
+   "docu.js"
+  ],
+  "ref:{0}": [
+   "app.js"
+  ],
+  "Reference set on {0} scenes. Regenerate them to apply.": [
+   "app.js"
+  ],
+  "Reference set, prompt wording added automatically. Click ↻ Image on {0} to apply.": [
+   "app.js"
+  ],
+  "Regenerating {0}…": [
+   "app.js"
+  ],
+  "Remove {0}": [
+   "nle.js"
+  ],
+  "Replace the picture of {0}": [
+   "nle.js"
+  ],
+  "research cost ${0}": [
+   "docu.js"
+  ],
+  "Running: {0} · {1}%": [
+   "app.js"
+  ],
+  "s · {0} shots": [
+   "docu.js"
+  ],
+  "Sample added ({0}s). It is selected, press play.": [
+   "app.js"
+  ],
+  "Save ({0})": [
+   "doctl.js"
+  ],
+  "Save {0}": [
+   "doctl.js"
+  ],
+  "SB.camera['{0}']='{1}';renderShot()": [
+   "app.js"
+  ],
+  "sc_{0}": [
+   "nle.js"
+  ],
+  "scale({0}) translate({1}%, {2}%)": [
+   "nle.js"
+  ],
+  "Scene {0} deleted. Run 4 · Render to update the video.": [
+   "app.js"
+  ],
+  "scene:{0}": [
+   "app.js"
+  ],
+  "scene(s) tagged as video{0}. Motion prompts written automatically.": [
+   "app.js"
+  ],
+  "scenes · {0} sounds{1} · captions": [
+   "nle.js"
+  ],
+  "Script ready: {0} facts, {1} confirmed by 2+ websites, {2} line(s) fixed by the fact check.": [
+   "app.js"
+  ],
+  "Search {0} voices": [
+   "app.js"
+  ],
+  "Sent as: {0}": [
+   "app.js"
+  ],
+  "Shared by every episode. {0}": [
+   "app.js"
+  ],
+  "Sheet model {0}": [
+   "app.js"
+  ],
+  "Sheet model for {0}": [
+   "app.js"
+  ],
+  "Short {0}": [
+   "app.js"
+  ],
+  "Shot {0} · {1} to {2} ({3} s)": [
+   "doctl.js"
+  ],
+  "shot {0} {1}": [
+   "doctl.js"
+  ],
+  "Shot Builder · {0}": [
+   "app.js"
+  ],
+  "skipped: {0} duplicates, {1} too small, {2} unreadable": [
+   "docu.js"
+  ],
+  "Song ready: {0} seconds, {1} pictures timed to it.": [
+   "app.js"
+  ],
+  "Sound changed to {0}": [
+   "nle.js"
+  ],
+  "Sound effect · {0}": [
+   "doctl.js"
+  ],
+  "Sound effect at {0}": [
+   "nle.js"
+  ],
+  "Sound of the video clip {0}": [
+   "nle.js"
+  ],
+  "sound{0} already made and cost nothing.": [
+   "app.js"
+  ],
+  "Spoken line {0}": [
+   "nle.js"
+  ],
+  "Started: {0}{1}": [
+   "app.js"
+  ],
+  "state {0}": [
+   "app.js"
+  ],
+  "Style previews: {0}": [
+   "app.js"
+  ],
+  "style_{0}_name": [
+   "app.js"
+  ],
+  "Style: {0}. Painting a sample picture…": [
+   "app.js"
+  ],
+  "suggested for a {0} voice": [
+   "app.js"
+  ],
+  "Sung · {0} ·": [
+   "app.js"
+  ],
+  "Sung · {0} · {1}{2}": [
+   "app.js"
+  ],
+  "tb-upd{0}": [
+   "app.js"
+  ],
+  "The longest clip of this model is {0} s. The picture holds still for the last {1} s of the line.": [
+   "app.js"
+  ],
+  "This line is about {0} s. Shorter clips are off so the narration is never cut.": [
+   "app.js"
+  ],
+  "this scene ~${0} ({1} s)": [
+   "app.js"
+  ],
+  "This video · {0}": [
+   "app.js"
+  ],
+  "this video ~${0}": [
+   "app.js"
+  ],
+  "Thumbnail {0}": [
+   "app.js"
+  ],
+  "Timeline {0}": [
+   "nle.js"
+  ],
+  "to {0} ·": [
+   "app.js",
+   "nle.js"
+  ],
+  "to {0} · {1} s": [
+   "nle.js"
+  ],
+  "to {0} · sound of its video clip": [
+   "nle.js"
+  ],
+  "to {0} · voice {1} s": [
+   "nle.js"
+  ],
+  "To make this video, LECCORTUBE needs {0} first (about {1} GB, downloaded once):": [
+   "app.js"
+  ],
+  "Tuned for {0}: images {1}×{2}, video": [
+   "app.js"
+  ],
+  "Tuned for {0}: images {1}×{2}, video {3}": [
+   "app.js"
+  ],
+  "type_{0}_desc": [
+   "app.js"
+  ],
+  "type_{0}_name": [
+   "app.js"
+  ],
+  "Update to v{0}": [
+   "app.js"
+  ],
+  "Updating {0}%": [
+   "app.js"
+  ],
+  "used ${0}": [
+   "docu.js"
+  ],
+  "Version {0} is downloaded. LECCORTUBE restarts for a few seconds to finish. Projects, models and settings stay as they are.": [
+   "app.js"
+  ],
+  "Video shape {0}x{1} for new renders": [
+   "app.js"
+  ],
+  "Video type: {0}. Pacing, music and captions follow it.": [
+   "app.js"
+  ],
+  "video(s) created{0}{1}.": [
+   "app.js"
+  ],
+  "Voice · {0}": [
+   "nle.js"
+  ],
+  "Voice {0}{1}": [
+   "app.js"
+  ],
+  "Voice for {0}": [
+   "app.js"
+  ],
+  "Voice preview · {0}": [
+   "app.js"
+  ],
+  "Voice: {0}": [
+   "app.js"
+  ],
+  "Voice: {0} ·": [
+   "app.js"
+  ],
+  "Voice: {0} · {1}": [
+   "app.js"
+  ],
+  "vsVoice('{0}',true)": [
+   "app.js"
+  ],
+  "vsVoice('{0}')": [
+   "app.js"
+  ],
+  "Why {0}": [
+   "app.js"
+  ],
+  "write @{0} in a prompt to put a scene here": [
+   "app.js"
+  ],
+  "Your {0} API key": [
+   "app.js"
+  ]
+ }
+}
