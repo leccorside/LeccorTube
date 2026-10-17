@@ -15,7 +15,8 @@
   "use strict";
   const DICT = window.I18N_DICT || {};
   const ATTRS = ["title", "placeholder", "aria-label", "alt", "data-tip"];
-  const SKIP_SEL = "script,style,textarea,code,pre,svg,[contenteditable=''],[contenteditable='true'],[data-noi18n],.noi18n";
+  // #metaText: título/descrição/tags gerados para o YouTube; o botão "copiar" (copyMeta) lê o texto da tela
+  const SKIP_SEL = "script,style,textarea,code,pre,svg,[contenteditable=''],[contenteditable='true'],[data-noi18n],.noi18n,#metaText";
   const FRAG_MAX_LEN = 300; // textos longos (roteiros, descrições do usuário) não passam por fragmentos
 
   let lang = null;
