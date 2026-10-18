@@ -70,6 +70,10 @@
   .fixo li { margin: 3px 0; }
   .acts { display: flex; gap: 8px; margin-top: 10px; }
   .acts button { flex: 1; }
+  .estprev { display: flex; align-items: center; gap: 12px; margin-top: 12px; padding: 8px; border: 1px solid var(--line);
+    border-radius: 10px; background: #120f0d; }
+  .estprev img { width: 120px; aspect-ratio: 16/9; object-fit: cover; border-radius: 6px; background: #000; }
+  .estprev span { color: var(--mut); font-size: 13px; }
   .hidden { display: none !important; }
 </style>
 </head>
@@ -94,6 +98,7 @@
           </select></div>
         <div><label for="estilo">Estilo visual</label><select id="estilo"></select></div>
       </div>
+      <div class="estprev hidden" id="previaEstilo"><img alt="Exemplo do estilo visual"><span></span></div>
       <label for="miniatura">Texto da miniatura <span class="hint">curto: 2 a 4 palavras, para não cortar</span></label>
       <input type="text" id="miniatura" placeholder="Ex.: MÃE ARRANCOU SEUS OLHOS">
       <div class="meta"><span id="miniInfo"></span></div>
@@ -168,7 +173,7 @@
 </div>
 <script>
 const $ = s => document.querySelector(s);
-let PPS = 3.2, timer = null;
+let PPS = 3.2, timer = null, ESTILOS = [];
 
 const esc = s => String(s).replace(/[&<>"]/g, c => ({"&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;"})[c]);
 const fmt = s => s >= 60 ? `${Math.floor(s / 60)} min ${String(Math.round(s % 60)).padStart(2, "0")} s` : `${Math.round(s)} s`;
@@ -178,7 +183,10 @@ async function carregar() {
     const o = await (await fetch("/api/opcoes")).json();
     PPS = o.palavras_por_seg;
     $("#tipo").innerHTML = o.tipos.map(t => `<option value="${t.id}" ${t.id === "short" ? "selected" : ""}>${tipoPt(t)}</option>`).join("");
-    $("#estilo").innerHTML = o.estilos.map(s => `<option value="${s.id}" ${s.id === "anime_dark" ? "selected" : ""}>${s.nome}</option>`).join("");
+    ESTILOS = o.estilos;
+    const grupos = [...new Set(o.estilos.map(s => s.grupo))];  // na ordem do catálogo do app
+    $("#estilo").innerHTML = grupos.map(g => `<optgroup label="${esc(g)}">` + o.estilos.filter(s => s.grupo === g)
+      .map(s => `<option value="${esc(s.id)}" ${s.id === "anime_dark" ? "selected" : ""}>${esc(s.nome)}</option>`).join("") + `</optgroup>`).join("");
     listarAmb(o.ambientes);
     $("#pastaAmb").textContent = o.pasta_ambiente;
   } catch (e) { alert("Não consegui falar com o LeccorTube. Feche esta página e abra de novo pelo LeccorTube Simples.bat."); }
@@ -210,6 +218,10 @@ function atualizar() {
   $("#cap").style.fontSize = `${h * t / 100}px`;
   $("#cap").style.color = $("#cor").value;
   $("#capHi").style.color = $("#dest").value;
+  const estilo = ESTILOS.find(s => s.id === $("#estilo").value);
+  $("#previaEstilo").classList.toggle("hidden", !(estilo && estilo.previa));
+  if (estilo && estilo.previa && $("#previaEstilo img").getAttribute("src") !== estilo.previa) $("#previaEstilo img").src = estilo.previa;
+  if (estilo) $("#previaEstilo span").textContent = `${estilo.grupo} · ${estilo.nome}`;
   $("#ambVolV").textContent = `${$("#ambVol").value}%`;
   $("#ambVol").disabled = $("#ouvir").disabled = !$("#amb").value;
   $("#player").volume = volOuvir();

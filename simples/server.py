@@ -43,6 +43,23 @@ FASES = [("Na fila", 0), ("Preparando", 2), ("Criando o projeto", 2),
          ("Adicionando o som ambiente", 2)]
 TOTAL_PESO = sum(p for _, p in FASES)
 
+# nomes em português dos estilos visuais do catálogo do app (os mesmos do static/i18n_dict.js, completados)
+ESTILOS_PT = {
+    "anime": "Anime clássico", "anime_cinematic": "Filme de anime", "handpainted": "Estilo Ghibli",
+    "anime_dark": "Anime sombrio", "chibi": "Chibi fofo", "manga": "Nanquim de mangá",
+    "pixar3d": "Filme de animação 3D", "clay": "Massinha (stop motion)", "soft3d": "Mundo de brinquedo 3D",
+    "lowpoly": "3D low poly (facetado)", "diorama": "Diorama em miniatura", "cartoon": "Desenho plano",
+    "stick": "Animação de palitinho", "comic": "Histórias em quadrinhos", "papercut": "Recorte de papel",
+    "pixel": "Pixel art (videogame retrô)", "storybook": "Livro infantil ilustrado",
+    "cinematic": "Realista cinematográfico", "documentary": "Documentário realista", "aerial": "Aérea com drone",
+    "noir": "Filme noir (preto e branco)", "vintage": "Fotografia antiga", "horror_real": "Terror cinematográfico",
+    "found_footage": "Filmagem encontrada (found footage)", "darkfantasy": "Fantasia sombria",
+    "gothic": "Nanquim gótico", "engraving": "Gravura antiga", "painterly": "Pintura suave",
+    "watercolor": "Aquarela", "oil": "Pintura a óleo", "inkwash": "Aguada de nanquim", "ukiyoe": "Xilogravura japonesa",
+    "fantasyart": "Fantasia épica", "cyberpunk": "Neon cyberpunk",
+}
+GRUPOS_PT = {"Anime": "Anime", "3D": "3D", "Cartoon": "Desenho", "Realistic": "Realista", "Horror": "Terror", "Art": "Arte"}
+
 app = FastAPI(title="LeccorTube Simples")
 TRABALHO = {"ativo": False}  # um vídeo por vez (a GPU é uma só)
 TRAVA = threading.Lock()
@@ -321,7 +338,9 @@ def opcoes():
     cat = api("GET", "/api/catalog")
     return {
         "tipos": [{"id": t["id"], "nome": t["name"]} for t in cat["types"] if t["id"] != "rhyme"],
-        "estilos": [{"id": s["id"], "nome": s["name"]} for s in cat["styles"]],
+        "estilos": [{"id": s["id"], "nome": ESTILOS_PT.get(s["id"], s["name"]),
+                     "grupo": GRUPOS_PT.get(s.get("group"), s.get("group") or "Outros"),
+                     "previa": APP + s["preview"] if s.get("preview") else ""} for s in cat["styles"]],
         "palavras_por_seg": PALAVRAS_POR_SEG,
         "ambientes": [{"id": i["id"], "nome": i["nome"]} for i in ambiente.lista()],
         "pasta_ambiente": ambiente.PASTA,
