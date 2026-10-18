@@ -122,6 +122,18 @@
       </div>
     </div>
     <div class="card">
+      <h2>4. Som ambiente</h2>
+      <label for="amb">Som de fundo</label>
+      <div class="row" style="grid-template-columns: 1fr auto">
+        <select id="amb"><option value="">Nenhum</option></select>
+        <button class="sec" id="ouvir" type="button" style="padding:9px 14px">▶ Ouvir</button>
+      </div>
+      <label for="ambVol">Volume <span class="hint" id="ambVolV"></span></label>
+      <input type="range" id="ambVol" min="5" max="100" step="5" value="30">
+      <div class="hint" style="margin-top:8px">Fica por baixo da narração, com entrada e saída suaves. Para usar sons reais, coloque arquivos .mp3 ou .wav em <code id="pastaAmb" style="word-break:break-all">assets\ambiente</code> e recarregue a página.</div>
+      <audio id="player" loop></audio>
+    </div>
+    <div class="card">
       <h2>Sempre igual</h2>
       <ul class="fixo">
         <li>Voz oficial em português (a do NARRACAO.wav), sem eco</li>
@@ -155,6 +167,7 @@
 const $ = s => document.querySelector(s);
 let PPS = 3.2, timer = null;
 
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;"})[c]);
 const fmt = s => s >= 60 ? `${Math.floor(s / 60)} min ${String(Math.round(s % 60)).padStart(2, "0")} s` : `${Math.round(s)} s`;
 
 async function carregar() {
@@ -163,6 +176,8 @@ async function carregar() {
     PPS = o.palavras_por_seg;
     $("#tipo").innerHTML = o.tipos.map(t => `<option value="${t.id}" ${t.id === "short" ? "selected" : ""}>${tipoPt(t)}</option>`).join("");
     $("#estilo").innerHTML = o.estilos.map(s => `<option value="${s.id}" ${s.id === "anime_dark" ? "selected" : ""}>${s.nome}</option>`).join("");
+    $("#amb").innerHTML = `<option value="">Nenhum</option>` + o.ambientes.map(a => `<option value="${esc(a.id)}">${esc(a.nome)}</option>`).join("");
+    $("#pastaAmb").textContent = o.pasta_ambiente;
   } catch (e) { alert("Não consegui falar com o LeccorTube. Feche esta página e abra de novo pelo LeccorTube Simples.bat."); }
   restaurar(); atualizar(); status();
 }
@@ -192,12 +207,26 @@ function atualizar() {
   $("#cap").style.fontSize = `${h * t / 100}px`;
   $("#cap").style.color = $("#cor").value;
   $("#capHi").style.color = $("#dest").value;
+  $("#ambVolV").textContent = `${$("#ambVol").value}%`;
+  $("#ambVol").disabled = $("#ouvir").disabled = !$("#amb").value;
+  $("#player").volume = volOuvir();
   // mesmas alturas que o render do app usa (medidas em /api/captions/preview)
   $("#cap").style.top = {bottom: "73%", middle: "60%", top: "24%"}[$("#pos").value] || "60%";
   salvar();
 }
 
-const CAMPOS = ["titulo", "tipo", "duracao", "estilo", "miniatura", "roteiro", "pos", "tam", "cor", "dest"];
+const CAMPOS = ["titulo", "tipo", "duracao", "estilo", "miniatura", "roteiro", "pos", "tam", "cor", "dest", "amb", "ambVol"];
+
+// prévia do som ambiente: mesma curva da mixagem (100% = -6 dB; volume em dB proporcional ao slider)
+function volOuvir() { const v = +$("#ambVol").value; return Math.min(1, Math.pow(10, (-6 + 20 * Math.log10(Math.max(v, 1) / 100)) / 20)); }
+function ouvir() {
+  const p = $("#player");
+  if (!p.paused) { p.pause(); $("#ouvir").textContent = "▶ Ouvir"; return; }
+  p.src = `/api/ambiente/ouvir?id=${encodeURIComponent($("#amb").value)}`;
+  p.volume = volOuvir(); p.play(); $("#ouvir").textContent = "■ Parar";
+}
+$("#ouvir").addEventListener("click", ouvir);
+$("#amb").addEventListener("change", () => { if (!$("#player").paused) { $("#player").pause(); ouvir(); } });
 function salvar() { try { localStorage.setItem("lts", JSON.stringify(Object.fromEntries(CAMPOS.map(c => [c, $("#" + c).value])))); } catch (e) {} }
 function restaurar() {
   try { const d = JSON.parse(localStorage.getItem("lts") || "{}"); CAMPOS.forEach(c => { if (d[c] != null && $("#" + c)) $("#" + c).value = d[c]; }); } catch (e) {}
@@ -208,7 +237,7 @@ async function gerar() {
     titulo: $("#titulo").value, tipo: $("#tipo").value, duracao: +$("#duracao").value, estilo: $("#estilo").value,
     miniatura: $("#miniatura").value, roteiro: $("#roteiro").value,
     legenda_tamanho: +$("#tam").value, legenda_cor: $("#cor").value, legenda_destaque: $("#dest").value,
-    legenda_posicao: $("#pos").value,
+    legenda_posicao: $("#pos").value, ambiente: $("#amb").value, ambiente_volume: +$("#ambVol").value,
   };
   if (!body.titulo.trim() || !body.roteiro.trim()) { alert("Preencha o título e o roteiro."); return; }
   $("#go").disabled = true;
@@ -252,7 +281,7 @@ async function status() {
 let FIM = null;
 const CURTO = {"Preparando": "Preparar", "Criando o projeto": "Projeto", "Escrevendo os prompts das imagens (IA local)": "Prompts",
   "Narrando com a voz oficial": "Narração", "Finalizando a voz": "Voz", "Gerando as imagens": "Imagens",
-  "Montando o vídeo": "Montagem", "Exportando": "Exportar"};
+  "Montando o vídeo": "Montagem", "Exportando": "Exportar", "Adicionando o som ambiente": "Ambiente"};
 // mensagens de progresso que vêm do app em inglês
 const MSG = [
   [/^Image (\d+)\/(\d+), about (\d+)m (\d+)s left/, (m, a, b, mi, s) => `Imagem ${a} de ${b} · faltam ~${+mi ? mi + " min " : ""}${s} s`],

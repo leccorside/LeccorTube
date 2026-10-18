@@ -14,6 +14,7 @@ import json
 import os
 import re
 import subprocess
+import sys
 import threading
 import time
 import traceback
@@ -25,6 +26,8 @@ from fastapi.responses import FileResponse
 from pydantic import BaseModel
 
 RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, os.path.join(RAIZ, "tools", "diag"))
+import ambiente  # noqa: E402  (tools/diag/ambiente.py: loops de som ambiente e mixagem)
 APP = "http://127.0.0.1:7860"
 OLLAMA = "http://127.0.0.1:11434"
 OLLAMA_EXE = os.path.expandvars(r"%LOCALAPPDATA%\Programs\Ollama\ollama.exe")
@@ -36,7 +39,8 @@ FX_VOZ = "none"  # a voz oficial sai como na referência, sem eco
 # fases do botão "Gerar vídeo" e o peso de cada uma na barra geral (proporcional ao tempo típico)
 FASES = [("Na fila", 0), ("Preparando", 2), ("Criando o projeto", 2),
          ("Escrevendo os prompts das imagens (IA local)", 8), ("Narrando com a voz oficial", 25),
-         ("Finalizando a voz", 2), ("Gerando as imagens", 45), ("Montando o vídeo", 12), ("Exportando", 4)]
+         ("Finalizando a voz", 2), ("Gerando as imagens", 45), ("Montando o vídeo", 12), ("Exportando", 4),
+         ("Adicionando o som ambiente", 2)]
 TOTAL_PESO = sum(p for _, p in FASES)
 
 app = FastAPI(title="LeccorTube Simples")
@@ -245,6 +249,8 @@ class Pedido(BaseModel):
     legenda_cor: str = "#ffffff"
     legenda_destaque: str = "#3cff7a"
     legenda_posicao: str = "middle"  # bottom, middle ou top (valores do app)
+    ambiente: str = ""  # id de ambiente.lista() ("" = sem som ambiente)
+    ambiente_volume: float = 30  # 0 a 100
 
 
 def pipeline(p: Pedido):
@@ -290,6 +296,10 @@ def pipeline(p: Pedido):
         pasta = final["outputs"].get("export_dir") or os.path.join(RAIZ, "projects", pid, "output")
         metadados_ptbr(final, pasta)
         mp4 = next((os.path.join(pasta, n) for n in os.listdir(pasta) if n.endswith(".mp4")), None)
+        if p.ambiente and p.ambiente_volume > 0 and mp4:
+            TRABALHO.update(fase="Adicionando o som ambiente", progresso=0, mensagem="")
+            ambiente.mixar(mp4, p.ambiente, p.ambiente_volume)
+            log(f"Som ambiente: {p.ambiente} a {p.ambiente_volume:.0f}%")
         TRABALHO.update(fase="Pronto", progresso=1, pasta=pasta, video=mp4, mensagem="Vídeo pronto")
         log(f"Pronto: {mp4}")
     except Exception as e:
@@ -313,7 +323,17 @@ def opcoes():
         "tipos": [{"id": t["id"], "nome": t["name"]} for t in cat["types"] if t["id"] != "rhyme"],
         "estilos": [{"id": s["id"], "nome": s["name"]} for s in cat["styles"]],
         "palavras_por_seg": PALAVRAS_POR_SEG,
+        "ambientes": [{"id": i["id"], "nome": i["nome"]} for i in ambiente.lista()],
+        "pasta_ambiente": ambiente.PASTA,
     }
+
+
+@app.get("/api/ambiente/ouvir")
+def ouvir_ambiente(id: str):
+    item = next((i for i in ambiente.lista() if i["id"] == id), None)
+    if not item:
+        raise HTTPException(404, "Som não encontrado")
+    return FileResponse(item["arquivo"])
 
 
 @app.post("/api/gerar")
