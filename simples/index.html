@@ -45,10 +45,27 @@
   .go { width: 100%; background: var(--acc); color: #1a0f08; font-size: 16px; }
   .go:disabled { opacity: .5; cursor: not-allowed; }
   .sec { background: #2a221d; color: var(--txt); border: 1px solid var(--line); }
-  .bar { height: 10px; background: #120f0d; border-radius: 6px; overflow: hidden; margin: 10px 0 6px; }
-  .bar i { display: block; height: 100%; width: 0; background: linear-gradient(90deg, var(--acc), var(--acc2)); transition: width .4s; }
-  .fase { font-weight: 700; font-size: 16px; }
-  .log { font: 12px/1.5 Consolas, monospace; color: var(--mut); white-space: pre-wrap; max-height: 160px; overflow: auto; margin-top: 8px; }
+  .ov { position: fixed; inset: 0; z-index: 50; display: flex; align-items: center; justify-content: center; padding: 16px;
+    background: rgba(10, 8, 7, .55); backdrop-filter: blur(12px) saturate(.8); -webkit-backdrop-filter: blur(12px) saturate(.8);
+    animation: aparece .25s ease-out; }
+  @keyframes aparece { from { opacity: 0; } }
+  .ovc { width: min(520px, 100%); background: rgba(31, 26, 23, .92); border: 1px solid var(--line); border-radius: 18px;
+    padding: 28px 28px 22px; box-shadow: 0 24px 80px rgba(0, 0, 0, .55); text-align: center; }
+  .pct { font-size: 64px; font-weight: 800; line-height: 1; font-variant-numeric: tabular-nums;
+    background: linear-gradient(90deg, var(--acc), var(--acc2)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .ovc .titulo { color: var(--mut); font-size: 13px; margin: 6px 0 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .bar { height: 14px; background: #120f0d; border-radius: 8px; overflow: hidden; margin: 14px 0 8px; border: 1px solid var(--line); }
+  .bar i { display: block; height: 100%; width: 0; background: linear-gradient(90deg, var(--acc), var(--acc2)); transition: width .6s ease; }
+  .ovc.ok .bar i { background: var(--ok); }
+  .ovc.erro .bar i { background: var(--err); }
+  .fase { font-weight: 700; font-size: 17px; }
+  .passos { list-style: none; padding: 0; margin: 16px 0 0; display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; }
+  .passos li { font-size: 12px; padding: 4px 9px; border-radius: 999px; border: 1px solid var(--line); color: var(--mut); }
+  .passos li.feito { color: var(--ok); border-color: rgba(60, 255, 122, .35); }
+  .passos li.agora { color: #1a0f08; background: var(--acc); border-color: var(--acc); font-weight: 700; }
+  .log { font: 12px/1.5 Consolas, monospace; color: var(--mut); white-space: pre-wrap; max-height: 110px; overflow: auto; margin-top: 12px; text-align: left; }
+  .ovc .acts { margin-top: 18px; }
+  .ovc .acts .go { flex: 1.3; }
   .fixo { font-size: 13px; color: var(--mut); margin: 0; padding-left: 18px; }
   .fixo li { margin: 3px 0; }
   .acts { display: flex; gap: 8px; margin-top: 10px; }
@@ -114,18 +131,26 @@
       </ul>
     </div>
     <button class="go" id="go">Gerar vídeo</button>
-    <div class="card hidden" id="st" style="margin-top:16px">
-      <div class="fase" id="fase"></div>
-      <div class="bar"><i id="barra"></i></div>
-      <div class="meta"><span id="msg"></span><span id="tempo"></span></div>
-      <div class="log" id="log"></div>
-      <div class="acts hidden" id="acts">
-        <button class="sec" onclick="abrir('video')">Abrir vídeo</button>
-        <button class="sec" onclick="abrir('pasta')">Abrir pasta</button>
-      </div>
-    </div>
   </aside>
 </main>
+
+<div class="ov hidden" id="ov" role="dialog" aria-modal="true" aria-labelledby="pct">
+  <div class="ovc" id="ovc">
+    <div class="pct" id="pct">0%</div>
+    <div class="titulo" id="ovTitulo"></div>
+    <div class="fase" id="fase"></div>
+    <div class="bar"><i id="barra"></i></div>
+    <div class="meta"><span id="msg"></span><span id="tempo"></span></div>
+    <ol class="passos" id="passos"></ol>
+    <div class="log hidden" id="log"></div>
+    <div class="acts hidden" id="acts">
+      <button class="go" onclick="abrir('video')">Abrir vídeo</button>
+      <button class="sec" onclick="abrir('pasta')">Abrir pasta</button>
+      <button class="sec" onclick="fechar()">Fechar</button>
+    </div>
+    <div class="acts hidden" id="actsErro"><button class="sec" onclick="fechar()">Fechar</button></div>
+  </div>
+</div>
 <script>
 const $ = s => document.querySelector(s);
 let PPS = 3.2, timer = null;
@@ -138,7 +163,7 @@ async function carregar() {
     PPS = o.palavras_por_seg;
     $("#tipo").innerHTML = o.tipos.map(t => `<option value="${t.id}" ${t.id === "short" ? "selected" : ""}>${tipoPt(t)}</option>`).join("");
     $("#estilo").innerHTML = o.estilos.map(s => `<option value="${s.id}" ${s.id === "anime_dark" ? "selected" : ""}>${s.nome}</option>`).join("");
-  } catch (e) { $("#fase").textContent = "Não consegui falar com o LeccorTube."; $("#st").classList.remove("hidden"); }
+  } catch (e) { alert("Não consegui falar com o LeccorTube. Feche esta página e abra de novo pelo LeccorTube Simples.bat."); }
   restaurar(); atualizar(); status();
 }
 function tipoPt(t) {
@@ -189,25 +214,59 @@ async function gerar() {
   $("#go").disabled = true;
   const r = await fetch("/api/gerar", {method: "POST", headers: {"Content-Type": "application/json"}, body: JSON.stringify(body)});
   if (!r.ok) { alert((await r.json()).detail || "Erro ao começar"); $("#go").disabled = false; return; }
+  ABRIU = true; FECHADO = null;
   status();
 }
 
+let FECHADO = null, ABRIU = false;  // geração cuja janela o usuário fechou; se esta página iniciou uma
 async function status() {
   clearTimeout(timer);
   let t;
   try { t = await (await fetch("/api/status")).json(); } catch (e) { timer = setTimeout(status, 4000); return; }
-  if (!t.fase) { $("#go").disabled = false; return; }
-  $("#st").classList.remove("hidden");
-  $("#fase").textContent = t.fase === "Erro" ? "Erro" : t.fase;
-  $("#fase").className = "fase" + (t.fase === "Erro" ? " bad" : "");
-  $("#barra").style.width = `${Math.round((t.progresso || 0) * 100)}%`;
-  $("#msg").textContent = t.erro || t.mensagem || "";
-  $("#tempo").textContent = fmt(t.decorrido || 0);
-  $("#log").textContent = (t.log || []).join("\n");
-  $("#acts").classList.toggle("hidden", t.fase !== "Pronto");
   $("#go").disabled = !!t.ativo;
-  if (t.ativo) timer = setTimeout(status, 2000);
+  if (t.ativo) ABRIU = true;  // página recarregada no meio: continua mostrando até o fim
+  // mostra a janela durante a geração e no fim dela (se foi iniciada aqui), até o usuário fechar
+  const mostrar = t.fase && (t.ativo || ABRIU) && FECHADO !== t.inicio;
+  $("#ov").classList.toggle("hidden", !mostrar);
+  if (!mostrar) return;
+  const pronto = t.fase === "Pronto", erro = t.fase === "Erro";
+  $("#ovc").className = "ovc" + (pronto ? " ok" : erro ? " erro" : "");
+  $("#pct").textContent = `${t.geral || 0}%`;
+  $("#ovTitulo").textContent = t.titulo || "";
+  $("#fase").textContent = pronto ? "Vídeo pronto!" : erro ? "Algo deu errado" : `${t.fase}…`;
+  $("#barra").style.width = `${t.geral || 0}%`;
+  $("#msg").textContent = erro ? "" : msgPt(t.mensagem || "");
+  $("#tempo").textContent = fmt(t.decorrido || 0);
+  const lst = t.etapas || [], at = t.etapa == null ? (pronto ? lst.length + 1 : -1) : t.etapa;
+  $("#passos").innerHTML = lst.map((n, i) => {  // etapa i da lista = FASES[i + 1] no servidor ("Na fila" não aparece)
+    const c = i + 1 < at ? "feito" : i + 1 === at ? "agora" : "";
+    return `<li class="${c}">${CURTO[n] || n}</li>`;
+  }).join("");
+  $("#log").classList.toggle("hidden", !erro);
+  $("#log").textContent = erro ? `${t.erro || ""}\n\n${(t.log || []).join("\n")}` : "";
+  $("#acts").classList.toggle("hidden", !pronto);
+  $("#actsErro").classList.toggle("hidden", !erro);
+  if (t.ativo) timer = setTimeout(status, 1500);
+  else FIM = t.inicio;
 }
+let FIM = null;
+const CURTO = {"Preparando": "Preparar", "Criando o projeto": "Projeto", "Escrevendo os prompts das imagens (IA local)": "Prompts",
+  "Narrando com a voz oficial": "Narração", "Finalizando a voz": "Voz", "Gerando as imagens": "Imagens",
+  "Montando o vídeo": "Montagem", "Exportando": "Exportar"};
+// mensagens de progresso que vêm do app em inglês
+const MSG = [
+  [/^Image (\d+)\/(\d+), about (\d+)m (\d+)s left/, (m, a, b, mi, s) => `Imagem ${a} de ${b} · faltam ~${+mi ? mi + " min " : ""}${s} s`],
+  [/^Generating (\d+) images?/, (m, n) => `Gerando ${n} imagens`],
+  [/^Starting ComfyUI/, () => "Ligando o gerador de imagens (na 1ª vez leva ~1 min)"],
+  [/^Rendering (\S+) \/ (\S+)/, (m, a, b) => `Montando ${a} de ${b}`],
+  [/^Mixing audio/, () => "Mixando o áudio"],
+  [/^Waiting in queue/, () => "Na fila"],
+  [/^Body check/, () => "Conferindo as imagens"],
+  [/^Voice done/, () => "Voz pronta"], [/^Video ready/, () => "Vídeo montado"], [/^Export ready/, () => "Exportado"],
+  [/^Hook and originality check/, () => "Conferindo o gancho e a originalidade"],
+];
+function msgPt(m) { for (const [re, f] of MSG) { const r = m.match(re); if (r) return f(...r); } return m; }
+function fechar() { FECHADO = FIM; ABRIU = false; $("#ov").classList.add("hidden"); }
 async function abrir(o) { await fetch("/api/abrir", {method: "POST", headers: {"Content-Type": "application/json"}, body: JSON.stringify({o})}); }
 
 CAMPOS.forEach(c => $("#" + c).addEventListener("input", atualizar));

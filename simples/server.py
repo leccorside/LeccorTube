@@ -14,7 +14,6 @@ import json
 import os
 import re
 import subprocess
-import sys
 import threading
 import time
 import traceback
@@ -33,6 +32,12 @@ MODELO_IA = "qwen2.5vl:7b"
 PALAVRAS_POR_SEG = 3.2  # medido na voz oficial: ~290 palavras em ~1:31
 LOG = os.path.join(RAIZ, "logs", "simples.log")
 FX_VOZ = "none"  # a voz oficial sai como na referência, sem eco
+
+# fases do botão "Gerar vídeo" e o peso de cada uma na barra geral (proporcional ao tempo típico)
+FASES = [("Na fila", 0), ("Preparando", 2), ("Criando o projeto", 2),
+         ("Escrevendo os prompts das imagens (IA local)", 8), ("Narrando com a voz oficial", 25),
+         ("Finalizando a voz", 2), ("Gerando as imagens", 45), ("Montando o vídeo", 12), ("Exportando", 4)]
+TOTAL_PESO = sum(p for _, p in FASES)
 
 app = FastAPI(title="LeccorTube Simples")
 TRABALHO = {"ativo": False}  # um vídeo por vez (a GPU é uma só)
@@ -129,14 +134,29 @@ def escrever_prompts(titulo, cenas):
         return {}
 
 
+def geral(t):
+    """Porcentagem do vídeo inteiro (0 a 100) a partir da fase atual e do progresso dentro dela."""
+    if t.get("fase") == "Pronto":
+        return 100
+    nomes = [n for n, _ in FASES]
+    if t.get("fase") not in nomes:
+        return t.get("geral_max", 0)
+    i = nomes.index(t["fase"])
+    feito = sum(p for _, p in FASES[:i]) + FASES[i][1] * min(1.0, max(0.0, float(t.get("progresso") or 0)))
+    pct = round(100 * feito / TOTAL_PESO)
+    t["geral_max"] = max(t.get("geral_max", 0), pct)  # nunca volta para trás
+    return t["geral_max"]
+
+
 def rodar_etapa(pid, etapa, rotulo):
-    TRABALHO["fase"] = rotulo
+    TRABALHO.update(fase=rotulo, progresso=0, mensagem="")
     api("POST", f"/api/projects/{pid}/run/{etapa}", json={})
     inicio = time.time()
     time.sleep(2)
     while True:
         st = api("GET", f"/api/projects/{pid}")["status"]
-        TRABALHO["progresso"] = st.get("progress") or 0
+        if st.get("step") == etapa:  # antes disso o status ainda é o da etapa anterior (100%)
+            TRABALHO["progresso"] = st.get("progress") or 0
         TRABALHO["mensagem"] = st.get("message") or ""
         if st.get("state") == "error":
             raise RuntimeError(f"{rotulo}: {st.get('message')}")
@@ -272,6 +292,9 @@ def gerar(p: Pedido):
 @app.get("/api/status")
 def status():
     t = dict(TRABALHO)
+    t["geral"] = geral(TRABALHO) if t.get("fase") else 0
+    t["etapa"] = next((i for i, (n, _) in enumerate(FASES) if n == t.get("fase")), None)
+    t["etapas"] = [n for n, p in FASES if p]
     t["log"] = t.get("log", [])[-8:]
     t["decorrido"] = int((t.get("fim") or time.time()) - t["inicio"]) if t.get("inicio") else 0
     return t
