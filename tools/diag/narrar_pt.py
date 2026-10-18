@@ -14,6 +14,7 @@ import argparse
 import hashlib
 import json
 import os
+import re
 import sys
 import time
 
@@ -23,14 +24,41 @@ import numpy as np
 import soundfile as sf
 import torch
 from chatterbox.mtl_tts import ChatterboxMultilingualTTS
+from num2words import num2words
 
 RAIZ = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))  # tools\diag -> raiz
 REF_PADRAO = os.path.join(RAIZ, "assets", "vozes", "narrador_ptbr_ref.wav")
 
 
-def aparar(w, sr, limiar_db=-40.0, pausa=0.7, resto=0.8, folga=0.25):
-    """Corta silêncio nas pontas e o "resto" que o Chatterbox às vezes inventa depois da frase
-    (um estalo ou sopro curto, < `resto` s, depois de uma pausa >= `pausa` s)."""
+def _extenso(n, lang):
+    # o num2words põe vírgula em "mil, novecentos…": na fala isso vira uma pausa no meio do número
+    return num2words(n, lang=lang).replace(",", "")
+
+
+def _ordinal(n, feminino, lang):
+    o = num2words(n, lang=lang, to="ordinal").replace(",", "")  # "vigésimo primeiro"
+    return re.sub(r"o\b", "a", o) if feminino else o  # "vigésima primeira"
+
+
+def falar_numeros(texto, lang="pt_BR"):
+    """Escreve números por extenso para a voz (o modelo erra a leitura de "2012" etc.).
+    Só o texto enviado ao TTS muda; a legenda continua com os algarismos."""
+    if not lang.startswith("pt"):
+        return texto
+    t = re.sub(r"R\$\s*(\d+(?:\.\d{3})*)(?:,(\d{2}))?",
+               lambda m: _extenso(int(m[1].replace(".", "")), lang) + " reais"
+               + (f" e {_extenso(int(m[2]), lang)} centavos" if m[2] and int(m[2]) else ""), texto)
+    t = re.sub(r"(\d+(?:\.\d{3})*(?:,\d+)?)\s*%", lambda m: m[1] + " por cento", t)
+    t = re.sub(r"(\d+)\s*([ºª])", lambda m: _ordinal(int(m[1]), m[2] == "ª", lang), t)
+    t = re.sub(r"\d{1,3}(?:\.\d{3})+(?!\d)", lambda m: m[0].replace(".", ""), t)  # 1.500 -> 1500
+    t = re.sub(r"\d+,\d+", lambda m: _extenso(float(m[0].replace(",", ".")), lang), t)  # 3,5
+    return re.sub(r"\d+", lambda m: _extenso(int(m[0]), lang), t)
+
+
+def aparar(w, sr, limiar_db=-50.0, pausa=0.7, resto=0.0, folga=0.3):
+    """Corta silêncio nas pontas. Com `resto` > 0 também tira o "resto" que o Chatterbox às vezes
+    inventa depois da frase (trecho < `resto` s depois de uma pausa >= `pausa` s); desligado por
+    padrão desde que a temperatura baixa (0.5) parou de gerar esses restos e o corte comia fala."""
     q = int(sr * 0.02)
     n = len(w) // q
     if n == 0:
@@ -69,9 +97,10 @@ def main():
     ap.add_argument("--ref", default=REF_PADRAO,
                     help="wav de referência do timbre/sotaque (padrão: a voz oficial; '' usa a narração crua em inglês)")
     ap.add_argument("--cenas", help="ids separados por vírgula (padrão: todas)")
-    ap.add_argument("--exaggeration", type=float, default=0.5)
-    ap.add_argument("--cfg", type=float, default=0.5)
-    ap.add_argument("--temperature", type=float, default=0.8, help="menor = mais estável, menos travadas")
+    # padrões da versão "C" aprovada pelo usuário em 2026-10-18 (fala mais estável e uniforme)
+    ap.add_argument("--exaggeration", type=float, default=0.4)
+    ap.add_argument("--cfg", type=float, default=0.3)
+    ap.add_argument("--temperature", type=float, default=0.5, help="menor = mais estável, menos travadas")
     a = ap.parse_args()
     if a.ref and not os.path.exists(a.ref):
         sys.exit(f"Referência não encontrada: {a.ref}")
@@ -108,7 +137,8 @@ def main():
     voz = proj.get("voice") or "turbo:k_bm_george"
     for s in cenas:
         t1 = time.time()
-        wav = tts.generate(s["text"], language_id=a.lang, exaggeration=a.exaggeration, cfg_weight=a.cfg,
+        fala = falar_numeros(s["text"], "pt_BR" if a.lang == "pt" else a.lang)
+        wav = tts.generate(fala, language_id=a.lang, exaggeration=a.exaggeration, cfg_weight=a.cfg,
                            temperature=a.temperature)
         out = os.path.join(raw_dir, s["id"] + ".wav")
         w = wav.squeeze(0).cpu().numpy()

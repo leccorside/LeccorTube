@@ -166,6 +166,60 @@ def rodar_etapa(pid, etapa, rotulo):
         time.sleep(3)
 
 
+def rodar_script(cmd, ao_ler):
+    """Roda um script de tools\\diag e repassa cada linha da saída; erro se o script falhar."""
+    proc = subprocess.Popen(cmd, cwd=RAIZ, env=dict(os.environ, PYTHONIOENCODING="utf-8"), stdout=subprocess.PIPE,
+                            stderr=subprocess.STDOUT, text=True, encoding="utf-8", errors="replace",
+                            creationflags=subprocess.CREATE_NO_WINDOW)
+    for linha in proc.stdout:
+        if "Traceback" in linha or "Error" in linha:
+            log(linha.strip())
+        ao_ler(linha)
+    if proc.wait() != 0:
+        raise RuntimeError(f"{os.path.basename(cmd[2])} falhou (ver logs\\simples.log)")
+
+
+def narrar_e_revisar(pid, total, tentativas=2):
+    """Narra com a voz oficial (narrar_pt.py) e revisa com o Whisper (revisar_narracao.py): corta as
+    sobras depois da última palavra e narra de novo as cenas que saíram diferentes do roteiro."""
+    pasta = os.path.join(RAIZ, "projects", pid)
+    narrar = [os.path.join(RAIZ, "venv_voice", "Scripts", "python.exe"), "-u",
+              os.path.join(RAIZ, "tools", "diag", "narrar_pt.py"), pasta, "--lang", "pt"]  # padrões = versão "C"
+    revisar = [os.path.join(RAIZ, ".venv", "Scripts", "python.exe"), "-u",
+               os.path.join(RAIZ, "tools", "diag", "revisar_narracao.py"), pasta]
+    alvo, feitas = None, [0]
+    for rodada in range(tentativas + 1):
+        n = total if alvo is None else len(alvo)
+        feitas[0] = 0
+
+        def ao_narrar(linha):
+            if re.match(r"s\d{3}: ", linha):
+                feitas[0] += 1
+                TRABALHO["progresso"] = 0.75 * feitas[0] / n if rodada == 0 else TRABALHO.get("progresso", 0)
+                TRABALHO["mensagem"] = (f"Cena {feitas[0]}/{n} narrada" if rodada == 0
+                                        else f"Narrando de novo {feitas[0]}/{n} cena(s) com erro")
+
+        rodar_script(narrar + (["--cenas", ",".join(alvo)] if alvo else []), ao_narrar)
+        TRABALHO["mensagem"] = "Conferindo a narração"
+        res = {}
+
+        def ao_revisar(linha):
+            if re.match(r"s\d{3}: ", linha):
+                feitas[0] += 1
+                if rodada == 0:
+                    TRABALHO["progresso"] = 0.75 + 0.25 * (feitas[0] - n) / n
+            elif linha.startswith("REFAZER:"):
+                res["refazer"] = [x for x in linha.split(":", 1)[1].strip().split(",") if x and x != "-"]
+
+        rodar_script(revisar + (["--cenas", ",".join(alvo)] if alvo else []), ao_revisar)
+        alvo = res.get("refazer") or []
+        if not alvo:
+            log("Narração conferida: todas as cenas batem com o roteiro")
+            return
+        log(f"Cenas diferentes do roteiro: {', '.join(alvo)}" + (" (narrando de novo)" if rodada < tentativas else ""))
+    log(f"Aviso: {', '.join(alvo)} continuam diferentes do roteiro depois de {tentativas} tentativas")
+
+
 def metadados_ptbr(proj, pasta):
     """O texto do app sai com modelos em inglês; grava uma versão em pt-BR ao lado."""
     texto = " ".join(s["text"] for s in proj["scenes"][:2])
@@ -207,7 +261,7 @@ def pipeline(p: Pedido):
         proj = api("POST", "/api/projects", json={
             "title": p.titulo.strip(), "script": p.roteiro, "voice": "turbo:k_bm_george", "speed": 1.0,
             "scene_seconds": tipo.get("scene_seconds") or 6, "style_prefix": estilo["prefix"],
-            "thumbnail_text": p.miniatura.strip(), "preset": p.tipo, "voice_fx": FX_VOZ, "voice_clean": True,
+            "thumbnail_text": p.miniatura.strip(), "preset": p.tipo, "voice_fx": FX_VOZ, "voice_clean": False,
             "style_id": p.estilo, "explainer": None, "cloud": False})
         pid = proj["id"]
         TRABALHO["projeto"] = pid
@@ -219,28 +273,14 @@ def pipeline(p: Pedido):
         edits = [{"id": s["id"], "media": "image", **({"prompt": prompts[s["id"]]} if s["id"] in prompts else {})}
                  for s in cenas]
         api("PUT", f"/api/projects/{pid}/scenes", json={"scenes": edits})
-        api("PATCH", f"/api/projects/{pid}", json={"voice_fx": FX_VOZ, "captions": {
+        # sem a limpeza de voz do app: ela zera trechos fracos e soava como áudio "cortando"
+        api("PATCH", f"/api/projects/{pid}", json={"voice_fx": FX_VOZ, "voice_clean": False, "captions": {
             "enabled": True, "size": p.legenda_tamanho, "color": p.legenda_cor, "highlight": p.legenda_destaque,
             "position": p.legenda_posicao if p.legenda_posicao in ("bottom", "middle", "top") else "middle"}})
 
         TRABALHO["fase"] = "Narrando com a voz oficial"
         TRABALHO["progresso"] = 0
-        env = dict(os.environ, PYTHONIOENCODING="utf-8")
-        cmd = [os.path.join(RAIZ, "venv_voice", "Scripts", "python.exe"), "-u",
-               os.path.join(RAIZ, "tools", "diag", "narrar_pt.py"), os.path.join(RAIZ, "projects", pid),
-               "--lang", "pt", "--temperature", "0.7"]
-        proc = subprocess.Popen(cmd, cwd=RAIZ, env=env, stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
-                                text=True, encoding="utf-8", errors="replace", creationflags=subprocess.CREATE_NO_WINDOW)
-        feitas = 0
-        for linha in proc.stdout:
-            if re.match(r"s\d{3}: ", linha):
-                feitas += 1
-                TRABALHO["progresso"] = feitas / max(1, len(cenas))
-                TRABALHO["mensagem"] = f"Cena {feitas}/{len(cenas)} narrada"
-            elif "pronto:" in linha or "Traceback" in linha or "Error" in linha:
-                log(linha.strip())
-        if proc.wait() != 0:
-            raise RuntimeError("A narração falhou (ver logs\\simples.log)")
+        narrar_e_revisar(pid, len(cenas))
 
         rodar_etapa(pid, "voice", "Finalizando a voz")
         rodar_etapa(pid, "images", "Gerando as imagens")
