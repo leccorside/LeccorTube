@@ -98,6 +98,7 @@
           </select></div>
         <div><label for="estilo">Estilo visual</label><select id="estilo"></select></div>
       </div>
+      <div class="hint" id="tipoDesc" style="margin-top:6px"></div>
       <div class="estprev hidden" id="previaEstilo"><img alt="Exemplo do estilo visual"><span></span></div>
       <label for="miniatura">Texto da miniatura <span class="hint">curto: 2 a 4 palavras, para não cortar</span></label>
       <input type="text" id="miniatura" placeholder="Ex.: MÃE ARRANCOU SEUS OLHOS">
@@ -173,7 +174,7 @@
 </div>
 <script>
 const $ = s => document.querySelector(s);
-let PPS = 3.2, timer = null, ESTILOS = [];
+let PPS = 3.2, timer = null, ESTILOS = [], TIPOS = [];
 
 const esc = s => String(s).replace(/[&<>"]/g, c => ({"&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;"})[c]);
 const fmt = s => s >= 60 ? `${Math.floor(s / 60)} min ${String(Math.round(s % 60)).padStart(2, "0")} s` : `${Math.round(s)} s`;
@@ -182,7 +183,8 @@ async function carregar() {
   try {
     const o = await (await fetch("/api/opcoes")).json();
     PPS = o.palavras_por_seg;
-    $("#tipo").innerHTML = o.tipos.map(t => `<option value="${t.id}" ${t.id === "short" ? "selected" : ""}>${tipoPt(t)}</option>`).join("");
+    TIPOS = o.tipos;
+    $("#tipo").innerHTML = o.tipos.map(t => `<option value="${esc(t.id)}" title="${esc(t.desc)}" ${t.id === "short" ? "selected" : ""}>${esc(t.nome)}</option>`).join("");
     ESTILOS = o.estilos;
     const grupos = [...new Set(o.estilos.map(s => s.grupo))];  // na ordem do catálogo do app
     $("#estilo").innerHTML = grupos.map(g => `<optgroup label="${esc(g)}">` + o.estilos.filter(s => s.grupo === g)
@@ -191,10 +193,6 @@ async function carregar() {
     $("#pastaAmb").textContent = o.pasta_ambiente;
   } catch (e) { alert("Não consegui falar com o LeccorTube. Feche esta página e abra de novo pelo LeccorTube Simples.bat."); }
   restaurar(); atualizar(); status();
-}
-function tipoPt(t) {
-  return ({short: "Short vertical (9:16)", mystery: "Terror e mistério", story: "História curta", documentary: "Documentário",
-    bedtime: "História para dormir", sleep: "Relaxar / dormir", meditation: "Meditação"})[t.id] || t.nome;
 }
 
 function atualizar() {
@@ -218,6 +216,8 @@ function atualizar() {
   $("#cap").style.fontSize = `${h * t / 100}px`;
   $("#cap").style.color = $("#cor").value;
   $("#capHi").style.color = $("#dest").value;
+  const tipo = TIPOS.find(t => t.id === $("#tipo").value);
+  $("#tipoDesc").textContent = tipo ? tipo.desc : "";
   const estilo = ESTILOS.find(s => s.id === $("#estilo").value);
   $("#previaEstilo").classList.toggle("hidden", !(estilo && estilo.previa));
   if (estilo && estilo.previa && $("#previaEstilo img").getAttribute("src") !== estilo.previa) $("#previaEstilo img").src = estilo.previa;
@@ -242,6 +242,16 @@ function ouvir() {
 }
 $("#ouvir").addEventListener("click", ouvir);
 
+// mensagem de erro em português para qualquer resposta do servidor (as do FastAPI vêm em inglês)
+async function erroApi(r, padrao) {
+  let d = null;
+  try { d = await r.json(); } catch (e) {}
+  if (d && typeof d.detail === "string") return d.detail;           // nossas mensagens (já em português)
+  if (d && Array.isArray(d.detail)) return "Algum campo está vazio ou inválido. Confira o formulário e tente de novo.";
+  if (r.status >= 500) return `${padrao} Erro interno no LeccorTube Simples (veja logs\\simples.log).`;
+  return padrao;
+}
+
 function listarAmb(lista) {
   const meus = lista.filter(a => a.id.startsWith("user:")), prontos = lista.filter(a => !a.id.startsWith("user:"));
   const opt = a => `<option value="${esc(a.id)}">${esc(a.nome)}</option>`;
@@ -256,8 +266,9 @@ $("#arquivoAmb").addEventListener("change", async () => {
   $("#enviar").disabled = true;
   try {
     const fd = new FormData(); fd.append("arquivo", f);
-    const r = await fetch("/api/ambiente/enviar", {method: "POST", body: fd}), d = await r.json();
-    if (!r.ok) throw new Error(d.detail || "Falha no envio");
+    const r = await fetch("/api/ambiente/enviar", {method: "POST", body: fd});
+    if (!r.ok) throw new Error(await erroApi(r, "Falha no envio"));
+    const d = await r.json();
     listarAmb(d.ambientes); $("#amb").value = d.id;
     msg.className = "hint"; msg.textContent = `"${d.nome}" adicionado e selecionado.`;
     atualizar();
@@ -280,7 +291,7 @@ async function gerar() {
   if (!body.titulo.trim() || !body.roteiro.trim()) { alert("Preencha o título e o roteiro."); return; }
   $("#go").disabled = true;
   const r = await fetch("/api/gerar", {method: "POST", headers: {"Content-Type": "application/json"}, body: JSON.stringify(body)});
-  if (!r.ok) { alert((await r.json()).detail || "Erro ao começar"); $("#go").disabled = false; return; }
+  if (!r.ok) { alert(await erroApi(r, "Não consegui começar a gerar.")); $("#go").disabled = false; return; }
   ABRIU = true; FECHADO = null;
   status();
 }
@@ -302,7 +313,7 @@ async function status() {
   $("#ovTitulo").textContent = t.titulo || "";
   $("#fase").textContent = pronto ? "Vídeo pronto!" : erro ? "Algo deu errado" : `${t.fase}…`;
   $("#barra").style.width = `${t.geral || 0}%`;
-  $("#msg").textContent = erro ? "" : msgPt(t.mensagem || "");
+  $("#msg").textContent = erro ? "" : (t.mensagem || "");  // já vem traduzida pelo servidor
   $("#tempo").textContent = fmt(t.decorrido || 0);
   const lst = t.etapas || [], at = t.etapa == null ? (pronto ? lst.length + 1 : -1) : t.etapa;
   $("#passos").innerHTML = lst.map((n, i) => {  // etapa i da lista = FASES[i + 1] no servidor ("Na fila" não aparece)
@@ -320,19 +331,6 @@ let FIM = null;
 const CURTO = {"Preparando": "Preparar", "Criando o projeto": "Projeto", "Escrevendo os prompts das imagens (IA local)": "Prompts",
   "Narrando com a voz oficial": "Narração", "Finalizando a voz": "Voz", "Gerando as imagens": "Imagens",
   "Montando o vídeo": "Montagem", "Exportando": "Exportar", "Adicionando o som ambiente": "Ambiente"};
-// mensagens de progresso que vêm do app em inglês
-const MSG = [
-  [/^Image (\d+)\/(\d+), about (\d+)m (\d+)s left/, (m, a, b, mi, s) => `Imagem ${a} de ${b} · faltam ~${+mi ? mi + " min " : ""}${s} s`],
-  [/^Generating (\d+) images?/, (m, n) => `Gerando ${n} imagens`],
-  [/^Starting ComfyUI/, () => "Ligando o gerador de imagens (na 1ª vez leva ~1 min)"],
-  [/^Rendering (\S+) \/ (\S+)/, (m, a, b) => `Montando ${a} de ${b}`],
-  [/^Mixing audio/, () => "Mixando o áudio"],
-  [/^Waiting in queue/, () => "Na fila"],
-  [/^Body check/, () => "Conferindo as imagens"],
-  [/^Voice done/, () => "Voz pronta"], [/^Video ready/, () => "Vídeo montado"], [/^Export ready/, () => "Exportado"],
-  [/^Hook and originality check/, () => "Conferindo o gancho e a originalidade"],
-];
-function msgPt(m) { for (const [re, f] of MSG) { const r = m.match(re); if (r) return f(...r); } return m; }
 function fechar() { FECHADO = FIM; ABRIU = false; $("#ov").classList.add("hidden"); }
 async function abrir(o) { await fetch("/api/abrir", {method: "POST", headers: {"Content-Type": "application/json"}, body: JSON.stringify({o})}); }
 

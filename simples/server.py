@@ -60,6 +60,99 @@ ESTILOS_PT = {
 }
 GRUPOS_PT = {"Anime": "Anime", "3D": "3D", "Cartoon": "Desenho", "Realistic": "Realista", "Horror": "Terror", "Art": "Arte"}
 
+TIPOS_PT = {  # tipos de vídeo do catálogo do app: (nome, descrição)
+    "short": ("Short vertical (9:16)", "Vertical de 30 s a 3 min, cortes rápidos e legenda grande"),
+    "mystery": ("Terror e mistério", "Contos sombrios, lendas e mistérios, ritmo lento"),
+    "story": ("História curta", "História animada curta, com cortes rápidos"),
+    "documentary": ("Documentário", "Explicação clara sobre história, ciência ou lugares"),
+    "bedtime": ("História para dormir", "Contos suaves e aconchegantes"),
+    "sleep": ("Relaxar e dormir", "Histórias calmas, voz lenta e música suave"),
+    "meditation": ("Meditação", "Relaxamento, respiração guiada e natureza"),
+}
+
+# mensagens do app (inglês) -> português; a primeira regra que casar vale
+def _T(minutos, segundos):
+    """"0","44" -> "44 s"; "1","14" -> "1 min 14 s" """
+    return f"{int(minutos)} min {int(segundos)} s" if int(minutos) else f"{int(segundos)} s"
+
+
+def _n(qtd, singular, plural):
+    return f"{qtd} {singular if int(qtd) == 1 else plural}"
+
+
+MSGS_PT = [
+    (r"Waiting in queue", "Na fila"),
+    (r"Loading the natural voice model.*", "Carregando o modelo de voz (na 1ª vez baixa de 2 a 4 GB)"),
+    (r"Narrated (\d+)/(\d+) scenes, about (\d+)m (\d+)s left", lambda m: f"Cena {m[1]} de {m[2]} · faltam ~{_T(m[3], m[4])}"),
+    (r"Narrat\w* (\d+)/(\d+).*", lambda m: f"Narrando a cena {m[1]} de {m[2]}"),
+    (r"Voice effect: .*", "Aplicando o acabamento da voz"),
+    (r"Voice done.*", "Voz pronta"),
+    (r"Starting ComfyUI.*", "Ligando o gerador de imagens (na 1ª vez leva ~1 min)"),
+    (r"ComfyUI not running, starting it", "Ligando o gerador de imagens"),
+    (r"ComfyUI is busy, waiting for it", "O gerador de imagens está ocupado; aguardando"),
+    (r"Waiting for the GPU", "Aguardando a placa de vídeo"),
+    (r"Generating (\d+) images?", lambda m: f"Gerando {_n(m[1], 'imagem', 'imagens')}"),
+    (r"Image (\d+)/(\d+), about (\d+)m (\d+)s left", lambda m: f"Imagem {m[1]} de {m[2]} · faltam ~{_T(m[3], m[4])}"),
+    (r"Image (\d+)/(\d+).*", lambda m: f"Imagem {m[1]} de {m[2]}"),
+    (r"Painting.*", "Pintando as imagens"),
+    (r"Animating (\d+) scenes?.*", lambda m: f"Animando {_n(m[1], 'cena', 'cenas')}"),
+    (r"Body check: looking at (\d+) pictures? with people",
+     lambda m: f"Conferindo os corpos em {_n(m[1], 'imagem', 'imagens')} com pessoas"),
+    (r"Body check done.*", "Imagens conferidas"),
+    (r"Body problems.*", "Corrigindo imagens com problemas de anatomia"),
+    (r"Images done.*", "Imagens prontas"),
+    (r"Images: nothing to do", "Imagens já prontas"),
+    (r"Render started|Starting render", "Começando a montagem"),
+    (r"Rendering the preview", "Montando a prévia"),
+    (r"Rendering (\S+) / (\S+)", lambda m: f"Montando {m[1]} de {m[2]}"),
+    (r"Encoding with .*", "Codificando o vídeo"),
+    (r"Mixing audio", "Mixando o áudio"),
+    (r"Captions: .*", "Preparando as legendas"),
+    (r"Sound effects: (\d+) placed.*",
+     lambda m: f"{_n(m[1], 'efeito sonoro posicionado', 'efeitos sonoros posicionados')}"),
+    (r"Sound effects.*", "Efeitos sonoros"),
+    (r"Effect (\d+)/(\d+)", lambda m: f"Efeito {m[1]} de {m[2]}"),
+    (r"Music ready", "Música pronta"),
+    (r"Render done.*|Video ready", "Vídeo montado"),
+    (r"Hook and originality check", "Conferindo o gancho e a originalidade"),
+    (r"Titles, thumbnails, subtitles", "Títulos, miniaturas e legendas"),
+    (r"(\d+) thumbnails?", lambda m: _n(m[1], "miniatura", "miniaturas")),
+    (r"Export ready", "Exportado"),
+    (r"Copied to .*", "Copiado para a pasta de vídeos"),
+    # erros comuns
+    (r"ComfyUI did not answer in time.*", "O gerador de imagens (ComfyUI) não respondeu a tempo. Veja logs\\comfyui.log"),
+    (r"ComfyUI closed while starting.*", "O gerador de imagens fechou ao iniciar. Veja logs\\comfyui.log"),
+    (r"ComfyUI lost this job.*", "O gerador de imagens perdeu o trabalho (provavelmente reiniciou). Gere de novo: as cenas prontas são mantidas."),
+    (r"ComfyUI did not accept the job.*", "O gerador de imagens não aceitou o trabalho (está ocupado). Espere um minuto e tente de novo."),
+    (r"ComfyUI (?:was )?not found.*", "O gerador de imagens (ComfyUI) não foi encontrado. Abra a Central de Ajustes do LeccorTube."),
+    (r"Voice worker did not answer in (\d+) s.*", lambda m: f"O processo de voz não respondeu em {m[1]} s"),
+    (r"Voice worker stopped unexpectedly.*", "O processo de voz parou de repente. Veja logs\\voice_worker.log"),
+    (r"Not enough disk space on (.*)", lambda m: f"Sem espaço em disco em {m[1]}"),
+    (r".*out of memory.*", "Faltou memória na placa de vídeo. Feche outros programas e tente de novo."),
+    (r"Interrupted.*", "Interrompido (o app reiniciou). Gere de novo."),
+    (r"Cancel requested", "Cancelamento pedido"),
+    (r"No images found.*|No images yet.*", "Nenhuma imagem encontrada. Gere as imagens primeiro."),
+    (r"Render the video first.*", "Monte o vídeo primeiro."),
+]
+MSGS_PT = [(re.compile(rf"^{p}$", re.S), t) for p, t in MSGS_PT]
+_INGLES = re.compile(r"\b(the|of|with|and|is|was|not|for|scenes?|images?|done|ready|left|about|first|see|failed|error)\b", re.I)
+
+
+def traduzir(msg, erro=False):
+    """Traduz uma mensagem do app. Desconhecida: progresso some (fica só a fase); erro aparece com aviso."""
+    msg = (msg or "").strip()
+    if not msg:
+        return ""
+    primeira = msg.splitlines()[0].strip()
+    for rx, tr in MSGS_PT:
+        m = rx.match(primeira)
+        if m:
+            return tr(m) if callable(tr) else tr
+    if not _INGLES.search(primeira):
+        return primeira  # já está em português (mensagens deste servidor) ou é só número
+    return f"O LeccorTube informou (em inglês): {primeira}" if erro else ""
+
+
 app = FastAPI(title="LeccorTube Simples")
 TRABALHO = {"ativo": False}  # um vídeo por vez (a GPU é uma só)
 TRAVA = threading.Lock()
@@ -115,9 +208,18 @@ def garantir_ollama():
 
 
 def api(metodo, caminho, **kw):
-    r = httpx.request(metodo, f"{APP}{caminho}", timeout=120, **kw)
+    try:
+        r = httpx.request(metodo, f"{APP}{caminho}", timeout=120, **kw)
+    except httpx.HTTPError as e:
+        raise RuntimeError("Não consegui falar com o LeccorTube (porta 7860): ele pode ter fechado. "
+                           f"Abra de novo pelo LeccorTube Simples.bat. ({type(e).__name__})") from e
     if r.status_code >= 400:
-        raise RuntimeError(f"{metodo} {caminho}: {r.status_code} {r.text[:300]}")
+        try:
+            detalhe = r.json().get("detail") or r.text
+        except ValueError:
+            detalhe = r.text
+        log(f"API {metodo} {caminho}: {r.status_code} {str(detalhe)[:300]}")  # original fica no simples.log
+        raise RuntimeError(f"O LeccorTube recusou o pedido ({r.status_code}). {traduzir(str(detalhe), erro=True)}")
     return r.json()
 
 
@@ -180,7 +282,7 @@ def rodar_etapa(pid, etapa, rotulo):
             TRABALHO["progresso"] = st.get("progress") or 0
         TRABALHO["mensagem"] = st.get("message") or ""
         if st.get("state") == "error":
-            raise RuntimeError(f"{rotulo}: {st.get('message')}")
+            raise RuntimeError(f"{rotulo}: {traduzir(st.get('message'), erro=True)}")
         if st.get("state") == "done" and st.get("step") == etapa and time.time() - inicio > 3:
             log(f"{rotulo}: pronto em {(time.time() - inicio) / 60:.1f} min")
             return
@@ -337,7 +439,9 @@ def opcoes():
     garantir_app()
     cat = api("GET", "/api/catalog")
     return {
-        "tipos": [{"id": t["id"], "nome": t["name"]} for t in cat["types"] if t["id"] != "rhyme"],
+        "tipos": [{"id": t["id"], "nome": TIPOS_PT.get(t["id"], (t["name"],))[0],
+                   "desc": TIPOS_PT.get(t["id"], ("", t.get("desc", "")))[1]}
+                  for t in cat["types"] if t["id"] != "rhyme"],  # "rhyme" (música infantil cantada) não usa narração
         "estilos": [{"id": s["id"], "nome": ESTILOS_PT.get(s["id"], s["name"]),
                      "grupo": GRUPOS_PT.get(s.get("group"), s.get("group") or "Outros"),
                      "previa": APP + s["preview"] if s.get("preview") else ""} for s in cat["styles"]],
@@ -406,7 +510,9 @@ def status():
     t["geral"] = geral(TRABALHO) if t.get("fase") else 0
     t["etapa"] = next((i for i, (n, _) in enumerate(FASES) if n == t.get("fase")), None)
     t["etapas"] = [n for n, p in FASES if p]
-    t["log"] = t.get("log", [])[-8:]
+    t["mensagem"] = traduzir(t.get("mensagem"))  # as mensagens de progresso vêm do app, em inglês
+    # no log da tela fica só a 1ª linha de cada registro (sem o traceback em inglês, que segue no simples.log)
+    t["log"] = [linha.splitlines()[0] for linha in t.get("log", [])[-8:]]
     t["decorrido"] = int((t.get("fim") or time.time()) - t["inicio"]) if t.get("inicio") else 0
     return t
 
