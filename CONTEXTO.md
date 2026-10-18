@@ -35,13 +35,14 @@ Arquivos fora do projeto (não vão junto na cópia, mas continuam valendo no me
 - Voz natural: processo separado `venv_voice\Scripts\python.exe -u engine\voice_worker.pyc` (Chatterbox/Turbo), log em `logs\voice_worker.log`; o `venv_voice` usa o `torch` do `.venv` via `_sleepy_main_torch.pth`.
 - Imagens/vídeo: ComfyUI em `ComfyUI_windows_portable\` (Python 3.13 próprio em `python_embeded\`), porta 8188, log em `logs\comfyui.log`. O app espera ~3 min a subida do ComfyUI (`_comfy_ready` em `app.jobs`, sem opção no config) e desiste com "ComfyUI did not answer in time".
 - Logs: `logs\server.log`, `logs\window.log`, `logs\voice_worker.log`, `logs\comfyui.log`, `logs\setup.log`.
+- **Para vídeos em português com a voz oficial, use o `LeccorTube Simples.bat`** (interface em http://127.0.0.1:7861). A interface original (`LECCORTUBE.exe`) continua narrando só em inglês.
 
 ## Estado atual
 - Repositório em `https://github.com/leccorside/LeccorTube` (branch `main`). Commits feitos manualmente pelo usuário (o Claude só redige a mensagem, em pt-BR, salvo pedido explícito).
 - Configuração do motor em `config.json` (local, **não versionado**); modelo versionado: `config.example.json` (chaves vazias).
 - Marca: tudo que aparece ao usuário diz **LeccorTube / Leccorside Ai** (splash, títulos, janela de erro, recurso de versão do .exe, textos do motor, logo de raposa, links para leccorside.com.br e Instagram negociosleccorside). Busca de atualizações do servidor original desativada.
 - Interface traduzida para **pt-BR e es** (camada `static/i18n_dom.js` + dicionário `static/i18n_dict.js`).
-- Projeto de teste **CAROLINE** (`projects\20261016-164745-untitled`, tipo Terror e Mistério, voz George/Chatterbox Turbo): voz pronta; imagens/vídeos/render pendentes.
+- Projeto de teste **CAROLINE** (`projects\20261016-164745-untitled`, tipo Terror e Mistério, voz George/Chatterbox Turbo): **vídeo completo gerado em 2026-10-17** (ver Histórico). Pendente: encurtar o texto da miniatura e, para publicar, reescrever o roteiro como narração.
 
 ## Histórico da conversa e das implementações (cronológico)
 
@@ -83,7 +84,37 @@ Arquivos fora do projeto (não vão junto na cópia, mas continuam valendo no me
 - Vídeos: 1 clipe (cena 2, 704x1280, 97 quadros, `wan22_5b_i2v_api.json`) em **14,6 min**, a ~35 s por passo (20 passos), GPU a 100% com ~7,8/12 GB. O monitor parou no meio por engano (ver "Erros e correções"); a geração seguiu normalmente.
 - Render e Export disparados em sequência às ~16:19, com o monitor corrigido.
 
+### 2026-10-17 (noite) — Narração em português (teste no projeto TESTE DUB PT)
+- **As vozes do app só falam inglês** (Chatterbox Turbo/Kokoro). A etapa "Dub" do app não serve para um vídeo em pt: traduz pelo `llm_provider` (OpenRouter, sem créditos → erro 402) e gera só uma faixa de áudio + `.srt` para "idioma adicional" no YouTube; o MP4 mantém as legendas em inglês.
+- **Caminho que funcionou**: `tools/diag/narrar_pt.py`. Ele narra o texto das cenas com o **Chatterbox Multilingual** (`language_id="pt"`, timbre a partir de um wav de referência; por padrão, a narração crua em inglês do George), grava em `audio/raw/<cena>.wav` e ajusta `raw_voice` = `[voz, 1.0, md5(texto)[:10]]`. Com o hash batendo, a etapa "voice" do app **não narra de novo**: só aplica o efeito ("Voice: 0 scenes"). Como o texto das cenas está em pt, as **legendas queimadas saem em pt, com acentos**.
+- Passos: texto das cenas em pt e prompts em inglês via `PUT /api/projects/{id}/scenes` (o `prompt_manual` só vira `true` quando o prompt muda) → **parar o servidor** (o script edita o `project.json`) e liberar a GPU (ComfyUI/Ollama) → `venv_voice\Scripts\python.exe tools\diag\narrar_pt.py projects\<id> --lang pt [--ref wav]` → subir o servidor → voice → images → render.
+- Resultado do teste: 2 cenas narradas em 41 s (modelo carregado em 22 s). O Whisper (`faster_whisper`, na CPU, porque falta `cublas64_12.dll`) detectou pt com 95% de confiança e transcreveu o texto quase igual. Falhas: "Nezahualcóyotl" sai mal pronunciado e a palavra é larga demais para a legenda (cortada nas bordas).
+- **Retorno do usuário no 1º teste**: eco, travadas e mistura de português de Portugal com o do Brasil. Causas e correções:
+  - Eco: efeito `mystery` ("distant echo"). Agora `voice_fx = none` (voz igual à referência).
+  - Sotaque misturado: a referência era o George falando inglês. **Voz oficial de todos os vídeos (pedido do usuário)**: `NARRACAO.wav` (raiz, 1min47, pt-BR, narração do roteiro original), recortada em `assets\vozes\narrador_ptbr_ref.wav` (8,1–18,7 s, 10,6 s limpos) e usada por padrão no `narrar_pt.py`. Os dois `.wav` ficam fora do Git (`*.wav` no `.gitignore`).
+  - Travadas: o Chatterbox às vezes inventa um estalo/sopro depois da frase (no teste: 2 s de silêncio + ruído no fim da cena 1). O `narrar_pt.py` agora apara as pontas (`aparar()`: corta trechos < 0,8 s depois de pausa ≥ 0,7 s) e usa `--temperature 0.7`.
+  - 2º teste: pt com 99% de confiança no Whisper, frases encadeadas sem pausa sobrando.
+
+### 2026-10-17/18 — Primeiro vídeo em pt-BR: "A própria mãe arrancou os olhos do filho"
+- Projeto `20261017-232737-a-pr-pria-m-e-arrancou-os-olhos-do-filho` (caso real, México, 2012). Tipo `short`, estilo `anime_dark`, `voice_fx = none`, miniatura "MÃE ARRANCOU SEUS OLHOS". Roteiro completo do usuário (com "na na periferia" corrigido): o app dividiu em **14 cenas, uma por frase**.
+- **Só imagens animadas** (pedido do usuário): todas as cenas com `media: image` e prompts manuais em inglês, personagens com descrição fixa. A violência fica só sugerida: a cena 7 mostra sombras e a luta, sem sangue.
+- Narração: `narrar_pt.py` com a voz oficial, 14 cenas em 2min46 (~1min31 de fala). Imagens em 3,2 min, render em 1,2 min, export instantâneo; **~6 min do início ao fim**, sem erros, com o monitor ligado.
+- Saída: `C:\Users\Johnathan Amorim\Videos\a-pr-pria-m-e-arrancou-os-olhos-do-filho\`, MP4 de 1:33, 1080x1920. Whisper: pt com 100% de confiança, transcrição quase idêntica ao roteiro. Ponto a revisar no ouvido: a cena 7 soou como "arrancou-se os olhos" (no texto: "arrancou seus olhos"). Para refazer só uma cena: `narrar_pt.py ... --cenas s007`, depois voice → render → export.
+- O `youtube_metadata.txt` do app mistura modelos em inglês ("The Untold Story of…", "A one minute animated story") e tags quebradas ("pria"). Foi criado à mão um `youtube_metadata_ptbr.txt` na mesma pasta. Os personagens saem com traços pouco latinos, por causa do estilo anime.
+
+### 2026-10-18 — LeccorTube Simples (interface enxuta em pt-BR)
+- Pedido do usuário: uma interface só com título, tipo, duração, estilo visual, texto da miniatura, roteiro e tamanho/cor da legenda; a voz é sempre a oficial (pt-BR) e as legendas sempre em pt.
+- Arquivos: `simples/server.py` (FastAPI, porta **7861**, roda com o `.venv` do app), `simples/index.html` (página) e `LeccorTube Simples.bat` (raiz: sobe a 7861 se preciso e abre o navegador). Log em `logs\simples.log`.
+- Fluxo do botão "Gerar vídeo" (uma geração por vez): sobe a API 7860 se estiver fora (processo destacado, não cai junto) → `POST /api/projects` (`voice_fx = none`, `scene_seconds` do tipo) → **prompts em inglês pela IA local** (Ollama `qwen2.5vl:7b`, baixado nesta data, ~5,6 GB; `keep_alive: 0` para liberar a GPU; sem IA, usa o texto da cena) → todas as cenas `media: image` → legenda via `PATCH {captions: {enabled, size, color, highlight}}` → `narrar_pt.py` (voz oficial) → voice → images → render → export → `youtube_metadata_ptbr.txt` na pasta do vídeo.
+- **Descoberta que permitiu narrar com o app aberto**: o servidor lê o `project.json` do disco a cada pedido (testado editando o arquivo e lendo pela API). Então o `narrar_pt.py` pode editar o projeto com a API no ar, desde que nenhuma etapa esteja rodando nele. Já o `PUT /scenes` ignora `raw_voice`/`audio`/`duration`.
+- "Duração" é uma **meta**: a página estima a duração pelo roteiro (3,2 palavras/s, medido na voz oficial) e avisa se passar de 125% ou ficar abaixo de 60% da meta. A duração real vem do roteiro narrado.
+- Teste de ponta a ponta (3 frases, legenda amarela com destaque vermelho em 6,5%): **3min50** do clique ao vídeo, sem erros; cores e tamanho aplicados. A IA começava os prompts com "prompt1:"; corrigido com uma regex que tira esse rótulo.
+- Os nomes dos estilos visuais aparecem em inglês (vêm do catálogo do app).
+- **Posição da legenda** (Embaixo/Meio/Em cima → `captions.position` = `bottom`/`middle`/`top`; padrão "Meio"). A prévia da página usa as mesmas alturas do render do app, medidas em `/api/captions/preview`: o centro do texto fica em ~73% (embaixo), ~60% (meio, um pouco abaixo do centro) e ~24% (em cima).
+
 ## Erros e correções conhecidas
+- **Monitor não terminava em etapas instantâneas (2026-10-17)**: quando a etapa acaba antes da 1ª consulta (ex.: "voice" com a narração já pronta), o monitor nunca via "running" e esperava até o `-MaxMin`. Corrigido: um `Finished` no fim do log, com horário a partir de 60 s antes do início do monitor, também conta como fim.
+- **Servidor cai junto com a tarefa que o abriu**: se o `uvicorn` for iniciado por um script e esse script for encerrado, o servidor morre junto (árvore de processos). Subir o servidor num processo próprio.
 - **Monitor acusava "LENTIDÃO" em vídeos longos (2026-10-17)**: o `monitor_geracao.ps1` só considerava progresso quando o status do projeto mudava. Na etapa de Vídeos, o app mostra "Animating 1 scenes" do início ao fim (~15 min), então o monitor desistia aos 10 min, mesmo com o ComfyUI avançando os passos. Corrigido: o crescimento de `logs\comfyui.log` também conta como progresso. Uma parada real (ComfyUI sem escrever nada) continua sendo detectada.
 - **CAROLINE editado às 16/10 17:55 (achado ao testar o novo local)**: título e texto da miniatura viraram "O que realmente aconteceu em CAROLINE? A resposta é mais estranha do que você imagina." (versão traduzida na tela da sugestão do Hook Doctor; colada pela interface) e a cena 1 ficou com "The answer is stranger than you think." repetido. A repetição vem de clicar mais de uma vez em "Replace first line": a sugestão tem 2 frases e o servidor (`POST /api/projects/{id}/hook/apply`) troca só a 1ª frase da cena a cada clique. Nenhuma alteração veio da camada de tradução (o `applyHook` envia a frase original em inglês). Corrigir à mão o título, a miniatura e a cena 1 e narrar de novo.
 - **Risco corrigido na camada de tradução (2026-10-17)**: `copyMeta()` (`app.js`) copia para a área de transferência o texto de `#metaText` lido da tela; se a camada traduzisse trechos desse texto gerado, a cópia sairia alterada. `#metaText` entrou no `SKIP_SEL` do `static/i18n_dom.js`. Observação: textos do usuário exibidos como texto comum (ex.: cenas no Storyboard) ainda podem receber tradução **só na exibição** quando uma frase coincide com uma frase da interface (ex.: as sugestões do Hook Doctor); o dado salvo não muda. Se incomodar, marcar o contêiner com `data-noi18n`.
@@ -98,7 +129,7 @@ Arquivos fora do projeto (não vão junto na cópia, mas continuam valendo no me
 
 ## Pendências / próximos passos
 1. ~~Mover o projeto para o `C:`~~ (feito em 2026-10-17) e ~~retomar o CAROLINE até Imagens~~ (feito: voz e imagens prontas).
-2. CAROLINE: seguir com Vídeos (a cena 2 está com `media: video`), Render e Export, ou antes reescrever o roteiro como narração (ver Histórico 2026-10-17 tarde).
+2. CAROLINE: ~~Vídeos, Render e Export~~ (feito: vídeo final pronto). Falta encurtar o `thumbnail_text` (ex.: "CAROLINE?") e rodar o Export de novo; para publicar, reescrever o roteiro como narração e escolher um estilo só (ver Histórico 2026-10-17 tarde).
 3. Avaliar o HD do `D:` (cabo/porta/saúde) e fazer backup dele.
 4. Avaliar a rotação da `google_key` no Google Cloud Console (precaução; nunca foi publicada).
 5. Opcional (só se o usuário pedir): referências restantes à marca antiga — ID `HarisAi.OMNITUBE` no `window.pyc` (agrupamento na barra de tarefas), `engine/voice_worker.pyc`, caminho de extração `Haris Ai\OMNITUBE` no stub Nuitka. Mantidos de propósito no `app.pyd`: entropia DPAPI `OMNITUBE` do `app.secretstore` (trocar invalida as chaves salvas), variáveis `OMNITUBE_*`, cabeçalho `X-OMNITUBE-Key`, extensão `.omnitube`, user-agent `OMNITUBE-downloader/1.0`, link do Gumroad.

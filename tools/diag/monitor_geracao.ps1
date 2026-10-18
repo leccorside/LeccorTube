@@ -37,6 +37,10 @@ while ($true) {
     $lastKey = $key; $lastChange = $now
   }
   if ($s.state -in 'running', 'queued') { $sawRunning = $true }
+  # etapa rápida (ex.: voz já narrada) pode terminar antes da 1ª consulta: vale o "Finished" recente no log
+  if (-not $sawRunning -and $s.state -eq 'done' -and "$($s.log | Select-Object -Last 1)" -match '^\[(\d\d:\d\d:\d\d)\] Finished') {
+    if ([datetime]::ParseExact($Matches[1], 'HH:mm:ss', $null) -ge $t0.AddSeconds(-60)) { $sawRunning = $true }
+  }
   if ($s.state -eq 'error') { W 'ERRO no projeto:'; W (($s.log | Select-Object -Last 3) -join "`n"); Fim 'ERRO' }
   if ($sawRunning -and $s.state -in 'done', 'idle', 'stopped', 'cancelled') { W 'últimas linhas do log:'; W (($s.log | Select-Object -Last 4) -join "`n"); Fim "geração terminou ($($s.state))" }
   if ($s.state -in 'running', 'queued' -and ($now - $lastChange).TotalMinutes -gt $StallMin) { Fim ("LENTIDÃO: sem progresso há {0:N0} min em '{1}'" -f ($now - $lastChange).TotalMinutes, $msg) }
