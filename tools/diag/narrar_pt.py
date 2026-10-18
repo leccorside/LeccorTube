@@ -92,7 +92,7 @@ def aparar(w, sr, limiar_db=-50.0, pausa=0.7, resto=0.0, folga=0.3):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("projeto")
+    ap.add_argument("projeto", nargs="?")
     ap.add_argument("--lang", default="pt")
     ap.add_argument("--ref", default=REF_PADRAO,
                     help="wav de referência do timbre/sotaque (padrão: a voz oficial; '' usa a narração crua em inglês)")
@@ -101,9 +101,21 @@ def main():
     ap.add_argument("--exaggeration", type=float, default=0.4)
     ap.add_argument("--cfg", type=float, default=0.3)
     ap.add_argument("--temperature", type=float, default=0.5, help="menor = mais estável, menos travadas")
+    ap.add_argument("--amostra", help="só gera este texto com a voz de --ref (sem projeto) e grava em --saida")
+    ap.add_argument("--saida", help="wav de saída do --amostra")
     a = ap.parse_args()
     if a.ref and not os.path.exists(a.ref):
         sys.exit(f"Referência não encontrada: {a.ref}")
+    if a.amostra:  # prévia de uma voz para a interface (LeccorTube Simples)
+        tts = ChatterboxMultilingualTTS.from_pretrained("cuda" if torch.cuda.is_available() else "cpu")
+        tts.prepare_conditionals(a.ref, exaggeration=a.exaggeration)
+        wav = tts.generate(falar_numeros(a.amostra), language_id=a.lang, exaggeration=a.exaggeration,
+                           cfg_weight=a.cfg, temperature=a.temperature)
+        sf.write(a.saida, aparar(wav.squeeze(0).cpu().numpy(), tts.sr), tts.sr)
+        print(f"amostra pronta: {a.saida}", flush=True)
+        return
+    if not a.projeto:
+        sys.exit("Informe a pasta do projeto (ou use --amostra).")
 
     pj = os.path.join(a.projeto, "project.json")
     with open(pj, encoding="utf-8") as f:

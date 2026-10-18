@@ -62,3 +62,6 @@ Desktop.ini
 
 # Cópias dos binários/imagens originais antes do rebrand
 _backup_original/
+
+# Gravações das vozes escolhidas pelo usuário (MP3 de origem das vozes do LeccorTube Simples)
+/vozes/

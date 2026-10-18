@@ -15,19 +15,21 @@ import os
 import re
 import subprocess
 import sys
+import tempfile
 import threading
 import time
 import traceback
 from datetime import datetime
 
 import httpx
-from fastapi import FastAPI, HTTPException, UploadFile
+from fastapi import FastAPI, Form, HTTPException, UploadFile
 from fastapi.responses import FileResponse
 from pydantic import BaseModel
 
 RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(RAIZ, "tools", "diag"))
 import ambiente  # noqa: E402  (tools/diag/ambiente.py: loops de som ambiente e mixagem)
+import vozes  # noqa: E402  (tools/diag/vozes.py: vozes de narração = referências do Chatterbox)
 APP = "http://127.0.0.1:7860"
 OLLAMA = "http://127.0.0.1:11434"
 OLLAMA_EXE = os.path.expandvars(r"%LOCALAPPDATA%\Programs\Ollama\ollama.exe")
@@ -38,7 +40,7 @@ FX_VOZ = "none"  # a voz oficial sai como na referência, sem eco
 
 # fases do botão "Gerar vídeo" e o peso de cada uma na barra geral (proporcional ao tempo típico)
 FASES = [("Na fila", 0), ("Preparando", 2), ("Criando o projeto", 2),
-         ("Escrevendo os prompts das imagens (IA local)", 8), ("Narrando com a voz oficial", 25),
+         ("Escrevendo os prompts das imagens (IA local)", 8), ("Narrando o roteiro", 25),
          ("Finalizando a voz", 2), ("Gerando as imagens", 45), ("Montando o vídeo", 12), ("Exportando", 4),
          ("Adicionando o som ambiente", 2)]
 TOTAL_PESO = sum(p for _, p in FASES)
@@ -302,12 +304,13 @@ def rodar_script(cmd, ao_ler):
         raise RuntimeError(f"{os.path.basename(cmd[2])} falhou (ver logs\\simples.log)")
 
 
-def narrar_e_revisar(pid, total, tentativas=2):
-    """Narra com a voz oficial (narrar_pt.py) e revisa com o Whisper (revisar_narracao.py): corta as
-    sobras depois da última palavra e narra de novo as cenas que saíram diferentes do roteiro."""
+def narrar_e_revisar(pid, total, ref, tentativas=2):
+    """Narra com a voz escolhida (narrar_pt.py, `ref` = wav de referência) e revisa com o Whisper
+    (revisar_narracao.py): corta as sobras depois da última palavra e narra de novo as cenas que
+    saíram diferentes do roteiro."""
     pasta = os.path.join(RAIZ, "projects", pid)
     narrar = [os.path.join(RAIZ, "venv_voice", "Scripts", "python.exe"), "-u",
-              os.path.join(RAIZ, "tools", "diag", "narrar_pt.py"), pasta, "--lang", "pt"]  # padrões = versão "C"
+              os.path.join(RAIZ, "tools", "diag", "narrar_pt.py"), pasta, "--lang", "pt", "--ref", ref]  # padrões = versão "C"
     revisar = [os.path.join(RAIZ, ".venv", "Scripts", "python.exe"), "-u",
                os.path.join(RAIZ, "tools", "diag", "revisar_narracao.py"), pasta]
     alvo, feitas = None, [0]
@@ -368,6 +371,7 @@ class Pedido(BaseModel):
     legenda_cor: str = "#ffffff"
     legenda_destaque: str = "#3cff7a"
     legenda_posicao: str = "middle"  # bottom, middle ou top (valores do app)
+    voz: str = "oficial"  # id de vozes.lista()
     ambiente: str = ""  # id de ambiente.lista() ("" = sem som ambiente)
     ambiente_volume: float = 30  # 0 a 100
 
@@ -403,9 +407,11 @@ def pipeline(p: Pedido):
             "enabled": True, "size": p.legenda_tamanho, "color": p.legenda_cor, "highlight": p.legenda_destaque,
             "position": p.legenda_posicao if p.legenda_posicao in ("bottom", "middle", "top") else "middle"}})
 
-        TRABALHO["fase"] = "Narrando com a voz oficial"
+        TRABALHO["fase"] = "Narrando o roteiro"
         TRABALHO["progresso"] = 0
-        narrar_e_revisar(pid, len(cenas))
+        ref = vozes.arquivo(p.voz)
+        log(f"Voz: {next((v['nome'] for v in vozes.lista() if v['arquivo'] == ref), p.voz)}")
+        narrar_e_revisar(pid, len(cenas), ref)
 
         rodar_etapa(pid, "voice", "Finalizando a voz")
         rodar_etapa(pid, "images", "Gerando as imagens")
@@ -446,12 +452,62 @@ def opcoes():
                      "grupo": GRUPOS_PT.get(s.get("group"), s.get("group") or "Outros"),
                      "previa": APP + s["preview"] if s.get("preview") else ""} for s in cat["styles"]],
         "palavras_por_seg": PALAVRAS_POR_SEG,
+        "vozes": [{"id": v["id"], "nome": v["nome"], "amostra": os.path.exists(vozes.amostra_path(v["id"]))}
+                  for v in vozes.lista()],
         "ambientes": [{"id": i["id"], "nome": i["nome"]} for i in ambiente.lista()],
         "pasta_ambiente": ambiente.PASTA,
     }
 
 
 MAX_ENVIO_MB = 50
+FRASE_AMOSTRA = "Olá! Esta é a minha voz no LeccorTube. Tudo aconteceu numa noite fria de 2012, numa casa no fim da rua."
+TRAVA_AMOSTRA = threading.Lock()
+
+
+@app.post("/api/vozes/enviar")
+async def enviar_voz(arquivo: UploadFile, nome: str = Form("")):
+    """Cria uma voz de narração a partir de um áudio do usuário (o melhor trecho de ~10 s vira referência)."""
+    ext = os.path.splitext(arquivo.filename or "")[1].lower()
+    if ext not in vozes.EXT:
+        raise HTTPException(400, "Envie um arquivo de áudio: " + ", ".join(vozes.EXT))
+    dados = await arquivo.read(MAX_ENVIO_MB * 1024 * 1024 + 1)
+    if len(dados) > MAX_ENVIO_MB * 1024 * 1024:
+        raise HTTPException(400, f"Arquivo grande demais (máximo {MAX_ENVIO_MB} MB).")
+    with tempfile.TemporaryDirectory() as tmp:
+        origem = os.path.join(tmp, "origem" + ext)
+        with open(origem, "wb") as f:
+            f.write(dados)
+        try:
+            v = vozes.adicionar(origem, nome or os.path.splitext(arquivo.filename or "")[0])
+        except ValueError as e:
+            raise HTTPException(400, str(e))
+    log(f"Voz criada: {v['nome']} (trecho de {v['duracao']} s a partir de {v['inicio']} s)")
+    return {**v, "vozes": [{"id": x["id"], "nome": x["nome"], "amostra": os.path.exists(vozes.amostra_path(x["id"]))}
+                           for x in vozes.lista()]}
+
+
+@app.get("/api/vozes/amostra")
+def amostra_voz(id: str):
+    """Frase de teste falada com a voz (gerada uma vez e guardada em assets/vozes/_amostras/)."""
+    try:
+        ref = vozes.arquivo(id)
+    except ValueError:
+        raise HTTPException(404, "Voz não encontrada.")
+    saida = vozes.amostra_path(id)
+    if not os.path.exists(saida):
+        if TRABALHO.get("ativo"):
+            raise HTTPException(409, "Há um vídeo sendo gerado (a placa de vídeo está ocupada). Ouça a amostra depois.")
+        with TRAVA_AMOSTRA:
+            if not os.path.exists(saida):
+                cmd = [os.path.join(RAIZ, "venv_voice", "Scripts", "python.exe"), "-u",
+                       os.path.join(RAIZ, "tools", "diag", "narrar_pt.py"), "--ref", ref,
+                       "--amostra", FRASE_AMOSTRA, "--saida", saida]
+                r = subprocess.run(cmd, cwd=RAIZ, env=dict(os.environ, PYTHONIOENCODING="utf-8"), capture_output=True,
+                                   text=True, encoding="utf-8", errors="replace", creationflags=subprocess.CREATE_NO_WINDOW)
+                if r.returncode != 0 or not os.path.exists(saida):
+                    log("Falha na amostra de voz: " + (r.stdout + r.stderr)[-500:])
+                    raise HTTPException(500, "Não consegui gerar a amostra dessa voz (ver logs\\simples.log).")
+    return FileResponse(saida, media_type="audio/wav")
 
 
 @app.post("/api/ambiente/enviar")

@@ -110,11 +110,28 @@
       <textarea id="roteiro" placeholder="Tudo aconteceu em 2012, em uma casa humilde..."></textarea>
       <div class="meta"><span id="palavras">0 palavras</span><span id="estimativa"></span></div>
     </div>
+    <div class="card">
+      <h2>3. Voz da narração</h2>
+      <label for="voz">Voz</label>
+      <div class="row" style="grid-template-columns: 1fr auto">
+        <select id="voz"></select>
+        <button class="sec" id="ouvirVoz" type="button" style="padding:9px 14px">▶ Ouvir amostra</button>
+      </div>
+      <div class="hint" id="vozMsg" style="margin-top:6px"></div>
+      <div class="row" style="grid-template-columns: 1fr auto; margin-top:12px; align-items:end">
+        <div><label for="nomeVoz">Adicionar uma voz <span class="hint">nome para a lista</span></label>
+          <input type="text" id="nomeVoz" placeholder="Ex.: Narrador grave"></div>
+        <button class="sec" id="enviarVoz" type="button" style="padding:9px 14px">⬆ Enviar áudio da voz</button>
+      </div>
+      <input type="file" id="arquivoVoz" accept=".mp3,.wav,.ogg,.flac,.m4a,audio/*" class="hidden">
+      <div class="hint" style="margin-top:8px">Envie uma gravação de alguém falando em <b>português do Brasil</b>, só voz (sem música), com pelo menos 10 s de fala contínua. O sistema escolhe sozinho o melhor trecho e clona o timbre e o sotaque.</div>
+      <audio id="playerVoz"></audio>
+    </div>
   </section>
 
   <aside>
     <div class="card">
-      <h2>3. Legenda</h2>
+      <h2>4. Legenda</h2>
       <div class="preview" id="prev"><div class="cap" id="cap">a mãe <span id="capHi">arrancou</span> os</div></div>
       <label for="pos">Posição</label>
       <select id="pos">
@@ -128,7 +145,7 @@
       </div>
     </div>
     <div class="card">
-      <h2>4. Som ambiente</h2>
+      <h2>5. Som ambiente</h2>
       <label for="amb">Som de fundo</label>
       <div class="row" style="grid-template-columns: 1fr auto">
         <select id="amb"><option value="">Nenhum</option></select>
@@ -145,7 +162,7 @@
     <div class="card">
       <h2>Sempre igual</h2>
       <ul class="fixo">
-        <li>Voz oficial em português (a do NARRACAO.wav), sem eco</li>
+        <li>Narração em português do Brasil, sem eco, conferida palavra por palavra</li>
         <li>Legendas em português, palavra por palavra</li>
         <li>Só imagens animadas, sem clipes de vídeo</li>
         <li>Prompts das imagens escritos pela IA local</li>
@@ -190,6 +207,7 @@ async function carregar() {
     $("#estilo").innerHTML = grupos.map(g => `<optgroup label="${esc(g)}">` + o.estilos.filter(s => s.grupo === g)
       .map(s => `<option value="${esc(s.id)}" ${s.id === "anime_dark" ? "selected" : ""}>${esc(s.nome)}</option>`).join("") + `</optgroup>`).join("");
     listarAmb(o.ambientes);
+    listarVozes(o.vozes);
     $("#pastaAmb").textContent = o.pasta_ambiente;
   } catch (e) { alert("Não consegui falar com o LeccorTube. Feche esta página e abra de novo pelo LeccorTube Simples.bat."); }
   restaurar(); atualizar(); status();
@@ -230,7 +248,46 @@ function atualizar() {
   salvar();
 }
 
-const CAMPOS = ["titulo", "tipo", "duracao", "estilo", "miniatura", "roteiro", "pos", "tam", "cor", "dest", "amb", "ambVol"];
+const CAMPOS = ["titulo", "tipo", "duracao", "estilo", "miniatura", "roteiro", "voz", "pos", "tam", "cor", "dest", "amb", "ambVol"];
+
+// ---- vozes de narração
+function listarVozes(lista) {
+  const atual = $("#voz").value;
+  $("#voz").innerHTML = lista.map(v => `<option value="${esc(v.id)}">${esc(v.nome)}</option>`).join("");
+  if (lista.some(v => v.id === atual)) $("#voz").value = atual;
+}
+async function ouvirVoz() {
+  const p = $("#playerVoz"), b = $("#ouvirVoz"), msg = $("#vozMsg");
+  if (!p.paused) { p.pause(); b.textContent = "▶ Ouvir amostra"; return; }
+  b.disabled = true; msg.className = "hint";
+  msg.textContent = "Preparando a amostra… na primeira vez de cada voz leva cerca de 1 minuto.";
+  try {
+    const r = await fetch(`/api/vozes/amostra?id=${encodeURIComponent($("#voz").value)}`);
+    if (!r.ok) throw new Error(await erroApi(r, "Não consegui gerar a amostra."));
+    p.src = URL.createObjectURL(await r.blob()); await p.play();
+    b.textContent = "■ Parar"; msg.textContent = "";
+  } catch (e) { msg.className = "bad"; msg.textContent = e.message; }
+  b.disabled = false;
+}
+$("#playerVoz").addEventListener("ended", () => { $("#ouvirVoz").textContent = "▶ Ouvir amostra"; });
+$("#voz").addEventListener("change", () => { $("#playerVoz").pause(); $("#ouvirVoz").textContent = "▶ Ouvir amostra"; $("#vozMsg").textContent = ""; });
+$("#ouvirVoz").addEventListener("click", ouvirVoz);
+$("#enviarVoz").addEventListener("click", () => $("#arquivoVoz").click());
+$("#arquivoVoz").addEventListener("change", async () => {
+  const f = $("#arquivoVoz").files[0]; if (!f) return;
+  const msg = $("#vozMsg"); msg.className = "hint"; msg.textContent = `Analisando ${f.name} e escolhendo o melhor trecho…`;
+  $("#enviarVoz").disabled = true;
+  try {
+    const fd = new FormData(); fd.append("arquivo", f); fd.append("nome", $("#nomeVoz").value || f.name.replace(/\.[^.]+$/, ""));
+    const r = await fetch("/api/vozes/enviar", {method: "POST", body: fd});
+    if (!r.ok) throw new Error(await erroApi(r, "Falha no envio da voz"));
+    const d = await r.json();
+    listarVozes(d.vozes); $("#voz").value = d.id; $("#nomeVoz").value = "";
+    msg.textContent = `Voz "${d.nome}" criada (trecho de ${d.duracao} s a partir de ${d.inicio} s) e selecionada. Clique em Ouvir amostra para testar.`;
+    salvar();
+  } catch (e) { msg.className = "bad"; msg.textContent = e.message; }
+  $("#enviarVoz").disabled = false; $("#arquivoVoz").value = "";
+});
 
 // prévia do som ambiente: mesma curva da mixagem (100% = -6 dB; volume em dB proporcional ao slider)
 function volOuvir() { const v = +$("#ambVol").value; return Math.min(1, Math.pow(10, (-6 + 20 * Math.log10(Math.max(v, 1) / 100)) / 20)); }
@@ -287,6 +344,7 @@ async function gerar() {
     miniatura: $("#miniatura").value, roteiro: $("#roteiro").value,
     legenda_tamanho: +$("#tam").value, legenda_cor: $("#cor").value, legenda_destaque: $("#dest").value,
     legenda_posicao: $("#pos").value, ambiente: $("#amb").value, ambiente_volume: +$("#ambVol").value,
+    voz: $("#voz").value || "oficial",
   };
   if (!body.titulo.trim() || !body.roteiro.trim()) { alert("Preencha o título e o roteiro."); return; }
   $("#go").disabled = true;
@@ -329,7 +387,7 @@ async function status() {
 }
 let FIM = null;
 const CURTO = {"Preparando": "Preparar", "Criando o projeto": "Projeto", "Escrevendo os prompts das imagens (IA local)": "Prompts",
-  "Narrando com a voz oficial": "Narração", "Finalizando a voz": "Voz", "Gerando as imagens": "Imagens",
+  "Narrando o roteiro": "Narração", "Finalizando a voz": "Voz", "Gerando as imagens": "Imagens",
   "Montando o vídeo": "Montagem", "Exportando": "Exportar", "Adicionando o som ambiente": "Ambiente"};
 function fechar() { FECHADO = FIM; ABRIU = false; $("#ov").classList.add("hidden"); }
 async function abrir(o) { await fetch("/api/abrir", {method: "POST", headers: {"Content-Type": "application/json"}, body: JSON.stringify({o})}); }
