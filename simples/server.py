@@ -21,7 +21,7 @@ import traceback
 from datetime import datetime
 
 import httpx
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, UploadFile
 from fastapi.responses import FileResponse
 from pydantic import BaseModel
 
@@ -326,6 +326,38 @@ def opcoes():
         "ambientes": [{"id": i["id"], "nome": i["nome"]} for i in ambiente.lista()],
         "pasta_ambiente": ambiente.PASTA,
     }
+
+
+MAX_ENVIO_MB = 50
+
+
+@app.post("/api/ambiente/enviar")
+async def enviar_ambiente(arquivo: UploadFile):
+    """Recebe um som do usuário e guarda em assets/ambiente/ (aparece na lista de ambientes)."""
+    nome, ext = os.path.splitext(os.path.basename(arquivo.filename or ""))
+    if ext.lower() not in ambiente.EXT:
+        raise HTTPException(400, "Envie um arquivo de áudio: " + ", ".join(ambiente.EXT))
+    dados = await arquivo.read(MAX_ENVIO_MB * 1024 * 1024 + 1)
+    if len(dados) > MAX_ENVIO_MB * 1024 * 1024:
+        raise HTTPException(400, f"Arquivo grande demais (máximo {MAX_ENVIO_MB} MB).")
+    nome = re.sub(r"[^\w\- ]+", "", nome).strip()[:60] or "meu-som"
+    os.makedirs(ambiente.PASTA, exist_ok=True)
+    destino, n = os.path.join(ambiente.PASTA, nome + ext.lower()), 2
+    while os.path.exists(destino):  # não sobrescreve um som que já existe
+        destino = os.path.join(ambiente.PASTA, f"{nome} ({n}){ext.lower()}")
+        n += 1
+    with open(destino, "wb") as f:
+        f.write(dados)
+    try:
+        dur, _ = ambiente.info(destino)  # confere se o ffmpeg lê o áudio
+        if dur < 1:
+            raise ValueError("curto demais")
+    except Exception:
+        os.remove(destino)
+        raise HTTPException(400, "Não consegui ler esse arquivo como áudio (ou ele tem menos de 1 s).")
+    log(f"Som ambiente enviado: {os.path.basename(destino)} ({dur:.0f} s)")
+    return {"id": "user:" + os.path.basename(destino), "nome": os.path.splitext(os.path.basename(destino))[0],
+            "ambientes": [{"id": i["id"], "nome": i["nome"]} for i in ambiente.lista()]}
 
 
 @app.get("/api/ambiente/ouvir")

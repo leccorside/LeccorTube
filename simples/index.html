@@ -128,9 +128,12 @@
         <select id="amb"><option value="">Nenhum</option></select>
         <button class="sec" id="ouvir" type="button" style="padding:9px 14px">▶ Ouvir</button>
       </div>
+      <button class="sec" id="enviar" type="button" style="width:100%;margin-top:8px;padding:9px 14px">⬆ Enviar meu som (mp3, wav…)</button>
+      <input type="file" id="arquivoAmb" accept=".mp3,.wav,.ogg,.flac,.m4a,audio/*" class="hidden">
+      <div class="hint" id="envioMsg" style="margin-top:6px"></div>
       <label for="ambVol">Volume <span class="hint" id="ambVolV"></span></label>
       <input type="range" id="ambVol" min="5" max="100" step="5" value="30">
-      <div class="hint" style="margin-top:8px">Fica por baixo da narração, com entrada e saída suaves. Para usar sons reais, coloque arquivos .mp3 ou .wav em <code id="pastaAmb" style="word-break:break-all">assets\ambiente</code> e recarregue a página.</div>
+      <div class="hint" style="margin-top:8px">Fica por baixo da narração, com entrada e saída suaves, e repete se for mais curto que o vídeo. Os sons enviados ficam guardados em <code id="pastaAmb" style="word-break:break-all">assets\ambiente</code> para os próximos vídeos.</div>
       <audio id="player" loop></audio>
     </div>
     <div class="card">
@@ -176,7 +179,7 @@ async function carregar() {
     PPS = o.palavras_por_seg;
     $("#tipo").innerHTML = o.tipos.map(t => `<option value="${t.id}" ${t.id === "short" ? "selected" : ""}>${tipoPt(t)}</option>`).join("");
     $("#estilo").innerHTML = o.estilos.map(s => `<option value="${s.id}" ${s.id === "anime_dark" ? "selected" : ""}>${s.nome}</option>`).join("");
-    $("#amb").innerHTML = `<option value="">Nenhum</option>` + o.ambientes.map(a => `<option value="${esc(a.id)}">${esc(a.nome)}</option>`).join("");
+    listarAmb(o.ambientes);
     $("#pastaAmb").textContent = o.pasta_ambiente;
   } catch (e) { alert("Não consegui falar com o LeccorTube. Feche esta página e abra de novo pelo LeccorTube Simples.bat."); }
   restaurar(); atualizar(); status();
@@ -226,6 +229,29 @@ function ouvir() {
   p.volume = volOuvir(); p.play(); $("#ouvir").textContent = "■ Parar";
 }
 $("#ouvir").addEventListener("click", ouvir);
+
+function listarAmb(lista) {
+  const meus = lista.filter(a => a.id.startsWith("user:")), prontos = lista.filter(a => !a.id.startsWith("user:"));
+  const opt = a => `<option value="${esc(a.id)}">${esc(a.nome)}</option>`;
+  $("#amb").innerHTML = `<option value="">Nenhum</option>`
+    + (meus.length ? `<optgroup label="Meus sons">${meus.map(opt).join("")}</optgroup>` : "")
+    + `<optgroup label="Sons prontos">${prontos.map(opt).join("")}</optgroup>`;
+}
+$("#enviar").addEventListener("click", () => $("#arquivoAmb").click());
+$("#arquivoAmb").addEventListener("change", async () => {
+  const f = $("#arquivoAmb").files[0]; if (!f) return;
+  const msg = $("#envioMsg"); msg.className = "hint"; msg.textContent = `Enviando ${f.name}…`;
+  $("#enviar").disabled = true;
+  try {
+    const fd = new FormData(); fd.append("arquivo", f);
+    const r = await fetch("/api/ambiente/enviar", {method: "POST", body: fd}), d = await r.json();
+    if (!r.ok) throw new Error(d.detail || "Falha no envio");
+    listarAmb(d.ambientes); $("#amb").value = d.id;
+    msg.className = "hint"; msg.textContent = `"${d.nome}" adicionado e selecionado.`;
+    atualizar();
+  } catch (e) { msg.className = "bad"; msg.textContent = e.message; }
+  $("#enviar").disabled = false; $("#arquivoAmb").value = "";
+});
 $("#amb").addEventListener("change", () => { if (!$("#player").paused) { $("#player").pause(); ouvir(); } });
 function salvar() { try { localStorage.setItem("lts", JSON.stringify(Object.fromEntries(CAMPOS.map(c => [c, $("#" + c).value])))); } catch (e) {} }
 function restaurar() {

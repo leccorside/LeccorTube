@@ -28,7 +28,8 @@ SEG = 40  # duração do loop
 EXT = (".wav", ".mp3", ".ogg", ".flac", ".m4a")
 NOMES = {"chuva": "Chuva", "vento": "Vento", "tempestade": "Tempestade", "noite": "Noite com grilos",
          "drone": "Drone sombrio", "fogueira": "Fogueira"}
-RMS_DB = -20.0  # intensidade média dos loops (os do usuário são levados ao mesmo nível na mixagem)
+RMS_DB = -20.0  # nível de partida dos loops sintetizados
+LUFS_ALVO = -18.0  # loudness de todos os sons (sintetizados ao gerar; os do usuário na mixagem, com loudnorm)
 # volume 100% = ambiente ~6 dB abaixo da narração (bem presente); 30% fica de fundo, ~16 dB abaixo
 GANHO_MAX_DB = -6.0
 
@@ -115,11 +116,20 @@ def gerar_padroes():
         if os.path.exists(p):
             continue
         x = _loop(_sintetizar(tipo, np.random.default_rng(100 + i)))
-        # mesma intensidade média (-20 dB RMS) em todos, para o volume escolhido soar igual em qualquer som;
-        # os picos (trovão, estalos) passam por um limitador suave
         x = x * (10 ** (RMS_DB / 20) / (np.sqrt((x ** 2).mean()) + 1e-9))
-        x = np.tanh(x / 0.95) * 0.95
+        x = np.tanh(x / 0.95) * 0.95  # limitador suave nos picos (trovão, estalos)
         sf.write(p, x.astype(np.float32), SR, subtype="PCM_16")
+        # mesma loudness percebida (LUFS) em todos, igual ao alvo dos sons do usuário: o mesmo volume
+        # soa igual em qualquer som (só o RMS igual deixava "noite" 7 LU mais alto que "drone")
+        ajuste = LUFS_ALVO - _lufs(p)
+        x = np.tanh(x * 10 ** (ajuste / 20) / 0.95) * 0.95
+        sf.write(p, x.astype(np.float32), SR, subtype="PCM_16")
+
+
+def _lufs(arquivo):
+    saida = subprocess.run([_ffmpeg(), "-hide_banner", "-i", arquivo, "-af", "loudnorm=print_format=summary",
+                            "-f", "null", "-"], capture_output=True, text=True, errors="replace").stderr
+    return float(re.search(r"Input Integrated:\s*(-?[\d.]+)", saida)[1])
 
 
 def lista():
@@ -133,7 +143,7 @@ def lista():
     return itens
 
 
-def _info(video):
+def info(video):
     """(duração em s, se o áudio é mono)"""
     saida = subprocess.run([_ffmpeg(), "-i", video], capture_output=True, text=True, errors="replace").stderr
     h, m, s = re.search(r"Duration: (\d+):(\d+):([\d.]+)", saida).groups()
@@ -148,11 +158,11 @@ def mixar(video, som_id, volume):
     item = next((i for i in lista() if i["id"] == som_id), None)
     if not item:
         raise ValueError(f"Som ambiente não encontrado: {som_id}")
-    dur, mono = _info(video)
+    dur, mono = info(video)
     ganho = 10 ** ((GANHO_MAX_DB + 20 * np.log10(max(volume, 1) / 100)) / 20)
     tmp = video + ".amb.mp4"
     # sons do usuário vêm com qualquer volume: loudnorm leva ao mesmo nível médio dos sintetizados
-    norm = f"loudnorm=I={RMS_DB - 3:.0f}:TP=-2:LRA=15," if som_id.startswith("user:") else ""
+    norm = f"loudnorm=I={LUFS_ALVO:.0f}:TP=-2:LRA=15," if som_id.startswith("user:") else ""
     filtro = (f"[1:a]aformat=sample_rates=48000:channel_layouts=stereo,{norm}volume={ganho:.4f},"
               f"afade=t=in:d=1.5,afade=t=out:st={max(0, dur - 2.5):.2f}:d=2.5[amb];"
               # a narração do app é mono: duplica o canal (a conversão padrão para estéreo baixa 3 dB)
