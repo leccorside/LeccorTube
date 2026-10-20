@@ -134,29 +134,42 @@ class CreativeDirectorAgent(BaseAgent):
         super().__init__(4, "visual", "Diretor Visual")
 
     def execute(self, video: VideoItem, cb: Optional[Callable] = None):
-        self.update_agent(video, "RUNNING", 30, "Planejando paleta de cores, estilo e iluminação...", "Direção de arte", cb)
-        time.sleep(1)
+        from automation.prompt_writer import escrever_prompts
 
-        # Estilo visual coerente
-        video.brief.visual_style = "anime_dark"
+        video.brief.visual_style = video.brief.visual_style or "anime_dark"
         # Fracionar frases do roteiro em cenas
         frases = [f.strip() for f in video.brief.script_body.split(".") if len(f.strip()) > 8]
         if not frases:
             frases = [video.brief.script_body]
 
+        # Prompts em inglês escritos pela IA local (Ollama), num pedido só para todas as cenas.
+        # Antes todas as cenas recebiam o mesmo prompt fixo ("cinematic dark atmospheric scene depicting …").
+        self.update_agent(video, "RUNNING", 30, f"Escrevendo os prompts de {len(frases)} cenas com a IA local (Ollama)...",
+                          "Prompts com IA", cb)
+        try:
+            prompts = escrever_prompts(video.brief.title, frases, video.brief.visual_style)
+            erro = ""
+        except Exception as e:  # Ollama fora do ar, sem o modelo ou resposta inválida
+            prompts, erro = {}, f"{type(e).__name__}: {e}"
+
         scenes: List[ScenePrompt] = []
-        for i, fr in enumerate(frases):
+        for i, fr in enumerate(frases, 1):
             scenes.append(ScenePrompt(
-                scene_index=i + 1,
+                scene_index=i,
                 text_pt=fr,
-                prompt_en=f"cinematic dark atmospheric scene depicting {fr[:60]}, dramatic shadows, 8k aesthetic, cinematic lighting",
+                # sem prompt da IA, usa o genérico (o vídeo ainda sai), e a mensagem do agente diz isso
+                prompt_en=prompts.get(i) or f"cinematic scene depicting {fr[:80]}, high quality, detailed lighting, {video.brief.visual_style} aesthetic",
                 duration_est_seconds=4.0
             ))
-
         video.brief.scenes = scenes
-        self.update_agent(video, "RUNNING", 80, f"{len(scenes)} cenas planejadas com prompts neurais...", "Prompts prontos", cb)
-        time.sleep(1)
-        self.update_agent(video, "COMPLETED", 100, f"{len(scenes)} cenas dirigidas com estilo {video.brief.visual_style}", "Concluído", cb)
+        video.brief.sources_rationale["visual"] = f"Prompts pela IA local: {len(prompts)}/{len(frases)}" + (f" ({erro})" if erro else "")
+
+        if len(prompts) == len(frases):
+            self.update_agent(video, "COMPLETED", 100, f"{len(scenes)} prompts escritos pela IA local ({video.brief.visual_style})", "Concluído", cb)
+        elif prompts:
+            self.update_agent(video, "COMPLETED", 100, f"IA local escreveu {len(prompts)}/{len(frases)} prompts; o resto ficou genérico", "Concluído", cb)
+        else:
+            self.update_agent(video, "COMPLETED", 100, f"IA local indisponível: {len(scenes)} cenas com prompt genérico ({erro[:80]})", "Prompts genéricos", cb)
 
 
 # ==================== 05. PRODUTOR DE VÍDEO (HERO) ====================

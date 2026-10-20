@@ -157,12 +157,13 @@ def _agentes(cfg: Dict[str, Any], sv: Dict[str, Any]) -> List[Dict[str, Any]]:
                 motor_tag="Sem modelo", params=[("Gancho", "pronto"), ("CTA", "fixo"), ("Idioma", "pt-BR")],
                 custo="Sem custo", faz="Monta o roteiro, títulos alternativos, descrição, hashtags e tags.",
                 limitacao="Todo roteiro sai com o mesmo texto genérico (\"Você não vai acreditar…\"), só trocando o título. Nenhum modelo de IA escreve o roteiro."),
-        4: dict(categoria="visual", implementacao="simulado", servico=None, motor="Prompt de modelo fixo (sem IA)",
-                motor_tag="Sem IA", params=[("Estilo", "anime_dark"), ("Cenas", "por ponto final"), ("Ollama", "não usado")],
-                custo="Sem custo",
-                faz="Corta o roteiro em cenas por ponto final e dá a cada uma o prompt fixo \"cinematic dark atmospheric scene depicting …\".",
-                limitacao=f"Como as cenas já saem com prompt, o adaptador nunca chama o Ollama ({MODELO_IA}) na esteira: ele só "
-                          "escreveria o prompt de uma cena que viesse sem. O estilo é sempre anime_dark."),
+        4: dict(categoria="visual", implementacao="parcial", servico="ollama", motor=f"Ollama · {MODELO_IA}",
+                motor_tag="IA local", params=[("Temp", "0.4"), ("Estilo", "anime_dark"), ("Pedido", "1 p/ todas")],
+                custo="Local · sem custo",
+                faz="Corta o roteiro em cenas e pede à IA local, num pedido só, um prompt em inglês para cada cena "
+                    "(personagens com a mesma descrição, sem texto na imagem, violência só sugerida).",
+                limitacao="O corte das cenas é por ponto final e o estilo é sempre anime_dark. Se o Ollama falhar, as cenas "
+                          "recebem um prompt genérico e a mensagem do agente avisa."),
         5: dict(categoria="visual", implementacao="real", servico="comfy", motor="Motor LeccorTube + ComfyUI",
                 motor_tag="GPU local", params=[("Imagem", f"{w}x{h}"), ("Workflow", str(cfg.get("workflow_file", "?")).replace("_api.json", "")),
                                                ("Encoder", "NVENC" if enc in ("auto", "nvenc", "h264_nvenc") else enc)],
@@ -190,6 +191,9 @@ def _agentes(cfg: Dict[str, Any], sv: Dict[str, Any]) -> List[Dict[str, Any]]:
                  faz="Deveria medir retenção e CTR e realimentar o Pesquisador. Só roda para vídeos publicados de verdade (hoje, nenhum).",
                  limitacao="Sem vídeo publicado, só avisa \"nada para medir\" e não mexe no status. Quando houver publicação, ainda devolve números fixos: não consulta o YouTube Analytics."),
     }
+    if not sv["ollama"].get("modelo_presente", True):  # Ollama sem o modelo: os prompts caem no genérico
+        a[4]["limitacao"] = (f"O modelo {MODELO_IA} não está instalado no Ollama: as cenas ficam com prompt genérico. "
+                             f"Para instalar: ollama pull {MODELO_IA}. ") + a[4]["limitacao"]
     codigo = {1: "ResearchAgent", 2: "StrategyAgent", 3: "ScriptAgent", 4: "CreativeDirectorAgent", 5: "VideoProducerAgent",
               6: "AudioEngineerAgent", 7: "QualityControlAgent", 8: "DesignerAgent", 9: "PublishingAgent", 10: "AnalyticsAgent"}
     lista = []
