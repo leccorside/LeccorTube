@@ -1,8 +1,14 @@
 # CONTEXTO — LeccorTube
 
-Resumo vivo do projeto para retomar o trabalho em outra sessão, pasta ou máquina. Última atualização: 2026-10-17.
+Resumo vivo do projeto para retomar o trabalho em outra sessão, pasta ou máquina. Última atualização: 2026-10-20.
 
 ## ▶️ Como retomar (leia primeiro)
+
+**Situação em 2026-10-20:** o jeito de gerar vídeos é o **LeccorTube Simples** (dois cliques em `LeccorTube Simples.bat` → http://127.0.0.1:7861). Ele sobe sozinho a API do app (7860) e o Ollama se estiverem fora. Gera vídeos narrados em **pt-BR** (voz oficial ou uma das vozes escolhidas pelo usuário), com legendas em pt, só imagens animadas e som ambiente opcional. A interface original (`LECCORTUBE.exe`) continua funcionando, mas narra só em inglês. Detalhes no Histórico (2026-10-18). Pendências na seção própria.
+
+Para conferir que está tudo de pé: abrir o `.bat`, escolher uma voz, clicar em "Ouvir amostra" (as 8 vozes já têm amostra pronta) e gerar um roteiro de 2 frases (~2 min do clique ao vídeo). Log em `logs\simples.log`.
+
+### Mudança de pasta (2026-10-17) — referência para uma próxima mudança
 
 **Situação em 2026-10-17 (15:10):** projeto **movido para `C:\Users\Johnathan Amorim\Documents\PROJETOS-GERAIS\LeccorTube`** (SSD). Esta é a pasta oficial agora. A cópia original continua em `D:\0000000-PROJETOS\LeccorTube` (HD externo USB com falhas de leitura) e pode ser apagada pelo usuário depois de confirmar que está tudo certo aqui.
 
@@ -18,8 +24,9 @@ Checklist para uma próxima mudança de pasta (com o LeccorTube **fechado**):
 3. Conferir que o ComfyUI aponta para a pasta nova: Central de Ajustes, ou `GET http://127.0.0.1:7860/api/setup` → `comfy.root`.
 4. Confirmar que o disco novo não tem erros: `Get-WinEvent -FilterHashtable @{LogName='System';ProviderName='disk';Id=153} -MaxEvents 5` (não deve aparecer o disco do projeto).
 5. Testar a voz: `venv_voice\Scripts\python.exe tools\diag\voice_test.py <pasta_saida>` (importa torch/chatterbox, carrega o Turbo e gera um wav).
-6. Retomar o projeto **CAROLINE** (id `20261016-164745-untitled`): voz pronta (7/7 cenas, 2,8 min), mas a **cena 1 foi editada depois da narração** (Hook Doctor) e precisa ser narrada de novo ("1 · Voz"). Depois, seguir de **Imagens** (a pré-visualização falhou só porque o ComfyUI não subiu no disco D:). Ver também "Erros e correções" → CAROLINE às 17:55.
-7. Acompanhar a geração: `powershell -ExecutionPolicy Bypass -File tools\diag\monitor_geracao.ps1 -Id 20261016-164745-untitled` — para e avisa em erro, lentidão (> 10 min sem progresso), queda do ComfyUI, Traceback/OOM no log do ComfyUI ou fim; grava em `logs\monitor_geracao.log`.
+6. Gerar um vídeo curto pelo LeccorTube Simples para validar tudo (voz pt, imagens, render).
+7. Para acompanhar uma geração feita pela API: `powershell -ExecutionPolicy Bypass -File tools\diag\monitor_geracao.ps1 -Id <id_do_projeto>` — para e avisa em erro, lentidão (> 10 min sem progresso nem no `comfyui.log`), queda do ComfyUI, Traceback/OOM no log do ComfyUI ou fim; grava em `logs\monitor_geracao.log`.
+8. Ollama: modelo `qwen2.5vl:7b` (prompts das imagens). Fica no perfil do usuário (`%USERPROFILE%\.ollama`), fora do projeto.
 
 Arquivos fora do projeto (não vão junto na cópia, mas continuam valendo no mesmo PC):
 - Cache de modelos Hugging Face em `C:\Users\<usuário>\.cache\huggingface\hub` (Chatterbox, Chatterbox Turbo, Kokoro…). Os arquivos grandes de `models--ResembleAI--*` são links simbólicos para `hub\blobs\xx\...` — é normal aparecerem com 0 bytes no Explorer.
@@ -35,14 +42,22 @@ Arquivos fora do projeto (não vão junto na cópia, mas continuam valendo no me
 - Voz natural: processo separado `venv_voice\Scripts\python.exe -u engine\voice_worker.pyc` (Chatterbox/Turbo), log em `logs\voice_worker.log`; o `venv_voice` usa o `torch` do `.venv` via `_sleepy_main_torch.pth`.
 - Imagens/vídeo: ComfyUI em `ComfyUI_windows_portable\` (Python 3.13 próprio em `python_embeded\`), porta 8188, log em `logs\comfyui.log`. O app espera ~3 min a subida do ComfyUI (`_comfy_ready` em `app.jobs`, sem opção no config) e desiste com "ComfyUI did not answer in time".
 - Logs: `logs\server.log`, `logs\window.log`, `logs\voice_worker.log`, `logs\comfyui.log`, `logs\setup.log`.
-- **Para vídeos em português com a voz oficial, use o `LeccorTube Simples.bat`** (interface em http://127.0.0.1:7861). A interface original (`LECCORTUBE.exe`) continua narrando só em inglês.
+- **Para vídeos em português, use o `LeccorTube Simples.bat`** (interface em http://127.0.0.1:7861). A interface original (`LECCORTUBE.exe`) continua narrando só em inglês.
+
+### LeccorTube Simples (porta 7861) — peças
+- `simples/server.py` (FastAPI no `.venv`): `GET /` (página), `GET /api/opcoes` (tipos, estilos com prévia, vozes, ambientes), `POST /api/gerar` (uma geração por vez), `GET /api/status` (fase, `geral` em %, mensagem já traduzida), `POST /api/abrir` (vídeo/pasta), `POST /api/vozes/enviar`, `GET /api/vozes/amostra`, `POST /api/ambiente/enviar`, `GET /api/ambiente/ouvir`.
+- `simples/index.html`: página única (1. O vídeo, 2. Roteiro, 3. Voz da narração, 4. Legenda, 5. Som ambiente, janela de progresso com fundo desfocado). Campos salvos no `localStorage`.
+- Scripts em `tools/diag/` usados pelo Simples: `narrar_pt.py` (venv_voice: Chatterbox Multilingual pt, números por extenso, `--amostra`), `revisar_narracao.py` (.venv: Whisper corta sobras e confere o texto), `vozes.py` (lista e cria vozes), `ambiente.py` (loops e mixagem do som ambiente).
+- Dados: `assets\vozes\` (voz oficial + vozes do usuário; amostras em `_amostras\`), `assets\ambiente\` (sons do usuário; sintetizados em `_padrao\`). Todos os `.wav` ficam fora do Git e os sintetizados se recriam sozinhos; as vozes do usuário **não** (guardar a pasta `vozes\` original, também fora do Git).
 
 ## Estado atual
 - Repositório em `https://github.com/leccorside/LeccorTube` (branch `main`). Commits feitos manualmente pelo usuário (o Claude só redige a mensagem, em pt-BR, salvo pedido explícito).
 - Configuração do motor em `config.json` (local, **não versionado**); modelo versionado: `config.example.json` (chaves vazias).
 - Marca: tudo que aparece ao usuário diz **LeccorTube / Leccorside Ai** (splash, títulos, janela de erro, recurso de versão do .exe, textos do motor, logo de raposa, links para leccorside.com.br e Instagram negociosleccorside). Busca de atualizações do servidor original desativada.
 - Interface traduzida para **pt-BR e es** (camada `static/i18n_dom.js` + dicionário `static/i18n_dict.js`).
-- Projeto de teste **CAROLINE** (`projects\20261016-164745-untitled`, tipo Terror e Mistério, voz George/Chatterbox Turbo): **vídeo completo gerado em 2026-10-17** (ver Histórico). Pendente: encurtar o texto da miniatura e, para publicar, reescrever o roteiro como narração.
+- **LeccorTube Simples** (2026-10-18): interface enxuta em pt-BR, ver seção acima. Narração em pt pelo Chatterbox Multilingual com **8 vozes**: Voz oficial (NARRACAO, padrão) + Bia, Elena, Eliel, Leo, Lucas, Randel e Vagner (escolhidas pelo usuário). Ajustes aprovados de ouvido ("versão C"), números por extenso, revisão automática pelo Whisper. Prompts das imagens pela IA local (Ollama `qwen2.5vl:7b`). Estilos, tipos e mensagens em português. Legenda com posição, tamanho e cores. Som ambiente (6 sintetizados + sons enviados) com volume.
+- Vídeos já gerados em pt: "A própria mãe arrancou os olhos do filho" (refeito com a narração final em 2026-10-18) e "Eles ficaram 40 dias perdidos na floresta" (gerado pelo usuário em 2026-10-18, **com as configurações antigas** de narração).
+- Projeto de teste **CAROLINE** (`projects\20261016-164745-untitled`, tipo Terror e Mistério, voz George/Chatterbox Turbo, em inglês): vídeo completo gerado em 2026-10-17 (ver Histórico). Pendente: encurtar o texto da miniatura e, para publicar, reescrever o roteiro como narração.
 
 ## Histórico da conversa e das implementações (cronológico)
 
@@ -82,7 +97,8 @@ Arquivos fora do projeto (não vão junto na cópia, mas continuam valendo no me
 - Imagens: `run/images` com `monitor_geracao.ps1` ligado. **7/7 imagens em 1,5 min** (15:40:33 → 15:42:04, ~9 s por imagem, GPU em 11,7/12 GB, ComfyUI subiu sem demora); "Body check" ok em 4 imagens com pessoas. Primeira geração de imagens concluída desde a mudança para o C:.
 - Achado de conteúdo: o roteiro do CAROLINE é um prompt de gerador de vídeo, não uma narração. A voz lê instruções como "NEGATIVE PROMPT" e "NO narration", e o estilo fica misturado: a cena 1 saiu em desenho 2D, porque o texto pede cartoon vintage, enquanto as cenas 3 e 7 saíram realistas, por causa do `style_id` `horror_real`. Serve como teste técnico; para publicar, trocar o roteiro por uma narração de verdade e escolher um estilo só.
 - Vídeos: 1 clipe (cena 2, 704x1280, 97 quadros, `wan22_5b_i2v_api.json`) em **14,6 min**, a ~35 s por passo (20 passos), GPU a 100% com ~7,8/12 GB. O monitor parou no meio por engano (ver "Erros e correções"); a geração seguiu normalmente.
-- Render e Export disparados em sequência às ~16:19, com o monitor corrigido.
+- Render (1,8 min, 7 efeitos sonoros) e Export (15 s), sem erros, com o monitor corrigido. **Primeiro vídeo completo no C:**: `C:\Users\Johnathan Amorim\Videos\what-really-happened-in-caroline\what-really-happened-in-caroline.mp4`, 2:40, 1080x1920, 24 fps, 237 MB, com legendas queimadas palavra a palavra, 3 miniaturas, `subtitles.srt` e `youtube_metadata.txt`.
+- Achado: as miniaturas cortam o texto ("WHAT REALLY HAPPENED IN CARO" na A, "WHAT REALLY?" na B). O texto de 33 caracteres passa do limite do motor. Usar um `thumbnail_text` curto (2 a 4 palavras). Por isso o LeccorTube Simples avisa quando a miniatura passa de 4 palavras ou 26 letras.
 
 ### 2026-10-17 (noite) — Narração em português (teste no projeto TESTE DUB PT)
 - **As vozes do app só falam inglês** (Chatterbox Turbo/Kokoro). A etapa "Dub" do app não serve para um vídeo em pt: traduz pelo `llm_provider` (OpenRouter, sem créditos → erro 402) e gera só uma faixa de áudio + `.srt` para "idioma adicional" no YouTube; o MP4 mantém as legendas em inglês.
@@ -92,7 +108,7 @@ Arquivos fora do projeto (não vão junto na cópia, mas continuam valendo no me
 - **Retorno do usuário no 1º teste**: eco, travadas e mistura de português de Portugal com o do Brasil. Causas e correções:
   - Eco: efeito `mystery` ("distant echo"). Agora `voice_fx = none` (voz igual à referência).
   - Sotaque misturado: a referência era o George falando inglês. **Voz oficial de todos os vídeos (pedido do usuário)**: `NARRACAO.wav` (raiz, 1min47, pt-BR, narração do roteiro original), recortada em `assets\vozes\narrador_ptbr_ref.wav` (8,1–18,7 s, 10,6 s limpos) e usada por padrão no `narrar_pt.py`. Os dois `.wav` ficam fora do Git (`*.wav` no `.gitignore`).
-  - Travadas: o Chatterbox às vezes inventa um estalo/sopro depois da frase (no teste: 2 s de silêncio + ruído no fim da cena 1). O `narrar_pt.py` agora apara as pontas (`aparar()`: corta trechos < 0,8 s depois de pausa ≥ 0,7 s) e usa `--temperature 0.7`.
+  - Travadas: o Chatterbox às vezes inventa um estalo/sopro depois da frase (no teste: 2 s de silêncio + ruído no fim da cena 1). Naquele momento o `narrar_pt.py` passou a aparar as pontas (`aparar()`: cortava trechos < 0,8 s depois de pausa ≥ 0,7 s) e a usar `--temperature 0.7`. **Superado em 2026-10-18**: temperatura 0.5 e corte das sobras pelo Whisper (`revisar_narracao.py`), porque o corte por volume comia fala (ver "Qualidade da narração").
   - 2º teste: pt com 99% de confiança no Whisper, frases encadeadas sem pausa sobrando.
 
 ### 2026-10-17/18 — Primeiro vídeo em pt-BR: "A própria mãe arrancou os olhos do filho"
@@ -103,14 +119,14 @@ Arquivos fora do projeto (não vão junto na cópia, mas continuam valendo no me
 - O `youtube_metadata.txt` do app mistura modelos em inglês ("The Untold Story of…", "A one minute animated story") e tags quebradas ("pria"). Foi criado à mão um `youtube_metadata_ptbr.txt` na mesma pasta. Os personagens saem com traços pouco latinos, por causa do estilo anime.
 
 ### 2026-10-18 — LeccorTube Simples (interface enxuta em pt-BR)
-- Pedido do usuário: uma interface só com título, tipo, duração, estilo visual, texto da miniatura, roteiro e tamanho/cor da legenda; a voz é sempre a oficial (pt-BR) e as legendas sempre em pt.
+- Pedido do usuário: uma interface só com título, tipo, duração, estilo visual, texto da miniatura, roteiro e tamanho/cor da legenda; a voz era sempre a oficial (pt-BR) e as legendas sempre em pt. Depois vieram, a pedido: posição da legenda, janela de progresso, som ambiente, envio de som, estilos/tipos/mensagens em português e **escolha de voz** (a oficial continua o padrão). Itens abaixo em ordem.
 - Arquivos: `simples/server.py` (FastAPI, porta **7861**, roda com o `.venv` do app), `simples/index.html` (página) e `LeccorTube Simples.bat` (raiz: sobe a 7861 se preciso e abre o navegador). Log em `logs\simples.log`.
-- Fluxo do botão "Gerar vídeo" (uma geração por vez): sobe a API 7860 se estiver fora (processo destacado, não cai junto) → `POST /api/projects` (`voice_fx = none`, `scene_seconds` do tipo) → **prompts em inglês pela IA local** (Ollama `qwen2.5vl:7b`, baixado nesta data, ~5,6 GB; `keep_alive: 0` para liberar a GPU; sem IA, usa o texto da cena) → todas as cenas `media: image` → legenda via `PATCH {captions: {enabled, size, color, highlight}}` → `narrar_pt.py` (voz oficial) → voice → images → render → export → `youtube_metadata_ptbr.txt` na pasta do vídeo.
+- Fluxo do botão "Gerar vídeo" (uma geração por vez): sobe a API 7860 se estiver fora (processo destacado, não cai junto) → `POST /api/projects` (`voice_fx = none`, `scene_seconds` do tipo) → **prompts em inglês pela IA local** (Ollama `qwen2.5vl:7b`, baixado nesta data, ~5,6 GB; `keep_alive: 0` para liberar a GPU; sem IA, usa o texto da cena) → todas as cenas `media: image` → legenda via `PATCH {captions: {enabled, size, color, highlight}}` → `narrar_pt.py` (voz oficial) → voice → images → render → export → `youtube_metadata_ptbr.txt` na pasta do vídeo. **Fluxo atual** (depois das mudanças de 2026-10-18): projeto com `voice_clean = false` → prompts (Ollama) → cenas como imagem + legenda (tamanho, cores, posição) → `narrar_pt.py --ref <voz escolhida>` → `revisar_narracao.py` (refaz até 2× as cenas com erro) → voice → images → render → export → som ambiente (se escolhido) → `youtube_metadata_ptbr.txt`.
 - **Descoberta que permitiu narrar com o app aberto**: o servidor lê o `project.json` do disco a cada pedido (testado editando o arquivo e lendo pela API). Então o `narrar_pt.py` pode editar o projeto com a API no ar, desde que nenhuma etapa esteja rodando nele. Já o `PUT /scenes` ignora `raw_voice`/`audio`/`duration`.
 - "Duração" é uma **meta**: a página estima a duração pelo roteiro (3,2 palavras/s, medido na voz oficial) e avisa se passar de 125% ou ficar abaixo de 60% da meta. A duração real vem do roteiro narrado.
 - Teste de ponta a ponta (3 frases, legenda amarela com destaque vermelho em 6,5%): **3min50** do clique ao vídeo, sem erros; cores e tamanho aplicados. A IA começava os prompts com "prompt1:"; corrigido com uma regex que tira esse rótulo.
 - **Estilos visuais em português** (2026-10-18): `ESTILOS_PT` (por id) e `GRUPOS_PT` no `server.py`. Base: as traduções do `static/i18n_dict.js` (lido pelo Node), completadas onde faltavam (Claymation → "Massinha (stop motion)", Low poly, Pixel art, Film noir, Found footage, Watercolor → "Aquarela") e com ajustes de caixa. A lista vem agrupada como no app (Anime, 3D, Desenho, Realista, Terror, Arte), e abaixo dela aparece a imagem de exemplo do estilo escolhido (`preview` do catálogo, servida pela API 7860). Estilo novo num app futuro aparece com o nome em inglês até entrar no `ESTILOS_PT`.
-- **Janela de progresso** (pedido do usuário): ao clicar em "Gerar vídeo", a tela fica com fundo desfocado (`backdrop-filter: blur`) e um card central mostra a porcentagem do vídeo inteiro, a etapa atual, a barra, o tempo e as etapas (verde = feita, laranja = agora). No fim aparecem os botões Abrir vídeo, Abrir pasta e Fechar; em erro, a mensagem e o log. A porcentagem vem do servidor (`geral` em `/api/status`): cada fase tem um peso proporcional ao tempo típico (`FASES` em `server.py`: narração 25, imagens 45, montagem 12…) e o valor nunca volta para trás. As mensagens de progresso do app (em inglês) são traduzidas na página (`msgPt`). Testado: subiu de 4% a 100% sem saltos para trás.
+- **Janela de progresso** (pedido do usuário): ao clicar em "Gerar vídeo", a tela fica com fundo desfocado (`backdrop-filter: blur`) e um card central mostra a porcentagem do vídeo inteiro, a etapa atual, a barra, o tempo e as etapas (verde = feita, laranja = agora). No fim aparecem os botões Abrir vídeo, Abrir pasta e Fechar; em erro, a mensagem e o log. A porcentagem vem do servidor (`geral` em `/api/status`): cada fase tem um peso proporcional ao tempo típico (`FASES` em `server.py`: narração 25, imagens 45, montagem 12…) e o valor nunca volta para trás. As mensagens de progresso do app (em inglês) eram traduzidas na página (`msgPt`); depois a tradução passou para o servidor (`traduzir()`, item "Tipos de vídeo e mensagens"). Testado: subiu de 4% a 100% sem saltos para trás.
 - **Tipos de vídeo e mensagens em português** (2026-10-18): `TIPOS_PT` (nome + descrição, mostrada abaixo dos campos) e `traduzir()` no `server.py`, com uma tabela revisada de regex (`MSGS_PT`) para as mensagens de progresso e os erros comuns do app (montada a partir das mensagens reais do `logs\monitor_geracao.log` e das strings do motor em `tools/i18n/strings_pyd.json`), com plural certo (`_n`). O `/api/status` já devolve a mensagem traduzida. Mensagem desconhecida: progresso some (fica só a fase); erro aparece como "O LeccorTube informou (em inglês): …". O log da tela mostra só a 1ª linha de cada registro (o traceback continua no `simples.log`). Erros da API do app e de conexão viram texto em português em `api()`; as respostas de erro do FastAPI (422/500) são tratadas na página (`erroApi`).
   - Por que não reaproveitar o motor do app (`i18n_dom.js`): no teste ele cobriu 16 de 24 mensagens, mas várias saíam meio traduzidas ("Animating 1 cenas (1 clips of 4.0 s)", "Mixing áudio", "Voz pronto").
   - Teste de ponta a ponta registrando cada mensagem exibida: as 13 combinações de fase + mensagem saíram em português.
@@ -153,11 +169,15 @@ Arquivos fora do projeto (não vão junto na cópia, mas continuam valendo no me
 - Os `.exe` de `.venv\Scripts\` e `venv_voice\Scripts\` (pip.exe, uvicorn.exe, hf.exe…) têm o Python do primeiro local embutido; o app não os usa (chama `python -m …`/`uv.exe`). À mão, use `python -m pip`.
 
 ## Pendências / próximos passos
-1. ~~Mover o projeto para o `C:`~~ (feito em 2026-10-17) e ~~retomar o CAROLINE até Imagens~~ (feito: voz e imagens prontas).
-2. CAROLINE: ~~Vídeos, Render e Export~~ (feito: vídeo final pronto). Falta encurtar o `thumbnail_text` (ex.: "CAROLINE?") e rodar o Export de novo; para publicar, reescrever o roteiro como narração e escolher um estilo só (ver Histórico 2026-10-17 tarde).
-3. Avaliar o HD do `D:` (cabo/porta/saúde) e fazer backup dele.
-4. Avaliar a rotação da `google_key` no Google Cloud Console (precaução; nunca foi publicada).
-5. Opcional (só se o usuário pedir): referências restantes à marca antiga — ID `HarisAi.OMNITUBE` no `window.pyc` (agrupamento na barra de tarefas), `engine/voice_worker.pyc`, caminho de extração `Haris Ai\OMNITUBE` no stub Nuitka. Mantidos de propósito no `app.pyd`: entropia DPAPI `OMNITUBE` do `app.secretstore` (trocar invalida as chaves salvas), variáveis `OMNITUBE_*`, cabeçalho `X-OMNITUBE-Key`, extensão `.omnitube`, user-agent `OMNITUBE-downloader/1.0`, link do Gumroad.
+1. **Ouvir e aprovar** as 7 vozes novas (amostras em `assets\vozes\_amostras\`, `user_<Nome>_wav.wav`). Se alguma não ficar parecida com o original, trocar o trecho de referência ou usar a gravação inteira.
+2. Oferecido e ainda sem resposta: refazer a narração do vídeo "Eles ficaram 40 dias perdidos na floresta" com a narração atual (as imagens são mantidas; ~3 a 5 min).
+3. Ouvir o vídeo do Fernando refeito em 2026-10-18 (números por extenso, sem a limpeza do app, sobras cortadas) e confirmar a cena 7 ("jogou-o no chão e arrancou seus olhos").
+4. Limpeza: apagar os projetos de teste "TESTE …" (TESTE DUB PT, TESTE SIMPLES, TESTE BARRA, TESTE NUMEROS, TESTE AMBIENTE, TESTE TRADUCAO, TESTE VOZ ESCOLHIDA) e as pastas em `Videos\teste-*` e `Videos\comparacao-voz`.
+5. Se a narração ainda soar ruim em algum caso: testar o **F5-TTS pt-BR** (clonagem de voz treinada em português; exige ~1,5 GB, só com o ok do usuário).
+6. CAROLINE (em inglês, teste técnico): encurtar o `thumbnail_text` e rodar o Export de novo; para publicar, reescrever o roteiro como narração e escolher um estilo só.
+7. Apagar a cópia antiga em `D:\0000000-PROJETOS\LeccorTube` quando o usuário confirmar que está tudo certo no C:; avaliar o HD do `D:` (cabo/porta/saúde) e fazer backup dele.
+8. Avaliar a rotação da `google_key` no Google Cloud Console (precaução; nunca foi publicada). A conta do OpenRouter não tem créditos (erro 402), então os recursos do app que dependem dele (dublagem, etc.) não funcionam.
+9. Opcional (só se o usuário pedir): referências restantes à marca antiga — ID `HarisAi.OMNITUBE` no `window.pyc` (agrupamento na barra de tarefas), `engine/voice_worker.pyc`, caminho de extração `Haris Ai\OMNITUBE` no stub Nuitka. Mantidos de propósito no `app.pyd`: entropia DPAPI `OMNITUBE` do `app.secretstore` (trocar invalida as chaves salvas), variáveis `OMNITUBE_*`, cabeçalho `X-OMNITUBE-Key`, extensão `.omnitube`, user-agent `OMNITUBE-downloader/1.0`, link do Gumroad.
 
 ## Limitações conhecidas
 - `*.pyc`, `*.pyd` e `*.exe` estão no `.gitignore`: os patches de marca existem só localmente. Originais em `_backup_original/` (também ignorado). Num clone novo, regerar com `tools/rebrand_launcher.py`, `tools/rebrand_app_pyd.py`, `tools/set_exe_icon.py`, `tools/set_exe_version.py` e editar o `engine/window.pyc`.
@@ -165,4 +185,13 @@ Arquivos fora do projeto (não vão junto na cópia, mas continuam valendo no me
 - Tradução: prompts de estilo de imagem ficam em inglês de propósito (são o texto enviado ao gerador); conteúdo do usuário nunca é traduzido; textos novos no app.js/pyd exigem rodar o pipeline de novo (itens de `source_en.json` ausentes de `translations.json`); mensagens do servidor montadas com valores no meio podem sair metade traduzidas.
 - Ferramentas de auditoria da tradução (`acorn`, `acorn-walk`, `puppeteer-core`) e o `py-spy` não estão versionados: instalar numa pasta à parte (`npm install acorn acorn-walk puppeteer-core` com `PUPPETEER_SKIP_DOWNLOAD=1`; `uv pip install --target <pasta> py-spy`) e apontar `ACORN_DIR`/`PUPPETEER_DIR`.
 - O manifesto local de atualização usa a porta 7860 fixa; em outra porta a checagem falha (sem baixar nada).
+- **LeccorTube Simples**:
+  - Uma geração por vez (a GPU é uma só); a amostra de voz é recusada enquanto um vídeo está sendo gerado.
+  - Vozes só em português (o sotaque vem da gravação de referência). A 1ª amostra de cada voz leva de ~35 s a 1min45; depois fica em cache. Se o arquivo de uma voz for trocado à mão, apagar a amostra em `_amostras\`.
+  - A duração é só uma meta (estimativa de 3,2 palavras/s); o vídeo dura o que o roteiro narrado durar.
+  - O som ambiente é mixado só no `.mp4` exportado (o `output\final.mp4` do projeto fica sem ele); rodar o Export de novo pelo app apaga o ambiente.
+  - Estilos, tipos e mensagens novos de uma versão futura do app aparecem em inglês até entrarem em `ESTILOS_PT`/`TIPOS_PT`/`MSGS_PT`. Mensagem de progresso desconhecida some (fica só a fase); erro desconhecido aparece com "O LeccorTube informou (em inglês)".
+  - O tipo "Música infantil" (`rhyme`) fica de fora: é cantado, não narrado.
+  - O `youtube_metadata.txt` do app sai em inglês; usar o `youtube_metadata_ptbr.txt` gerado ao lado.
+  - O Whisper roda na CPU, porque falta `cublas64_12.dll` para a GPU no `.venv`.
 - O `config.json` precisa ser recriado em outra máquina (a partir do `config.example.json` ou pela interface); as chaves `dpapi:` só abrem no mesmo usuário do Windows.
