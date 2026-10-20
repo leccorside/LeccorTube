@@ -148,34 +148,46 @@ class AutomationOrchestrator:
 
     def pause_batch(self, batch_id: str):
         with self._lock:
-            if not self._active_batch or self._active_batch.id != batch_id:
-                return
-            self._active_batch.status = "PAUSED"
-            storage.save_batch(self._active_batch)
-            self._pause_event.clear()  # Bloqueia a thread
-            storage.log_event(batch_id, self._active_batch.current_video_id, None, "BATCH_PAUSED", "Esteira pausada pelo operador.")
-            self._broadcast("batch.paused", {"batch_id": batch_id})
+            if self._active_batch and self._active_batch.id == batch_id:
+                self._active_batch.status = "PAUSED"
+                storage.save_batch(self._active_batch)
+                self._pause_event.clear()  # Bloqueia a thread
+                storage.log_event(batch_id, self._active_batch.current_video_id, None, "BATCH_PAUSED", "Esteira pausada pelo operador.")
+                self._broadcast("batch.paused", {"batch_id": batch_id})
+            else:
+                b = storage.get_batch(batch_id)
+                if b:
+                    b.status = "PAUSED"
+                    storage.save_batch(b)
 
     def resume_batch(self, batch_id: str):
         with self._lock:
-            if not self._active_batch or self._active_batch.id != batch_id:
-                return
-            self._active_batch.status = "RUNNING"
-            storage.save_batch(self._active_batch)
-            self._pause_event.set()  # Desbloqueia a thread
-            storage.log_event(batch_id, self._active_batch.current_video_id, None, "BATCH_RESUMED", "Produção retomada com sucesso.")
-            self._broadcast("batch.resumed", {"batch_id": batch_id})
+            if self._active_batch and self._active_batch.id == batch_id:
+                self._active_batch.status = "RUNNING"
+                storage.save_batch(self._active_batch)
+                self._pause_event.set()  # Desbloqueia a thread
+                storage.log_event(batch_id, self._active_batch.current_video_id, None, "BATCH_RESUMED", "Produção retomada com sucesso.")
+                self._broadcast("batch.resumed", {"batch_id": batch_id})
+            else:
+                b = storage.get_batch(batch_id)
+                if b:
+                    b.status = "RUNNING"
+                    storage.save_batch(b)
 
     def stop_batch(self, batch_id: str):
         with self._lock:
-            if not self._active_batch or self._active_batch.id != batch_id:
-                return
             self._stop_requested = True
-            self._active_batch.status = "STOPPED"
-            storage.save_batch(self._active_batch)
-            self._pause_event.set()  # Garante que não fica travado em pause
-            storage.log_event(batch_id, self._active_batch.current_video_id, None, "BATCH_STOPPED", "Esteira interrompida com segurança pelo operador.")
-            self._broadcast("batch.stopped", {"batch_id": batch_id})
+            if self._active_batch and self._active_batch.id == batch_id:
+                self._active_batch.status = "STOPPED"
+                storage.save_batch(self._active_batch)
+                self._pause_event.set()  # Garante que não fica travado em pause
+                storage.log_event(batch_id, self._active_batch.current_video_id, None, "BATCH_STOPPED", "Esteira interrompida com segurança pelo operador.")
+                self._broadcast("batch.stopped", {"batch_id": batch_id})
+            else:
+                b = storage.get_batch(batch_id)
+                if b:
+                    b.status = "STOPPED"
+                    storage.save_batch(b)
 
     # ==================== WORKER DA ESTEIRA ====================
 

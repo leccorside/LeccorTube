@@ -665,7 +665,7 @@
     </div>
   <!-- ==================== MODAL DE AUTORIZAÇÃO OAUTH ==================== -->
   <div id="oauthModalBox" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-    <div class="bg-[#0D1322] border border-[#1A253A] rounded-2xl max-w-md w-full p-6 shadow-2xl relative">
+    <div class="bg-[#0D1322] border border-[#1A253A] rounded-2xl max-w-lg w-full p-6 shadow-2xl relative max-h-[92vh] flex flex-col">
       <div class="flex items-center justify-between pb-4 border-b border-slate-800">
         <div class="flex items-center gap-2">
           <div class="w-8 h-8 rounded-lg bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400">
@@ -681,29 +681,60 @@
 
       <input type="hidden" id="oauthTargetChannelId">
 
-      <div class="py-4 space-y-4 text-xs">
-        <div class="bg-[#111827] p-3.5 rounded-xl border border-slate-800 space-y-2">
-          <h4 class="font-bold text-slate-200">1. Ativação Rápida (Recomendada)</h4>
-          <p class="text-[11px] text-slate-400">Ativa o canal imediatamente para a esteira autônoma e produção de vídeos, utilizando a conta configurada no ambiente.</p>
-          <button onclick="confirmFastAuthorize()" class="w-full mt-2 py-2 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-semibold text-xs shadow transition-colors flex items-center justify-center gap-1.5">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-            <span>Autorizar Canal Imediatamente</span>
-          </button>
-        </div>
+      <div class="flex-1 overflow-y-auto py-4 space-y-4 custom-scrollbar text-xs">
+        <!-- Opção 2: Conexão Oficial Google Cloud OAuth 2.0 (Upload Real) -->
+        <div class="bg-[#111827] p-4 rounded-xl border border-purple-500/40 space-y-3">
+          <div class="flex items-center justify-between">
+            <h4 class="font-bold text-purple-300 flex items-center gap-1.5">
+              <svg class="w-4 h-4 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 00-9.78 2.096A4.001 4.001 0 003 15z"/></svg>
+              Upload Real no YouTube (Google Cloud OAuth 2.0)
+            </h4>
+            <span class="text-[10px] font-mono text-purple-400 bg-purple-950/60 px-2 py-0.5 rounded border border-purple-800/50 font-semibold">Oficial GCP</span>
+          </div>
 
-        <div class="bg-[#111827] p-3.5 rounded-xl border border-slate-800 space-y-2">
-          <h4 class="font-bold text-slate-200">2. Conexão Google Cloud OAuth 2.0</h4>
-          <p class="text-[11px] text-slate-400">Gere uma URL de consentimento oficial para autenticar com credenciais da GCP com escopo <code class="text-purple-300">youtube.upload</code>.</p>
-          
-          <div class="space-y-2 pt-1">
-            <div>
-              <label class="text-[11px] text-slate-400">Google Client ID</label>
-              <input type="text" id="oauthClientIdInput" placeholder="xxxx.apps.googleusercontent.com" class="w-full mt-1 bg-[#070B14] border border-slate-700 rounded-lg p-2 text-slate-200 font-mono text-[11px]">
+          <p class="text-[11px] text-slate-300 leading-relaxed">
+            Permite que o LeccorTube envie os vídeos gerados diretamente para a sua conta do YouTube com agendamento e metadados oficiais.
+          </p>
+
+          <!-- URI de Redirecionamento -->
+          <div class="bg-[#070B14] p-2.5 rounded-lg border border-slate-800 space-y-1">
+            <div class="flex items-center justify-between">
+              <span class="text-[10px] text-slate-400 font-medium">URI de Redirecionamento Autorizado (GCP):</span>
+              <button onclick="copyRedirectUri()" class="text-[10px] text-purple-400 hover:text-purple-300 font-semibold">Copiar</button>
             </div>
-            <button onclick="generateGoogleAuthUrl()" class="w-full py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 font-semibold text-xs border border-slate-700 transition-colors">
-              Abrir Página de Consentimento Google
+            <p id="oauthRedirectUriDisplay" class="font-mono text-[10px] text-slate-300 select-all break-all">http://127.0.0.1:7861/api/automation/oauth/callback</p>
+          </div>
+
+          <!-- Campos de Credenciais GCP -->
+          <div class="space-y-2.5 pt-1">
+            <div>
+              <label class="text-[11px] text-slate-400 font-medium">Google Client ID *</label>
+              <input type="text" id="oauthClientIdInput" placeholder="Ex: 123456789-abcdef.apps.googleusercontent.com" class="w-full mt-1 bg-[#070B14] border border-slate-700 rounded-lg p-2 text-slate-200 font-mono text-[11px] focus:border-purple-500 outline-none">
+            </div>
+
+            <div>
+              <label class="text-[11px] text-slate-400 font-medium">Google Client Secret *</label>
+              <input type="password" id="oauthClientSecretInput" placeholder="Ex: GOCSPX-xxxxxxxxxxxxxx" class="w-full mt-1 bg-[#070B14] border border-slate-700 rounded-lg p-2 text-slate-200 font-mono text-[11px] focus:border-purple-500 outline-none">
+            </div>
+
+            <button onclick="saveCredsAndConnectGoogle()" class="w-full py-2.5 rounded-lg bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-semibold text-xs shadow-md transition-all flex items-center justify-center gap-2">
+              <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M21.35 11.1H12v2.8h5.35c-.25 1.4-1.05 2.55-2.25 3.35v2.75h3.65c2.15-2 3.4-4.9 3.4-8.4 0-.75-.05-1.3-.15-1.5z"/></svg>
+              <span>Conectar e Autorizar com Google</span>
             </button>
           </div>
+        </div>
+
+        <!-- Opção 1: Ativação Rápida Local -->
+        <div class="bg-[#111827] p-3.5 rounded-xl border border-slate-800 space-y-2">
+          <div class="flex items-center justify-between">
+            <h4 class="font-bold text-slate-200">Ativação Rápida (Produção Local / Testes)</h4>
+            <span class="text-[10px] font-mono text-emerald-400 bg-emerald-950/40 px-2 py-0.5 rounded border border-emerald-800/40 font-semibold">Sem GCP</span>
+          </div>
+          <p class="text-[11px] text-slate-400">Desbloqueia a esteira e renderiza os vídeos MP4 completos na sua máquina local sem necessidade de credenciais do Google Cloud.</p>
+          <button onclick="confirmFastAuthorize()" class="w-full mt-1 py-2 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-semibold text-xs shadow transition-colors flex items-center justify-center gap-1.5">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+            <span>Autorizar Imediatamente para Produção Local</span>
+          </button>
         </div>
       </div>
     </div>
@@ -1337,9 +1368,35 @@
     }
 
     // Modal de Conexão OAuth
-    function openOAuthModal(channelId, channelTitleEncoded) {
+    function copyRedirectUri() {
+      const uri = document.getElementById('oauthRedirectUriDisplay').textContent;
+      navigator.clipboard.writeText(uri).then(() => {
+        showToast("URI de redirecionamento copiada!", "purple");
+      });
+    }
+
+    async function openOAuthModal(channelId, channelTitleEncoded) {
       document.getElementById('oauthTargetChannelId').value = channelId;
       document.getElementById('oauthModalChannelTitle').textContent = `Canal: ${decodeURIComponent(channelTitleEncoded)}`;
+      
+      const redUri = window.location.origin + '/api/automation/oauth/callback';
+      document.getElementById('oauthRedirectUriDisplay').textContent = redUri;
+
+      try {
+        const res = await fetch('/api/automation/oauth/credentials');
+        if (res.ok) {
+          const creds = await res.json();
+          if (creds.client_id) {
+            document.getElementById('oauthClientIdInput').value = creds.client_id;
+          }
+          if (creds.has_secret) {
+            document.getElementById('oauthClientSecretInput').placeholder = "•••••••••••••••••••••••• (Já configurado)";
+          }
+        }
+      } catch (e) {
+        console.warn("Falha ao recuperar credenciais salvas:", e);
+      }
+
       document.getElementById('oauthModalBox').classList.remove('hidden');
     }
 
@@ -1352,7 +1409,7 @@
       try {
         const res = await fetch(`/api/automation/channels/${channelId}/authorize`, { method: 'POST' });
         if (res.ok) {
-          showToast("Canal autorizado com sucesso!", "emerald");
+          showToast("Canal autorizado com sucesso para produção local!", "emerald");
           closeOAuthModal();
           await loadChannels();
           openChannelModal();
@@ -1364,24 +1421,65 @@
       }
     }
 
-    async function generateGoogleAuthUrl() {
+    async function saveCredsAndConnectGoogle() {
       const channelId = document.getElementById('oauthTargetChannelId').value;
-      const clientId = document.getElementById('oauthClientIdInput').value.trim() || 'default-client.apps.googleusercontent.com';
+      const clientId = document.getElementById('oauthClientIdInput').value.trim();
+      const clientSecret = document.getElementById('oauthClientSecretInput').value.trim();
+
+      if (!clientId) {
+        showToast("Por favor, informe o Google Client ID.", "amber");
+        return;
+      }
+
+      // Se informou segredo, salva no servidor
+      if (clientSecret) {
+        try {
+          const resCreds = await fetch('/api/automation/oauth/credentials', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ client_id: clientId, client_secret: clientSecret })
+          });
+          if (!resCreds.ok) {
+            const err = await resCreds.json();
+            showToast(`Erro ao salvar credenciais: ${err.detail || 'Falha'}`, "rose");
+            return;
+          }
+        } catch (e) {
+          showToast("Erro de comunicação ao salvar credenciais.", "rose");
+          return;
+        }
+      }
+
       const redirectUri = window.location.origin + '/api/automation/oauth/callback';
 
       try {
         const res = await fetch(`/api/automation/channels/${channelId}/auth-url?client_id=${encodeURIComponent(clientId)}&redirect_uri=${encodeURIComponent(redirectUri)}`);
         if (res.ok) {
           const data = await res.json();
-          window.open(data.auth_url, '_blank');
-          showToast("Página de consentimento do Google aberta em nova aba.", "purple");
+          // Abre popup centralizado
+          const w = 550, h = 650;
+          const left = (screen.width - w) / 2;
+          const top = (screen.height - h) / 2;
+          window.open(data.auth_url, 'GoogleOAuthConsent', `width=${w},height=${h},top=${top},left=${left}`);
+          showToast("Janela oficial de consentimento do Google aberta.", "purple");
         } else {
-          showToast("Erro ao gerar URL de autorização.", "rose");
+          const err = await res.json();
+          showToast(`Erro ao gerar URL de autorização: ${err.detail || 'Falha'}`, "rose");
         }
       } catch (e) {
         showToast("Erro ao conectar com serviço OAuth.", "rose");
       }
     }
+
+    // Ouvinte para quando o Google redireciona e conclui a autorização
+    window.addEventListener('message', async (e) => {
+      if (e.data && e.data.type === 'oauth_success') {
+        showToast("Conta Google e canal autorizados com sucesso para upload real!", "emerald");
+        closeOAuthModal();
+        await loadChannels();
+        openChannelModal();
+      }
+    });
 
     // Modal e Telemetria de Quota
     async function syncQuota() {

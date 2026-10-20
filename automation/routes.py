@@ -9,7 +9,7 @@ import time
 from typing import Any, Dict, List, Optional
 
 from fastapi import APIRouter, Body, HTTPException, Query, Request
-from fastapi.responses import StreamingResponse
+from fastapi.responses import HTMLResponse, StreamingResponse
 
 from automation.models import (
     DashboardResponse,
@@ -30,10 +30,128 @@ def get_quota():
     return quota_guard.get_status()
 
 
+@router.get("/oauth/credentials")
+def get_oauth_credentials():
+    """Retorna o Client ID cadastrado e a URL de redirecionamento esperada."""
+    creds = oauth_service.get_app_credentials()
+    return {
+        "client_id": creds.get("client_id", ""),
+        "has_secret": bool(creds.get("client_secret")),
+        "redirect_uri": "http://127.0.0.1:7861/api/automation/oauth/callback",
+    }
+
+
+@router.post("/oauth/credentials")
+def save_oauth_credentials(data: Dict[str, str] = Body(...)):
+    """Salva com segurança o Google Client ID e Client Secret."""
+    client_id = data.get("client_id", "").strip()
+    client_secret = data.get("client_secret", "").strip()
+    if not client_id or not client_secret:
+        raise HTTPException(status_code=400, detail="Client ID e Client Secret são obrigatórios.")
+    oauth_service.save_app_credentials(client_id, client_secret)
+    return {"ok": True, "message": "Credenciais Google Cloud salvas com sucesso!"}
+
+
+@router.get("/oauth/callback")
+def oauth_web_callback(
+    code: Optional[str] = Query(None),
+    state: Optional[str] = Query(None),
+    error: Optional[str] = Query(None),
+):
+    """Recebe o retorno do consentimento Google OAuth 2.0 e finaliza a autorização do canal."""
+    if error:
+        return HTMLResponse(content=f"""
+        <html>
+        <body style="background:#0b0f19;color:#f87171;font-family:sans-serif;display:flex;align-items:center;justify-content:center;height:100vh;margin:0;">
+          <div style="background:#131b2e;padding:30px;border-radius:16px;border:1px solid #ef4444;text-align:center;max-width:400px;">
+            <h2>❌ Falha na Autorização</h2>
+            <p style="color:#94a3b8;font-size:14px;">O Google retornou o seguinte erro: <b>{error}</b></p>
+            <button onclick="window.close()" style="background:#ef4444;color:white;border:none;padding:10px 20px;border-radius:8px;cursor:pointer;margin-top:15px;">Fechar Janela</button>
+          </div>
+        </body>
+        </html>
+        """)
+
+    if not code:
+        return HTMLResponse(content="<h3>Código de autorização não fornecido pelo Google.</h3>", status_code=400)
+
+    channel_id = state or "techfuture"
+    creds = oauth_service.get_app_credentials()
+    client_id = creds.get("client_id")
+    client_secret = creds.get("client_secret")
+
+    if not client_id or not client_secret:
+        return HTMLResponse(content="""
+        <html>
+        <body style="background:#0b0f19;color:#fbbf24;font-family:sans-serif;display:flex;align-items:center;justify-content:center;height:100vh;margin:0;">
+          <div style="background:#131b2e;padding:30px;border-radius:16px;border:1px solid #f59e0b;text-align:center;max-width:420px;">
+            <h2>⚠️ Credenciais Ausentes</h2>
+            <p style="color:#94a3b8;font-size:13px;">O Client ID e Client Secret não foram localizados para concluir a troca de código.</p>
+          </div>
+        </body>
+        </html>
+        """, status_code=400)
+
+    try:
+        redirect_uri = "http://127.0.0.1:7861/api/automation/oauth/callback"
+        oauth_service.exchange_code(
+            channel_id=channel_id,
+            code=code,
+            client_id=client_id,
+            client_secret=client_secret,
+            redirect_uri=redirect_uri,
+        )
+        ch = storage.get_channel(channel_id)
+        if ch:
+            ch.is_authenticated = True
+            storage.save_channel(ch)
+
+        return HTMLResponse(content="""
+        <html>
+        <body style="background:#0b0f19;color:#34d399;font-family:sans-serif;display:flex;align-items:center;justify-content:center;height:100vh;margin:0;">
+          <div style="background:#131b2e;padding:30px;border-radius:16px;border:1px solid #10b981;text-align:center;max-width:440px;box-shadow:0 10px 25px rgba(0,0,0,0.5);">
+            <div style="font-size:40px;margin-bottom:10px;">✅</div>
+            <h2 style="color:white;margin:0 0 10px 0;">Canal Conectado com Sucesso!</h2>
+            <p style="color:#94a3b8;font-size:13px;line-height:1.5;">O token oficial de upload foi criptografado e salvo com segurança em disco. Este canal agora enviará vídeos reais diretamente ao YouTube.</p>
+            <script>
+              try {
+                if (window.opener) {
+                  window.opener.postMessage({ type: 'oauth_success', channelId: '""" + channel_id + """' }, '*');
+                  setTimeout(() => window.close(), 1800);
+                }
+              } catch(e) {}
+            </script>
+            <p style="color:#64748b;font-size:11px;margin-top:15px;">Esta janela pode ser fechada.</p>
+            <button onclick="window.close()" style="background:#10b981;color:white;border:none;padding:10px 22px;border-radius:8px;font-weight:bold;cursor:pointer;margin-top:10px;">Concluir e Fechar</button>
+          </div>
+        </body>
+        </html>
+        """)
+    except Exception as e:
+        return HTMLResponse(content=f"""
+        <html>
+        <body style="background:#0b0f19;color:#f87171;font-family:sans-serif;display:flex;align-items:center;justify-content:center;height:100vh;margin:0;">
+          <div style="background:#131b2e;padding:30px;border-radius:16px;border:1px solid #ef4444;text-align:center;max-width:440px;">
+            <h2>❌ Erro na Troca de Tokens</h2>
+            <p style="color:#94a3b8;font-size:13px;">{str(e)}</p>
+            <button onclick="window.close()" style="background:#ef4444;color:white;border:none;padding:10px 20px;border-radius:8px;cursor:pointer;margin-top:15px;">Fechar</button>
+          </div>
+        </body>
+        </html>
+        """, status_code=400)
+
+
 @router.get("/channels/{channel_id}/auth-url")
-def get_auth_url(channel_id: str, client_id: str = Query(...), redirect_uri: str = Query(...)):
+def get_auth_url(channel_id: str, client_id: Optional[str] = Query(None), redirect_uri: Optional[str] = Query(None)):
     """Gera URL de consentimento oficial do Google OAuth 2.0."""
-    url = oauth_service.generate_auth_url(client_id=client_id, redirect_uri=redirect_uri, state=channel_id)
+    if not client_id:
+        creds = oauth_service.get_app_credentials()
+        client_id = creds.get("client_id")
+    if not client_id:
+        raise HTTPException(status_code=400, detail="Google Client ID não informado e não configurado no sistema.")
+    
+    red_uri = redirect_uri or "http://127.0.0.1:7861/api/automation/oauth/callback"
+    url = oauth_service.generate_auth_url(client_id=client_id, redirect_uri=red_uri, state=channel_id)
     return {"auth_url": url}
 
 

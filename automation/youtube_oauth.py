@@ -16,6 +16,7 @@ import httpx
 
 RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 TOKENS_PATH = os.path.join(RAIZ, "data", "youtube_tokens.json")
+CREDENTIALS_PATH = os.path.join(RAIZ, "data", "google_credentials.json")
 
 # Escopos estritamente necessários para upload, gerenciamento de rascunhos e analytics
 OAUTH_SCOPES = [
@@ -59,6 +60,37 @@ class YouTubeOAuthService:
                         self._tokens_cache = json.loads(self._deobfuscate(content))
             except Exception:
                 self._tokens_cache = {}
+
+    def save_app_credentials(self, client_id: str, client_secret: str):
+        """Salva as credenciais do Google Cloud da aplicação de forma segura."""
+        os.makedirs(os.path.dirname(CREDENTIALS_PATH), exist_ok=True)
+        data = {
+            "client_id": client_id.strip(),
+            "client_secret": client_secret.strip(),
+            "updated_at": time.time(),
+        }
+        with open(CREDENTIALS_PATH, "w", encoding="utf-8") as f:
+            f.write(self._obfuscate(json.dumps(data)))
+
+    def get_app_credentials(self) -> Dict[str, str]:
+        """Recupera as credenciais do Google Cloud cadastradas (ou de variáveis de ambiente)."""
+        client_id = os.environ.get("GOOGLE_CLIENT_ID", "")
+        client_secret = os.environ.get("GOOGLE_CLIENT_SECRET", "")
+        if client_id and client_secret:
+            return {"client_id": client_id, "client_secret": client_secret}
+
+        if os.path.exists(CREDENTIALS_PATH):
+            try:
+                with open(CREDENTIALS_PATH, "r", encoding="utf-8") as f:
+                    raw = self._deobfuscate(f.read().strip())
+                    data = json.loads(raw)
+                    return {
+                        "client_id": data.get("client_id", ""),
+                        "client_secret": data.get("client_secret", ""),
+                    }
+            except Exception:
+                pass
+        return {"client_id": "", "client_secret": ""}
 
     def _save_tokens(self):
         try:
