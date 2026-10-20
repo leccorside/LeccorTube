@@ -1,0 +1,1041 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LeccorTubeAgent — Esteira Autônoma de Produção</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Geist', 'Inter', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          colors: {
+            brand: {
+              purple: '#8b5cf6',
+              purpleGlow: '#a855f7',
+              dark: '#070B14',
+              surface: '#0d131f',
+              surfaceCard: '#111827',
+              surfaceBorder: '#1f293d',
+              cyan: '#38bdf8',
+              emerald: '#10b981',
+              amber: '#f59e0b',
+              rose: '#ef4444',
+            }
+          },
+          animation: {
+            'conveyor-h': 'conveyorH 2s linear infinite',
+            'conveyor-h-reverse': 'conveyorHRev 2s linear infinite',
+            'conveyor-v': 'conveyorV 2s linear infinite',
+            'conveyor-loop': 'conveyorLoop 3s linear infinite',
+            'pulse-glow': 'pulseGlow 2.4s ease-in-out infinite',
+            'bot-float': 'botFloat 3s ease-in-out infinite',
+          },
+          keyframes: {
+            conveyorH: {
+              '0%': { backgroundPosition: '0 0' },
+              '100%': { backgroundPosition: '32px 0' }
+            },
+            conveyorHRev: {
+              '0%': { backgroundPosition: '32px 0' },
+              '100%': { backgroundPosition: '0 0' }
+            },
+            conveyorLoop: {
+              '0%': { strokeDashoffset: '200' },
+              '100%': { strokeDashoffset: '0' }
+            },
+            pulseGlow: {
+              '0%, 100%': { opacity: '0.4', transform: 'scale(0.98)' },
+              '50%': { opacity: '1', transform: 'scale(1.02)' }
+            },
+            botFloat: {
+              '0%, 100%': { transform: 'translateY(0px)' },
+              '50%': { transform: 'translateY(-4px)' }
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    .conveyor-belt-top {
+      background: repeating-linear-gradient(90deg, #182234 0px, #182234 16px, #0f172a 16px, #0f172a 32px);
+      background-size: 32px 100%;
+    }
+    .conveyor-belt-bottom {
+      background: repeating-linear-gradient(-90deg, #182234 0px, #182234 16px, #0f172a 16px, #0f172a 32px);
+      background-size: 32px 100%;
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: #0b0e15;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #1f293d;
+      border-radius: 9999px;
+    }
+    .grid-industrial {
+      background-size: 28px 28px;
+      background-image: 
+        linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    }
+    .glow-purple { box-shadow: 0 0 25px -4px rgba(139, 92, 246, 0.35); }
+    .glow-emerald { box-shadow: 0 0 16px -4px rgba(16, 185, 129, 0.25); }
+    .glow-amber { box-shadow: 0 0 25px -4px rgba(245, 158, 11, 0.35); }
+  </style>
+</head>
+<body class="bg-[#070B14] text-slate-100 font-sans min-h-screen flex flex-col antialiased selection:bg-purple-600 selection:text-white">
+
+  <!-- ==================== TOP NAVIGATION BAR ==================== -->
+  <header class="h-16 border-b border-[#1A2234] bg-[#0A0F1D]/90 backdrop-blur-md px-6 flex items-center justify-between sticky top-0 z-50">
+    <div class="flex items-center gap-6">
+      <!-- Logo LeccorTubeAgent -->
+      <div class="flex items-center gap-3">
+        <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-orange-500 via-amber-500 to-yellow-400 p-[1.5px] shadow-lg shadow-orange-500/30 flex-shrink-0">
+          <div class="w-full h-full bg-[#070B14] rounded-[10px] flex items-center justify-center overflow-hidden p-0.5">
+            <svg class="w-5 h-5 text-amber-400" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+            </svg>
+          </div>
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <span class="font-bold text-lg tracking-tight bg-gradient-to-r from-white via-slate-100 to-slate-400 bg-clip-text text-transparent">LeccorTubeAgent</span>
+            <span class="text-[10px] px-1.5 py-0.5 rounded font-mono font-medium bg-amber-500/10 text-amber-400 border border-amber-500/30">AUTÔNOMO v4.5</span>
+          </div>
+          <p class="text-[11px] text-slate-400">Esteira Automatizada de Vídeos YouTube</p>
+        </div>
+      </div>
+
+      <div class="h-6 w-[1px] bg-slate-800 hidden sm:block"></div>
+
+      <!-- Status Operacional do Cluster -->
+      <div id="clusterStatusBadge" class="hidden md:flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-mono">
+        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+        <span id="clusterStatusText">PIPELINE ONLINE • 10/10 AGENTES SINCRONIZADOS</span>
+      </div>
+    </div>
+
+    <!-- Canal Conectado, Link Manual e Modais -->
+    <div class="flex items-center gap-3">
+      <!-- Botão Aprendizado Contínuo -->
+      <button onclick="openLearningModal()" class="hidden lg:flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#111827] border border-[#1F293D] hover:border-cyan-500/50 text-xs text-cyan-400 transition-colors" title="Ver changelog de hipóteses e aprendizado">
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+        <span>Aprendizado IA</span>
+      </button>
+
+      <!-- Botão Alternar para Modo Manual -->
+      <a href="/simples" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#111827] border border-[#1F293D] hover:border-purple-500/50 text-xs text-slate-300 hover:text-white transition-colors" title="Abrir interface de geração manual">
+        <svg class="w-3.5 h-3.5 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+        <span class="hidden sm:inline">Modo Manual</span>
+      </a>
+
+      <!-- Canal Ativo -->
+      <div onclick="openChannelModal()" class="flex items-center gap-2.5 px-3 py-1.5 rounded-lg bg-[#111827] border border-[#1F293D] hover:border-red-500/40 cursor-pointer transition-colors" title="Configurar canais e políticas">
+        <div class="w-6 h-6 rounded-md bg-red-600 flex items-center justify-center text-white">
+          <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
+            <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+          </svg>
+        </div>
+        <div class="text-left text-xs">
+          <p id="topChannelTitle" class="font-medium text-slate-200 leading-none">TechFuture AI</p>
+          <p id="topChannelSubs" class="text-[10px] text-slate-400 mt-0.5">420K inscritos</p>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ==================== MAIN CONTENT AREA ==================== -->
+  <main class="flex-1 flex flex-col p-6 max-w-[1600px] w-full mx-auto gap-5">
+
+    <!-- 1. PAINEL DE CONTROLE DE ENTRADA & CONFIGURAÇÃO -->
+    <section class="bg-[#0D1322] border border-[#1A253A] rounded-2xl p-4 shadow-xl relative overflow-hidden">
+      <div class="absolute -top-16 left-1/4 w-96 h-16 bg-purple-600/10 blur-3xl pointer-events-none"></div>
+
+      <div class="flex flex-col lg:flex-row items-center justify-between gap-4">
+        <!-- Parâmetros de Produção -->
+        <div class="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-5 gap-3 w-full lg:w-auto flex-1">
+          
+          <!-- Canal YouTube -->
+          <div class="flex flex-col gap-1.5">
+            <label class="text-[11px] font-medium text-slate-400 flex items-center gap-1.5">
+              <svg class="w-3.5 h-3.5 text-red-500" viewBox="0 0 24 24" fill="currentColor"><path d="M10 15l5.19-3L10 9v6m11.56-7.83c.13.47.22 1.1.28 1.9.07.8.1 1.49.1 2.09L22 12c0 2.19-.16 3.8-.44 4.83-.25.9-.83 1.48-1.73 1.73-.47.13-1.33.22-2.65.28-1.3.07-2.49.1-3.59.1L12 19c-4.19 0-6.8-.16-7.83-.44-.9-.25-1.48-.83-1.73-1.73-.13-.47-.22-1.1-.28-1.9-.07-.8-.1-1.49-.1-2.09L22 12c0-2.19.16-3.8.44-4.83.25-.9.83-1.48 1.73-1.73z"/></svg>
+              Canal YouTube
+            </label>
+            <div class="relative">
+              <select id="channelSelect" class="w-full bg-[#111827] border border-[#1F293D] hover:border-purple-500/50 text-slate-200 text-xs rounded-xl px-3 py-2.5 appearance-none focus:outline-none focus:border-purple-500 transition-colors cursor-pointer font-medium">
+                <option value="techfuture">TechFuture AI (Principal)</option>
+              </select>
+              <div class="absolute right-3 top-3 pointer-events-none text-slate-400">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+              </div>
+            </div>
+          </div>
+
+          <!-- Nicho Temático -->
+          <div class="flex flex-col gap-1.5">
+            <label class="text-[11px] font-medium text-slate-400 flex items-center gap-1.5">
+              <svg class="w-3.5 h-3.5 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/></svg>
+              Nicho Temático
+            </label>
+            <div class="relative">
+              <select id="nicheSelect" class="w-full bg-[#111827] border border-[#1F293D] hover:border-purple-500/50 text-slate-200 text-xs rounded-xl px-3 py-2.5 appearance-none focus:outline-none focus:border-purple-500 transition-colors cursor-pointer font-medium">
+                <option value="tecnologia" selected>Tecnologia & IA</option>
+                <option value="terror">Terror & Mistérios</option>
+                <option value="curiosidades">Curiosidades do Mundo</option>
+                <option value="financas">Finanças & Negócios</option>
+                <option value="motivacional">Motivacional & Estoicismo</option>
+                <option value="custom">+ Personalizado...</option>
+              </select>
+              <div class="absolute right-3 top-3 pointer-events-none text-slate-400">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+              </div>
+            </div>
+          </div>
+
+          <!-- Nicho Específico -->
+          <div class="flex flex-col gap-1.5">
+            <label class="text-[11px] font-medium text-slate-400 flex items-center gap-1.5">
+              <svg class="w-3.5 h-3.5 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+              Nicho Específico
+            </label>
+            <input type="text" id="customNicheInput" value="Computação Quântica" placeholder="Ex: Cripto, Astrofísica..." class="w-full bg-[#111827] border border-[#1F293D] hover:border-purple-500/50 text-slate-200 text-xs rounded-xl px-3 py-2.5 focus:outline-none focus:border-purple-500 transition-colors font-medium placeholder-slate-500">
+          </div>
+
+          <!-- Formato de Vídeo -->
+          <div class="flex flex-col gap-1.5">
+            <label class="text-[11px] font-medium text-slate-400 flex items-center gap-1.5">
+              <svg class="w-3.5 h-3.5 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+              Formato
+            </label>
+            <div class="flex p-0.5 bg-[#111827] border border-[#1F293D] rounded-xl">
+              <button type="button" id="btnFmtShorts" class="flex-1 py-1.5 px-2 rounded-lg text-[11px] font-semibold bg-purple-600 text-white shadow-sm" onclick="setFormat('shorts')">Shorts</button>
+              <button type="button" id="btnFmtLongos" class="flex-1 py-1.5 px-2 rounded-lg text-[11px] font-medium text-slate-400 hover:text-white transition-colors" onclick="setFormat('longos')">Longos</button>
+              <button type="button" id="btnFmtAmbos" class="flex-1 py-1.5 px-2 rounded-lg text-[11px] font-medium text-slate-400 hover:text-white transition-colors" onclick="setFormat('ambos')">Ambos</button>
+            </div>
+          </div>
+
+          <!-- Quantidade de Vídeos (1 a 20) -->
+          <div class="flex flex-col gap-1.5">
+            <label class="text-[11px] font-medium text-slate-400 flex items-center gap-1.5">
+              <svg class="w-3.5 h-3.5 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
+              Qtd. de Vídeos
+            </label>
+            <div class="flex items-center bg-[#111827] border border-[#1F293D] rounded-xl px-2 py-1">
+              <button class="w-7 h-7 flex items-center justify-center rounded-lg hover:bg-slate-800 text-slate-300 font-bold text-sm" onclick="adjustCount(-1)">−</button>
+              <input type="number" id="videoCount" value="3" min="1" max="20" class="w-full bg-transparent text-center font-mono font-bold text-xs text-white focus:outline-none">
+              <button class="w-7 h-7 flex items-center justify-center rounded-lg hover:bg-slate-800 text-slate-300 font-bold text-sm" onclick="adjustCount(1)">+</button>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Botões de Ação Principal (START, PAUSE, STOP) -->
+        <div class="flex items-center gap-2.5 w-full lg:w-auto pt-2 lg:pt-0 lg:pl-4 border-t lg:border-t-0 lg:border-l border-[#1A253A]">
+          <!-- START -->
+          <button id="btnStart" onclick="startPipeline()" class="flex-1 sm:flex-none flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-500 hover:from-emerald-500 hover:to-teal-400 text-white font-semibold text-xs tracking-wide shadow-lg shadow-emerald-600/25 transition-all transform active:scale-95 group">
+            <span class="w-2 h-2 rounded-full bg-white animate-ping group-hover:scale-125"></span>
+            <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+            <span>START</span>
+          </button>
+
+          <!-- PAUSE / RESUME -->
+          <button id="btnPause" onclick="togglePausePipeline()" class="flex-1 sm:flex-none flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-[#1A2117] hover:bg-[#252f20] border border-amber-500/40 text-amber-300 font-medium text-xs tracking-wide transition-all active:scale-95">
+            <svg id="pauseIcon" class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+            <span id="pauseText">Pausar</span>
+          </button>
+
+          <!-- STOP -->
+          <button id="btnStop" onclick="confirmStopPipeline()" class="flex-1 sm:flex-none flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-[#261517] hover:bg-[#381a1d] border border-rose-500/40 text-rose-300 font-medium text-xs tracking-wide transition-all active:scale-95" title="Interrompe todo o pipeline com confirmação">
+            <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12" rx="2"/></svg>
+            <span>Stop</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. PIPELINE CENTRAL: ESTEIRA INDUSTRIAL EM FORMATO DE U (10 ROBÔS / AGENTES) -->
+    <section class="flex-1 bg-[#090E1A] border border-[#162033] rounded-3xl p-6 shadow-2xl relative overflow-hidden flex flex-col justify-between grid-industrial">
+      
+      <!-- Cabeçalho de Telemetria da Linha Industrial -->
+      <div class="flex items-center justify-between pb-3 border-b border-[#162033]/80">
+        <div class="flex items-center gap-3">
+          <div class="flex items-center gap-2">
+            <span class="w-2.5 h-2.5 rounded-full bg-amber-500 animate-ping"></span>
+            <span class="text-xs font-mono font-semibold uppercase tracking-wider text-amber-300">Esteira Industrial Autônoma • Topologia em U</span>
+          </div>
+          <span class="text-xs text-slate-500">•</span>
+          <span class="text-xs font-mono text-slate-400">10 Estações Operacionais // Ciclo Fechado com Retroalimentação</span>
+        </div>
+
+        <!-- Indicador de Status Geral dos Robôs -->
+        <div class="flex items-center gap-4 text-xs font-mono">
+          <div class="flex items-center gap-1.5 text-slate-400">
+            <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+            <span id="countCompleted">0 Concluídos</span>
+          </div>
+          <div class="flex items-center gap-1.5 text-amber-400 font-semibold">
+            <span class="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span>
+            <span id="countRunning">0 Em Execução</span>
+          </div>
+          <div class="flex items-center gap-1.5 text-slate-500">
+            <span class="w-2 h-2 rounded-full bg-slate-600"></span>
+            <span id="countWaiting">10 Em Espera</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ÁREA DA ESTEIRA MECÂNICA -->
+      <div class="relative my-4 flex flex-col justify-between gap-10">
+
+        <!-- ==================== FILEIRA SUPERIOR: 01 a 05 (Esquerda -> Direita) ==================== -->
+        <div class="relative z-10">
+          <!-- Correia Transportadora Superior -->
+          <div class="absolute -bottom-4 left-6 right-6 h-4 conveyor-belt-top animate-conveyor-h rounded-sm border-y border-[#2A374F] shadow-inner opacity-90">
+            <div class="absolute inset-0 flex items-center justify-around pointer-events-none opacity-40">
+              <span class="text-[10px] font-bold text-amber-400">▶</span>
+              <span class="text-[10px] font-bold text-amber-400">▶</span>
+              <span class="text-[10px] font-bold text-amber-400">▶</span>
+              <span class="text-[10px] font-bold text-amber-400">▶</span>
+              <span class="text-[10px] font-bold text-amber-400">▶</span>
+              <span class="text-[10px] font-bold text-amber-400">▶</span>
+            </div>
+          </div>
+
+          <!-- Grid dos 5 Robôs da Fileira Superior -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-5 gap-4 relative z-10">
+            <!-- Cards 01 a 05 renderizados dinamicamente via JS com IDs padronizados -->
+            <div id="card-agent-1" class="agent-card"></div>
+            <div id="card-agent-2" class="agent-card"></div>
+            <div id="card-agent-3" class="agent-card"></div>
+            <div id="card-agent-4" class="agent-card"></div>
+            <div id="card-agent-5" class="agent-card"></div>
+          </div>
+        </div>
+
+        <!-- ==================== CONECTOR EM CURVA DO FORMATO DE U (À DIREITA) ==================== -->
+        <div class="hidden xl:block absolute right-0 top-1/2 -translate-y-1/2 w-16 h-36 pointer-events-none z-0">
+          <svg class="w-full h-full text-slate-800" viewBox="0 0 64 144" fill="none">
+            <path d="M 0 16 C 50 16, 50 128, 0 128" stroke="#1E293B" stroke-width="12" stroke-linecap="round"/>
+            <path d="M 0 16 C 50 16, 50 128, 0 128" stroke="#334155" stroke-width="6" stroke-linecap="round" stroke-dasharray="8 6" class="animate-conveyor-loop"/>
+            <path d="M 0 16 C 50 16, 50 128, 0 128" stroke="#f59e0b" stroke-width="2" stroke-linecap="round" stroke-dasharray="12 12" opacity="0.6"/>
+            <polygon points="18,124 26,128 18,132" fill="#f59e0b"/>
+          </svg>
+        </div>
+
+        <!-- ==================== FILEIRA INFERIOR: 10 a 06 (Direita -> Esquerda / Fluxo 06 -> 10) ==================== -->
+        <div class="relative z-10">
+          <!-- Correia Transportadora Inferior -->
+          <div class="absolute -top-4 left-6 right-6 h-4 conveyor-belt-bottom animate-conveyor-h-reverse rounded-sm border-y border-[#2A374F] shadow-inner opacity-90">
+            <div class="absolute inset-0 flex items-center justify-around pointer-events-none opacity-40">
+              <span class="text-[10px] font-bold text-amber-400">◀</span>
+              <span class="text-[10px] font-bold text-amber-400">◀</span>
+              <span class="text-[10px] font-bold text-amber-400">◀</span>
+              <span class="text-[10px] font-bold text-amber-400">◀</span>
+              <span class="text-[10px] font-bold text-amber-400">◀</span>
+              <span class="text-[10px] font-bold text-amber-400">◀</span>
+            </div>
+          </div>
+
+          <!-- Grid dos 5 Robôs da Fileira Inferior (Visual esq->dir: 10, 09, 08, 07, 06; fluxo 06->10) -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-5 gap-4 relative z-10">
+            <!-- 10. ANALISTA (com retroalimentação conectando de volta ao 01) -->
+            <div id="card-agent-10" class="agent-card relative">
+              <div class="hidden xl:flex absolute -left-6 top-1/2 -translate-y-1/2 items-center text-cyan-400 pointer-events-none">
+                <svg class="w-7 h-36" viewBox="0 0 28 144" fill="none">
+                  <path d="M 28 128 C -10 128, -10 16, 28 16" stroke="#0ea5e9" stroke-width="2" stroke-dasharray="4 4" opacity="0.6"/>
+                  <polygon points="22,12 28,16 22,20" fill="#0ea5e9"/>
+                </svg>
+                <span class="absolute -left-12 top-1/2 -translate-y-1/2 -rotate-90 text-[8px] font-mono tracking-widest text-cyan-400/90 whitespace-nowrap bg-[#070B14] px-1 py-0.5 rounded border border-cyan-500/20">RETROALIMENTAÇÃO</span>
+              </div>
+            </div>
+            <!-- 09. PUBLICADOR -->
+            <div id="card-agent-9" class="agent-card"></div>
+            <!-- 08. DESIGNER -->
+            <div id="card-agent-8" class="agent-card"></div>
+            <!-- 07. REVISOR QA -->
+            <div id="card-agent-7" class="agent-card"></div>
+            <!-- 06. ENG. DE ÁUDIO -->
+            <div id="card-agent-6" class="agent-card"></div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Telemetria no Rodapé do Pipeline -->
+      <div class="pt-2 flex items-center justify-between text-[11px] font-mono text-slate-500 border-t border-[#162033]/60">
+        <span class="flex items-center gap-1.5">
+          <svg class="w-3.5 h-3.5 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+          Velocidade de Processamento: <strong class="text-slate-300">Cluster LeccorTube Local (RTX GPU + Ollama)</strong>
+        </span>
+        <span class="flex items-center gap-2">
+          <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+          <span id="pipelineFooterMsg">Sincronizado • Sistema pronto para produção</span>
+        </span>
+      </div>
+    </section>
+
+    <!-- 3. RESUMO INFERIOR CONSOLIDADO -->
+    <section class="bg-[#0C1221] border border-[#1A253A] rounded-2xl p-4 shadow-lg flex flex-col md:flex-row items-center justify-between gap-4">
+      
+      <!-- Detalhes do Vídeo em Andamento -->
+      <div class="flex items-center gap-4 w-full md:w-auto">
+        <div class="relative w-16 h-10 rounded-lg bg-slate-800 border border-amber-500/40 overflow-hidden flex-shrink-0 flex items-center justify-center shadow-md">
+          <div id="thumbBg" class="absolute inset-0 bg-gradient-to-tr from-orange-950 to-amber-900 opacity-70"></div>
+          <svg class="w-5 h-5 text-amber-300 z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          <span class="absolute bottom-0.5 right-1 text-[8px] font-mono font-bold text-amber-300 bg-black/70 px-1 rounded">AO VIVO</span>
+        </div>
+
+        <div>
+          <div class="flex items-center gap-2">
+            <span class="text-[10px] font-mono px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-300 font-bold border border-amber-500/30">VÍDEO ATUAL</span>
+            <span id="footerChannelName" class="text-xs font-mono text-slate-400">Canal: TechFuture AI</span>
+          </div>
+          <h2 id="currentVideoTitle" class="text-sm font-bold text-white tracking-tight mt-0.5">
+            Aguardando início do lote...
+          </h2>
+        </div>
+      </div>
+
+      <!-- Métricas Centrais de Progresso e Tempo -->
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 w-full md:w-auto flex-1 md:max-w-xl md:px-6 md:border-x border-[#1A253A]">
+        <!-- Progresso Geral -->
+        <div class="flex flex-col">
+          <span class="text-[10px] font-medium text-slate-400 uppercase tracking-wider">Progresso Geral</span>
+          <div class="flex items-baseline gap-1 mt-0.5">
+            <span id="metricGlobalProgress" class="text-lg font-mono font-bold text-amber-400">0%</span>
+            <span class="text-[10px] text-slate-500 font-mono">concluído</span>
+          </div>
+        </div>
+
+        <!-- Etapa Atual -->
+        <div class="flex flex-col">
+          <span class="text-[10px] font-medium text-slate-400 uppercase tracking-wider">Etapa Atual</span>
+          <div class="flex items-center gap-1.5 mt-0.5">
+            <span id="metricStepDot" class="w-2 h-2 rounded-full bg-slate-500"></span>
+            <span id="metricCurrentStep" class="text-xs font-semibold text-slate-200">Em espera</span>
+          </div>
+        </div>
+
+        <!-- Tempo Estimado Restante -->
+        <div class="flex flex-col">
+          <span class="text-[10px] font-medium text-slate-400 uppercase tracking-wider">Tempo Restante</span>
+          <div class="flex items-baseline gap-1 mt-0.5">
+            <span id="metricTimeRemaining" class="text-lg font-mono font-bold text-amber-400">Calculando...</span>
+          </div>
+        </div>
+
+        <!-- Produzidos e Agendados -->
+        <div class="flex flex-col">
+          <span class="text-[10px] font-medium text-slate-400 uppercase tracking-wider">Lote / Fila</span>
+          <div class="flex items-baseline gap-1.5 mt-0.5">
+            <span id="metricBatchStatus" class="text-sm font-mono font-bold text-emerald-400">0/3 Feitos</span>
+            <span id="metricQueued" class="text-[11px] font-mono text-slate-400">(0 na fila)</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Status de Publicação e Botão de Rascunho -->
+      <div class="flex items-center gap-3 w-full md:w-auto justify-end">
+        <div class="text-right">
+          <p id="footerPubStatus" class="text-xs font-semibold text-slate-200">Publicação: Rascunho</p>
+          <p id="footerPubMode" class="text-[10px] text-slate-400 font-mono">Modo: Assistido (Aprovação)</p>
+        </div>
+        <button onclick="openDraftModal()" class="px-3 py-2 rounded-xl bg-purple-600/20 hover:bg-purple-600/30 border border-purple-500/40 text-purple-300 font-medium text-xs flex items-center gap-1.5 transition-colors" title="Visualizar rascunho e aprovar">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+          <span>Ver Rascunho</span>
+        </button>
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- ==================== MODAL DE CONFIRMAÇÃO DO STOP ==================== -->
+  <div id="stopModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-[#0F1424] border border-rose-500/40 rounded-2xl max-w-md w-full p-6 shadow-2xl relative">
+      <div class="w-12 h-12 rounded-xl bg-rose-500/10 border border-rose-500/30 flex items-center justify-center text-rose-400 mx-auto mb-4">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+      </div>
+      <h3 class="text-base font-bold text-center text-white">Parar Produção Automática?</h3>
+      <p class="text-xs text-slate-400 text-center mt-2 leading-relaxed">
+        Você está prestes a interromper a esteira. Os rascunhos e mídias já gerados serão preservados com segurança, mas a fila futura será suspensa.
+      </p>
+      <div class="flex items-center gap-3 mt-6">
+        <button onclick="closeStopModal()" class="flex-1 px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-semibold text-slate-300 transition-colors">Cancelar</button>
+        <button onclick="executeStop()" class="flex-1 px-4 py-2.5 rounded-xl bg-rose-600 hover:bg-rose-500 text-xs font-semibold text-white shadow-lg shadow-rose-600/30 transition-colors">Sim, Parar Esteira</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== MODAL DE RASCUNHO & APROVAÇÃO ==================== -->
+  <div id="draftModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-[#0D1322] border border-[#1A253A] rounded-2xl max-w-2xl w-full p-6 shadow-2xl relative max-h-[90vh] flex flex-col">
+      <div class="flex items-center justify-between pb-4 border-b border-slate-800">
+        <div>
+          <h3 class="text-base font-bold text-white">Rascunho do Vídeo & Controle Editorial</h3>
+          <p class="text-xs text-slate-400">Inspeção detalhada de roteiro, QA e aprovação</p>
+        </div>
+        <button onclick="closeDraftModal()" class="w-8 h-8 rounded-lg bg-slate-800 hover:bg-slate-700 flex items-center justify-center text-slate-400 hover:text-white">✕</button>
+      </div>
+
+      <div class="flex-1 overflow-y-auto py-4 space-y-4 custom-scrollbar text-xs">
+        <div>
+          <span class="text-[10px] font-mono text-purple-400 uppercase font-bold">Título Sugerido</span>
+          <p id="modalDraftTitle" class="text-sm font-semibold text-slate-100 mt-0.5">Nenhum vídeo em andamento</p>
+        </div>
+
+        <div>
+          <span class="text-[10px] font-mono text-amber-400 uppercase font-bold">Roteiro Completo Sincronizado</span>
+          <div id="modalDraftScript" class="bg-[#070B14] p-3 rounded-xl border border-slate-800 text-slate-300 leading-relaxed font-mono whitespace-pre-wrap mt-1">Aguardando geração de roteiro...</div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div class="bg-[#111827] p-3 rounded-xl border border-slate-800">
+            <span class="text-[10px] font-mono text-cyan-400 uppercase font-bold">Texto da Miniatura</span>
+            <p id="modalDraftThumb" class="font-bold text-white mt-1">-</p>
+          </div>
+          <div class="bg-[#111827] p-3 rounded-xl border border-slate-800">
+            <span class="text-[10px] font-mono text-emerald-400 uppercase font-bold">Status de QA</span>
+            <p id="modalDraftQA" class="font-semibold text-emerald-400 mt-1">Conformidade aprovada</p>
+          </div>
+        </div>
+
+        <div id="modalVideoPlayerArea" class="hidden">
+          <span class="text-[10px] font-mono text-indigo-400 uppercase font-bold">Vídeo Final Renderizado</span>
+          <div class="mt-1 bg-black rounded-xl overflow-hidden border border-slate-800">
+            <video id="modalVideoPlayer" controls class="w-full max-h-60"></video>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex items-center justify-end gap-3 pt-4 border-t border-slate-800">
+        <button onclick="rejectCurrentDraft()" class="px-4 py-2 rounded-xl bg-slate-800 hover:bg-rose-950/60 border border-slate-700 hover:border-rose-600/50 text-rose-300 text-xs font-semibold transition-colors">Reprovar</button>
+        <button onclick="approveCurrentDraft()" class="px-5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-semibold shadow-lg shadow-emerald-600/30 transition-colors">Aprovar e Publicar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== MODAL DE APRENDIZADO IA ==================== -->
+  <div id="learningModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-[#0D1322] border border-[#1A253A] rounded-2xl max-w-xl w-full p-6 shadow-2xl relative">
+      <div class="flex items-center justify-between pb-4 border-b border-slate-800">
+        <div class="flex items-center gap-2">
+          <div class="w-8 h-8 rounded-lg bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+          </div>
+          <div>
+            <h3 class="text-base font-bold text-white">Changelog de Aprendizado Contínuo</h3>
+            <p class="text-xs text-slate-400">Decisões, testes de hipóteses e retroalimentação</p>
+          </div>
+        </div>
+        <button onclick="closeLearningModal()" class="w-8 h-8 rounded-lg bg-slate-800 hover:bg-slate-700 flex items-center justify-center text-slate-400 hover:text-white">✕</button>
+      </div>
+      <div id="learningList" class="py-4 space-y-3 text-xs">
+        <!-- Itens carregados via API -->
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== MODAL DE CANAIS ==================== -->
+  <div id="channelModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-[#0D1322] border border-[#1A253A] rounded-2xl max-w-md w-full p-6 shadow-2xl relative">
+      <div class="flex items-center justify-between pb-4 border-b border-slate-800">
+        <h3 class="text-base font-bold text-white">Canais YouTube Conectados</h3>
+        <button onclick="closeChannelModal()" class="w-8 h-8 rounded-lg bg-slate-800 hover:bg-slate-700 flex items-center justify-center text-slate-400 hover:text-white">✕</button>
+      </div>
+      <div id="channelModalList" class="py-4 space-y-2.5 text-xs"></div>
+    </div>
+  </div>
+
+  <!-- ==================== TOAST NOTIFICAÇÃO ==================== -->
+  <div id="toastNotification" class="fixed bottom-6 right-6 bg-[#0E1526] border border-purple-500/40 text-slate-200 px-4 py-3 rounded-xl shadow-2xl flex items-center gap-3 text-xs z-50 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none">
+    <div id="toastIcon" class="w-2 h-2 rounded-full bg-purple-400"></div>
+    <span id="toastMessage">Pipeline sincronizado.</span>
+  </div>
+
+  <!-- ==================== JAVASCRIPT REATIVO ==================== -->
+  <script>
+    // Metadados dos 10 Agentes com SVGs autênticos
+    const AGENTS_META = [
+      { order: 1, key: 'research', name: 'Pesquisador', tag: '01 • PESQUISA', desc: 'Identifica tendências & pautas virais no YouTube', color: 'emerald', icon: '<circle cx="20" cy="23" r="3" fill="#10b981"/><circle cx="28" cy="23" r="3" fill="#10b981"/><line x1="24" y1="14" x2="24" y2="7" stroke="currentColor" stroke-width="2"/><circle cx="24" cy="6" r="3.5" fill="#10b981" class="animate-pulse"/><circle cx="34" cy="30" r="5" stroke="#34d399" stroke-width="2" fill="#064e3b"/><line x1="38" y1="34" x2="43" y2="39" stroke="#34d399" stroke-width="2.5"/>' },
+      { order: 2, key: 'strategy', name: 'Estrategista', tag: '02 • ESTRATÉGIA', desc: 'Seleciona os melhores temas e formatos de alto CTR', color: 'emerald', icon: '<polyline points="17 27 21 23 25 25 31 19" stroke="#10b981" stroke-width="2" stroke-linecap="round"/><circle cx="31" cy="19" r="1.5" fill="#34d399"/><line x1="20" y1="16" x2="20" y2="10" stroke="currentColor" stroke-width="2"/><line x1="28" y1="16" x2="28" y2="10" stroke="currentColor" stroke-width="2"/><rect x="18" y="8" width="12" height="4" rx="2" fill="#10b981"/>' },
+      { order: 3, key: 'script', name: 'Roteirista', tag: '03 • ROTEIRO', desc: 'Cria títulos magnéticos, ganchos e roteiros completos', color: 'emerald', icon: '<line x1="17" y1="18" x2="31" y2="18" stroke="#10b981" stroke-width="2" stroke-linecap="round"/><line x1="17" y1="23" x2="28" y2="23" stroke="#10b981" stroke-width="2" stroke-linecap="round"/><line x1="17" y1="28" x2="24" y2="28" stroke="#34d399" stroke-width="2" stroke-linecap="round"/><path d="M32 30l4 4-8 4 4-8z" fill="#10b981"/>' },
+      { order: 4, key: 'visual', name: 'Diretor Visual', tag: '04 • DIREÇÃO', desc: 'Planeja cortes, ritmo, paleta e enquadramento de cenas', color: 'emerald', icon: '<circle cx="21" cy="24" r="5" stroke="#10b981" stroke-width="2"/><circle cx="21" cy="24" r="2.5" fill="#34d399"/><polygon points="32 19 40 14 40 34 32 29" fill="#0C1424" stroke="currentColor" stroke-width="2"/>' },
+      { order: 5, key: 'video', name: 'Produtor de Vídeo', tag: '05 • FORJA ATIVA', desc: 'Renderiza frames e sintetiza cenas pelo gerador existente', color: 'amber', isHero: true, icon: '<rect x="17" y="18" width="14" height="12" rx="3" fill="#f97316" stroke="#f59e0b" stroke-width="1.5"/><circle cx="24" cy="24" r="3" fill="#fef08a" class="animate-ping"/><line x1="16" y1="12" x2="16" y2="7" stroke="#fb923c" stroke-width="2.5" stroke-linecap="round"/><line x1="24" y1="12" x2="24" y2="5" stroke="#f59e0b" stroke-width="2.5" stroke-linecap="round"/><line x1="32" y1="12" x2="32" y2="7" stroke="#fb923c" stroke-width="2.5" stroke-linecap="round"/>' },
+      { order: 6, key: 'audio', name: 'Engenheiro de Áudio', tag: '06 • ÁUDIO & SFX', desc: 'Sintetiza vozes neurais, trilhas sonoras e masteriza -18 LUFS', color: 'blue', icon: '<path d="M10 24a14 14 0 0128 0" stroke="currentColor" stroke-width="2.5"/><rect x="8" y="21" width="5" height="9" rx="2" fill="currentColor"/><rect x="35" y="21" width="5" height="9" rx="2" fill="currentColor"/><line x1="21" y1="21" x2="21" y2="28" stroke="currentColor" stroke-width="2"/><line x1="24" y1="19" x2="24" y2="30" stroke="currentColor" stroke-width="2"/><line x1="27" y1="22" x2="27" y2="27" stroke="currentColor" stroke-width="2"/>' },
+      { order: 7, key: 'review', name: 'Revisor QA', tag: '07 • QA REVISOR', desc: 'Audita conformidade, legendas automáticas e direitos', color: 'emerald', icon: '<circle cx="24" cy="24" r="6" stroke="currentColor" stroke-width="2"/><polyline points="21 24 23 26 27 22" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><line x1="20" y1="14" x2="20" y2="8" stroke="currentColor" stroke-width="2"/><line x1="28" y1="14" x2="28" y2="8" stroke="currentColor" stroke-width="2"/>' },
+      { order: 8, key: 'design', name: 'Designer', tag: '08 • DESIGNER', desc: 'Gera variantes de miniaturas e textos de alto impacto', color: 'pink', icon: '<rect x="16" y="18" width="16" height="12" rx="2" stroke="currentColor" stroke-width="1.5"/><circle cx="20" cy="22" r="1.5" fill="currentColor"/><polyline points="18 28 22 24 25 27 28 23 30 25" stroke="currentColor" stroke-width="1.5"/>' },
+      { order: 9, key: 'publish', name: 'Publicador', tag: '09 • PUBLICAÇÃO', desc: 'Faz upload privado, tags, cards e agenda a estreia', color: 'indigo', icon: '<path d="M24 20v6l5-3-5-3z" fill="currentColor"/><path d="M19 12a7 7 0 0110 0" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M16 9a11 11 0 0116 0" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>' },
+      { order: 10, key: 'analytics', name: 'Analista', tag: '10 • ANALISTA', desc: 'Mede retenção e realimenta o Pesquisador com melhorias', color: 'cyan', icon: '<circle cx="24" cy="24" r="5" stroke="currentColor" stroke-width="2" stroke-dasharray="8 6"/><circle cx="24" cy="24" r="2" fill="currentColor"/><line x1="18" y1="14" x2="15" y2="8" stroke="currentColor" stroke-width="2"/><line x1="30" y1="14" x2="33" y2="8" stroke="currentColor" stroke-width="2"/>' }
+    ];
+
+    let currentBatchId = null;
+    let isRunning = false;
+    let isPaused = false;
+    let selectedFormat = 'shorts';
+    let activeVideoData = null;
+
+    // Renderizar template estático inicial dos cards dos 10 agentes
+    function initAgentCards() {
+      AGENTS_META.forEach(meta => {
+        const container = document.getElementById(`card-agent-${meta.order}`);
+        if (!container) return;
+
+        container.className = "bg-[#0C1220] border border-slate-800/80 rounded-2xl p-4 flex flex-col justify-between transition-all duration-300 hover:border-slate-700 relative group";
+        container.innerHTML = `
+          <div class="flex items-start justify-between">
+            <span id="agent-tag-${meta.order}" class="text-[10px] font-mono px-2 py-0.5 rounded bg-slate-800 text-slate-400 border border-slate-700 font-bold">${meta.tag}</span>
+            <span id="agent-badge-${meta.order}" class="text-[11px] font-mono font-medium text-slate-500">0%</span>
+          </div>
+          <div class="my-3 flex items-center justify-center">
+            <div id="agent-avatar-${meta.order}" class="w-16 h-16 rounded-2xl bg-[#0F1422] border border-slate-800 flex items-center justify-center relative shadow-inner group-hover:scale-105 transition-transform">
+              <svg class="w-10 h-10 text-slate-500" viewBox="0 0 48 48" fill="none">
+                <rect x="12" y="14" width="24" height="20" rx="5" fill="#0C1424" stroke="currentColor" stroke-width="2"/>
+                ${meta.icon}
+              </svg>
+              <span id="agent-dot-${meta.order}" class="absolute -bottom-1 -right-1 w-3 h-3 rounded-full bg-slate-700 border-2 border-[#0A0E18]"></span>
+            </div>
+          </div>
+          <div>
+            <div class="flex items-center justify-between">
+              <h3 class="text-xs font-bold text-slate-300 tracking-wide">${meta.name}</h3>
+              <span id="agent-step-${meta.order}" class="text-[9px] font-mono text-slate-500"></span>
+            </div>
+            <p id="agent-desc-${meta.order}" class="text-[11px] text-slate-500 leading-snug mt-0.5">${meta.desc}</p>
+            <div class="w-full bg-slate-800/80 rounded-full h-1.5 mt-2.5 overflow-hidden">
+              <div id="agent-bar-${meta.order}" class="bg-slate-600 h-full rounded-full transition-all duration-500" style="width: 0%"></div>
+            </div>
+          </div>
+        `;
+      });
+    }
+
+    // Atualizar visual de um agente específico
+    function updateAgentUI(ag) {
+      const order = ag.order;
+      const meta = AGENTS_META.find(m => m.order === order) || {};
+      const container = document.getElementById(`card-agent-${order}`);
+      const tagEl = document.getElementById(`agent-tag-${order}`);
+      const badgeEl = document.getElementById(`agent-badge-${order}`);
+      const dotEl = document.getElementById(`agent-dot-${order}`);
+      const barEl = document.getElementById(`agent-bar-${order}`);
+      const descEl = document.getElementById(`agent-desc-${order}`);
+      const stepEl = document.getElementById(`agent-step-${order}`);
+      const avatarEl = document.getElementById(`agent-avatar-${order}`);
+
+      if (!container) return;
+
+      if (ag.status === 'COMPLETED') {
+        container.className = "bg-[#0C1220] border border-emerald-500/40 rounded-2xl p-4 flex flex-col justify-between transition-all duration-300 hover:border-emerald-400 glow-emerald relative group";
+        tagEl.className = "text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-bold";
+        badgeEl.className = "flex items-center gap-1 text-[11px] font-mono font-medium text-emerald-400";
+        badgeEl.innerHTML = `<svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> 100%`;
+        dotEl.className = "absolute -bottom-1 -right-1 w-3 h-3 rounded-full bg-emerald-500 border-2 border-[#0C1220]";
+        barEl.className = "bg-emerald-400 h-full rounded-full transition-all duration-500";
+        barEl.style.width = "100%";
+        if (avatarEl) avatarEl.className = "w-16 h-16 rounded-2xl bg-[#111A2E] border border-emerald-500/30 flex items-center justify-center relative shadow-inner group-hover:scale-105 transition-transform text-emerald-400";
+      } else if (ag.status === 'RUNNING') {
+        container.className = "bg-[#1C130D] border-2 border-amber-500 rounded-2xl p-4 flex flex-col justify-between transition-all duration-300 relative ring-2 ring-amber-500/30 glow-amber group";
+        tagEl.className = "text-[10px] font-mono px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/40 font-bold flex items-center gap-1.5";
+        tagEl.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-amber-400 animate-ping"></span>${meta.tag || ''}`;
+        badgeEl.className = "flex items-center gap-1 text-xs font-mono font-bold text-amber-300";
+        badgeEl.innerHTML = `<span class="text-amber-400 animate-pulse">●</span>${ag.progress}%`;
+        dotEl.className = "absolute -bottom-1 -right-1 w-3 h-3 rounded-full bg-amber-400 border-2 border-[#0C1220] animate-ping";
+        barEl.className = "bg-gradient-to-r from-orange-500 via-amber-400 to-yellow-300 h-full rounded-full transition-all duration-500 animate-pulse";
+        barEl.style.width = `${Math.max(5, ag.progress)}%`;
+        if (avatarEl) avatarEl.className = "w-16 h-16 rounded-2xl bg-[#2A180E] border-2 border-amber-400 flex items-center justify-center relative shadow-lg shadow-orange-600/30 animate-pulse-glow text-amber-300";
+      } else if (ag.status === 'BLOCKED') {
+        container.className = "bg-[#1C1726] border border-purple-500/50 rounded-2xl p-4 flex flex-col justify-between relative group";
+        tagEl.className = "text-[10px] font-mono px-2 py-0.5 rounded bg-purple-500/20 text-purple-300 border border-purple-500/30 font-bold";
+        badgeEl.className = "text-[11px] font-mono font-medium text-purple-300";
+        badgeEl.textContent = "Aguardando Aprovação";
+        barEl.className = "bg-purple-500 h-full rounded-full";
+        barEl.style.width = "50%";
+      } else {
+        container.className = "bg-[#0A0E18] border border-slate-800/80 rounded-2xl p-4 flex flex-col justify-between transition-all duration-300 hover:border-slate-700 relative group";
+        tagEl.className = "text-[10px] font-mono px-2 py-0.5 rounded bg-slate-800 text-slate-400 border border-slate-700 font-bold";
+        badgeEl.className = "text-[11px] font-mono font-medium text-slate-500";
+        badgeEl.textContent = "0%";
+        dotEl.className = "absolute -bottom-1 -right-1 w-3 h-3 rounded-full bg-slate-700 border-2 border-[#0A0E18]";
+        barEl.className = "bg-slate-600 h-full rounded-full";
+        barEl.style.width = "0%";
+        if (avatarEl) avatarEl.className = "w-16 h-16 rounded-2xl bg-[#0F1422] border border-slate-800 flex items-center justify-center relative shadow-inner group-hover:scale-105 transition-transform text-slate-500";
+      }
+
+      if (ag.message) descEl.textContent = ag.message;
+      if (stepEl && ag.current_step) stepEl.textContent = ag.current_step;
+    }
+
+    // Carregar canais autorizados
+    async function loadChannels() {
+      try {
+        const res = await fetch('/api/automation/channels');
+        if (res.ok) {
+          const channels = await res.json();
+          const sel = document.getElementById('channelSelect');
+          sel.innerHTML = channels.map(c => `<option value="${c.id}">${c.title}</option>`).join('');
+          if (channels.length > 0) {
+            updateChannelBadge(channels[0]);
+          }
+        }
+      } catch (e) {
+        console.error("Erro ao carregar canais:", e);
+      }
+    }
+
+    function updateChannelBadge(ch) {
+      document.getElementById('topChannelTitle').textContent = ch.title;
+      document.getElementById('topChannelSubs').textContent = `${(ch.subscribers_count / 1000).toFixed(0)}K inscritos`;
+      document.getElementById('footerChannelName').textContent = `Canal: ${ch.title}`;
+    }
+
+    // Sincronizar estado completo do Dashboard
+    async function syncDashboard() {
+      try {
+        const res = await fetch('/api/automation/dashboard');
+        if (res.ok) {
+          const data = await res.json();
+          applyDashboardState(data);
+        }
+      } catch (e) {
+        console.error("Erro no polling do dashboard:", e);
+      }
+    }
+
+    function applyDashboardState(data) {
+      currentBatchId = data.batch_id;
+      isRunning = data.is_running;
+      isPaused = data.is_paused;
+
+      // Botão Pausar / Retomar
+      const pauseText = document.getElementById('pauseText');
+      const pauseIcon = document.getElementById('pauseIcon');
+      if (isPaused) {
+        pauseText.textContent = 'Retomar';
+        pauseIcon.innerHTML = '<path d="M8 5v14l11-7z"/>';
+      } else {
+        pauseText.textContent = 'Pausar';
+        pauseIcon.innerHTML = '<path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>';
+      }
+
+      // Atualizar contadores do cabeçalho
+      let completed = 0, running = 0, waiting = 0;
+      data.agents.forEach(ag => {
+        updateAgentUI(ag);
+        if (ag.status === 'COMPLETED') completed++;
+        else if (ag.status === 'RUNNING') running++;
+        else waiting++;
+      });
+
+      document.getElementById('countCompleted').textContent = `${completed} Concluídos`;
+      document.getElementById('countRunning').textContent = `${running} Em Execução`;
+      document.getElementById('countWaiting').textContent = `${waiting} Em Espera`;
+
+      // Atualizar Rodapé
+      if (data.current_video) {
+        activeVideoData = data.current_video;
+        document.getElementById('currentVideoTitle').textContent = data.current_video.title || "Produzindo...";
+        document.getElementById('metricGlobalProgress').textContent = `${data.current_video.overall_progress || 0}%`;
+        
+        const curAg = data.agents.find(a => a.order === data.current_video.current_agent);
+        document.getElementById('metricCurrentStep').textContent = curAg ? curAg.name : 'Em processamento';
+        document.getElementById('metricStepDot').className = isRunning ? "w-2 h-2 rounded-full bg-amber-400 animate-pulse" : "w-2 h-2 rounded-full bg-slate-500";
+
+        const sec = data.current_video.estimated_seconds_remaining;
+        document.getElementById('metricTimeRemaining').textContent = sec ? `~${Math.ceil(sec / 60)} min` : (data.current_video.overall_progress === 100 ? 'Finalizado' : 'Calculando...');
+      }
+
+      // Lote / Fila
+      if (data.batch) {
+        document.getElementById('metricBatchStatus').textContent = `${data.batch.produced}/${data.batch.requested} Feitos`;
+        document.getElementById('metricQueued').textContent = `(${data.batch.queued} na fila)`;
+      }
+
+      // Status de publicação
+      if (data.publication) {
+        const st = data.publication.status || "DRAFT";
+        document.getElementById('footerPubStatus').textContent = `Publicação: ${st}`;
+      }
+    }
+
+    // ==================== AÇÕES DE CONTROLE ====================
+
+    async function startPipeline() {
+      const channelId = document.getElementById('channelSelect').value;
+      const niche = document.getElementById('nicheSelect').value;
+      const subniche = document.getElementById('customNicheInput').value;
+      const count = parseInt(document.getElementById('videoCount').value, 10) || 3;
+
+      showToast("Iniciando esteira industrial e reservando capacidade...", "emerald");
+
+      try {
+        const res = await fetch('/api/automation/batches', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            channel_id: channelId,
+            niche: niche,
+            subniche: subniche,
+            format: selectedFormat,
+            video_count: count,
+            mode: "assisted",
+          })
+        });
+
+        if (res.ok) {
+          const data = await res.json();
+          currentBatchId = data.batch.id;
+          showToast(`Lote iniciado com sucesso! (${count} vídeos)`, "emerald");
+          syncDashboard();
+        } else {
+          const err = await res.json();
+          showToast(`Falha ao iniciar: ${err.detail || 'Erro'}`, "rose");
+        }
+      } catch (e) {
+        showToast("Erro ao conectar com o servidor.", "rose");
+      }
+    }
+
+    async function togglePausePipeline() {
+      if (!currentBatchId) {
+        showToast("Nenhum lote ativo no momento.", "amber");
+        return;
+      }
+      const endpoint = isPaused ? `/api/automation/batches/${currentBatchId}/resume` : `/api/automation/batches/${currentBatchId}/pause`;
+      try {
+        const res = await fetch(endpoint, { method: 'POST' });
+        if (res.ok) {
+          showToast(isPaused ? "Produção retomada com sucesso." : "Esteira pausada. Robôs em espera.", "amber");
+          syncDashboard();
+        }
+      } catch (e) {
+        showToast("Erro na requisição.", "rose");
+      }
+    }
+
+    function confirmStopPipeline() {
+      document.getElementById('stopModal').classList.remove('hidden');
+    }
+    function closeStopModal() {
+      document.getElementById('stopModal').classList.add('hidden');
+    }
+
+    async function executeStop() {
+      closeStopModal();
+      if (!currentBatchId) return;
+      try {
+        const res = await fetch(`/api/automation/batches/${currentBatchId}/stop`, { method: 'POST' });
+        if (res.ok) {
+          showToast("Esteira interrompida com segurança pelo operador.", "rose");
+          syncDashboard();
+        }
+      } catch (e) {
+        showToast("Erro ao parar esteira.", "rose");
+      }
+    }
+
+    // Modal de Rascunho
+    function openDraftModal() {
+      const modal = document.getElementById('draftModal');
+      modal.classList.remove('hidden');
+
+      if (activeVideoData) {
+        document.getElementById('modalDraftTitle').textContent = activeVideoData.title;
+        document.getElementById('modalDraftScript').textContent = activeVideoData.brief?.script_body || "Roteiro em síntese...";
+        document.getElementById('modalDraftThumb').textContent = activeVideoData.brief?.thumbnail_text || "Automático";
+        
+        const videoArea = document.getElementById('modalVideoPlayerArea');
+        const videoPlayer = document.getElementById('modalVideoPlayer');
+        if (activeVideoData.artifacts?.video_path) {
+          videoArea.classList.remove('hidden');
+          videoPlayer.src = `/api/abrir_arquivo?caminho=${encodeURIComponent(activeVideoData.artifacts.video_path)}`;
+        } else {
+          videoArea.classList.add('hidden');
+        }
+      }
+    }
+    function closeDraftModal() {
+      document.getElementById('draftModal').classList.add('hidden');
+    }
+
+    async function approveCurrentDraft() {
+      if (!activeVideoData) return;
+      try {
+        const res = await fetch(`/api/automation/drafts/${activeVideoData.id}/approve`, { method: 'POST' });
+        if (res.ok) {
+          showToast("Rascunho aprovado para publicação!", "emerald");
+          closeDraftModal();
+          syncDashboard();
+        }
+      } catch (e) {
+        showToast("Erro ao aprovar rascunho.", "rose");
+      }
+    }
+
+    async function rejectCurrentDraft() {
+      if (!activeVideoData) return;
+      try {
+        const res = await fetch(`/api/automation/drafts/${activeVideoData.id}/reject`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ reason: "Ajuste editorial solicitado pelo operador" })
+        });
+        if (res.ok) {
+          showToast("Rascunho reprovado.", "rose");
+          closeDraftModal();
+          syncDashboard();
+        }
+      } catch (e) {
+        showToast("Erro ao reprovar rascunho.", "rose");
+      }
+    }
+
+    // Modal de Aprendizado IA
+    async function openLearningModal() {
+      document.getElementById('learningModal').classList.remove('hidden');
+      const list = document.getElementById('learningList');
+      list.innerHTML = '<p class="text-slate-400">Carregando hipóteses...</p>';
+      try {
+        const res = await fetch('/api/automation/learning/changelog');
+        if (res.ok) {
+          const items = await res.json();
+          list.innerHTML = items.map(it => `
+            <div class="bg-[#111827] p-3 rounded-xl border border-slate-800">
+              <div class="flex items-center justify-between">
+                <span class="text-[10px] font-mono text-cyan-400 font-bold">${it.data} • ${it.status}</span>
+              </div>
+              <p class="font-semibold text-slate-200 mt-1">${it.hipotese}</p>
+              <p class="text-[11px] text-emerald-400 mt-0.5">${it.resultado}</p>
+              <p class="text-[10px] text-slate-400 mt-1 italic">Ação: ${it.acao_aplicada}</p>
+            </div>
+          `).join('');
+        }
+      } catch (e) {
+        list.innerHTML = '<p class="text-rose-400">Erro ao carregar hipóteses.</p>';
+      }
+    }
+    function closeLearningModal() {
+      document.getElementById('learningModal').classList.add('hidden');
+    }
+
+    // Modal de Canais
+    async function openChannelModal() {
+      document.getElementById('channelModal').classList.remove('hidden');
+      const list = document.getElementById('channelModalList');
+      list.innerHTML = '<p class="text-slate-400">Carregando canais...</p>';
+      try {
+        const res = await fetch('/api/automation/channels');
+        if (res.ok) {
+          const channels = await res.json();
+          list.innerHTML = channels.map(c => `
+            <div class="bg-[#111827] p-3 rounded-xl border border-slate-800 flex items-center justify-between">
+              <div>
+                <p class="font-bold text-slate-200">${c.title}</p>
+                <p class="text-[10px] text-slate-400">${c.handle} • Modo: <span class="text-amber-400 font-semibold">${c.mode.toUpperCase()}</span></p>
+              </div>
+              <span class="text-[10px] font-mono text-emerald-400 px-2 py-0.5 rounded bg-emerald-500/10 border border-emerald-500/30 font-bold">AUTORIZADO</span>
+            </div>
+          `).join('');
+        }
+      } catch (e) {
+        list.innerHTML = '<p class="text-rose-400">Erro ao listar canais.</p>';
+      }
+    }
+    function closeChannelModal() {
+      document.getElementById('channelModal').classList.add('hidden');
+    }
+
+    // Toast
+    function showToast(message, type = 'purple') {
+      const toast = document.getElementById('toastNotification');
+      const msg = document.getElementById('toastMessage');
+      const icon = document.getElementById('toastIcon');
+
+      msg.textContent = message;
+      if (type === 'emerald') icon.className = 'w-2 h-2 rounded-full bg-emerald-400';
+      else if (type === 'amber') icon.className = 'w-2 h-2 rounded-full bg-amber-400';
+      else if (type === 'rose') icon.className = 'w-2 h-2 rounded-full bg-rose-500';
+      else icon.className = 'w-2 h-2 rounded-full bg-purple-400';
+
+      toast.classList.remove('translate-y-20', 'opacity-0');
+      toast.classList.add('translate-y-0', 'opacity-100');
+
+      clearTimeout(window.toastTimer);
+      window.toastTimer = setTimeout(() => {
+        toast.classList.remove('translate-y-0', 'opacity-100');
+        toast.classList.add('translate-y-20', 'opacity-0');
+      }, 3000);
+    }
+
+    // Formato
+    function setFormat(fmt) {
+      selectedFormat = fmt;
+      const bShorts = document.getElementById('btnFmtShorts');
+      const bLongos = document.getElementById('btnFmtLongos');
+      const bAmbos = document.getElementById('btnFmtAmbos');
+      const btns = [bShorts, bLongos, bAmbos];
+      btns.forEach(b => {
+        b.className = 'flex-1 py-1.5 px-2 rounded-lg text-[11px] font-medium text-slate-400 hover:text-white transition-colors';
+      });
+      if (fmt === 'shorts') bShorts.className = 'flex-1 py-1.5 px-2 rounded-lg text-[11px] font-semibold bg-purple-600 text-white shadow-sm';
+      else if (fmt === 'longos') bLongos.className = 'flex-1 py-1.5 px-2 rounded-lg text-[11px] font-semibold bg-purple-600 text-white shadow-sm';
+      else bAmbos.className = 'flex-1 py-1.5 px-2 rounded-lg text-[11px] font-semibold bg-purple-600 text-white shadow-sm';
+      showToast(`Formato de produção definido: ${fmt.toUpperCase()}`);
+    }
+
+    function adjustCount(delta) {
+      const input = document.getElementById('videoCount');
+      let val = parseInt(input.value, 10) || 1;
+      val = Math.max(1, Math.min(20, val + delta));
+      input.value = val;
+    }
+
+    // Inicialização e Server-Sent Events (SSE)
+    window.addEventListener('DOMContentLoaded', () => {
+      initAgentCards();
+      loadChannels();
+      syncDashboard();
+
+      // Inicia SSE para atualização instantânea
+      try {
+        const evtSource = new EventSource('/api/automation/events');
+        evtSource.addEventListener('agent.progress', (e) => {
+          const payload = JSON.parse(e.data);
+          updateAgentUI({
+            order: payload.agent_order,
+            status: payload.status,
+            progress: payload.progress,
+            message: payload.message,
+            current_step: payload.current_step
+          });
+        });
+        evtSource.addEventListener('dashboard.sync', (e) => {
+          const payload = JSON.parse(e.data);
+          applyDashboardState(payload);
+        });
+        evtSource.addEventListener('batch.started', () => syncDashboard());
+        evtSource.addEventListener('batch.completed', () => syncDashboard());
+        evtSource.addEventListener('batch.stopped', () => syncDashboard());
+      } catch (e) {
+        console.warn("SSE indisponível, usando polling reativo.");
+      }
+
+      // Polling de garantia a cada 2.5s
+      setInterval(syncDashboard, 2500);
+    });
+  </script>
+</body>
+</html>

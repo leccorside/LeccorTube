@@ -30,6 +30,7 @@ RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(RAIZ, "tools", "diag"))
 import ambiente  # noqa: E402  (tools/diag/ambiente.py: loops de som ambiente e mixagem)
 import vozes  # noqa: E402  (tools/diag/vozes.py: vozes de narração = referências do Chatterbox)
+from automation.routes import router as automation_router
 APP = "http://127.0.0.1:7860"
 OLLAMA = "http://127.0.0.1:11434"
 OLLAMA_EXE = os.path.expandvars(r"%LOCALAPPDATA%\Programs\Ollama\ollama.exe")
@@ -156,6 +157,7 @@ def traduzir(msg, erro=False):
 
 
 app = FastAPI(title="LeccorTube Simples")
+app.include_router(automation_router)
 TRABALHO = {"ativo": False}  # um vídeo por vez (a GPU é uma só)
 TRAVA = threading.Lock()
 
@@ -436,8 +438,26 @@ def pipeline(p: Pedido):
 
 
 @app.get("/")
-def pagina():
+@app.get("/agent")
+def pagina_agente():
+    """Interface única da Esteira Industrial Autônoma LeccorTubeAgent."""
+    return FileResponse(os.path.join(RAIZ, "simples", "agent.html"))
+
+
+@app.get("/simples")
+@app.get("/manual")
+def pagina_manual():
+    """Interface de criação manual preservada."""
     return FileResponse(os.path.join(RAIZ, "simples", "index.html"))
+
+
+@app.get("/api/abrir_arquivo")
+def abrir_arquivo(caminho: str):
+    """Serve arquivo local para pré-visualização segura no modal de rascunhos."""
+    if not os.path.exists(caminho):
+        raise HTTPException(404, "Arquivo não encontrado")
+    media = "video/mp4" if caminho.endswith(".mp4") else "image/png"
+    return FileResponse(caminho, media_type=media)
 
 
 @app.get("/api/opcoes")
