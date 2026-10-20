@@ -8,6 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
   <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
   <script>
     tailwind.config = {
       darkMode: 'class',
@@ -94,74 +95,209 @@
     .glow-purple { box-shadow: 0 0 25px -4px rgba(139, 92, 246, 0.35); }
     .glow-emerald { box-shadow: 0 0 16px -4px rgba(16, 185, 129, 0.25); }
     .glow-amber { box-shadow: 0 0 25px -4px rgba(245, 158, 11, 0.35); }
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 20;
+      vertical-align: middle;
+      line-height: 1;
+    }
   </style>
 </head>
-<body class="bg-[#070B14] text-slate-100 font-sans min-h-screen flex flex-col antialiased selection:bg-purple-600 selection:text-white">
+<body class="bg-[#0b0e14] text-slate-100 font-sans min-h-screen flex antialiased selection:bg-amber-500 selection:text-black">
 
-  <!-- ==================== TOP NAVIGATION BAR ==================== -->
-  <header class="h-16 border-b border-[#1A2234] bg-[#0A0F1D]/90 backdrop-blur-md px-6 flex items-center justify-between sticky top-0 z-50">
-    <div class="flex items-center gap-6">
-      <!-- Logo LeccorTubeAgent -->
-      <div class="flex items-center gap-3">
-        <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-orange-500 via-amber-500 to-yellow-400 p-[1.5px] shadow-lg shadow-orange-500/30 flex-shrink-0">
-          <div class="w-full h-full bg-[#070B14] rounded-[10px] flex items-center justify-center overflow-hidden p-0.5">
-            <svg class="w-5 h-5 text-amber-400" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
-            </svg>
-          </div>
-        </div>
-        <div>
-          <div class="flex items-center gap-2">
-            <span class="font-bold text-lg tracking-tight bg-gradient-to-r from-white via-slate-100 to-slate-400 bg-clip-text text-transparent">LeccorTubeAgent</span>
-            <span class="text-[10px] px-1.5 py-0.5 rounded font-mono font-medium bg-amber-500/10 text-amber-400 border border-amber-500/30">AUTÔNOMO v4.5</span>
-          </div>
-          <p class="text-[11px] text-slate-400">Esteira Automatizada de Vídeos YouTube</p>
-        </div>
-      </div>
-
-      <div class="h-6 w-[1px] bg-slate-800 hidden sm:block"></div>
-
-      <!-- Status Operacional do Cluster -->
-      <div id="clusterStatusBadge" class="hidden md:flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-mono">
-        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-        <span id="clusterStatusText">PIPELINE ONLINE • 10/10 AGENTES SINCRONIZADOS</span>
-      </div>
-    </div>
-
-    <!-- Canal Conectado, Link Manual e Modais -->
-    <div class="flex items-center gap-3">
-      <!-- Botão Aprendizado Contínuo -->
-      <button onclick="openLearningModal()" class="hidden lg:flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#111827] border border-[#1F293D] hover:border-cyan-500/50 text-xs text-cyan-400 transition-colors" title="Ver changelog de hipóteses e aprendizado">
-        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-        <span>Aprendizado IA</span>
-      </button>
-
-      <!-- Indicador de Cota Diária da API YouTube -->
-      <div onclick="openQuotaModal()" class="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#111827] border border-[#1F293D] hover:border-amber-500/50 cursor-pointer text-xs text-amber-300 transition-colors" title="Monitoramento de Cota da YouTube API (10.000 pts/dia)">
-        <svg class="w-3.5 h-3.5 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-        <span id="topQuotaText">Cota: 0 / 10k (0%)</span>
-      </div>
-
-      <!-- Botão Alternar para Modo Manual -->
-      <a href="/simples" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#111827] border border-[#1F293D] hover:border-purple-500/50 text-xs text-slate-300 hover:text-white transition-colors" title="Abrir interface de geração manual">
-        <svg class="w-3.5 h-3.5 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
-        <span class="hidden sm:inline">Modo Manual</span>
-      </a>
-
-      <!-- Canal Ativo -->
-      <div onclick="openChannelModal()" class="flex items-center gap-2.5 px-3 py-1.5 rounded-lg bg-[#111827] border border-[#1F293D] hover:border-red-500/40 cursor-pointer transition-colors" title="Configurar canais e políticas">
-        <div class="w-6 h-6 rounded-md bg-red-600 flex items-center justify-center text-white">
-          <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
-            <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+  <!-- ==================== SIDEBAR FIXA À ESQUERDA ==================== -->
+  <aside class="w-[270px] h-screen sticky top-0 flex-shrink-0 bg-[#0d111a] border-r border-[#1c2638] flex flex-col justify-between z-40 select-none">
+    <div class="flex flex-col p-4 space-y-4">
+      <!-- Topo: Brand & Logo -->
+      <div class="flex items-center gap-3 px-2 py-1">
+        <div class="w-9 h-9 rounded-xl flex items-center justify-center p-1 bg-gradient-to-br from-amber-500/20 via-orange-500/10 to-transparent border border-amber-500/30 shadow-[0_0_12px_rgba(245,158,11,0.25)]">
+          <svg class="w-5 h-5 text-amber-400" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
           </svg>
         </div>
-        <div class="text-left text-xs">
-          <p id="topChannelTitle" class="font-medium text-slate-200 leading-none">TechFuture AI</p>
-          <p id="topChannelSubs" class="text-[10px] text-slate-400 mt-0.5">420K inscritos</p>
+        <div class="flex flex-col">
+          <div class="flex items-center gap-1.5">
+            <span class="text-[16px] text-slate-100 font-bold tracking-tight font-sans">LeccorTube</span>
+            <span class="px-1.5 py-0.2 rounded bg-gradient-to-r from-amber-500/20 to-orange-500/20 text-amber-400 text-[9px] border border-amber-500/30 font-semibold tracking-wider font-mono">v4.2</span>
+          </div>
+          <span class="text-[9px] text-slate-400 tracking-widest uppercase font-mono">Autonomous Studio</span>
+        </div>
+      </div>
+
+      <!-- Seletor de Canal TechFuture AI -->
+      <div onclick="openChannelModal()" class="p-2.5 rounded-xl bg-[#111726] border border-[#1c2638] flex items-center justify-between hover:border-amber-500/40 transition-colors cursor-pointer group shadow-sm" title="Gerenciar canais e políticas">
+        <div class="flex items-center gap-2.5 min-w-0">
+          <div class="w-7 h-7 rounded-lg bg-red-600/20 border border-red-500/30 flex items-center justify-center text-red-500 flex-shrink-0">
+            <span class="material-symbols-outlined text-[16px]">smart_display</span>
+          </div>
+          <div class="flex flex-col min-w-0">
+            <div class="flex items-center gap-1.5">
+              <span id="sidebarChannelTitle" class="text-[13px] text-slate-200 font-semibold truncate group-hover:text-amber-400 transition-colors">TechFuture AI</span>
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 shadow-[0_0_6px_rgba(74,225,118,0.9)]"></span>
+            </div>
+            <span id="sidebarChannelSubs" class="text-[10px] text-slate-400 font-mono">420K inscritos • Online</span>
+          </div>
+        </div>
+        <span class="material-symbols-outlined text-slate-400 text-[16px] group-hover:text-slate-200 transition-transform group-hover:translate-y-0.5">unfold_more</span>
+      </div>
+
+      <!-- Links de Navegação -->
+      <nav class="space-y-1 pt-1">
+        <div class="px-2 pb-1.5 text-[10px] text-slate-500 uppercase tracking-wider font-semibold font-mono">Orquestração</div>
+        <!-- Esteira de Produção (ITEM ATIVO) -->
+        <a class="px-3 py-2.5 rounded-lg bg-gradient-to-r from-amber-500/15 via-[#141d30] to-[#141d30] border-l-2 border-amber-500 text-slate-100 font-semibold flex items-center justify-between text-[13px] shadow-sm cursor-pointer" data-path="esteira-de-producao" href="#">
+          <div class="flex items-center gap-3">
+            <span class="material-symbols-outlined text-[19px] text-amber-400">bolt</span>
+            <span class="text-amber-300 font-medium">Esteira de Produção</span>
+          </div>
+          <span class="w-2 h-2 rounded-full bg-amber-400 animate-pulse shadow-[0_0_6px_rgba(245,158,11,0.8)]"></span>
+        </a>
+
+        <!-- Vídeos Criados -->
+        <a onclick="openDraftModal()" class="px-3 py-2.5 rounded-lg text-slate-400 hover:bg-[#111726] hover:text-slate-100 transition-all flex items-center justify-between text-[13px] group cursor-pointer" data-path="videos-criados" href="javascript:void(0)">
+          <div class="flex items-center gap-3">
+            <span class="material-symbols-outlined text-[19px] text-slate-400 group-hover:text-amber-400 transition-colors">video_library</span>
+            <span>Vídeos Criados</span>
+          </div>
+          <span id="sidebarCreatedCount" class="px-1.5 py-0.5 rounded-full bg-[#111726] text-slate-400 font-mono text-[10px]">48</span>
+        </a>
+
+        <!-- Agentes & Modelos -->
+        <a onclick="document.getElementById('pipelineSteps')?.scrollIntoView({behavior: 'smooth'})" class="px-3 py-2.5 rounded-lg text-slate-400 hover:bg-[#111726] hover:text-slate-100 transition-all flex items-center justify-between text-[13px] group cursor-pointer" data-path="agentes-e-modelos" href="javascript:void(0)">
+          <div class="flex items-center gap-3">
+            <span class="material-symbols-outlined text-[19px] text-slate-400 group-hover:text-amber-400 transition-colors">neurology</span>
+            <span>Agentes &amp; Modelos</span>
+          </div>
+          <span class="px-1.5 py-0.5 rounded-full bg-[#111726] text-emerald-400 font-mono text-[10px]">10 Ativos</span>
+        </a>
+
+        <!-- Canais Conectados -->
+        <a onclick="openChannelModal()" class="px-3 py-2.5 rounded-lg text-slate-400 hover:bg-[#111726] hover:text-slate-100 transition-all flex items-center justify-between text-[13px] group cursor-pointer" data-path="canais-conectados" href="javascript:void(0)">
+          <div class="flex items-center gap-3">
+            <span class="material-symbols-outlined text-[19px] text-slate-400 group-hover:text-amber-400 transition-colors">connected_tv</span>
+            <span>Canais Conectados</span>
+          </div>
+          <span id="sidebarChannelCount" class="text-[10px] text-slate-400 font-mono">3 canais</span>
+        </a>
+
+        <div class="px-2 pt-3 pb-1.5 text-[10px] text-slate-500 uppercase tracking-wider font-semibold font-mono">Sistema</div>
+        <!-- Aprendizado IA -->
+        <a onclick="openLearningModal()" class="px-3 py-2.5 rounded-lg text-slate-400 hover:bg-[#111726] hover:text-slate-100 transition-all flex items-center justify-between text-[13px] group cursor-pointer" href="javascript:void(0)">
+          <div class="flex items-center gap-3">
+            <span class="material-symbols-outlined text-[19px] text-slate-400 group-hover:text-cyan-400 transition-colors">psychology</span>
+            <span>Aprendizado IA</span>
+          </div>
+          <span class="material-symbols-outlined text-[15px] text-slate-500">chevron_right</span>
+        </a>
+
+        <!-- Cota Diária YouTube -->
+        <a onclick="openQuotaModal()" class="px-3 py-2.5 rounded-lg text-slate-400 hover:bg-[#111726] hover:text-slate-100 transition-all flex items-center justify-between text-[13px] group cursor-pointer" href="javascript:void(0)">
+          <div class="flex items-center gap-3">
+            <span class="material-symbols-outlined text-[19px] text-slate-400 group-hover:text-amber-400 transition-colors">data_usage</span>
+            <span>Cota Diária YouTube</span>
+          </div>
+          <span class="material-symbols-outlined text-[15px] text-slate-500">chevron_right</span>
+        </a>
+
+        <!-- Configurações -->
+        <a onclick="openChannelModal()" class="px-3 py-2.5 rounded-lg text-slate-400 hover:bg-[#111726] hover:text-slate-100 transition-all flex items-center justify-between text-[13px] group cursor-pointer" data-path="configuracoes" href="javascript:void(0)">
+          <div class="flex items-center gap-3">
+            <span class="material-symbols-outlined text-[19px] text-slate-400 group-hover:text-slate-200 transition-colors">settings</span>
+            <span>Configurações</span>
+          </div>
+          <span class="material-symbols-outlined text-[15px] text-slate-500">chevron_right</span>
+        </a>
+      </nav>
+    </div>
+
+    <!-- Rodapé da Sidebar: Telemetria e Perfil -->
+    <div class="p-3 border-t border-[#1c2638] space-y-3 bg-[#0a0d15]">
+      <div class="p-2.5 rounded-xl bg-[#111726] border border-[#1c2638] space-y-1.5">
+        <div class="flex items-center justify-between">
+          <span class="text-[9px] text-slate-400 uppercase tracking-wider font-semibold font-mono">Cluster Neural</span>
+          <span class="text-[10px] text-cyan-400 font-mono">RTX 4090 #4</span>
+        </div>
+        <div class="flex items-center justify-between text-emerald-400 text-[11px] font-mono">
+          <div class="flex items-center gap-1.5">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_8px_rgba(74,225,118,0.8)]"></span>
+            <span class="font-bold tracking-tight">10/10 AGENTES OK</span>
+          </div>
+          <span class="text-slate-400 text-[10px]">18ms</span>
+        </div>
+      </div>
+      <div class="p-2 rounded-xl bg-[#141d30]/60 flex items-center justify-between hover:bg-[#141d30] transition-colors">
+        <div class="flex items-center gap-2.5 min-w-0">
+          <div class="w-8 h-8 rounded-full bg-gradient-to-tr from-amber-600 to-purple-600 text-white flex items-center justify-center text-xs font-bold shadow-sm flex-shrink-0">
+            AR
+          </div>
+          <div class="flex flex-col min-w-0">
+            <span class="text-[13px] text-slate-200 font-medium leading-none truncate">Alex R.</span>
+            <span class="text-[10px] text-slate-400 leading-tight mt-0.5 truncate font-mono">Head of Content</span>
+          </div>
+        </div>
+        <div class="flex items-center gap-1">
+          <a href="/simples" class="p-1 rounded text-slate-400 hover:text-white hover:bg-slate-800 transition-colors" title="Modo Manual (/simples)">
+            <span class="material-symbols-outlined text-[17px]">tune</span>
+          </a>
+          <button onclick="openStopModal()" class="p-1 rounded text-slate-400 hover:text-rose-400 hover:bg-slate-800 transition-colors" title="Parar Esteira">
+            <span class="material-symbols-outlined text-[17px]">power_settings_new</span>
+          </button>
         </div>
       </div>
     </div>
-  </header>
+  </aside>
+
+  <!-- ==================== ÁREA PRINCIPAL DIREITA ==================== -->
+  <div class="flex-1 flex flex-col min-w-0 min-h-screen bg-[#0b0e14]">
+    <!-- Barra Superior (Header) -->
+    <header class="sticky top-0 z-30 h-14 bg-[#0a0f1d]/90 backdrop-blur-xl border-b border-[#1c2638] px-6 flex items-center justify-between gap-4">
+      <div class="flex items-center gap-2 text-[12px] font-mono text-slate-400">
+        <span class="hover:text-slate-200 transition-colors cursor-pointer">LeccorTubeAgent</span>
+        <span class="material-symbols-outlined text-[14px]">chevron_right</span>
+        <span class="text-amber-400 font-semibold">Esteira de Produção</span>
+      </div>
+
+      <div class="flex items-center gap-3">
+        <!-- Telemetria do Cluster -->
+        <div class="hidden sm:flex items-center gap-2 px-2.5 py-1 rounded-full bg-[#111726] border border-[#1c2638] text-[11px] font-mono">
+          <span class="w-1.5 h-1.5 rounded-full bg-cyan-400"></span>
+          <span class="text-slate-400">CLUSTER ALPHA-09</span>
+          <span class="text-slate-600">•</span>
+          <span class="text-emerald-400 font-semibold">LATÊNCIA 18ms</span>
+        </div>
+
+        <!-- Status Operacional do Cluster -->
+        <div id="clusterStatusBadge" class="flex items-center gap-2 px-2.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-mono">
+          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+          <span id="clusterStatusText" class="hidden md:inline font-medium">PIPELINE ONLINE • 10/10 AGENTES SINCRONIZADOS</span>
+          <span class="md:hidden">ONLINE</span>
+        </div>
+
+        <!-- Indicador de Cota Diária da API YouTube -->
+        <div onclick="openQuotaModal()" class="hidden sm:flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-[#111726] border border-[#1F293D] hover:border-amber-500/50 cursor-pointer text-xs text-amber-300 transition-colors" title="Monitoramento de Cota da YouTube API (10.000 pts/dia)">
+          <svg class="w-3.5 h-3.5 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+          <span id="topQuotaText">Cota: 0 / 10k (0%)</span>
+        </div>
+
+        <!-- Ao Vivo -->
+        <div class="flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-amber-500/10 border border-amber-500/30 text-amber-400 text-xs font-mono font-semibold">
+          <span class="w-2 h-2 rounded-full bg-amber-400 animate-ping"></span>
+          <span>Ao Vivo</span>
+        </div>
+
+        <!-- Canal Ativo compacto no header -->
+        <div onclick="openChannelModal()" class="flex items-center gap-2 px-2.5 py-1 rounded-lg bg-[#111726] border border-[#1F293D] hover:border-red-500/40 cursor-pointer transition-colors" title="Configurar canais e políticas">
+          <div class="w-5 h-5 rounded bg-red-600 flex items-center justify-center text-white">
+            <svg class="w-3 h-3 fill-current" viewBox="0 0 24 24">
+              <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+            </svg>
+          </div>
+          <div class="text-left text-xs">
+            <p id="topChannelTitle" class="font-medium text-slate-200 leading-none">TechFuture AI</p>
+            <p id="topChannelSubs" class="text-[10px] text-slate-400 hidden lg:block">420K inscritos</p>
+          </div>
+        </div>
+      </div>
+    </header>
 
   <!-- ==================== MAIN CONTENT AREA ==================== -->
   <main class="flex-1 flex flex-col p-6 max-w-[1600px] w-full mx-auto gap-5">
@@ -468,6 +604,7 @@
     </section>
 
   </main>
+  </div> <!-- /flex-1 flex flex-col min-w-0 min-h-screen bg-[#0b0e14] -->
 
   <!-- ==================== MODAL DE CONFIRMAÇÃO DO STOP ==================== -->
   <div id="stopModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
@@ -918,10 +1055,17 @@
         const res = await fetch('/api/automation/channels');
         if (res.ok) {
           const channels = await res.json();
+          window.allChannelsCache = channels;
           const sel = document.getElementById('channelSelect');
           sel.innerHTML = channels.map(c => `<option value="${c.id}">${c.title}</option>`).join('');
           if (channels.length > 0) {
-            updateChannelBadge(channels[0]);
+            const activeId = sel.value;
+            const ch = channels.find(c => c.id === activeId) || channels[0];
+            updateChannelBadge(ch);
+          }
+          const countEl = document.getElementById('sidebarChannelCount');
+          if (countEl) {
+            countEl.textContent = `${channels.length} cana${channels.length === 1 ? 'l' : 'is'}`;
           }
         }
       } catch (e) {
@@ -930,9 +1074,18 @@
     }
 
     function updateChannelBadge(ch) {
-      document.getElementById('topChannelTitle').textContent = ch.title;
-      document.getElementById('topChannelSubs').textContent = `${(ch.subscribers_count / 1000).toFixed(0)}K inscritos`;
-      document.getElementById('footerChannelName').textContent = `Canal: ${ch.title}`;
+      if (!ch) return;
+      const topTitle = document.getElementById('topChannelTitle');
+      if (topTitle) topTitle.textContent = ch.title;
+      const topSubs = document.getElementById('topChannelSubs');
+      if (topSubs) topSubs.textContent = `${(ch.subscribers_count / 1000).toFixed(0)}K inscritos`;
+      const footerCh = document.getElementById('footerChannelName');
+      if (footerCh) footerCh.textContent = `Canal: ${ch.title}`;
+
+      const sideTitle = document.getElementById('sidebarChannelTitle');
+      if (sideTitle) sideTitle.textContent = ch.title;
+      const sideSubs = document.getElementById('sidebarChannelSubs');
+      if (sideSubs) sideSubs.textContent = `${(ch.subscribers_count / 1000).toFixed(0)}K inscritos • Online`;
     }
 
     // Sincronizar estado completo do Dashboard
@@ -1557,6 +1710,12 @@
       loadChannels();
       syncDashboard();
       syncQuota();
+
+      document.getElementById('channelSelect')?.addEventListener('change', (e) => {
+        const selectedId = e.target.value;
+        const ch = window.allChannelsCache?.find(c => c.id === selectedId);
+        if (ch) updateChannelBadge(ch);
+      });
 
       // Inicia SSE para atualização instantânea
       try {
