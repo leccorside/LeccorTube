@@ -204,8 +204,11 @@ class VideoGenerationAdapter:
 
             report("Prompts visuais", 20, "Escrevendo prompts das cenas com IA local (Ollama)...")
             scenes_to_save = []
+            usou_ollama = False
             for idx, sc in enumerate(scenes):
                 if is_canceled():
+                    if usou_ollama:
+                        self._liberar_ollama()
                     job.status = "CANCELED"
                     return {"status": "CANCELED"}
 
@@ -214,6 +217,7 @@ class VideoGenerationAdapter:
                 if not prompt_en:
                     # Gera prompt em inglês via Ollama
                     prompt_en = self._gerar_prompt_ollama(text_pt, estilo)
+                    usou_ollama = True
 
                 scenes_to_save.append({
                     "id": f"s{idx + 1:03d}",
@@ -222,6 +226,9 @@ class VideoGenerationAdapter:
                     "media": "image",
                     "prompt_manual": True,
                 })
+
+            if usou_ollama:  # tira o modelo da VRAM antes do ComfyUI gerar as imagens
+                self._liberar_ollama()
 
             # Atualizar cenas no projeto do motor
             httpx.put(f"{APP_URL}/api/projects/{project_id}/scenes", json={"scenes": scenes_to_save}, timeout=15)
@@ -333,16 +340,7 @@ class VideoGenerationAdapter:
             job.thumbnail_path = self._localizar_thumbnail(project_id, video_exportado)
 
             # 7. Som ambiente (se solicitado)
-            som_amb = b.get("ambient_sound", "none")
-            if som_amb != "none" and video_exportado and os.path.exists(video_exportado):
-                report("Som ambiente", 95, f"Adicionando e masterizando som ambiente '{som_amb}' a -18 LUFS...")
-                try:
-                    vol = b.get("ambient_volume", 30)
-                    item_som = next((i for i in ambiente.lista() if i["id"] == som_amb), None)
-                    if item_som:
-                        ambiente.mixar(video_exportado, item_som["arquivo"], vol)
-                except Exception as e_amb:
-                    _log(f"Erro ao mixar som ambiente: {e_amb}")
+            self._aplicar_som_ambiente(video_exportado, b, report)
 
             # 8. Salvar metadados pt-BR
             self._salvar_metadados_ptbr(video_exportado, b)
@@ -364,6 +362,28 @@ class VideoGenerationAdapter:
             report("Falha", job.progress, f"Erro: {str(e)[:80]}")
             return {"status": "FAILED", "error": str(e)}
 
+    def _aplicar_som_ambiente(self, video_exportado: Optional[str], b: Dict[str, Any], report: Callable) -> bool:
+        """Mixa o som ambiente do brief no vídeo exportado. Devolve True se aplicou."""
+        som_amb = b.get("ambient_sound") or "none"
+        if som_amb == "none" or not video_exportado or not os.path.exists(video_exportado):
+            return False
+        report("Som ambiente", 95, f"Adicionando e masterizando som ambiente '{som_amb}' a -18 LUFS...")
+        try:
+            # mixar() recebe o ID do som (ex.: "chuva", "user:meu.mp3"), não o caminho do arquivo;
+            # antes passava item["arquivo"], a busca falhava e o ambiente nunca era aplicado
+            return bool(ambiente.mixar(video_exportado, som_amb, b.get("ambient_volume", 30)))
+        except Exception as e_amb:
+            _log(f"Erro ao mixar som ambiente '{som_amb}': {e_amb}")
+            report("Som ambiente", 95, f"Som ambiente não aplicado ({e_amb}); o vídeo segue sem ele.")
+            return False
+
+    def _liberar_ollama(self):
+        """Descarrega o modelo do Ollama da VRAM (pedido sem prompt e com keep_alive 0)."""
+        try:
+            httpx.post(f"{OLLAMA_URL}/api/generate", json={"model": MODELO_IA, "keep_alive": 0}, timeout=10)
+        except Exception as e:
+            _log(f"Não consegui descarregar o modelo do Ollama ({e}).")
+
     def _gerar_prompt_ollama(self, texto_pt: str, estilo: str) -> str:
         """Gera prompt em inglês para a cena usando o modelo Qwen2.5-VL via Ollama."""
         try:
@@ -379,7 +399,10 @@ class VideoGenerationAdapter:
                     "model": MODELO_IA,
                     "prompt": f"{prompt_sistema}\n\nScene: {texto_pt}\nEnglish prompt:",
                     "stream": False,
-                    "options": {"temperature": 0.6, "keep_alive": 0},
+                    # keep_alive vai no nível de cima (dentro de "options" o Ollama ignora). É uma chamada
+                    # por cena: o modelo fica carregado entre elas e _liberar_ollama() o descarrega no fim.
+                    "keep_alive": "2m",
+                    "options": {"temperature": 0.6},
                 },
                 timeout=25,
             )
