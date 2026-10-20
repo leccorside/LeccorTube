@@ -210,20 +210,34 @@ def _agentes(cfg: Dict[str, Any], sv: Dict[str, Any]) -> List[Dict[str, Any]]:
     return lista
 
 
-def resumo_menu() -> Dict[str, Any]:
-    """Dados leves para o menu lateral compartilhado (sem checar os serviços lentos)."""
+def _implementacoes() -> List[str]:
+    """Real/parcial/simulado de cada agente, sem checar os serviços (o selo não depende deles)."""
     stub = {k: {} for k in SERVICOS}
     stub["youtube"] = {"chave_api": bool(getattr(youtube_client, "api_key", None))}
     stub["ollama"] = {"modelo_presente": True}
-    impl = [a["implementacao"] for a in _agentes(_config(), stub)]
-    gpu = _medir(_gpu)
-    try:
-        from automation.storage import storage
-        videos = len(storage.list_all_videos(limit=10000))
+    return [a["implementacao"] for a in _agentes(_config(), stub)]
+
+
+def resumo_menu_agentes():
+    """(agentes com motor real ou parcial, total) — usado no selo de status da Esteira."""
+    impl = _implementacoes()
+    return sum(1 for i in impl if i != "simulado"), len(impl)
+
+
+def resumo_menu() -> Dict[str, Any]:
+    """Dados leves para o menu lateral compartilhado (sem checar os serviços lentos)."""
+    impl = _implementacoes()
+    with ThreadPoolExecutor(max_workers=2) as ex:  # GPU e motor em paralelo (motor fora do ar = ~1 s)
+        f_gpu = ex.submit(_medir, _gpu)
+        f_motor = ex.submit(_medir, lambda: {"online": httpx.get(f"{APP_URL}/api/app", timeout=1).status_code == 200})
+        gpu, motor = f_gpu.result(), f_motor.result()
+    try:  # mesmo total da tela Vídeos Criados (esteira + projetos do LeccorTube)
+        from automation.videos_catalog import catalogo as catalogo_videos
+        videos = catalogo_videos()["resumo"]["total"]
     except Exception:
         videos = None
     return {"agentes_reais": impl.count("real"), "agentes_parciais": impl.count("parcial"), "agentes_total": len(impl),
-            "videos": videos, "gpu": gpu}
+            "videos": videos, "gpu": gpu, "motor": motor}
 
 
 def catalogo() -> Dict[str, Any]:

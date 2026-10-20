@@ -76,21 +76,20 @@
       </div>
 
       <div class="flex items-center gap-3">
-        <!-- Telemetria do Cluster -->
-        <div class="hidden sm:flex items-center gap-2 px-2.5 py-1 rounded-full bg-[#111726] border border-[#1c2638] text-[11px] font-mono">
-          <span class="w-1.5 h-1.5 rounded-full bg-cyan-400"></span>
-          <span class="text-slate-400">CLUSTER ALPHA-09</span>
+        <!-- GPU e motor (dados reais) -->
+        <div class="hidden sm:flex items-center gap-2 px-2.5 py-1 rounded-full bg-[#111726] border border-[#1c2638] text-[11px] font-mono" title="Placa de vídeo e motor de render (porta 7860)">
+          <span id="hdrGpuDot" class="w-1.5 h-1.5 rounded-full bg-slate-500"></span>
+          <span id="hdrGpu" class="text-slate-400">GPU —</span>
           <span class="text-slate-600">•</span>
-          <span class="text-emerald-400 font-semibold">LATÊNCIA 18ms</span>
+          <span id="hdrMotor" class="text-slate-400 font-semibold">MOTOR —</span>
         </div>
 
-        <!-- Indicador de Cota Diária da API YouTube -->
-        <div onclick="openQuotaModal()" class="hidden sm:flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-[#111726] border border-[#1F293D] hover:border-amber-500/50 cursor-pointer text-xs text-amber-300 transition-colors" title="Monitoramento de Cota da YouTube API">
+        <!-- Cota diária da API do YouTube -->
+        <a href="/models" class="hidden sm:flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-[#111726] border border-[#1F293D] hover:border-amber-500/50 cursor-pointer text-xs text-amber-300 transition-colors" title="Cota diária da YouTube Data API v3 (detalhes em Agentes & Modelos)">
           <svg class="w-3.5 h-3.5 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-          <span id="topQuotaText">Cota: 0 / 10k (0%)</span>
-        </div>
+          <span id="topQuotaText">Cota: —</span>
+        </a>
 
-        <!-- Botão Nova Produção -->
         <a href="/agent" class="px-3 py-1.5 rounded-lg bg-gradient-to-r from-amber-500 via-orange-600 to-amber-600 hover:from-amber-400 hover:to-orange-500 text-black font-semibold text-xs transition-all flex items-center gap-1.5 shadow-md shadow-amber-900/30">
           <span class="material-symbols-outlined text-[16px]">bolt</span>
           <span>Nova Produção</span>
@@ -100,30 +99,26 @@
 
     <!-- Conteúdo Central -->
     <main class="w-full flex-1 bg-[#0b0e14] p-6 max-w-[1720px] mx-auto space-y-6">
-      
+
       <!-- Cabeçalho da Seção -->
       <div class="flex flex-col xl:flex-row xl:items-end justify-between gap-4 pb-1">
         <div class="space-y-1.5">
-          <div class="flex items-center gap-2">
-            <span class="px-2 py-0.5 rounded-full bg-[#111726] border border-cyan-500/30 text-cyan-400 font-mono text-[10px] tracking-wider uppercase font-semibold">Repositório Neural v4.2</span>
-            <span class="font-mono text-[11px] text-emerald-400 flex items-center gap-1.5">
-              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
-              Sincronizado com YouTube Data API v3
+          <div class="flex items-center gap-2 flex-wrap">
+            <span class="px-2 py-0.5 rounded-full bg-[#111726] border border-cyan-500/30 text-cyan-400 font-mono text-[10px] tracking-wider uppercase font-semibold">Biblioteca · dados reais</span>
+            <span id="syncInfo" class="font-mono text-[11px] text-slate-400 flex items-center gap-1.5">
+              <span class="w-1.5 h-1.5 rounded-full bg-slate-500"></span>carregando…
             </span>
           </div>
-          <h1 class="text-2xl sm:text-3xl font-bold text-white tracking-tight">
-            Vídeos Criados & Publicados
-          </h1>
+          <h1 class="text-2xl sm:text-3xl font-bold text-white tracking-tight">Vídeos Criados &amp; Publicados</h1>
           <p class="text-sm text-slate-400 max-w-3xl leading-relaxed">
-            Biblioteca de produções autônomas orquestradas pelos 10 agentes de inteligência artificial, renderizadas em cluster neural e indexadas diretamente aos canais integrados.
+            Vídeos feitos no LeccorTube (modo manual) e itens da esteira autônoma, lidos do disco e do banco da esteira. Visualizações, CTR e retenção vão aparecer quando houver integração com o YouTube Analytics.
           </p>
         </div>
 
-        <!-- Ações Principais -->
         <div class="flex items-center gap-2.5 flex-wrap">
           <button onclick="exportToCSV()" class="px-3.5 py-2 rounded-xl bg-[#111726] hover:bg-[#172033] border border-[#1c2638] text-slate-200 text-xs font-semibold transition-all flex items-center gap-2 shadow-sm">
             <span class="material-symbols-outlined text-[18px] text-slate-400">download_for_offline</span>
-            <span>Exportar Relatório CSV</span>
+            <span>Exportar relatório CSV</span>
           </button>
           <a href="/agent" class="px-4 py-2 rounded-xl bg-gradient-to-r from-amber-500 via-orange-600 to-amber-600 hover:from-amber-400 hover:to-orange-500 text-black text-xs font-bold transition-all flex items-center gap-2 shadow-lg shadow-amber-900/30">
             <span class="material-symbols-outlined text-[18px]">bolt</span>
@@ -132,797 +127,436 @@
         </div>
       </div>
 
-      <!-- Barra de KPIs (4 Cards) -->
-      <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
-        <!-- KPI 1 -->
-        <div class="rounded-2xl bg-[#101625] border border-[#1c2638] p-4 shadow-sm relative overflow-hidden group">
-          <div class="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-purple-500/50 to-transparent"></div>
-          <div class="flex items-start justify-between">
-            <div>
-              <p class="text-[10px] font-mono text-slate-400 uppercase tracking-wider font-semibold">Total de Produções</p>
-              <h3 id="kpiTotalVideos" class="text-2xl font-bold text-white mt-1">48 Vídeos</h3>
-            </div>
-            <div class="w-10 h-10 rounded-xl bg-[#141d30] border border-purple-500/30 flex items-center justify-center text-purple-400">
-              <span class="material-symbols-outlined text-[20px]">movie_filter</span>
-            </div>
-          </div>
-          <div class="mt-2.5 flex items-center gap-1.5 text-emerald-400 font-mono text-[11px]">
-            <span class="material-symbols-outlined text-[15px]">trending_up</span>
-            <span>+12 este mês</span>
-            <span class="text-slate-500">• 100% autônomos</span>
-          </div>
-        </div>
-
-        <!-- KPI 2 -->
-        <div class="rounded-2xl bg-[#101625] border border-[#1c2638] p-4 shadow-sm relative overflow-hidden group">
-          <div class="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-cyan-500/50 to-transparent"></div>
-          <div class="flex items-start justify-between">
-            <div>
-              <p class="text-[10px] font-mono text-slate-400 uppercase tracking-wider font-semibold">Média de CTR Real</p>
-              <h3 id="kpiAvgCTR" class="text-2xl font-bold text-cyan-400 mt-1">14.2%</h3>
-            </div>
-            <div class="w-10 h-10 rounded-xl bg-[#141d30] border border-cyan-500/30 flex items-center justify-center text-cyan-400">
-              <span class="material-symbols-outlined text-[20px]">ads_click</span>
-            </div>
-          </div>
-          <div class="mt-2.5 flex items-center gap-1.5 text-slate-400 font-mono text-[11px]">
-            <span class="text-emerald-400 font-semibold">+0.4%</span>
-            <span>acima da previsão (13.8%)</span>
-          </div>
-        </div>
-
-        <!-- KPI 3 -->
-        <div class="rounded-2xl bg-[#101625] border border-[#1c2638] p-4 shadow-sm relative overflow-hidden group">
-          <div class="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-emerald-500/50 to-transparent"></div>
-          <div class="flex items-start justify-between">
-            <div>
-              <p class="text-[10px] font-mono text-slate-400 uppercase tracking-wider font-semibold">Retenção aos 3 Minutos</p>
-              <h3 id="kpiAvgRetention" class="text-2xl font-bold text-emerald-400 mt-1">61.8%</h3>
-            </div>
-            <div class="w-10 h-10 rounded-xl bg-[#141d30] border border-emerald-500/30 flex items-center justify-center text-emerald-400">
-              <span class="material-symbols-outlined text-[20px]">hourglass_top</span>
-            </div>
-          </div>
-          <div class="mt-2.5 flex items-center gap-1.5 text-slate-400 font-mono text-[11px]">
-            <span class="text-cyan-400 font-semibold">Benchmark: 48.5%</span>
-            <span>• Alta performance</span>
-          </div>
-        </div>
-
-        <!-- KPI 4 -->
-        <div class="rounded-2xl bg-[#101625] border border-[#1c2638] p-4 shadow-sm relative overflow-hidden group">
-          <div class="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-amber-500/50 to-transparent"></div>
-          <div class="flex items-start justify-between">
-            <div>
-              <p class="text-[10px] font-mono text-slate-400 uppercase tracking-wider font-semibold">Eficiência de Render</p>
-              <h3 id="kpiEfficiency" class="text-2xl font-bold text-amber-400 mt-1">~18 min</h3>
-            </div>
-            <div class="w-10 h-10 rounded-xl bg-[#141d30] border border-amber-500/30 flex items-center justify-center text-amber-400">
-              <span class="material-symbols-outlined text-[20px]">speed</span>
-            </div>
-          </div>
-          <div class="mt-2.5 flex items-center gap-1.5 text-slate-400 font-mono text-[11px]">
-            <span class="text-emerald-400 font-semibold">RTX 4090 Cluster</span>
-            <span>• 0 falhas na esteira</span>
-          </div>
-        </div>
+      <!-- KPIs (dados reais) -->
+      <div id="kpis" class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
+        <div class="h-[106px] rounded-2xl bg-[#101625] border border-[#1c2638] animate-pulse"></div>
+        <div class="h-[106px] rounded-2xl bg-[#101625] border border-[#1c2638] animate-pulse"></div>
+        <div class="h-[106px] rounded-2xl bg-[#101625] border border-[#1c2638] animate-pulse"></div>
+        <div class="h-[106px] rounded-2xl bg-[#101625] border border-[#1c2638] animate-pulse"></div>
       </div>
 
-      <!-- Abas de Filtro Rápido -->
-      <div class="flex items-center gap-2 overflow-x-auto pb-1 border-b border-[#1c2638] custom-scrollbar text-xs">
-        <button onclick="setFilterTab('all')" id="tab_all" class="px-4 py-2.5 rounded-t-xl bg-[#141d30] border-t border-x border-[#1c2638] text-white font-semibold flex items-center gap-2 whitespace-nowrap transition-colors">
-          <span>Todos os Vídeos</span>
-          <span id="tabCount_all" class="px-1.5 py-0.5 rounded-full bg-[#111726] text-amber-400 font-mono text-[10px]">48</span>
-        </button>
-        <button onclick="setFilterTab('published')" id="tab_published" class="px-4 py-2.5 rounded-t-xl text-slate-400 hover:text-white hover:bg-[#111726] font-medium flex items-center gap-2 whitespace-nowrap transition-colors">
-          <span>Publicados no YouTube</span>
-          <span id="tabCount_published" class="px-1.5 py-0.5 rounded-full bg-[#111726] text-emerald-400 font-mono text-[10px]">36</span>
-        </button>
-        <button onclick="setFilterTab('scheduled')" id="tab_scheduled" class="px-4 py-2.5 rounded-t-xl text-slate-400 hover:text-white hover:bg-[#111726] font-medium flex items-center gap-2 whitespace-nowrap transition-colors">
-          <span>Agendados / Estreia</span>
-          <span id="tabCount_scheduled" class="px-1.5 py-0.5 rounded-full bg-[#111726] text-amber-400 font-mono text-[10px]">5</span>
-        </button>
-        <button onclick="setFilterTab('pipeline')" id="tab_pipeline" class="px-4 py-2.5 rounded-t-xl text-slate-400 hover:text-white hover:bg-[#111726] font-medium flex items-center gap-2 whitespace-nowrap transition-colors">
-          <span>Em Produção Ativa</span>
-          <span id="tabCount_pipeline" class="px-1.5 py-0.5 rounded-full bg-[#111726] text-cyan-400 font-mono text-[10px]">3</span>
-        </button>
-        <button onclick="setFilterTab('draft')" id="tab_draft" class="px-4 py-2.5 rounded-t-xl text-slate-400 hover:text-white hover:bg-[#111726] font-medium flex items-center gap-2 whitespace-nowrap transition-colors">
-          <span>Rascunhos / Aprovados</span>
-          <span id="tabCount_draft" class="px-1.5 py-0.5 rounded-full bg-[#111726] text-purple-400 font-mono text-[10px]">4</span>
-        </button>
-      </div>
+      <!-- Abas -->
+      <div id="abas" class="flex items-center gap-2 overflow-x-auto pb-1 border-b border-[#1c2638] custom-scrollbar text-xs"></div>
 
-      <!-- Barra de Ferramentas e Busca -->
+      <!-- Ferramentas e busca -->
       <div class="p-3.5 rounded-2xl bg-[#101625] border border-[#1c2638] flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-3 shadow-sm">
-        <!-- Input de Busca -->
         <div class="relative flex-1 min-w-[280px]">
           <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-[18px]">search</span>
-          <input id="searchInput" oninput="applyFilters()" class="w-full pl-9 pr-4 py-2 rounded-xl bg-[#0b0e14] border border-[#1c2638] text-slate-200 placeholder:text-slate-500 text-xs focus:outline-none focus:border-amber-500 transition-colors" placeholder="Buscar por título, nicho ou tag..." type="text"/>
+          <input id="searchInput" oninput="pagina = 1; renderVideos()" class="w-full pl-9 pr-4 py-2 rounded-xl bg-[#0b0e14] border border-[#1c2638] text-slate-200 placeholder:text-slate-500 text-xs focus:outline-none focus:border-amber-500 transition-colors" placeholder="Buscar por título, roteiro, estilo ou canal..." type="text"/>
         </div>
-
-        <!-- Grupo de Dropdowns -->
         <div class="flex items-center gap-2 flex-wrap sm:flex-nowrap">
-          <!-- Canal -->
           <div class="relative">
-            <select id="channelFilter" onchange="applyFilters()" class="appearance-none pl-3 pr-8 py-2 rounded-xl bg-[#0b0e14] border border-[#1c2638] text-slate-200 text-xs focus:outline-none focus:border-amber-500 cursor-pointer transition-colors font-medium">
-              <option value="all">Todos os Canais</option>
-              <option value="techfuture">TechFuture AI (Principal)</option>
-              <option value="curiosomaster">CuriosoMaster</option>
-              <option value="mindmoney">Mind & Money</option>
-              <option value="darktales">Contos Obscuros</option>
+            <select id="origemFilter" onchange="pagina = 1; renderVideos()" class="appearance-none pl-3 pr-8 py-2 rounded-xl bg-[#0b0e14] border border-[#1c2638] text-slate-200 text-xs focus:outline-none focus:border-amber-500 cursor-pointer font-medium">
+              <option value="all">Todas as origens</option>
+              <option value="leccortube">LeccorTube (manual)</option>
+              <option value="esteira">Esteira autônoma</option>
             </select>
             <span class="material-symbols-outlined pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 text-[16px]">expand_more</span>
           </div>
-
-          <!-- Nicho -->
           <div class="relative">
-            <select id="nicheFilter" onchange="applyFilters()" class="appearance-none pl-3 pr-8 py-2 rounded-xl bg-[#0b0e14] border border-[#1c2638] text-slate-200 text-xs focus:outline-none focus:border-amber-500 cursor-pointer transition-colors font-medium">
-              <option value="all">Todos os Nichos</option>
-              <option value="tecnologia">Tecnologia & IA</option>
-              <option value="curiosidades">Curiosidades do Mundo</option>
-              <option value="motivacao">Motivação & Crescimento</option>
-              <option value="terror">Terror & Mistérios</option>
+            <select id="channelFilter" onchange="pagina = 1; renderVideos()" class="appearance-none pl-3 pr-8 py-2 rounded-xl bg-[#0b0e14] border border-[#1c2638] text-slate-200 text-xs focus:outline-none focus:border-amber-500 cursor-pointer font-medium">
+              <option value="all">Todos os canais</option>
             </select>
             <span class="material-symbols-outlined pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 text-[16px]">expand_more</span>
           </div>
-
-          <!-- Ordenação -->
           <div class="relative">
-            <select id="sortFilter" onchange="applyFilters()" class="appearance-none pl-3 pr-8 py-2 rounded-xl bg-[#0b0e14] border border-[#1c2638] text-slate-200 text-xs focus:outline-none focus:border-amber-500 cursor-pointer transition-colors font-medium">
-              <option value="recent">Mais Recentes</option>
-              <option value="ctr">Maior CTR Real</option>
-              <option value="views">Mais Visualizações</option>
-              <option value="score">Score do Analista AI</option>
+            <select id="formatoFilter" onchange="pagina = 1; renderVideos()" class="appearance-none pl-3 pr-8 py-2 rounded-xl bg-[#0b0e14] border border-[#1c2638] text-slate-200 text-xs focus:outline-none focus:border-amber-500 cursor-pointer font-medium">
+              <option value="all">Todos os formatos</option>
+              <option value="9:16">Shorts 9:16</option>
+              <option value="16:9">Horizontal 16:9</option>
+            </select>
+            <span class="material-symbols-outlined pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 text-[16px]">expand_more</span>
+          </div>
+          <div class="relative">
+            <select id="sortFilter" onchange="pagina = 1; renderVideos()" class="appearance-none pl-3 pr-8 py-2 rounded-xl bg-[#0b0e14] border border-[#1c2638] text-slate-200 text-xs focus:outline-none focus:border-amber-500 cursor-pointer font-medium">
+              <option value="recent">Mais recentes</option>
+              <option value="old">Mais antigos</option>
+              <option value="duration">Maior duração</option>
+              <option value="title">Título (A–Z)</option>
             </select>
             <span class="material-symbols-outlined pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 text-[16px]">sort</span>
           </div>
-
-          <!-- Alternador de Visualização -->
           <div class="flex items-center bg-[#0b0e14] border border-[#1c2638] p-0.5 rounded-xl">
-            <button id="btnViewGrid" onclick="setViewMode('grid')" class="p-1.5 rounded-lg bg-[#141d30] text-amber-400" title="Visualização em Grade">
-              <span class="material-symbols-outlined text-[18px]">grid_view</span>
-            </button>
-            <button id="btnViewList" onclick="setViewMode('list')" class="p-1.5 rounded-lg text-slate-400 hover:text-white transition-colors" title="Visualização em Tabela">
-              <span class="material-symbols-outlined text-[18px]">view_agenda</span>
-            </button>
+            <button id="btnViewGrid" onclick="setViewMode('grid')" class="p-1.5 rounded-lg bg-[#141d30] text-amber-400" title="Grade"><span class="material-symbols-outlined text-[18px]">grid_view</span></button>
+            <button id="btnViewList" onclick="setViewMode('list')" class="p-1.5 rounded-lg text-slate-400 hover:text-white transition-colors" title="Lista"><span class="material-symbols-outlined text-[18px]">view_agenda</span></button>
           </div>
         </div>
       </div>
 
-      <!-- Container Dinâmico de Vídeos (Grid / Lista) -->
-      <div id="videosContainer" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
-        <!-- Renderizado dinamicamente via JavaScript -->
-      </div>
+      <!-- Vídeos -->
+      <div id="videosContainer" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5"></div>
 
-      <!-- Paginação e Rodapé de Retorno -->
+      <!-- Paginação -->
       <div class="flex flex-col sm:flex-row items-center justify-between gap-4 pt-4 pb-8 text-slate-400 font-mono text-xs border-t border-[#1c2638]">
-        <div class="flex items-center gap-1.5">
-          <span>Mostrando <span id="pagShowing" class="text-white font-semibold">1–6</span> de <span id="pagTotal" class="text-white font-semibold">48</span> produções geradas</span>
-        </div>
-
-        <!-- Controles de Paginação -->
-        <div class="flex items-center gap-1">
-          <button class="px-3 py-1.5 rounded-lg bg-[#111726] border border-[#1c2638] text-slate-400 disabled:opacity-40 transition-colors" disabled>
-            Anterior
-          </button>
-          <button class="w-8 h-8 rounded-lg bg-amber-500 text-black font-bold transition-colors">1</button>
-          <button class="w-8 h-8 rounded-lg bg-[#111726] hover:bg-[#172033] border border-[#1c2638] text-slate-200 transition-colors">2</button>
-          <button class="w-8 h-8 rounded-lg bg-[#111726] hover:bg-[#172033] border border-[#1c2638] text-slate-200 transition-colors">3</button>
-          <span class="px-1 text-slate-500">...</span>
-          <button class="px-3 py-1.5 rounded-lg bg-[#111726] hover:bg-[#172033] border border-[#1c2638] text-slate-200 transition-colors">
-            Próximo
-          </button>
-        </div>
-
-        <!-- Link Direto para a Esteira -->
+        <div>Mostrando <span id="pagShowing" class="text-white font-semibold">0</span> de <span id="pagTotal" class="text-white font-semibold">0</span> produções</div>
+        <div id="paginacao" class="flex items-center gap-1"></div>
         <a href="/agent" class="text-amber-400 hover:text-amber-300 font-semibold transition-colors flex items-center gap-1">
-          <span>Voltar para Esteira em Tempo Real</span>
-          <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+          <span>Ir para a Esteira de Produção</span><span class="material-symbols-outlined text-[16px]">arrow_forward</span>
         </a>
       </div>
-
     </main>
 
-    <!-- Rodapé Minimalista -->
+    <!-- Rodapé -->
     <footer class="w-full bg-[#0a0d15] border-t border-[#1c2638] py-3 px-6">
       <div class="w-full flex flex-col md:flex-row items-center justify-between gap-2 font-mono text-xs text-slate-500">
-        <div>© 2026 LeccorTubeAgent Core. Autonomous Pipeline Orchestration.</div>
+        <div>© 2026 LeccorTube · Leccorside Ai</div>
         <div class="flex items-center gap-4">
-          <span class="flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-cyan-400"></span>Cluster Alpha-09</span>
-          <span>Latência 18ms</span>
-          <span class="text-emerald-400 font-semibold flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>Render GPU Online</span>
+          <span id="ftGpu" class="flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-slate-500"></span>GPU —</span>
+          <span id="ftMotor">Motor —</span>
+          <span id="ftAtualizado">—</span>
         </div>
       </div>
     </footer>
 
   </div>
 
-  <!-- ==================== MODAL DE DETALHES & INSPEÇÃO DO VÍDEO ==================== -->
-  <div id="videoDetailModal" class="fixed inset-0 bg-black/85 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
+  <!-- ==================== MODAL DE DETALHES DO VÍDEO ==================== -->
+  <div id="videoDetailModal" class="fixed inset-0 bg-black/85 backdrop-blur-md z-50 hidden flex items-center justify-center p-4" onclick="if (event.target === this) closeVideoDetailModal()">
     <div class="bg-[#0D1322] border border-[#1A253A] rounded-2xl max-w-4xl w-full p-6 shadow-2xl relative max-h-[92vh] flex flex-col">
-      <div class="flex items-center justify-between pb-4 border-b border-slate-800">
-        <div class="flex items-center gap-3">
-          <div class="w-9 h-9 rounded-xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400">
+      <div class="flex items-center justify-between pb-4 border-b border-slate-800 gap-3">
+        <div class="flex items-center gap-3 min-w-0">
+          <div class="w-9 h-9 rounded-xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400 flex-shrink-0">
             <span class="material-symbols-outlined text-[20px]">movie_filter</span>
           </div>
-          <div>
-            <h3 id="modalVideoTitle" class="text-base font-bold text-white">Inspeção Detalhada da Produção</h3>
-            <p id="modalVideoChannelNiche" class="text-xs text-slate-400 font-mono">TechFuture AI • Tecnologia & IA</p>
+          <div class="min-w-0">
+            <h3 id="modalVideoTitle" class="text-base font-bold text-white truncate">—</h3>
+            <p id="modalVideoChannelNiche" class="text-xs text-slate-400 font-mono truncate">—</p>
           </div>
         </div>
-        <button onclick="closeVideoDetailModal()" class="w-8 h-8 rounded-lg bg-slate-800 hover:bg-slate-700 flex items-center justify-center text-slate-400 hover:text-white">✕</button>
+        <button onclick="closeVideoDetailModal()" class="w-8 h-8 rounded-lg bg-slate-800 hover:bg-slate-700 flex items-center justify-center text-slate-400 hover:text-white flex-shrink-0" title="Fechar">✕</button>
       </div>
 
       <div class="flex-1 overflow-y-auto py-4 space-y-5 custom-scrollbar text-xs">
-        
-        <!-- Player de Vídeo ou Prévia Master -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div class="rounded-xl overflow-hidden bg-black border border-slate-800 relative aspect-video flex items-center justify-center">
-            <img id="modalPreviewImg" class="w-full h-full object-cover" src="" alt="Thumbnail">
-            <div class="absolute inset-0 bg-black/30 flex items-center justify-center">
-              <button onclick="alert('Reproduzindo Master 4K')" class="w-12 h-12 rounded-full bg-amber-500/90 text-black flex items-center justify-center shadow-lg hover:scale-105 transition-transform">
-                <span class="material-symbols-outlined text-[26px]">play_arrow</span>
-              </button>
-            </div>
-            <span id="modalDurationBadge" class="absolute bottom-2 right-2 px-2 py-0.5 rounded bg-black/80 font-mono text-white text-[11px]">14:28</span>
-          </div>
-
-          <!-- Métricas e Telemetria do YouTube -->
+          <div id="modalMidia" class="rounded-xl overflow-hidden bg-black border border-slate-800 relative aspect-video flex items-center justify-center"></div>
           <div class="bg-[#111827] p-4 rounded-xl border border-slate-800 space-y-3">
-            <h4 class="font-bold text-white text-xs uppercase tracking-wider font-mono text-amber-400">Telemetria & Desempenho Real</h4>
-            <div class="grid grid-cols-2 gap-2 text-center font-mono">
-              <div class="bg-[#0b0e14] p-2.5 rounded-lg border border-slate-800">
-                <span class="text-[10px] text-slate-400 block">VIEWS REAIS</span>
-                <span id="modalViews" class="text-base font-bold text-white">18.4K</span>
-              </div>
-              <div class="bg-[#0b0e14] p-2.5 rounded-lg border border-slate-800">
-                <span class="text-[10px] text-slate-400 block">CTR REAL</span>
-                <span id="modalCTR" class="text-base font-bold text-emerald-400">15.6%</span>
-              </div>
-              <div class="bg-[#0b0e14] p-2.5 rounded-lg border border-slate-800">
-                <span class="text-[10px] text-slate-400 block">RETENÇÃO MÉDIA</span>
-                <span id="modalRetention" class="text-base font-bold text-cyan-400">68.2%</span>
-              </div>
-              <div class="bg-[#0b0e14] p-2.5 rounded-lg border border-slate-800">
-                <span class="text-[10px] text-slate-400 block">SCORE ANALISTA</span>
-                <span id="modalScore" class="text-base font-bold text-purple-400">96/100</span>
-              </div>
-            </div>
-            <p id="modalStatusDetail" class="text-[11px] text-slate-300 leading-relaxed font-mono">
-              Status: Publicado oficialmente no canal com metadados SEO, tags e thumbnail variante B.
-            </p>
+            <h4 class="font-bold text-xs uppercase tracking-wider font-mono text-amber-400">Informações da produção</h4>
+            <div id="modalInfo" class="grid grid-cols-2 gap-2 font-mono"></div>
+            <p id="modalStatusDetail" class="text-[11px] text-slate-300 leading-relaxed font-mono"></p>
           </div>
         </div>
 
-        <!-- Breakdown dos 10 Agentes -->
-        <div class="bg-[#111827] p-4 rounded-xl border border-slate-800 space-y-3">
+        <div id="modalAgentes" class="hidden bg-[#111827] p-4 rounded-xl border border-slate-800 space-y-3">
           <div class="flex items-center justify-between">
-            <h4 class="font-bold text-slate-200 flex items-center gap-1.5">
-              <span class="material-symbols-outlined text-[16px] text-amber-400">hub</span>
-              Orquestração Neural: Desempenho dos 10 Agentes
-            </h4>
-            <span class="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-400 font-mono text-[10px] font-bold">10/10 CONCLUÍDOS</span>
+            <h4 class="font-bold text-slate-200 flex items-center gap-1.5"><span class="material-symbols-outlined text-[16px] text-amber-400">hub</span>Agentes da esteira neste vídeo</h4>
+            <span id="modalAgentesResumo" class="px-2 py-0.5 rounded bg-[#0b0e14] text-slate-300 font-mono text-[10px] font-bold">—</span>
           </div>
-
-          <div class="grid grid-cols-2 sm:grid-cols-5 gap-2 text-center font-mono text-[11px]">
-            <div class="p-2 rounded bg-[#0b0e14] border border-slate-800">
-              <span class="text-[9px] text-slate-500 block">#01 PESQUISADOR</span>
-              <span class="font-bold text-white">2m 14s</span>
-            </div>
-            <div class="p-2 rounded bg-[#0b0e14] border border-slate-800">
-              <span class="text-[9px] text-slate-500 block">#02 ROTEIRISTA</span>
-              <span class="font-bold text-white">4m 02s</span>
-            </div>
-            <div class="p-2 rounded bg-[#0b0e14] border border-slate-800">
-              <span class="text-[9px] text-slate-500 block">#03 DIRETOR</span>
-              <span class="font-bold text-white">3m 18s</span>
-            </div>
-            <div class="p-2 rounded bg-[#0b0e14] border border-slate-800">
-              <span class="text-[9px] text-slate-500 block">#04 GERADOR IMG</span>
-              <span class="font-bold text-white">5m 45s</span>
-            </div>
-            <div class="p-2 rounded bg-[#0b0e14] border border-slate-800">
-              <span class="text-[9px] text-slate-500 block">#05 VOZ NEURAL</span>
-              <span class="font-bold text-white">1m 50s</span>
-            </div>
-            <div class="p-2 rounded bg-[#0b0e14] border border-slate-800">
-              <span class="text-[9px] text-slate-500 block">#06 FORJA 4K</span>
-              <span class="font-bold text-white">12m 30s</span>
-            </div>
-            <div class="p-2 rounded bg-[#0b0e14] border border-slate-800">
-              <span class="text-[9px] text-slate-500 block">#07 ÁUDIO FX</span>
-              <span class="font-bold text-white">1m 40s</span>
-            </div>
-            <div class="p-2 rounded bg-[#0b0e14] border border-slate-800">
-              <span class="text-[9px] text-slate-500 block">#08 REVISOR QA</span>
-              <span class="font-bold text-emerald-400">Aprovado</span>
-            </div>
-            <div class="p-2 rounded bg-[#0b0e14] border border-slate-800">
-              <span class="text-[9px] text-slate-500 block">#09 THUMB A/B</span>
-              <span class="font-bold text-amber-400">Var. B (+22%)</span>
-            </div>
-            <div class="p-2 rounded bg-[#0b0e14] border border-slate-800">
-              <span class="text-[9px] text-slate-500 block">#10 PUBLICADOR</span>
-              <span class="font-bold text-white">0m 58s</span>
-            </div>
-          </div>
+          <div id="modalAgentesLista" class="grid grid-cols-2 sm:grid-cols-5 gap-2 text-center font-mono text-[11px]"></div>
         </div>
 
-        <!-- Roteiro & Metadados -->
         <div class="space-y-2">
-          <span class="text-[10px] font-mono text-slate-400 uppercase font-bold">Roteiro Completo Sincronizado</span>
-          <div id="modalScriptContent" class="bg-[#0b0e14] p-3.5 rounded-xl border border-slate-800 text-slate-300 font-mono text-xs leading-relaxed max-h-48 overflow-y-auto whitespace-pre-wrap">
-            Carregando roteiro...
-          </div>
+          <span class="text-[10px] font-mono text-slate-400 uppercase font-bold">Roteiro</span>
+          <div id="modalScriptContent" class="bg-[#0b0e14] p-3.5 rounded-xl border border-slate-800 text-slate-300 font-mono text-xs leading-relaxed max-h-48 overflow-y-auto whitespace-pre-wrap">—</div>
         </div>
-
       </div>
 
-      <div class="flex items-center justify-end gap-3 pt-4 border-t border-slate-800">
-        <button onclick="closeVideoDetailModal()" class="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold transition-colors">Fechar</button>
-        <button onclick="alert('Abrindo vídeo no YouTube...')" class="px-5 py-2 rounded-xl bg-red-600 hover:bg-red-500 text-white text-xs font-semibold flex items-center gap-1.5 shadow-lg shadow-red-600/30 transition-colors">
-          <span class="material-symbols-outlined text-[16px]">smart_display</span>
-          <span>Ver no YouTube</span>
-        </button>
-      </div>
+      <div id="modalAcoes" class="flex items-center justify-end gap-3 pt-4 border-t border-slate-800 flex-wrap"></div>
     </div>
   </div>
 
-  <!-- Toast de Notificação -->
+  <!-- Toast -->
   <div id="toastNotification" class="fixed bottom-6 right-6 z-50 bg-[#141d30] border border-amber-500/40 text-slate-100 px-4 py-3 rounded-xl shadow-2xl flex items-center gap-3 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none text-xs">
     <span id="toastIcon" class="w-2 h-2 rounded-full bg-amber-400"></span>
-    <span id="toastMessage" class="font-medium">Mensagem de status</span>
+    <span id="toastMessage" class="font-medium">—</span>
   </div>
 
-  <!-- JavaScript de Gestão e Dados -->
   <script>
-    // Base de Dados de Vídeos Criados & Publicados
-    const MOCK_VIDEOS = [
-      {
-        id: "vid-142",
-        channel: "TechFuture AI",
-        channel_id: "techfuture",
-        title: "Ep. 142 — A Revolução dos Chips Quânticos em 2025",
-        status: "published",
-        status_text: "PUBLICADO NO YOUTUBE",
-        status_color: "emerald",
-        format: "16:9",
-        duration: "14:28",
-        date: "Hoje • 14:00",
-        thumb_url: "https://lh3.googleusercontent.com/aida-public/AB6AXuDRBymfQ9JtqOGCiUbBAKmlrqraTcfvOw8IYNRsAghAPMw8P6s0DyF-Tok3Q1-FgMM3RPszhpl2rF7tzjKSPz0ZhwnaN1Bi-3iT8iJM-JfVA70Cntpt8ObAiJeWbugyX_RO46LuFK2GQZyVVbAMVm8423ZXuwE16Fpa0tE860HiuxfrhP2XE6GyIDYh2Li1uUhoBh2qKASPdj8fE-Sd2K9cONCyDiT4GdXp9mbjeG8d9OZJi5KqPLE",
-        views: "18.4K",
-        ctr: "15.6%",
-        score: "96/100",
-        retention: "68.2%",
-        niche: "tecnologia",
-        script: "No coração dos laboratórios mais secretos do mundo, uma nova geração de processadores quânticos acaba de quebrar a barreira do impossível. O que antes levava 10.000 anos para ser calculado agora é resolvido em 3 segundos. Neste episódio, exploramos como os chips de qubit supercondutor estão redefinindo a inteligência artificial, a criptografia e o futuro da humanidade."
-      },
-      {
-        id: "vid-143",
-        channel: "TechFuture AI",
-        channel_id: "techfuture",
-        title: "Ep. 143 — Agentes Autônomos vs Programadores: O Fim dos Devs?",
-        status: "scheduled",
-        status_text: "AGENDADO P/ ESTREIA",
-        status_color: "amber",
-        format: "16:9",
-        duration: "18:05",
-        date: "Amanhã • 18:30",
-        thumb_url: "https://lh3.googleusercontent.com/aida-public/AB6AXuChMdDtzDqzYsA1c3eMqds_njz1YXyTiwE-4b2OmYzktKvWSuryxxTypGiLJkkkos7h47RBtDz3SRdyQZE7D-9u3cRKWNFX4IK_SThC0aBRuO1dS_WBj5SUdhDoNWq7mRlGFfAjFobiZFX2F0_XaeHcRX_Zg1gcm2jCqYM82MiJUoQZmrCXhxkcENJ_StOfnGRinRPFqMFMKo5TzYTwyKfZ1MVkGfHnUguS31ZHDVlbACSw0BvwGDk",
-        views: "Estreia",
-        ctr: "Prev. 16.1%",
-        score: "94/100",
-        retention: "Estreia",
-        niche: "tecnologia",
-        script: "Será que 2026 marca o fim dos desenvolvedores tradicionais? Agentes de IA autônomos agora escrevem, testam, depuram e publicam aplicações completas sem intervenção humana. Descubra a verdade sobre o mercado de software e como os engenheiros seniores estão se adaptando à era dos agentes colaborativos."
-      },
-      {
-        id: "vid-144",
-        channel: "TechFuture AI",
-        channel_id: "techfuture",
-        title: "Ep. 144 — Top 5 Tecnologias Esquecidas da Década Que Vão Voltar",
-        status: "pipeline",
-        status_text: "EM PRODUÇÃO ATIVA",
-        status_color: "cyan",
-        format: "16:9",
-        duration: "12:40",
-        date: "Restante: ~18 min",
-        thumb_url: "https://lh3.googleusercontent.com/aida-public/AB6AXuBFO5xcukuyMtPMK0qibNFvXkZFfKXuP9PtbDXuBOImCP-KNleKRJNG9kOW7v2uljnUvOYt7WZYPX71fe_In7rrXqWLe6gry6A88ouZZAoZ7_zXtOg0PymNZq15gZllioDAwrHRlnoBzjmRzw9C-npi-jiT5p5O3XKJG47KDfAEQbNZQvOdzDiOr58rUOzRsw8Og1B9OEmY8NsAKzC8kgQmHSvwslkrvpvuHalq7FRgjDW7K2ePIWs",
-        views: "Renderizando",
-        ctr: "Prev. 14.8%",
-        score: "Em Análise",
-        retention: "68% Render",
-        niche: "tecnologia",
-        script: "Muitas das maiores inovações tecnológicas foram descartadas cedo demais. Dos tubos a vácuo modernizados até a memória óptica tridimensional, veja os 5 projetos abandonados que a ciência está ressuscitando para alimentar a próxima revolução industrial."
-      },
-      {
-        id: "vid-145",
-        channel: "TechFuture Shorts",
-        channel_id: "techfuture",
-        title: "Como a IA do Google Lê Seus Pensamentos em 3 Segundos 🤯",
-        status: "published",
-        status_text: "VIRAL SHORTS",
-        status_color: "rose",
-        format: "9:16",
-        duration: "0:58",
-        date: "3 dias atrás",
-        thumb_url: "https://lh3.googleusercontent.com/aida-public/AB6AXuBph3iNUwRoRiBQdhlvQeFii_4HRKbtFdcpowBNH5ofvDQ_et53jStN-FxIp2BR4-QX_GF_CEo5680Pasy4JJ8P_iHO7R9ooIEPaKKgRkn9lSLpOGTHGYK8S-C0HdXZ7vbmzsWaIhcqYOIpErO5SEJwRTT2ahQiJ7r8AFBNbrEgepUB0BJPEmnSo-aTIJ0TZGKhM-JRE2-Gp1b-davmtrxekpLFlcMjowNKTN5yuVt-s2ArkmJwn08",
-        views: "284.5K",
-        ctr: "18.2%",
-        score: "99/100",
-        retention: "84.2%",
-        niche: "tecnologia",
-        script: "Você sabia que a IA consegue decodificar imagens mentais diretamente dos seus sinais cerebrais com 88% de precisão? Assista até o final para ver o teste chocante que deixou os cientistas de queixo caído!"
-      },
-      {
-        id: "vid-146",
-        channel: "TechFuture Shorts",
-        channel_id: "techfuture",
-        title: "O Computador Quântico da IBM Cabe no Seu Bolso?",
-        status: "published",
-        status_text: "PUBLICADO",
-        status_color: "emerald",
-        format: "9:16",
-        duration: "0:45",
-        date: "Ontem",
-        thumb_url: "https://lh3.googleusercontent.com/aida-public/AB6AXuCL2uebxUbQ2GuBk7x1llgJ2upoUjd7HoqXJqmmvonIOmn_MH6Scwbyp0J9jm0BYQ5ClLk_jqioZYEIdZy4tzbC6GK5nFPYuv0nUA1KhTv4tCwLhcR60wj-24Qi0utwVKaxLKaqxdgWxfzbQfkjFmZNdbaUS3XcgFBu-KoTsJX_wS2d80Ahb3Y2mrQNo_34XuuCL3xWwOf1R9IlLvr5jTrsTBo-23785ns-1CmKWvZl-k6J6zyY0jU",
-        views: "94.2K",
-        ctr: "12.8%",
-        score: "91/100",
-        retention: "77.5%",
-        niche: "tecnologia",
-        script: "Engenheiros conseguiram reduzir o resfriamento criogênico em 90%. Isso significa que o seu próximo smartphone pode ter poder quântico? Veja a resposta surpreendente."
-      },
-      {
-        id: "vid-147",
-        channel: "CuriosoMaster",
-        channel_id: "curiosomaster",
-        title: "5 Fatos Obscuros do Espaço Que a NASA Escondeu por Anos",
-        status: "draft",
-        status_text: "RASCUNHO APROVADO",
-        status_color: "purple",
-        format: "16:9",
-        duration: "15:10",
-        date: "Em revisão",
-        thumb_url: "https://lh3.googleusercontent.com/aida-public/AB6AXuDVLCOoLuqNsyt_8_jcMC5F7SQH7c07-7PsAWcgbK2e88066C7SCol4wU6tSAYu_b8cJic27rdmLowYUX9WIbM9PXqgzoTDvt0TyBS0luemRxJLIsKu1LACQ72Mb0IatvpAylC1VwOBDFE0JkMxrhuyYDHu8GEM2j0Z80tWtMCoQFDFGVteRVbUVByHFuozeL1eWonVUdt2jRaXfFZZlqbIY7gI1FATMBeQGkzQO7dauDvLVuP-y_c",
-        views: "Rascunho",
-        ctr: "Prev. 13.9%",
-        score: "92/100",
-        retention: "Conforme",
-        niche: "curiosidades",
-        script: "Arquivos desclassificados revelam sinais acústicos não identificados na órbita de Júpiter e anomalias gravitacionais inexplicadas na borda do nosso sistema solar."
-      }
+    // Tela "Vídeos Criados": tudo vem de /api/automation/videos/catalogo (disco + banco da esteira).
+    const POR_PAGINA = 12;
+    let allVideos = [], resumo = null, currentTab = 'all', currentView = 'grid', pagina = 1;
+    try { currentView = localStorage.getItem('videos_modo') || 'grid'; } catch (e) {}
+
+    const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'})[c]);
+    const fmtDur = s => s == null ? '—' : (s >= 3600 ? `${Math.floor(s / 3600)}h${String(Math.floor(s % 3600 / 60)).padStart(2, '0')}` : `${Math.floor(s / 60)}:${String(Math.round(s % 60)).padStart(2, '0')}`);
+    const fmtTotal = s => s >= 3600 ? `${Math.floor(s / 3600)} h ${Math.round(s % 3600 / 60)} min` : `${Math.floor(s / 60)} min ${Math.round(s % 60)} s`;
+    function fmtData(ts) {
+      if (!ts) return '—';
+      const d = new Date(ts * 1000), hoje = new Date(), ontem = new Date(Date.now() - 86400000);
+      const hora = d.toLocaleTimeString('pt-BR', {hour: '2-digit', minute: '2-digit'});
+      if (d.toDateString() === hoje.toDateString()) return `Hoje • ${hora}`;
+      if (d.toDateString() === ontem.toDateString()) return `Ontem • ${hora}`;
+      return `${d.toLocaleDateString('pt-BR')} • ${hora}`;
+    }
+    const COR = {
+      emerald: 'bg-emerald-500/20 text-emerald-300 border-emerald-500/30', amber: 'bg-amber-500/20 text-amber-300 border-amber-500/30',
+      cyan: 'bg-cyan-500/20 text-cyan-300 border-cyan-500/30', purple: 'bg-purple-500/20 text-purple-300 border-purple-500/30',
+      rose: 'bg-rose-500/20 text-rose-300 border-rose-500/30', slate: 'bg-slate-500/20 text-slate-300 border-slate-500/30',
+    };
+    const ABAS = [
+      {id: 'all', nome: 'Todos', cor: 'text-amber-400', filtro: v => true},
+      {id: 'pronto', nome: 'Vídeos prontos', cor: 'text-emerald-400', filtro: v => v.status === 'pronto'},
+      {id: 'publicado', nome: 'Publicados no YouTube', cor: 'text-emerald-400', filtro: v => v.status === 'publicado'},
+      {id: 'producao', nome: 'Em produção', cor: 'text-cyan-400', filtro: v => v.status === 'producao'},
+      {id: 'rascunho', nome: 'Rascunhos & ideias', cor: 'text-purple-400', filtro: v => v.status === 'rascunho' || v.status === 'ideia'},
+      {id: 'falhou', nome: 'Com erro', cor: 'text-rose-400', filtro: v => v.status === 'falhou'},
     ];
 
-    let currentTab = 'all';
-    let currentView = 'grid';
-    let allVideos = [...MOCK_VIDEOS];
-
-    // Carregar vídeos reais do backend SQLite e mesclar
     async function fetchVideosFromBackend() {
       try {
-        const res = await fetch('/api/automation/videos');
-        if (res.ok) {
-          const backendVideos = await res.json();
-          if (backendVideos && backendVideos.length > 0) {
-            const formatted = backendVideos.map(v => ({
-              id: v.id,
-              channel: v.brief?.channel_id || "TechFuture AI",
-              channel_id: v.brief?.channel_id || "techfuture",
-              title: v.title || "Produção Autônoma",
-              status: v.status.toLowerCase(),
-              status_text: v.status.toUpperCase(),
-              status_color: v.status === 'COMPLETED' ? 'emerald' : (v.status === 'RUNNING' ? 'cyan' : 'amber'),
-              format: v.brief?.format === 'shorts' ? '9:16' : '16:9',
-              duration: "10:00",
-              date: new Date(v.created_at * 1000).toLocaleDateString('pt-BR'),
-              thumb_url: v.artifacts?.thumbnail_path ? `/api/abrir_arquivo?caminho=${encodeURIComponent(v.artifacts.thumbnail_path)}` : MOCK_VIDEOS[0].thumb_url,
-              views: "Recente",
-              ctr: "15.0%",
-              score: "95/100",
-              retention: "64.0%",
-              niche: v.brief?.niche || "tecnologia",
-              script: v.brief?.script_body || "Roteiro autônomo gerado pela esteira industrial."
-            }));
-            allVideos = [...formatted, ...MOCK_VIDEOS];
-          }
-        }
+        const r = await fetch('/api/automation/videos/catalogo');
+        if (!r.ok) throw new Error(`HTTP ${r.status}`);
+        const d = await r.json();
+        allVideos = d.videos; resumo = d.resumo;
+        const canais = [...new Map(allVideos.map(v => [v.canal_id, v.canal])).entries()];
+        const sel = document.getElementById('channelFilter'), atual = sel.value;
+        sel.innerHTML = '<option value="all">Todos os canais</option>' + canais.map(([id, nome]) => `<option value="${esc(id)}">${esc(nome)}</option>`).join('');
+        if ([...sel.options].some(o => o.value === atual)) sel.value = atual;
+        document.getElementById('syncInfo').innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>${resumo.leccortube} do LeccorTube • ${resumo.esteira} da esteira • atualizado às ${new Date().toLocaleTimeString('pt-BR')}`;
+        document.getElementById('ftAtualizado').textContent = `Atualizado ${new Date().toLocaleTimeString('pt-BR')}`;
+        renderKpis(); renderAbas(); renderVideos();
       } catch (e) {
-        console.warn("Usando base de produções neurais locais:", e);
+        document.getElementById('videosContainer').innerHTML = `<div class="col-span-full rounded-2xl border border-rose-500/30 bg-rose-500/10 p-5 text-rose-300 text-xs">Não consegui carregar os vídeos (${esc(e.message)}). O servidor da porta 7861 está no ar?</div>`;
       }
-      renderVideos();
     }
 
-    // Renderizar vídeos com filtros aplicados
-    function renderVideos() {
-      const search = document.getElementById('searchInput').value.toLowerCase().trim();
-      const channel = document.getElementById('channelFilter').value;
-      const niche = document.getElementById('nicheFilter').value;
-      const sort = document.getElementById('sortFilter').value;
-
-      let filtered = allVideos.filter(v => {
-        // Filtro por Tab
-        if (currentTab === 'published' && v.status !== 'published' && v.status !== 'completed') return false;
-        if (currentTab === 'scheduled' && v.status !== 'scheduled') return false;
-        if (currentTab === 'pipeline' && v.status !== 'pipeline' && v.status !== 'running') return false;
-        if (currentTab === 'draft' && v.status !== 'draft' && v.status !== 'ready') return false;
-
-        // Filtro por busca
-        if (search && !v.title.toLowerCase().includes(search) && !v.script.toLowerCase().includes(search)) return false;
-
-        // Filtro por canal
-        if (channel !== 'all' && v.channel_id !== channel) return false;
-
-        // Filtro por nicho
-        if (niche !== 'all' && v.niche !== niche) return false;
-
-        return true;
-      });
-
-      // Ordenação
-      if (sort === 'ctr') {
-        filtered.sort((a, b) => parseFloat(b.ctr) - parseFloat(a.ctr));
-      } else if (sort === 'views') {
-        filtered.sort((a, b) => (parseFloat(b.views) || 0) - (parseFloat(a.views) || 0));
-      }
-
-      const container = document.getElementById('videosContainer');
-      container.className = currentView === 'grid' 
-        ? "grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5"
-        : "flex flex-col space-y-4";
-
-      if (filtered.length === 0) {
-        container.innerHTML = `
-          <div class="col-span-full py-16 text-center text-slate-500 space-y-3">
-            <span class="material-symbols-outlined text-4xl text-slate-600">video_library</span>
-            <p class="text-sm font-medium">Nenhuma produção encontrada com os filtros selecionados.</p>
-            <button onclick="resetFilters()" class="px-4 py-2 rounded-xl bg-[#141d30] text-amber-400 font-mono text-xs border border-amber-500/30">Limpar Filtros</button>
-          </div>
-        `;
-        document.getElementById('pagShowing').textContent = "0";
-        return;
-      }
-
-      document.getElementById('pagShowing').textContent = `1–${filtered.length}`;
-      document.getElementById('pagTotal').textContent = allVideos.length;
-
-      container.innerHTML = filtered.map(v => {
-        const isShort = v.format === '9:16';
-        const badgeColor = v.status_color === 'emerald' ? 'bg-emerald-500/20 text-emerald-300 border-emerald-500/30' :
-                           (v.status_color === 'amber' ? 'bg-amber-500/20 text-amber-300 border-amber-500/30' :
-                           (v.status_color === 'cyan' ? 'bg-cyan-500/20 text-cyan-300 border-cyan-500/30' : 'bg-purple-500/20 text-purple-300 border-purple-500/30'));
-
-        return `
-          <div class="rounded-2xl bg-[#101625] border border-[#1c2638] flex flex-col justify-between overflow-hidden shadow-xl transition-all duration-200 hover:-translate-y-1 hover:border-amber-500/40 relative group">
-            <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-amber-500 via-orange-500 to-amber-600"></div>
-            
-            <div>
-              <!-- Capa / Preview -->
-              <div onclick="openVideoDetailModal('${v.id}')" class="relative w-full ${isShort ? 'aspect-[16/10]' : 'aspect-video'} overflow-hidden bg-black cursor-pointer">
-                <img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" src="${v.thumb_url}" alt="${v.title}">
-                <div class="absolute inset-0 bg-gradient-to-t from-[#101625] via-transparent to-black/50"></div>
-                
-                <!-- Badges -->
-                <div class="absolute top-3 left-3 flex items-center gap-1.5 flex-wrap">
-                  <span class="px-2 py-0.5 rounded-full ${badgeColor} border font-mono text-[10px] font-bold backdrop-blur-md">
-                    ${v.status_text}
-                  </span>
-                  <span class="px-2 py-0.5 rounded-full bg-black/60 text-slate-300 font-mono text-[10px] backdrop-blur-md">
-                    ${v.format === '9:16' ? 'SHORTS 9:16' : '4K ULTRA HD'}
-                  </span>
-                </div>
-                
-                <div class="absolute bottom-3 right-3 px-2 py-0.5 rounded bg-black/80 text-white font-mono text-[11px] backdrop-blur-md">
-                  ${v.duration}
-                </div>
-              </div>
-
-              <!-- Informações -->
-              <div class="p-4 space-y-3">
-                <div class="flex items-center justify-between font-mono text-[11px] text-slate-400">
-                  <span class="text-cyan-400 font-medium">${v.channel}</span>
-                  <span>${v.date}</span>
-                </div>
-
-                <h3 onclick="openVideoDetailModal('${v.id}')" class="text-sm font-bold text-white leading-snug line-clamp-2 hover:text-amber-400 transition-colors cursor-pointer">
-                  ${v.title}
-                </h3>
-
-                <!-- Status dos 10 Agentes -->
-                <div class="p-2.5 rounded-xl bg-[#0b0e14] border border-[#1c2638] flex items-center justify-between font-mono text-[11px]">
-                  <div class="flex items-center gap-1.5 text-slate-300">
-                    <span class="material-symbols-outlined text-[16px] text-emerald-400">hub</span>
-                    <span>10/10 Agentes OK</span>
-                  </div>
-                  <div class="flex items-center gap-1">
-                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
-                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
-                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
-                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
-                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
-                  </div>
-                </div>
-
-                <!-- Métricas -->
-                <div class="grid grid-cols-3 gap-2 font-mono text-[11px] text-center pt-0.5">
-                  <div class="p-2 rounded-lg bg-[#0b0e14] border border-[#1c2638]">
-                    <span class="block text-[9px] text-slate-400">VIEWS</span>
-                    <span class="font-bold text-white">${v.views}</span>
-                  </div>
-                  <div class="p-2 rounded-lg bg-[#0b0e14] border border-[#1c2638]">
-                    <span class="block text-[9px] text-slate-400">CTR REAL</span>
-                    <span class="font-bold text-emerald-400">${v.ctr}</span>
-                  </div>
-                  <div class="p-2 rounded-lg bg-[#0b0e14] border border-[#1c2638]">
-                    <span class="block text-[9px] text-slate-400">SCORE AI</span>
-                    <span class="font-bold text-cyan-400">${v.score}</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Botões de Ação -->
-            <div class="px-4 py-3 bg-[#0c111e] border-t border-[#1c2638] flex items-center justify-between gap-2 mt-2">
-              <button onclick="openVideoDetailModal('${v.id}')" class="px-3 py-1.5 rounded-lg bg-[#141d30] hover:bg-[#1a253d] text-white text-xs font-semibold flex items-center gap-1.5 transition-colors">
-                <span class="material-symbols-outlined text-[16px] text-amber-400">description</span>
-                <span>Inspecionar</span>
-              </button>
-              
-              <div class="flex items-center gap-1">
-                <button onclick="showToast('Baixando master do vídeo...', 'emerald')" class="p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-colors" title="Baixar Vídeo 4K">
-                  <span class="material-symbols-outlined text-[18px]">cloud_download</span>
-                </button>
-                <button onclick="alert('Abrindo YouTube Studio...')" class="p-1.5 rounded-lg text-slate-400 hover:text-red-400 hover:bg-slate-800 transition-colors" title="Ver no YouTube">
-                  <span class="material-symbols-outlined text-[18px]">smart_display</span>
-                </button>
-              </div>
-            </div>
-          </div>
-        `;
+    function kpi(titulo, icone, cor, valor, linha) {
+      return `<div class="rounded-2xl bg-[#101625] border border-[#1c2638] p-4 shadow-sm relative overflow-hidden">
+        <div class="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-${cor}-500/50 to-transparent"></div>
+        <div class="flex items-start justify-between">
+          <div><p class="text-[10px] font-mono text-slate-400 uppercase tracking-wider font-semibold">${titulo}</p>
+            <h3 class="text-2xl font-bold text-white mt-1">${valor}</h3></div>
+          <div class="w-10 h-10 rounded-xl bg-[#141d30] border border-${cor}-500/30 flex items-center justify-center text-${cor}-400"><span class="material-symbols-outlined text-[20px]">${icone}</span></div>
+        </div>
+        <div class="mt-2.5 flex items-center gap-1.5 text-slate-400 font-mono text-[11px] flex-wrap">${linha}</div>
+      </div>`;
+    }
+    function renderKpis() {
+      const r = resumo;
+      document.getElementById('kpis').innerHTML =
+        kpi('Total de produções', 'movie_filter', 'purple', `${r.total} ${r.total === 1 ? 'item' : 'itens'}`,
+            `<span class="text-slate-300">${r.leccortube} LeccorTube</span>•<span>${r.esteira} esteira</span>•<span class="text-emerald-400">${r.ultimos_30_dias} em 30 dias</span>`) +
+        kpi('Vídeos prontos (MP4)', 'check_circle', 'emerald', `${r.prontos}`,
+            `<span>duração total</span><span class="text-emerald-400 font-semibold">${fmtTotal(r.duracao_total_s)}</span>`) +
+        kpi('Publicados no YouTube', 'smart_display', 'rose', `${r.publicados_youtube}`,
+            r.publicacoes_simuladas ? `<span class="text-amber-400">${r.publicacoes_simuladas} publicação(ões) simulada(s) pelo Publicador</span>`
+                                    : `<span class="text-amber-400">upload real ainda não implementado</span>`) +
+        kpi('Esteira autônoma', 'conveyor_belt', 'cyan', `${r.esteira} ${r.esteira === 1 ? 'item' : 'itens'}`,
+            `<span>${r.ideias} ideias</span>•<span>${r.rascunhos} rascunhos</span>•<span class="text-cyan-400">${r.em_producao} em produção</span>${r.falhas ? `•<span class="text-rose-400">${r.falhas} com erro</span>` : ''}`);
+    }
+    function renderAbas() {
+      document.getElementById('abas').innerHTML = ABAS.map(a => {
+        const n = allVideos.filter(a.filtro).length, on = a.id === currentTab;
+        return `<button onclick="setFilterTab('${a.id}')" class="px-4 py-2.5 rounded-t-xl flex items-center gap-2 whitespace-nowrap transition-colors ${on ? 'bg-[#141d30] border-t border-x border-[#1c2638] text-white font-semibold' : 'text-slate-400 hover:text-white hover:bg-[#111726] font-medium'}">
+          <span>${a.nome}</span><span class="px-1.5 py-0.5 rounded-full bg-[#111726] ${a.cor} font-mono text-[10px]">${n}</span></button>`;
       }).join('');
     }
 
-    // Modal de Detalhes
+    function filtrar() {
+      const q = document.getElementById('searchInput').value.toLowerCase().trim();
+      const origem = document.getElementById('origemFilter').value, canal = document.getElementById('channelFilter').value;
+      const formato = document.getElementById('formatoFilter').value, sort = document.getElementById('sortFilter').value;
+      const aba = ABAS.find(a => a.id === currentTab) || ABAS[0];
+      const lista = allVideos.filter(v => aba.filtro(v) && (origem === 'all' || v.origem === origem) && (canal === 'all' || v.canal_id === canal)
+        && (formato === 'all' || v.formato === formato)
+        && (!q || [v.titulo, v.roteiro, v.estilo, v.canal, v.status_texto].join(' ').toLowerCase().includes(q)));
+      if (sort === 'old') lista.sort((a, b) => (a.criado_em || 0) - (b.criado_em || 0));
+      else if (sort === 'duration') lista.sort((a, b) => (b.duracao_s || 0) - (a.duracao_s || 0));
+      else if (sort === 'title') lista.sort((a, b) => a.titulo.localeCompare(b.titulo, 'pt-BR'));
+      else lista.sort((a, b) => (b.criado_em || 0) - (a.criado_em || 0));
+      return lista;
+    }
+
+    function capa(v, classe) {
+      return v.miniatura
+        ? `<img class="${classe}" src="${esc(v.miniatura)}" alt="" loading="lazy">`
+        : `<div class="w-full h-full flex flex-col items-center justify-center gap-1 bg-gradient-to-br from-[#141d30] to-[#0b0e14] text-slate-600"><span class="material-symbols-outlined text-[34px]">${v.origem === 'esteira' ? 'lightbulb' : 'movie'}</span><span class="font-mono text-[10px]">sem miniatura</span></div>`;
+    }
+    function linhaInfo(v) {
+      if (v.agentes) {
+        const ag = v.agentes, pontos = ag.lista.map(a => `<span class="w-1.5 h-1.5 rounded-full ${a.status === 'COMPLETED' ? 'bg-emerald-400' : a.status === 'RUNNING' ? 'bg-cyan-400' : a.status === 'FAILED' ? 'bg-rose-500' : a.status === 'BLOCKED' ? 'bg-amber-400' : 'bg-slate-600'}" title="#${a.ordem} ${esc(a.nome)}: ${esc(a.status)}"></span>`).join('');
+        return `<div class="flex items-center gap-1.5 text-slate-300"><span class="material-symbols-outlined text-[16px] text-cyan-400">hub</span><span>${ag.concluidos}/${ag.total} agentes concluídos</span></div><div class="flex items-center gap-1">${pontos}</div>`;
+      }
+      return `<div class="flex items-center gap-1.5 text-slate-300"><span class="material-symbols-outlined text-[16px] text-amber-400">tune</span><span>${v.cenas} ${v.cenas === 1 ? 'cena' : 'cenas'}${v.estilo ? ' • ' + esc(v.estilo) : ''}</span></div><span class="text-slate-500">${esc(v.etapa)}</span>`;
+    }
+    function acoes(v) {
+      return `<div class="flex items-center gap-1">
+        ${v.video ? `<button onclick="abrir('${esc(v.id)}', 'video')" class="p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-colors" title="Abrir o vídeo"><span class="material-symbols-outlined text-[18px]">play_circle</span></button>` : ''}
+        ${v.pasta ? `<button onclick="abrir('${esc(v.id)}', 'pasta')" class="p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-colors" title="Abrir a pasta"><span class="material-symbols-outlined text-[18px]">folder_open</span></button>` : ''}
+        ${v.youtube_url ? `<a href="${esc(v.youtube_url)}" target="_blank" rel="noopener" class="p-1.5 rounded-lg text-slate-400 hover:text-red-400 hover:bg-slate-800 transition-colors" title="Ver no YouTube"><span class="material-symbols-outlined text-[18px]">smart_display</span></a>` : ''}
+      </div>`;
+    }
+
+    function renderVideos() {
+      if (!resumo) return;
+      const lista = filtrar(), total = lista.length, paginas = Math.max(1, Math.ceil(total / POR_PAGINA));
+      pagina = Math.min(pagina, paginas);
+      const ini = (pagina - 1) * POR_PAGINA, vis = lista.slice(ini, ini + POR_PAGINA);
+      const box = document.getElementById('videosContainer');
+      box.className = currentView === 'grid' ? 'grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5' : 'flex flex-col space-y-3';
+      document.getElementById('pagShowing').textContent = total ? `${ini + 1}–${ini + vis.length}` : '0';
+      document.getElementById('pagTotal').textContent = total;
+      renderPaginacao(paginas);
+      document.getElementById('btnViewGrid').className = `p-1.5 rounded-lg ${currentView === 'grid' ? 'bg-[#141d30] text-amber-400' : 'text-slate-400 hover:text-white transition-colors'}`;
+      document.getElementById('btnViewList').className = `p-1.5 rounded-lg ${currentView === 'list' ? 'bg-[#141d30] text-amber-400' : 'text-slate-400 hover:text-white transition-colors'}`;
+      if (!total) {
+        box.innerHTML = `<div class="col-span-full py-16 text-center text-slate-500 space-y-3"><span class="material-symbols-outlined text-4xl text-slate-600">video_library</span>
+          <p class="text-sm font-medium">Nenhuma produção encontrada com esses filtros.</p>
+          <button onclick="resetFilters()" class="px-4 py-2 rounded-xl bg-[#141d30] text-amber-400 font-mono text-xs border border-amber-500/30">Limpar filtros</button></div>`;
+        return;
+      }
+      box.innerHTML = vis.map(v => currentView === 'grid' ? `
+        <div class="rounded-2xl bg-[#101625] border border-[#1c2638] flex flex-col justify-between overflow-hidden shadow-xl transition-all duration-200 hover:-translate-y-1 hover:border-amber-500/40 relative group">
+          <div class="absolute top-0 left-0 right-0 h-1 z-10 bg-gradient-to-r ${v.origem === 'esteira' ? 'from-cyan-500 via-sky-500 to-cyan-600' : 'from-amber-500 via-orange-500 to-amber-600'}"></div>
+          <div>
+            <div onclick="openVideoDetailModal('${esc(v.id)}')" class="relative w-full aspect-video overflow-hidden bg-black cursor-pointer">
+              ${capa(v, 'w-full h-full object-cover transition-transform duration-500 group-hover:scale-105')}
+              <div class="absolute inset-0 bg-gradient-to-t from-[#101625] via-transparent to-black/40 pointer-events-none"></div>
+              <div class="absolute top-3 left-3 flex items-center gap-1.5 flex-wrap">
+                <span class="px-2 py-0.5 rounded-full ${COR[v.status_cor] || COR.slate} border font-mono text-[10px] font-bold backdrop-blur-md">${esc(v.status_texto)}</span>
+                <span class="px-2 py-0.5 rounded-full bg-black/60 text-slate-300 font-mono text-[10px] backdrop-blur-md">${v.formato === '9:16' ? 'SHORTS 9:16' : 'HORIZONTAL 16:9'}</span>
+              </div>
+              ${v.duracao_s ? `<div class="absolute bottom-3 right-3 px-2 py-0.5 rounded bg-black/80 text-white font-mono text-[11px] backdrop-blur-md">${fmtDur(v.duracao_s)}</div>` : ''}
+            </div>
+            <div class="p-4 space-y-3">
+              <div class="flex items-center justify-between font-mono text-[11px] text-slate-400 gap-2">
+                <span class="${v.origem === 'esteira' ? 'text-cyan-400' : 'text-amber-400'} font-medium truncate">${esc(v.canal)}</span>
+                <span class="flex-shrink-0">${fmtData(v.criado_em)}</span>
+              </div>
+              <h3 onclick="openVideoDetailModal('${esc(v.id)}')" class="text-sm font-bold text-white leading-snug line-clamp-2 hover:text-amber-400 transition-colors cursor-pointer">${esc(v.titulo)}</h3>
+              <div class="p-2.5 rounded-xl bg-[#0b0e14] border border-[#1c2638] flex items-center justify-between font-mono text-[11px] gap-2">${linhaInfo(v)}</div>
+              <div class="grid grid-cols-3 gap-2 font-mono text-[11px] text-center pt-0.5">
+                <div class="p-2 rounded-lg bg-[#0b0e14] border border-[#1c2638]"><span class="block text-[9px] text-slate-400">ORIGEM</span><span class="font-bold text-white">${esc(v.origem_nome)}</span></div>
+                <div class="p-2 rounded-lg bg-[#0b0e14] border border-[#1c2638]"><span class="block text-[9px] text-slate-400">DURAÇÃO</span><span class="font-bold text-emerald-400">${fmtDur(v.duracao_s)}</span></div>
+                <div class="p-2 rounded-lg bg-[#0b0e14] border border-[#1c2638]"><span class="block text-[9px] text-slate-400">CENAS</span><span class="font-bold text-cyan-400">${v.cenas || '—'}</span></div>
+              </div>
+            </div>
+          </div>
+          <div class="px-4 py-3 bg-[#0c111e] border-t border-[#1c2638] flex items-center justify-between gap-2 mt-2">
+            <button onclick="openVideoDetailModal('${esc(v.id)}')" class="px-3 py-1.5 rounded-lg bg-[#141d30] hover:bg-[#1a253d] text-white text-xs font-semibold flex items-center gap-1.5 transition-colors"><span class="material-symbols-outlined text-[16px] text-amber-400">description</span><span>Inspecionar</span></button>
+            ${acoes(v)}
+          </div>
+        </div>` : `
+        <div class="rounded-2xl bg-[#101625] border border-[#1c2638] p-3 flex items-center gap-4 hover:border-amber-500/40 transition-colors">
+          <div onclick="openVideoDetailModal('${esc(v.id)}')" class="relative w-40 aspect-video rounded-lg overflow-hidden bg-black cursor-pointer flex-shrink-0">${capa(v, 'w-full h-full object-cover')}
+            ${v.duracao_s ? `<span class="absolute bottom-1 right-1 px-1.5 rounded bg-black/80 text-white font-mono text-[10px]">${fmtDur(v.duracao_s)}</span>` : ''}</div>
+          <div class="flex-1 min-w-0 space-y-1.5">
+            <div class="flex items-center gap-2 flex-wrap"><span class="px-2 py-0.5 rounded-full ${COR[v.status_cor] || COR.slate} border font-mono text-[10px] font-bold">${esc(v.status_texto)}</span>
+              <span class="font-mono text-[10px] text-slate-400">${v.formato === '9:16' ? 'SHORTS 9:16' : 'HORIZONTAL 16:9'}</span></div>
+            <h3 onclick="openVideoDetailModal('${esc(v.id)}')" class="text-sm font-bold text-white truncate hover:text-amber-400 cursor-pointer">${esc(v.titulo)}</h3>
+            <div class="font-mono text-[11px] text-slate-400 truncate"><span class="${v.origem === 'esteira' ? 'text-cyan-400' : 'text-amber-400'}">${esc(v.canal)}</span> • ${fmtData(v.criado_em)} • ${v.cenas || 0} cenas</div>
+          </div>
+          <div class="flex items-center gap-2 flex-shrink-0">
+            <button onclick="openVideoDetailModal('${esc(v.id)}')" class="px-3 py-1.5 rounded-lg bg-[#141d30] hover:bg-[#1a253d] text-white text-xs font-semibold">Inspecionar</button>${acoes(v)}
+          </div>
+        </div>`).join('');
+    }
+    function renderPaginacao(paginas) {
+      const el = document.getElementById('paginacao');
+      if (paginas <= 1) { el.innerHTML = ''; return; }
+      const btn = (n, txt, on, dis) => `<button ${dis ? 'disabled' : `onclick="irPagina(${n})"`} class="${txt.length > 2 ? 'px-3 py-1.5' : 'w-8 h-8'} rounded-lg ${on ? 'bg-amber-500 text-black font-bold' : 'bg-[#111726] hover:bg-[#172033] border border-[#1c2638] text-slate-200'} disabled:opacity-40 transition-colors">${txt}</button>`;
+      let h = btn(pagina - 1, 'Anterior', false, pagina === 1);
+      for (let i = 1; i <= paginas; i++) h += btn(i, String(i), i === pagina, false);
+      el.innerHTML = h + btn(pagina + 1, 'Próximo', false, pagina === paginas);
+    }
+    function irPagina(n) { pagina = n; renderVideos(); window.scrollTo({top: 0, behavior: 'smooth'}); }
+
     function openVideoDetailModal(id) {
-      const vid = allVideos.find(v => v.id === id);
-      if (!vid) return;
-
-      document.getElementById('modalVideoTitle').textContent = vid.title;
-      document.getElementById('modalVideoChannelNiche').textContent = `${vid.channel} • Nicho: ${vid.niche.toUpperCase()}`;
-      document.getElementById('modalPreviewImg').src = vid.thumb_url;
-      document.getElementById('modalDurationBadge').textContent = vid.duration;
-      document.getElementById('modalViews').textContent = vid.views;
-      document.getElementById('modalCTR').textContent = vid.ctr;
-      document.getElementById('modalRetention').textContent = vid.retention;
-      document.getElementById('modalScore').textContent = vid.score;
-      document.getElementById('modalScriptContent').textContent = vid.script;
-
+      const v = allVideos.find(x => x.id === id);
+      if (!v) return;
+      document.getElementById('modalVideoTitle').textContent = v.titulo;
+      document.getElementById('modalVideoChannelNiche').textContent = `${v.canal} • ${v.origem === 'esteira' ? 'Esteira autônoma' : 'LeccorTube (manual)'}${v.nicho ? ' • nicho: ' + v.nicho : ''}`;
+      document.getElementById('modalMidia').innerHTML = v.video
+        ? `<video class="w-full h-full bg-black" src="${esc(v.video)}" controls preload="metadata" ${v.miniatura ? `poster="${esc(v.miniatura)}"` : ''}></video>`
+        : capa(v, 'w-full h-full object-cover');
+      const info = [['Status', v.status_texto], ['Criado em', fmtData(v.criado_em)], ['Duração', fmtDur(v.duracao_s)], ['Formato', v.formato],
+                    ['Cenas', v.cenas || '—'], ['Estilo', v.estilo || '—']];
+      document.getElementById('modalInfo').innerHTML = info.map(([k, val]) => `<div class="bg-[#0b0e14] p-2.5 rounded-lg border border-slate-800"><span class="text-[10px] text-slate-400 block">${k.toUpperCase()}</span><span class="text-[13px] font-bold text-white break-words">${esc(val)}</span></div>`).join('');
+      let det = v.mensagem ? `Última mensagem do motor: ${v.mensagem}` : '';
+      if (v.publicacao_simulada) det = 'Atenção: o Publicador (#09) marcou este vídeo como publicado, mas o upload para o YouTube ainda não está implementado.';
+      if (!v.video && v.origem === 'esteira') det = det || 'Este item ainda não tem vídeo gerado.';
+      document.getElementById('modalStatusDetail').textContent = det;
+      const ag = document.getElementById('modalAgentes');
+      ag.classList.toggle('hidden', !v.agentes);
+      if (v.agentes) {
+        document.getElementById('modalAgentesResumo').textContent = `${v.agentes.concluidos}/${v.agentes.total} CONCLUÍDOS`;
+        const ST = {COMPLETED: ['Concluído', 'text-emerald-400'], RUNNING: ['Em execução', 'text-cyan-400'], FAILED: ['Falhou', 'text-rose-400'],
+                    BLOCKED: ['Aguardando', 'text-amber-400'], CANCELED: ['Cancelado', 'text-rose-400'], PAUSED: ['Pausado', 'text-amber-400']};
+        document.getElementById('modalAgentesLista').innerHTML = v.agentes.lista.map(a => {
+          const [t, c] = ST[a.status] || ['Na fila', 'text-slate-400'];
+          return `<div class="p-2 rounded bg-[#0b0e14] border border-slate-800"><span class="text-[9px] text-slate-500 block truncate">#${String(a.ordem).padStart(2, '0')} ${esc(a.nome).toUpperCase()}</span><span class="font-bold ${c}">${t}</span></div>`;
+        }).join('');
+      }
+      document.getElementById('modalScriptContent').textContent = v.roteiro || 'Sem roteiro registrado.';
+      document.getElementById('modalAcoes').innerHTML = `
+        <button onclick="closeVideoDetailModal()" class="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold transition-colors">Fechar</button>
+        ${v.pasta ? `<button onclick="abrir('${esc(v.id)}', 'pasta')" class="px-4 py-2 rounded-xl bg-[#141d30] hover:bg-[#1a253d] border border-[#1c2638] text-slate-200 text-xs font-semibold flex items-center gap-1.5"><span class="material-symbols-outlined text-[16px]">folder_open</span>Abrir pasta</button>` : ''}
+        ${v.video ? `<button onclick="abrir('${esc(v.id)}', 'video')" class="px-4 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-black text-xs font-bold flex items-center gap-1.5"><span class="material-symbols-outlined text-[16px]">play_circle</span>Abrir no player</button>` : ''}
+        ${v.youtube_url ? `<a href="${esc(v.youtube_url)}" target="_blank" rel="noopener" class="px-5 py-2 rounded-xl bg-red-600 hover:bg-red-500 text-white text-xs font-semibold flex items-center gap-1.5"><span class="material-symbols-outlined text-[16px]">smart_display</span>Ver no YouTube</a>` : ''}`;
       document.getElementById('videoDetailModal').classList.remove('hidden');
     }
-
     function closeVideoDetailModal() {
-      document.getElementById('videoDetailModal').classList.add('hidden');
+      const m = document.getElementById('videoDetailModal');
+      m.querySelectorAll('video').forEach(x => x.pause());
+      m.classList.add('hidden');
+    }
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeVideoDetailModal(); });
+
+    async function abrir(id, alvo) {
+      try {
+        const r = await fetch('/api/automation/videos/abrir', {method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({id, alvo})});
+        const d = await r.json().catch(() => ({}));
+        if (!r.ok) throw new Error(d.detail || `HTTP ${r.status}`);
+        showToast(alvo === 'video' ? 'Abrindo o vídeo no player do Windows…' : 'Abrindo a pasta do vídeo…', 'emerald');
+      } catch (e) { showToast(e.message, 'rose'); }
     }
 
-    // Exportação em CSV
     function exportToCSV() {
-      let csv = "ID,Titulo,Canal,Formato,Duracao,Status,Views,CTR,Score,Data\n";
-      allVideos.forEach(v => {
-        csv += `"${v.id}","${v.title.replace(/"/g, '""')}","${v.channel}","${v.format}","${v.duration}","${v.status_text}","${v.views}","${v.ctr}","${v.score}","${v.date}"\n`;
-      });
-      const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = `LeccorTube_Videos_${new Date().toISOString().slice(0,10)}.csv`;
+      const campos = ['Título', 'Origem', 'Canal', 'Status', 'Formato', 'Duração (s)', 'Cenas', 'Estilo', 'Criado em', 'Arquivo'];
+      const linhas = filtrar().map(v => [v.titulo, v.origem_nome, v.canal, v.status_texto, v.formato, v.duracao_s ?? '', v.cenas, v.estilo,
+        v.criado_em ? new Date(v.criado_em * 1000).toLocaleString('pt-BR') : '', v.arquivo_video || '']);
+      const csv = '﻿' + [campos, ...linhas].map(l => l.map(c => `"${String(c).replace(/"/g, '""')}"`).join(';')).join('\n');
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(new Blob([csv], {type: 'text/csv;charset=utf-8;'}));
+      a.download = `LeccorTube_Videos_${new Date().toISOString().slice(0, 10)}.csv`;
       a.click();
-      showToast("Relatório CSV exportado com sucesso!", "emerald");
+      showToast(`Relatório CSV exportado (${linhas.length} itens).`, 'emerald');
     }
 
-    // Filtros e Tabs
-    function setFilterTab(tab) {
-      currentTab = tab;
-      const tabs = ['all', 'published', 'scheduled', 'pipeline', 'draft'];
-      tabs.forEach(t => {
-        const el = document.getElementById(`tab_${t}`);
-        if (el) {
-          if (t === tab) {
-            el.className = "px-4 py-2.5 rounded-t-xl bg-[#141d30] border-t border-x border-[#1c2638] text-white font-semibold flex items-center gap-2 whitespace-nowrap transition-colors";
-          } else {
-            el.className = "px-4 py-2.5 rounded-t-xl text-slate-400 hover:text-white hover:bg-[#111726] font-medium flex items-center gap-2 whitespace-nowrap transition-colors";
-          }
-        }
-      });
-      renderVideos();
-    }
-
-    function applyFilters() {
-      renderVideos();
-    }
-
+    function setFilterTab(tab) { currentTab = tab; pagina = 1; renderAbas(); renderVideos(); }
+    function applyFilters() { pagina = 1; renderVideos(); }
     function resetFilters() {
-      document.getElementById('searchInput').value = "";
-      document.getElementById('channelFilter').value = "all";
-      document.getElementById('nicheFilter').value = "all";
-      document.getElementById('sortFilter').value = "recent";
+      ['searchInput'].forEach(i => document.getElementById(i).value = '');
+      ['origemFilter', 'channelFilter', 'formatoFilter'].forEach(i => document.getElementById(i).value = 'all');
+      document.getElementById('sortFilter').value = 'recent';
       setFilterTab('all');
     }
+    function setViewMode(mode) { currentView = mode; try { localStorage.setItem('videos_modo', mode); } catch (e) {} renderVideos(); }
 
-    function setViewMode(mode) {
-      currentView = mode;
-      const btnGrid = document.getElementById('btnViewGrid');
-      const btnList = document.getElementById('btnViewList');
-      if (mode === 'grid') {
-        btnGrid.className = "p-1.5 rounded-lg bg-[#141d30] text-amber-400";
-        btnList.className = "p-1.5 rounded-lg text-slate-400 hover:text-white transition-colors";
-      } else {
-        btnList.className = "p-1.5 rounded-lg bg-[#141d30] text-amber-400";
-        btnGrid.className = "p-1.5 rounded-lg text-slate-400 hover:text-white transition-colors";
-      }
-      renderVideos();
-    }
-
-    // Sincronizar canais e cota
-    async function syncChannels() {
+    async function syncTopo() {
       try {
-        const res = await fetch('/api/automation/channels');
-        if (res.ok) {
-          const channels = await res.json();
-          if (channels.length > 0) {
-            document.getElementById('sidebarChannelTitle').textContent = channels[0].title;
-            document.getElementById('sidebarChannelSubs').textContent = `${(channels[0].subscribers_count || 0).toLocaleString("pt-BR")} inscritos • ${({manual: "manual", assisted: "assistido", automatic: "automático"})[channels[0].mode] || channels[0].mode}`;
-          }
-          const sel = document.getElementById('channelFilter');
-          sel.innerHTML = '<option value="all">Todos os Canais</option>' + channels.map(c => `<option value="${c.id}">${c.title}</option>`).join('');
-          const countEl = document.getElementById('sidebarChannelCount');
-          if (countEl) countEl.textContent = `${channels.length} ${channels.length === 1 ? "canal" : "canais"}`;
-        }
-      } catch (e) {
-        console.warn("Erro ao buscar canais:", e);
-      }
-    }
-
-    async function syncQuota() {
+        const d = await (await fetch('/api/automation/sidebar')).json();
+        const g = d.gpu || {}, m = d.motor || {};
+        const gpuTxt = g.online ? `${g.detalhe.replace('NVIDIA GeForce ', '')} • ${g.temperatura_c} °C` : 'GPU indisponível';
+        document.getElementById('hdrGpu').textContent = gpuTxt;
+        document.getElementById('hdrGpuDot').className = `w-1.5 h-1.5 rounded-full ${g.online ? 'bg-cyan-400' : 'bg-rose-500'}`;
+        document.getElementById('hdrMotor').textContent = m.online ? 'MOTOR NO AR' : 'MOTOR FORA';
+        document.getElementById('hdrMotor').className = `font-semibold ${m.online ? 'text-emerald-400' : 'text-rose-400'}`;
+        document.getElementById('ftGpu').innerHTML = `<span class="w-1.5 h-1.5 rounded-full ${g.online ? 'bg-cyan-400' : 'bg-rose-500'}"></span>${esc(gpuTxt)}`;
+        document.getElementById('ftMotor').innerHTML = `<span class="${m.online ? 'text-emerald-400' : 'text-rose-400'} font-semibold">Motor ${m.online ? 'no ar' : 'fora do ar'}</span>`;
+      } catch (e) {}
       try {
-        const res = await fetch('/api/automation/quota');
-        if (res.ok) {
-          const q = await res.json();
-          document.getElementById('topQuotaText').textContent = `Cota: ${q.units_used.toLocaleString()} / 10k (${q.percent_used}%)`;
-        }
-      } catch (e) {
-        console.warn("Erro ao sincronizar cota:", e);
-      }
+        const q = await (await fetch('/api/automation/quota')).json();
+        document.getElementById('topQuotaText').textContent = `Cota: ${q.units_used.toLocaleString('pt-BR')} / ${(q.daily_limit / 1000).toLocaleString('pt-BR')} mil (${q.percent_used}%)`;
+      } catch (e) {}
     }
 
     function showToast(message, type = 'amber') {
       const toast = document.getElementById('toastNotification');
-      const msg = document.getElementById('toastMessage');
-      const icon = document.getElementById('toastIcon');
-
-      msg.textContent = message;
-      if (type === 'emerald') icon.className = 'w-2 h-2 rounded-full bg-emerald-400';
-      else if (type === 'rose') icon.className = 'w-2 h-2 rounded-full bg-rose-500';
-      else icon.className = 'w-2 h-2 rounded-full bg-amber-400';
-
+      document.getElementById('toastMessage').textContent = message;
+      document.getElementById('toastIcon').className = `w-2 h-2 rounded-full ${type === 'emerald' ? 'bg-emerald-400' : type === 'rose' ? 'bg-rose-500' : 'bg-amber-400'}`;
       toast.classList.remove('translate-y-20', 'opacity-0');
       toast.classList.add('translate-y-0', 'opacity-100');
-
       clearTimeout(window.toastTimer);
-      window.toastTimer = setTimeout(() => {
-        toast.classList.remove('translate-y-0', 'opacity-100');
-        toast.classList.add('translate-y-20', 'opacity-0');
-      }, 3000);
+      window.toastTimer = setTimeout(() => { toast.classList.remove('translate-y-0', 'opacity-100'); toast.classList.add('translate-y-20', 'opacity-0'); }, 3000);
     }
 
     function openChannelModal() { window.location.href = '/agent'; }
-    function openLearningModal() { window.location.href = '/agent'; }
-    function openQuotaModal() { window.location.href = '/agent'; }
 
-    // Inicialização
     window.addEventListener('DOMContentLoaded', () => {
-      syncChannels();
-      syncQuota();
+      syncTopo();
       fetchVideosFromBackend();
+      setInterval(fetchVideosFromBackend, 30000);
+      setInterval(syncTopo, 60000);
     });
   </script>
 </body>

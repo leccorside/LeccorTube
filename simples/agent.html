@@ -119,19 +119,19 @@
       </div>
 
       <div class="flex items-center gap-3">
-        <!-- Telemetria do Cluster -->
-        <div class="hidden sm:flex items-center gap-2 px-2.5 py-1 rounded-full bg-[#111726] border border-[#1c2638] text-[11px] font-mono">
-          <span class="w-1.5 h-1.5 rounded-full bg-cyan-400"></span>
-          <span class="text-slate-400">CLUSTER ALPHA-09</span>
+        <!-- GPU e motor (dados reais) -->
+        <div class="hidden sm:flex items-center gap-2 px-2.5 py-1 rounded-full bg-[#111726] border border-[#1c2638] text-[11px] font-mono" title="Placa de vídeo e motor de render (porta 7860)">
+          <span id="hdrGpuDot" class="w-1.5 h-1.5 rounded-full bg-slate-500"></span>
+          <span id="hdrGpu" class="text-slate-400">GPU —</span>
           <span class="text-slate-600">•</span>
-          <span class="text-emerald-400 font-semibold">LATÊNCIA 18ms</span>
+          <span id="hdrMotor" class="text-slate-400 font-semibold">MOTOR —</span>
         </div>
 
-        <!-- Status Operacional do Cluster -->
-        <div id="clusterStatusBadge" class="flex items-center gap-2 px-2.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-mono">
-          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-          <span id="clusterStatusText" class="hidden md:inline font-medium">PIPELINE ONLINE • 10/10 AGENTES SINCRONIZADOS</span>
-          <span class="md:hidden">ONLINE</span>
+        <!-- Estado real da esteira (lote atual) e agentes reais -->
+        <div id="clusterStatusBadge" class="flex items-center gap-2 px-2.5 py-1 rounded-full bg-slate-500/10 border border-slate-500/30 text-slate-300 text-xs font-mono">
+          <span id="clusterStatusDot" class="w-2 h-2 rounded-full bg-slate-400"></span>
+          <span id="clusterStatusText" class="hidden md:inline font-medium">CARREGANDO…</span>
+          <span id="clusterStatusCurto" class="md:hidden">—</span>
         </div>
 
         <!-- Indicador de Cota Diária da API YouTube -->
@@ -140,10 +140,10 @@
           <span id="topQuotaText">Cota: 0 / 10k (0%)</span>
         </div>
 
-        <!-- Ao Vivo -->
-        <div class="flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-amber-500/10 border border-amber-500/30 text-amber-400 text-xs font-mono font-semibold">
-          <span class="w-2 h-2 rounded-full bg-amber-400 animate-ping"></span>
-          <span>Ao Vivo</span>
+        <!-- Conexão em tempo real (SSE) com o servidor -->
+        <div id="sseBadge" class="flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-slate-500/10 border border-slate-500/30 text-slate-400 text-xs font-mono font-semibold" title="Atualização em tempo real (eventos do servidor)">
+          <span id="sseDot" class="w-2 h-2 rounded-full bg-slate-400"></span>
+          <span id="sseText">Conectando…</span>
         </div>
 
         <!-- Canal Ativo compacto no header -->
@@ -154,8 +154,8 @@
             </svg>
           </div>
           <div class="text-left text-xs">
-            <p id="topChannelTitle" class="font-medium text-slate-200 leading-none">TechFuture AI</p>
-            <p id="topChannelSubs" class="text-[10px] text-slate-400 hidden lg:block">420K inscritos</p>
+            <p id="topChannelTitle" class="font-medium text-slate-200 leading-none">Carregando…</p>
+            <p id="topChannelSubs" class="text-[10px] text-slate-400 hidden lg:block">—</p>
           </div>
         </div>
       </div>
@@ -180,7 +180,7 @@
             </label>
             <div class="relative">
               <select id="channelSelect" class="w-full bg-[#111827] border border-[#1F293D] hover:border-purple-500/50 text-slate-200 text-xs rounded-xl px-3 py-2.5 appearance-none focus:outline-none focus:border-purple-500 transition-colors cursor-pointer font-medium">
-                <option value="techfuture">TechFuture AI (Principal)</option>
+                <option value="">Carregando canais…</option>
               </select>
               <div class="absolute right-3 top-3 pointer-events-none text-slate-400">
                 <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
@@ -405,7 +405,7 @@
         <div>
           <div class="flex items-center gap-2">
             <span class="text-[10px] font-mono px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-300 font-bold border border-amber-500/30">VÍDEO ATUAL</span>
-            <span id="footerChannelName" class="text-xs font-mono text-slate-400">Canal: TechFuture AI</span>
+            <span id="footerChannelName" class="text-xs font-mono text-slate-400">Canal: —</span>
           </div>
           <h2 id="currentVideoTitle" class="text-sm font-bold text-white tracking-tight mt-0.5">
             Aguardando início do lote...
@@ -940,7 +940,7 @@
       const topTitle = document.getElementById('topChannelTitle');
       if (topTitle) topTitle.textContent = ch.title;
       const topSubs = document.getElementById('topChannelSubs');
-      if (topSubs) topSubs.textContent = `${(ch.subscribers_count / 1000).toFixed(0)}K inscritos`;
+      if (topSubs) topSubs.textContent = `${(ch.subscribers_count || 0).toLocaleString("pt-BR")} inscritos`;
       const footerCh = document.getElementById('footerChannelName');
       if (footerCh) footerCh.textContent = `Canal: ${ch.title}`;
 
@@ -963,10 +963,39 @@
       }
     }
 
+    // Selo de status no cabeçalho: estado real do lote (texto montado no backend)
+    function aplicarStatusEsteira(data) {
+      const txt = data.cluster_status || 'ESTEIRA OCIOSA';
+      const cor = data.is_running ? 'emerald' : data.is_paused ? 'amber' : (data.status === 'FAILED' ? 'rose' : 'slate');
+      document.getElementById('clusterStatusText').textContent = txt;
+      document.getElementById('clusterStatusCurto').textContent = txt.split(' • ')[0];
+      document.getElementById('clusterStatusBadge').className = `flex items-center gap-2 px-2.5 py-1 rounded-full bg-${cor}-500/10 border border-${cor}-500/30 text-${cor}-${cor === 'slate' ? '300' : '400'} text-xs font-mono`;
+      document.getElementById('clusterStatusDot').className = `w-2 h-2 rounded-full bg-${cor}-400 ${data.is_running ? 'animate-pulse' : ''}`;
+    }
+
+    // GPU e motor no cabeçalho (dados reais do menu: /api/automation/sidebar)
+    async function syncTopo() {
+      try {
+        const d = await (await fetch('/api/automation/sidebar')).json();
+        const g = d.gpu || {}, m = d.motor || {};
+        document.getElementById('hdrGpu').textContent = g.online ? `${g.detalhe.replace('NVIDIA GeForce ', '')} • ${g.temperatura_c} °C` : 'GPU indisponível';
+        document.getElementById('hdrGpuDot').className = `w-1.5 h-1.5 rounded-full ${g.online ? 'bg-cyan-400' : 'bg-rose-500'}`;
+        document.getElementById('hdrMotor').textContent = m.online ? 'MOTOR NO AR' : 'MOTOR FORA';
+        document.getElementById('hdrMotor').className = `font-semibold ${m.online ? 'text-emerald-400' : 'text-rose-400'}`;
+      } catch (e) {}
+    }
+
+    function sseEstado(ok) {
+      document.getElementById('sseText').textContent = ok ? 'Ao vivo' : 'Reconectando…';
+      document.getElementById('sseBadge').className = `flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-mono font-semibold ${ok ? 'bg-amber-500/10 border border-amber-500/30 text-amber-400' : 'bg-rose-500/10 border border-rose-500/30 text-rose-400'}`;
+      document.getElementById('sseDot').className = `w-2 h-2 rounded-full ${ok ? 'bg-amber-400 animate-ping' : 'bg-rose-500'}`;
+    }
+
     function applyDashboardState(data) {
       currentBatchId = data.batch_id;
       isRunning = data.is_running;
       isPaused = data.is_paused;
+      aplicarStatusEsteira(data);
 
       // Botão Pausar / Retomar
       const pauseText = document.getElementById('pauseText');
@@ -1502,7 +1531,7 @@
         const res = await fetch('/api/automation/quota');
         if (res.ok) {
           const q = await res.json();
-          document.getElementById('topQuotaText').textContent = `Cota: ${q.units_used.toLocaleString()} / 10k (${q.percent_used}%)`;
+          document.getElementById('topQuotaText').textContent = `Cota: ${q.units_used.toLocaleString('pt-BR')} / ${(q.daily_limit / 1000).toLocaleString('pt-BR')} mil (${q.percent_used}%)`;
           document.getElementById('quotaModalNumbers').textContent = `${q.units_used.toLocaleString()} / 10.000 pts (${q.percent_used}%)`;
           const bar = document.getElementById('quotaModalBar');
           bar.style.width = `${Math.min(100, q.percent_used)}%`;
@@ -1572,6 +1601,8 @@
       loadChannels();
       syncDashboard();
       syncQuota();
+      syncTopo();
+      setInterval(syncTopo, 60000);
 
       document.getElementById('channelSelect')?.addEventListener('change', (e) => {
         const selectedId = e.target.value;
@@ -1582,6 +1613,8 @@
       // Inicia SSE para atualização instantânea
       try {
         const evtSource = new EventSource('/api/automation/events');
+        evtSource.onopen = () => sseEstado(true);
+        evtSource.onerror = () => sseEstado(false);
         evtSource.addEventListener('agent.progress', (e) => {
           const payload = JSON.parse(e.data);
           updateAgentUI({

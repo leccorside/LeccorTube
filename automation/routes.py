@@ -38,6 +38,25 @@ def get_agents_models():
     return catalogo()
 
 
+@router.get("/videos/catalogo")
+def get_videos_catalogo():
+    """Tela Vídeos Criados: vídeos reais da esteira (SQLite) e do LeccorTube (projects/), com resumo."""
+    from automation.videos_catalog import catalogo
+    return catalogo()
+
+
+@router.post("/videos/abrir")
+def post_videos_abrir(body: Dict[str, Any] = Body(...)):
+    """Abre o MP4 ou a pasta de um vídeo no Windows (o servidor roda no próprio PC)."""
+    from automation.videos_catalog import abrir
+    try:
+        return {"ok": True, "caminho": abrir(str(body.get("id", "")), "video" if body.get("alvo") == "video" else "pasta")}
+    except KeyError:
+        raise HTTPException(404, "Vídeo não encontrado.")
+    except FileNotFoundError:
+        raise HTTPException(404, "Esse vídeo ainda não tem arquivo gerado.")
+
+
 @router.get("/sidebar")
 def get_sidebar():
     """Dados do menu lateral compartilhado (simples/sidebar.js): agentes reais, vídeos e GPU."""

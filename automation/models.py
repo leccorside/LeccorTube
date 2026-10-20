@@ -244,7 +244,7 @@ class DashboardResponse(BaseModel):
     batch: Dict[str, Any] = Field(default_factory=lambda: {"requested": 3, "produced": 0, "published": 0, "queued": 0})
     agents: List[Dict[str, Any]] = Field(default_factory=list)
     publication: Dict[str, Any] = Field(default_factory=lambda: {"status": "DRAFT", "scheduled_at": None})
-    cluster_status: str = "PIPELINE ONLINE • 10/10 AGENTES SINCRONIZADOS"
+    cluster_status: str = "ESTEIRA OCIOSA"  # montado com dados reais em orchestrator._status_esteira
     is_running: bool = False
     is_paused: bool = False
     updated_at: float = Field(default_factory=time.time)

@@ -472,13 +472,33 @@ def pagina_manual():
     return FileResponse(os.path.join(RAIZ, "simples", "index.html"))
 
 
+MIDIA = {".mp4": "video/mp4", ".png": "image/png", ".jpg": "image/jpeg", ".jpeg": "image/jpeg", ".webp": "image/webp"}
+
+
+def _pastas_de_midia():
+    """Únicas pastas de onde /api/abrir_arquivo pode servir arquivos: projetos e saída de vídeos do motor."""
+    pastas = [os.path.join(RAIZ, "projects")]
+    try:
+        with open(os.path.join(RAIZ, "config.json"), encoding="utf-8") as f:
+            saida = json.load(f).get("output_dir")
+        if saida:
+            pastas.append(saida)
+    except Exception:
+        pass
+    return [os.path.normcase(os.path.realpath(p)) for p in pastas]
+
+
 @app.get("/api/abrir_arquivo")
 def abrir_arquivo(caminho: str):
-    """Serve arquivo local para pré-visualização segura no modal de rascunhos."""
-    if not os.path.exists(caminho):
+    """Serve vídeo/imagem para pré-visualização. Só dentro de projects/ e da pasta de vídeos do motor,
+    e só tipos de mídia: antes servia qualquer arquivo do disco (inclusive config.json com as chaves)."""
+    real = os.path.normcase(os.path.realpath(caminho))
+    ext = os.path.splitext(real)[1]
+    if ext not in MIDIA or not any(real.startswith(p + os.sep) for p in _pastas_de_midia()):
+        raise HTTPException(403, "Arquivo fora das pastas de vídeos")
+    if not os.path.isfile(real):
         raise HTTPException(404, "Arquivo não encontrado")
-    media = "video/mp4" if caminho.endswith(".mp4") else "image/png"
-    return FileResponse(caminho, media_type=media)
+    return FileResponse(real, media_type=MIDIA[ext])
 
 
 @app.get("/api/opcoes")

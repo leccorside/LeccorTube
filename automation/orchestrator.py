@@ -35,6 +35,24 @@ from automation.models import (
 from automation.storage import storage
 
 
+_ESTADO_LOTE = {
+    "RUNNING": "ESTEIRA RODANDO", "PAUSING": "PAUSANDO", "PAUSED": "ESTEIRA PAUSADA", "STOPPING": "PARANDO",
+    "STOPPED": "ESTEIRA PARADA", "COMPLETED": "LOTE CONCLUÍDO", "FAILED": "LOTE COM ERRO", "CREATED": "LOTE CRIADO",
+}
+
+
+def _status_esteira(batch) -> str:
+    """Texto do selo de status no cabeçalho da Esteira: estado real do lote e quantos agentes são reais
+    (antes era fixo em "PIPELINE ONLINE • 10/10 AGENTES SINCRONIZADOS")."""
+    estado = _ESTADO_LOTE.get(batch.status, batch.status) if batch else "ESTEIRA OCIOSA"
+    try:
+        from automation.agents_catalog import resumo_menu_agentes
+        reais, total = resumo_menu_agentes()
+        return f"{estado} • {reais}/{total} AGENTES REAIS"
+    except Exception:
+        return estado
+
+
 class AutomationOrchestrator:
     def __init__(self):
         self._lock = threading.RLock()
@@ -360,7 +378,7 @@ class AutomationOrchestrator:
                 },
                 agents=agents_list,
                 publication=current_video.get("publication") if current_video else {"status": "DRAFT", "scheduled_at": None},
-                cluster_status="PIPELINE ONLINE • 10/10 AGENTES SINCRONIZADOS",
+                cluster_status=_status_esteira(batch),
                 is_running=is_running,
                 is_paused=is_paused,
                 updated_at=time.time(),
