@@ -4,6 +4,8 @@ from __future__ import annotations
 import asyncio
 import json
 import queue
+import re
+import time
 from typing import Any, Dict, List, Optional
 
 from fastapi import APIRouter, Body, HTTPException, Query, Request
@@ -93,41 +95,52 @@ def delete_channel(channel_id: str):
     return {"ok": True, "deleted": True}
 
 
+@router.post("/channels/reset-defaults")
+def reset_default_channels():
+    """Restaura a lista inicial de canais padrão da aplicação."""
+    channels = storage.restore_default_channels()
+    return {"ok": True, "channels": channels}
+
+
 @router.post("/channels")
 def create_channel(data: Dict[str, Any] = Body(...)):
     """Cadastra um novo canal no LeccorTube."""
-    title = data.get("title", "").strip()
-    if not title:
-        raise HTTPException(status_code=400, detail="O título do canal é obrigatório")
+    try:
+        title = data.get("title", "").strip()
+        if not title:
+            raise HTTPException(status_code=400, detail="O título do canal é obrigatório")
 
-    import re
-    handle = data.get("handle", "").strip()
-    raw_id = data.get("id") or (handle.replace("@", "") if handle else re.sub(r"[^a-zA-Z0-9_]", "", title.lower()))
-    channel_id = raw_id.strip().lower() or f"ch_{int(time.time())}"
+        handle = data.get("handle", "").strip()
+        raw_id = data.get("id") or (handle.replace("@", "") if handle else re.sub(r"[^a-zA-Z0-9_]", "", title.lower()))
+        channel_id = raw_id.strip().lower() or f"ch_{int(time.time())}"
 
-    # Evita sobrescrever se já existir com ID diferente
-    existing = storage.get_channel(channel_id)
-    if existing:
-        channel_id = f"{channel_id}_{int(time.time()) % 1000}"
+        # Evita sobrescrever se já existir com ID diferente
+        existing = storage.get_channel(channel_id)
+        if existing:
+            channel_id = f"{channel_id}_{int(time.time()) % 1000}"
 
-    new_channel = YouTubeChannel(
-        id=channel_id,
-        title=title,
-        handle=handle if handle.startswith("@") or not handle else f"@{handle}",
-        subscribers_count=int(data.get("subscribers_count", 0)),
-        thumbnail_url=data.get("thumbnail_url", ""),
-        is_authenticated=bool(data.get("is_authenticated", False)),
-        mode=data.get("mode", "assisted"),
-        default_niche=data.get("default_niche", "curiosidades"),
-        default_subniche=data.get("default_subniche", ""),
-        default_format=data.get("default_format", "shorts"),
-        publication_policy=data.get("publication_policy", "draft"),
-        max_videos_per_day=int(data.get("max_videos_per_day", 3)),
-        daily_budget_usd=float(data.get("daily_budget_usd", 20.0)),
-        created_at=time.time(),
-    )
-    storage.save_channel(new_channel)
-    return {"ok": True, "channel": new_channel}
+        new_channel = YouTubeChannel(
+            id=channel_id,
+            title=title,
+            handle=handle if handle.startswith("@") or not handle else f"@{handle}",
+            subscribers_count=int(data.get("subscribers_count", 0)),
+            thumbnail_url=data.get("thumbnail_url", ""),
+            is_authenticated=bool(data.get("is_authenticated", False)),
+            mode=data.get("mode", "assisted"),
+            default_niche=data.get("default_niche", "curiosidades"),
+            default_subniche=data.get("default_subniche", ""),
+            default_format=data.get("default_format", "shorts"),
+            publication_policy=data.get("publication_policy", "draft"),
+            max_videos_per_day=int(data.get("max_videos_per_day", 3)),
+            daily_budget_usd=float(data.get("daily_budget_usd", 20.0)),
+            created_at=time.time(),
+        )
+        storage.save_channel(new_channel)
+        return {"ok": True, "channel": new_channel}
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=f"Erro ao salvar canal: {str(e)}")
 
 
 @router.patch("/channels/{channel_id}/settings")

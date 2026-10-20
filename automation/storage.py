@@ -206,6 +206,20 @@ class Storage:
             cur = conn.execute("DELETE FROM channels WHERE id = ?", (channel_id,))
             return cur.rowcount > 0
 
+    def restore_default_channels(self) -> List[YouTubeChannel]:
+        canais_padrao = [
+            ("techfuture", "TechFuture AI (Principal)", "@techfuture_ai", 420000, "", 1, "assisted", "tecnologia", "Computação Quântica", "shorts", "draft", 3, 20.0, time.time()),
+            ("curiosomaster", "CuriosoMaster (Dark/Shorts)", "@curiosomaster", 185000, "", 1, "assisted", "curiosidades", "Fatos Ocultos", "shorts", "draft", 3, 20.0, time.time()),
+            ("mindmoney", "Mind & Money (Finanças)", "@mindmoney", 92000, "", 1, "assisted", "financas", "Criptomoedas", "shorts", "draft", 2, 20.0, time.time()),
+            ("darktales", "Contos Obscuros (Terror)", "@darktales", 310000, "", 1, "assisted", "terror", "Lendas Urbanas", "shorts", "draft", 3, 20.0, time.time()),
+        ]
+        with self._lock, self._get_connection() as conn:
+            conn.executemany("""
+            INSERT OR REPLACE INTO channels (id, title, handle, subscribers_count, thumbnail_url, is_authenticated, mode, default_niche, default_subniche, default_format, publication_policy, max_videos_per_day, daily_budget_usd, created_at)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            """, canais_padrao)
+        return self.list_channels()
+
     # ==================== BATCHES ====================
 
     def save_batch(self, batch: Batch):

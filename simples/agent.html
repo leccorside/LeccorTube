@@ -1170,16 +1170,36 @@
           showToast(`Canal "${data.channel.title}" cadastrado com sucesso!`, "emerald");
           document.getElementById('newChTitle').value = '';
           document.getElementById('newChHandle').value = '';
-          toggleNewChannelForm();
+          const card = document.getElementById('newChannelCard');
+          if (!card.classList.contains('hidden')) card.classList.add('hidden');
           await loadChannels();
           document.getElementById('channelSelect').value = data.channel.id;
           openChannelModal();
         } else {
-          const err = await res.json();
-          showToast(`Erro ao cadastrar canal: ${err.detail || 'Falha'}`, "rose");
+          let errDetail = "Falha ao salvar canal.";
+          try {
+            const err = await res.json();
+            errDetail = err.detail || errDetail;
+          } catch (pe) {
+            errDetail = await res.text() || errDetail;
+          }
+          showToast(`Erro ao cadastrar canal: ${errDetail}`, "rose");
         }
       } catch (e) {
-        showToast("Erro de comunicação ao salvar canal.", "rose");
+        showToast("Erro de comunicação ao salvar canal: " + e.message, "rose");
+      }
+    }
+
+    async function restoreDefaultChannels() {
+      try {
+        const res = await fetch('/api/automation/channels/reset-defaults', { method: 'POST' });
+        if (res.ok) {
+          showToast("Canais padrão restaurados com sucesso!", "emerald");
+          await loadChannels();
+          openChannelModal();
+        }
+      } catch (e) {
+        showToast("Erro ao restaurar canais.", "rose");
       }
     }
 
@@ -1220,7 +1240,15 @@
           }
 
           if (channels.length === 0) {
-            list.innerHTML = '<p class="text-slate-400 p-3 bg-slate-900 rounded-xl text-center">Nenhum canal cadastrado. Clique em "+ Novo Canal" acima.</p>';
+            list.innerHTML = `
+              <div class="p-4 bg-slate-900/80 rounded-xl text-center space-y-3 border border-slate-800">
+                <p class="text-slate-300 font-medium">Nenhum canal cadastrado no momento.</p>
+                <div class="flex items-center justify-center gap-2">
+                  <button onclick="toggleNewChannelForm()" class="px-3 py-1.5 rounded-lg bg-purple-600 hover:bg-purple-500 text-white font-medium text-xs">+ Cadastrar Canal</button>
+                  <button onclick="restoreDefaultChannels()" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 font-medium text-xs">Restaurar Padrões</button>
+                </div>
+              </div>
+            `;
             return;
           }
 
