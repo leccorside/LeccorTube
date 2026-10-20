@@ -72,14 +72,22 @@ def test_fase1_suite():
     assert "units_used" in q_data and "daily_limit" in q_data
     print("[OK] GET /api/automation/quota retornou telemetria de cota.")
 
+    # Criar canal de teste temporário para não interferir nos canais do usuário
+    client.post("/api/automation/channels", json={
+        "id": "test_ch_fase1",
+        "title": "Canal de Teste Automatizado",
+        "handle": "@test_fase1",
+        "is_authenticated": True
+    })
+
     # Auth URL endpoint
-    r_auth = client.get("/api/automation/channels/techfuture/auth-url?client_id=teste123&redirect_uri=http://localhost/cb")
+    r_auth = client.get("/api/automation/channels/test_ch_fase1/auth-url?client_id=teste123&redirect_uri=http://localhost/cb")
     assert r_auth.status_code == 200
     assert "accounts.google.com" in r_auth.json()["auth_url"]
     print("[OK] GET /api/automation/channels/{id}/auth-url OK.")
 
     # Settings do Canal (modo operacional, orçamento, políticas)
-    r_patch = client.patch("/api/automation/channels/techfuture/settings", json={
+    r_patch = client.patch("/api/automation/channels/test_ch_fase1/settings", json={
         "mode": "automatic",
         "daily_budget_usd": 35.0,
         "max_videos_per_day": 5,
@@ -92,14 +100,14 @@ def test_fase1_suite():
     print("[OK] PATCH /api/automation/channels/{id}/settings atualizou políticas com sucesso.")
 
     # Revogação segura
-    r_rev = client.post("/api/automation/channels/techfuture/revoke")
+    r_rev = client.post("/api/automation/channels/test_ch_fase1/revoke")
     assert r_rev.status_code == 200
     print("[OK] POST /api/automation/channels/{id}/revoke executado com limpeza segura.")
 
     # 4. Teste de Idempotência e Pausa do Workflow
     print("\n--- 4. Testando Idempotência e Controles do Workflow ---")
     r_batch = client.post("/api/automation/batches", json={
-        "channel_id": "techfuture",
+        "channel_id": "test_ch_fase1",
         "niche": "tecnologia",
         "subniche": "IA e Robótica",
         "format": "shorts",
@@ -129,6 +137,9 @@ def test_fase1_suite():
     b_obj3 = storage.get_batch(b_id)
     assert b_obj3.status == "STOPPED"
     print("[OK] Botão STOP interrompe o lote com integridade de arquivos.")
+
+    # Limpeza do canal de teste
+    client.delete("/api/automation/channels/test_ch_fase1")
 
     print("\n==================================================")
     print(" TODOS OS TESTES DA FASE 1 FORAM CONCLUÍDOS COM 100% DE SUCESSO!")

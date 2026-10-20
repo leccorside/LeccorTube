@@ -113,11 +113,16 @@ class Storage:
                 result_notes TEXT DEFAULT '',
                 created_at REAL NOT NULL
             );
+
+            CREATE TABLE IF NOT EXISTS system_meta (
+                key TEXT PRIMARY KEY,
+                value TEXT NOT NULL
+            );
             """)
 
-            # Inserir canais padrão caso não existam
-            cur = conn.execute("SELECT COUNT(*) as count FROM channels")
-            if cur.fetchone()["count"] == 0:
+            # Inserir canais padrão UMA ÚNICA VEZ na instalação inicial
+            cur = conn.execute("SELECT value FROM system_meta WHERE key = 'channels_seeded'")
+            if not cur.fetchone():
                 canais_padrao = [
                     ("techfuture", "TechFuture AI (Principal)", "@techfuture_ai", 420000, "", 1, "assisted", "tecnologia", "Computação Quântica", "shorts", "draft", 3, 20.0, time.time()),
                     ("curiosomaster", "CuriosoMaster (Dark/Shorts)", "@curiosomaster", 185000, "", 1, "assisted", "curiosidades", "Fatos Ocultos", "shorts", "draft", 3, 20.0, time.time()),
@@ -125,9 +130,10 @@ class Storage:
                     ("darktales", "Contos Obscuros (Terror)", "@darktales", 310000, "", 1, "assisted", "terror", "Lendas Urbanas", "shorts", "draft", 3, 20.0, time.time()),
                 ]
                 conn.executemany("""
-                INSERT INTO channels (id, title, handle, subscribers_count, thumbnail_url, is_authenticated, mode, default_niche, default_subniche, default_format, publication_policy, max_videos_per_day, daily_budget_usd, created_at)
+                INSERT OR IGNORE INTO channels (id, title, handle, subscribers_count, thumbnail_url, is_authenticated, mode, default_niche, default_subniche, default_format, publication_policy, max_videos_per_day, daily_budget_usd, created_at)
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                 """, canais_padrao)
+                conn.execute("INSERT OR REPLACE INTO system_meta (key, value) VALUES ('channels_seeded', '1')")
 
     # ==================== CANAIS ====================
 
