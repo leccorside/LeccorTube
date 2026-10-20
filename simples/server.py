@@ -444,6 +444,13 @@ def pagina_agente():
     return FileResponse(os.path.join(RAIZ, "simples", "agent.html"))
 
 
+@app.get("/videos")
+@app.get("/agent/videos")
+def pagina_videos():
+    """Interface de Repositório de Vídeos Criados & Publicados."""
+    return FileResponse(os.path.join(RAIZ, "simples", "videos.html"))
+
+
 @app.get("/simples")
 @app.get("/manual")
 def pagina_manual():

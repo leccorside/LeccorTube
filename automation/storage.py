@@ -333,6 +333,11 @@ class Storage:
             rows = conn.execute("SELECT * FROM batch_videos WHERE batch_id = ? ORDER BY index_in_batch ASC", (batch_id,)).fetchall()
             return [self._row_to_video(r) for r in rows]
 
+    def list_all_videos(self, limit: int = 100) -> List[VideoItem]:
+        with self._lock, self._get_connection() as conn:
+            rows = conn.execute("SELECT * FROM batch_videos ORDER BY created_at DESC LIMIT ?", (limit,)).fetchall()
+            return [self._row_to_video(r) for r in rows]
+
     def _row_to_video(self, r: sqlite3.Row) -> VideoItem:
         brief_data = json.loads(r["brief_json"])
         agents_data = json.loads(r["agents_json"])

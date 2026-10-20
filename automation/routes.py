@@ -427,6 +427,15 @@ def get_learning_changelog():
     ]
 
 
+@router.get("/videos")
+def get_videos_list(limit: int = 100, channel_id: Optional[str] = None):
+    """Retorna os vídeos produzidos e registrados no banco de dados com telemetria."""
+    videos = storage.list_all_videos(limit=limit)
+    if channel_id:
+        videos = [v for v in videos if v.brief.channel_id == channel_id]
+    return [v.model_dump() for v in videos]
+
+
 @router.get("/events")
 async def events_stream(request: Request):
     """Server-Sent Events (SSE) para atualização em tempo real da esteira industrial."""
