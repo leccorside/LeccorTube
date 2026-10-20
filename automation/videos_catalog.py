@@ -126,9 +126,13 @@ def _esteira() -> List[Dict[str, Any]]:
         chave, txt, cor = STATUS_ESTEIRA.get(v.status, ("rascunho", v.status, "slate"))
         pub = v.publication or {}
         yt = pub.get("youtube_video_id") or ""
-        falso = bool(yt) and yt.startswith("yt-")  # ID inventado pelo Publicador (#09), sem upload real
+        falso = bool(yt) and yt.startswith("yt-")  # ID inventado pelo Publicador antigo (antes de 20/10), sem upload real
         if falso:
             chave, txt, cor = "rascunho", "PUBLICAÇÃO SIMULADA", "amber"
+        elif chave == "publicado" and not yt:  # status de publicado sem ID real do YouTube não conta
+            chave, txt, cor = "rascunho", "RASCUNHO · SEM UPLOAD", "amber"
+        elif pub.get("status") == "UPLOAD_UNAVAILABLE":  # Publicador recusou: upload ainda não existe
+            chave, txt, cor = "rascunho", "RASCUNHO · SEM UPLOAD", "amber"
         mp4 = v.artifacts.get("video_path")
         thumb = v.artifacts.get("thumbnail_path")
         b = v.brief

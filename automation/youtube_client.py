@@ -6,15 +6,17 @@ from __future__ import annotations
 
 import json
 import os
-import time
 from datetime import datetime, timezone
 from typing import Any, Dict, List, Optional
 
 import httpx
 from automation.quota_guard import quota_guard
-from automation.youtube_oauth import oauth_service
 
 RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+# O upload de vídeos (videos.insert) ainda não existe. Enquanto for False, upload_and_schedule recusa
+# sem enviar, sem inventar ID e sem descontar cota; o Publicador deixa o vídeo como rascunho local.
+UPLOAD_IMPLEMENTADO = False
 
 
 class YouTubeClient:
@@ -200,57 +202,29 @@ class YouTubeClient:
         publish_at_iso: Optional[str] = None,
         is_shorts: bool = True,
     ) -> Dict[str, Any]:
-        """Realiza o upload seguro e agendamento de publicação no YouTube.
+        """Envio do vídeo ao YouTube — AINDA NÃO IMPLEMENTADO.
 
-        Caso o canal esteja em modo assistido ou não autenticado via OAuth em produção,
-        cria o registro de Rascunho / Agendamento seguro com integridade idempotente.
+        Antes, esta função montava o pedido, descontava 1.600 unidades da cota (com token OAuth),
+        **não enviava nada** e devolvia "sucesso" com um ID inventado (`yt-<horário>`), fazendo o
+        Publicador marcar o vídeo como publicado. Agora ela recusa de forma explícita: nada é enviado,
+        nenhum ID é criado e a cota não é tocada.
+
+        Quem implementar o upload de verdade deve: enviar o arquivo por upload retomável
+        (`POST https://www.googleapis.com/upload/youtube/v3/videos?uploadType=resumable&part=snippet,status`)
+        com o token OAuth do canal, conferir a cota com `quota_guard.check_quota("videos.insert")` antes,
+        descontar só depois da resposta 200 com o `id` real, e trocar `UPLOAD_IMPLEMENTADO` para True.
         """
-        # Verifica proteção de cota diária antes de tentar o upload (1600 unidades)
-        if not quota_guard.check_quota("videos.insert"):
-            return {
-                "success": False,
-                "error": "QUOTA_EXCEEDED",
-                "message": "Cota diária da YouTube Data API v3 atingida (limite de 10.000 unidades). Operação retida com segurança.",
-                "quota_status": quota_guard.get_status(),
-            }
-
-        token = oauth_service.get_valid_access_token(channel_id)
-
-        if token:
-            try:
-                # Fluxo oficial com tokens OAuth se configurados
-                headers = {"Authorization": f"Bearer {token}", "Content-Type": "application/json"}
-                body = {
-                    "snippet": {
-                        "title": title[:100],
-                        "description": description[:5000],
-                        "tags": tags[:20],
-                        "categoryId": "28" if is_shorts else "22",
-                    },
-                    "status": {
-                        "privacyStatus": "private",
-                        "publishAt": publish_at_iso if publish_at_iso else None,
-                        "selfDeclaredMadeForKids": False,
-                    },
-                }
-                quota_guard.consume_quota("videos.insert")
-            except Exception:
-                pass
-
-        # Confirmação de agendamento estruturada e rastreável
-        agora_iso = datetime.now(timezone.utc).isoformat()
-        video_id = f"yt-{int(time.time())}"
-        status_pub = "SCHEDULED" if publish_at_iso else "UPLOADED_PRIVATE"
-
         return {
-            "success": True,
-            "youtube_video_id": video_id,
-            "status": status_pub,
-            "privacy": "private",
-            "scheduled_at": publish_at_iso,
-            "published_at": agora_iso if not publish_at_iso else None,
-            "url": f"https://youtu.be/{video_id}",
-            "mode": "official_isolated",
+            "success": False,
+            "error": "UPLOAD_NOT_IMPLEMENTED",
+            "status": "UPLOAD_UNAVAILABLE",
+            "message": "O envio de vídeos ao YouTube ainda não foi implementado. Nada foi enviado e nenhuma cota foi descontada.",
+            "youtube_video_id": None,
+            "url": None,
+            "privacy": None,
+            "scheduled_at": None,
+            "published_at": None,
+            "quota_consumed": 0,
         }
 
     def collect_channel_metrics(self, channel_id: str) -> Dict[str, Any]:

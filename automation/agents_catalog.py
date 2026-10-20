@@ -179,13 +179,14 @@ def _agentes(cfg: Dict[str, Any], sv: Dict[str, Any]) -> List[Dict[str, Any]]:
                 custo="Local · sem custo", faz="Define o texto da miniatura; o motor gera as 3 variantes no Export.",
                 limitacao="O texto é só as 3 primeiras palavras do título em maiúsculas, sem IA."),
         9: dict(categoria="qa", implementacao="simulado", servico="youtube", motor="YouTube Data API v3 · videos.insert",
-                motor_tag="NÃO ENVIA", params=[("Privacidade", "private"), ("Cota", "1.600 un."), ("Upload", "não feito")],
-                custo="1.600 un. de cota (com OAuth)", faz="Deveria enviar o vídeo como privado e agendar a estreia.",
-                limitacao="O upload não está implementado: o agente gera um ID falso (yt-…), marca o vídeo como \"Publicado\" e, se o canal tiver OAuth, ainda desconta 1.600 unidades de cota."),
+                motor_tag="SEM UPLOAD", params=[("Privacidade", "private"), ("Cota", "não usa"), ("Upload", "bloqueado")],
+                custo="Sem custo (nada é enviado)",
+                faz="No modo assistido, deixa o vídeo aguardando aprovação. No automático, tenta enviar e, sem upload, deixa o vídeo como rascunho local.",
+                limitacao="O upload para o YouTube ainda não existe. O agente não marca mais o vídeo como \"Publicado\", não inventa ID e não desconta cota: avisa e guarda o vídeo como rascunho local."),
         10: dict(categoria="qa", implementacao="simulado", servico=None, motor="Valores fixos", motor_tag="Sem dados reais",
                  params=[("Retenção", "74,2% fixo"), ("CTR", "8,6% fixo"), ("Coleta", "não faz")], custo="Sem custo",
-                 faz="Deveria medir retenção e CTR e realimentar o Pesquisador.",
-                 limitacao="Devolve sempre os mesmos números; não consulta a API do YouTube Analytics."),
+                 faz="Deveria medir retenção e CTR e realimentar o Pesquisador. Só roda para vídeos publicados de verdade (hoje, nenhum).",
+                 limitacao="Sem vídeo publicado, só avisa \"nada para medir\" e não mexe no status. Quando houver publicação, ainda devolve números fixos: não consulta o YouTube Analytics."),
     }
     if not sv["ollama"].get("modelo_presente"):  # Ollama no ar mas sem o modelo: prompts caem no texto genérico
         a[4]["limitacao"] = (f"O modelo {MODELO_IA} não está instalado no Ollama: os prompts caem num texto genérico "
@@ -267,6 +268,7 @@ def catalogo() -> Dict[str, Any]:
             {"nome": "Revisão da narração pelo Whisper", "ativa": True, "detalhe": "Corta sobras do Chatterbox e refaz cenas diferentes do roteiro."},
             {"nome": "Teto diário de cota do YouTube", "ativa": True,
              "detalhe": f"Bloqueia novas chamadas ao chegar em {sv['youtube'].get('cota', {}).get('daily_limit', 10000):,} unidades.".replace(",", ".")},
-            {"nome": "Publicação real no YouTube", "ativa": False, "detalhe": "Upload ainda não implementado no Publicador (#09)."},
+            {"nome": "Publicação real no YouTube", "ativa": False,
+             "detalhe": "Upload ainda não implementado: o Publicador (#09) guarda o vídeo como rascunho local, sem marcar como publicado e sem gastar cota."},
         ],
     }

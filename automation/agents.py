@@ -260,9 +260,7 @@ class PublishingAgent(BaseAgent):
                 "message": "Rascunho finalizado e disponível para revisão e agendamento.",
             }
         else:
-            self.update_agent(video, "RUNNING", 60, "Modo Automático: Agendando publicação no YouTube...", "Enviando com privacyStatus=private", cb)
-            time.sleep(1)
-            # Agendamento
+            self.update_agent(video, "RUNNING", 60, "Modo Automático: preparando o envio ao YouTube...", "Envio ao YouTube", cb)
             pub = youtube_client.upload_and_schedule(
                 channel_id=video.batch_id,
                 video_path=video.artifacts.get("video_path", ""),
@@ -273,8 +271,16 @@ class PublishingAgent(BaseAgent):
                 is_shorts=(video.brief.format == "shorts"),
             )
             video.publication = pub
-            video.status = "PUBLISHED"
-            self.update_agent(video, "COMPLETED", 100, f"Publicado com sucesso! Link: {pub.get('url')}", "Publicado", cb)
+            if pub.get("success") and pub.get("youtube_video_id"):
+                # só com um ID devolvido pelo YouTube o vídeo conta como publicado
+                video.status = "SCHEDULED" if pub.get("scheduled_at") else "PUBLISHED"
+                self.update_agent(video, "COMPLETED", 100, f"Enviado ao YouTube: {pub.get('url')}", "Publicado", cb)
+            else:
+                # Sem upload real (ou cota/erro): fica como rascunho local, nunca "Publicado"
+                video.status = "DRAFT_READY"
+                self.update_agent(video, "BLOCKED", 100,
+                                  f"Não publicado: {pub.get('message', 'envio ao YouTube indisponível')} Vídeo guardado como rascunho local.",
+                                  "Envio indisponível", cb)
 
 
 # ==================== 10. ANALISTA ====================
@@ -283,6 +289,13 @@ class AnalyticsAgent(BaseAgent):
         super().__init__(10, "analytics", "Analista")
 
     def execute(self, video: VideoItem, cb: Optional[Callable] = None):
+        # Só há o que medir se o vídeo foi publicado de verdade (com ID do YouTube). Antes este agente
+        # rodava sempre, trocava o status para LEARNING_RECORDED (mostrado como "publicado") e, no modo
+        # assistido, apagava o "aguardando aprovação" do Publicador.
+        if video.status not in ("PUBLISHED", "SCHEDULED") or not (video.publication or {}).get("youtube_video_id"):
+            self.update_agent(video, "BLOCKED", 0, "Nada para medir: o vídeo não foi publicado no YouTube.", "Sem publicação", cb)
+            return
+
         self.update_agent(video, "RUNNING", 50, "Coletando telemetria inicial de visualizações e retenção...", "Métricas de 1h/24h", cb)
         time.sleep(1)
 
