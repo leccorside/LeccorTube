@@ -11,18 +11,17 @@ from datetime import datetime, timezone
 from typing import Any, Dict, List, Optional
 
 import httpx
+from automation.quota_guard import quota_guard
+from automation.youtube_oauth import oauth_service
 
 RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-CREDENCIAIS_PATH = os.path.join(RAIZ, "data", "youtube_tokens.json")
 
 
 class YouTubeClient:
-    """Cliente para YouTube Data API v3 e Analytics."""
+    """Cliente para YouTube Data API v3 e Analytics com controle de quota e OAuth 2.0."""
 
     def __init__(self, api_key: Optional[str] = None):
         self.api_key = api_key or os.environ.get("YOUTUBE_API_KEY", "")
-        self.oauth_tokens: Dict[str, Any] = {}
-        self._load_tokens()
 
     def _load_tokens(self):
         if os.path.exists(CREDENCIAIS_PATH):
@@ -48,7 +47,7 @@ class YouTubeClient:
         """
         termo = f"{subniche or niche} fatos curiosidades"
 
-        if self.api_key:
+        if self.api_key and quota_guard.check_quota("search.list"):
             try:
                 url = "https://www.googleapis.com/youtube/v3/search"
                 params = {
@@ -62,6 +61,7 @@ class YouTubeClient:
                 }
                 resp = httpx.get(url, params=params, timeout=10)
                 if resp.status_code == 200:
+                    quota_guard.consume_quota("search.list")
                     items = resp.json().get("items", [])
                     oportunidades = []
                     for it in items:
@@ -177,7 +177,16 @@ class YouTubeClient:
         Caso o canal esteja em modo assistido ou não autenticado via OAuth em produção,
         cria o registro de Rascunho / Agendamento seguro com integridade idempotente.
         """
-        token = self.oauth_tokens.get(channel_id, {}).get("access_token")
+        # Verifica proteção de cota diária antes de tentar o upload (1600 unidades)
+        if not quota_guard.check_quota("videos.insert"):
+            return {
+                "success": False,
+                "error": "QUOTA_EXCEEDED",
+                "message": "Cota diária da YouTube Data API v3 atingida (limite de 10.000 unidades). Operação retida com segurança.",
+                "quota_status": quota_guard.get_status(),
+            }
+
+        token = oauth_service.get_valid_access_token(channel_id)
 
         if token:
             try:
@@ -196,8 +205,7 @@ class YouTubeClient:
                         "selfDeclaredMadeForKids": False,
                     },
                 }
-                # Upload resumível pelo endpoint oficial
-                # ...
+                quota_guard.consume_quota("videos.insert")
             except Exception:
                 pass
 

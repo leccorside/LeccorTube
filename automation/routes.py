@@ -15,9 +15,87 @@ from automation.models import (
     YouTubeChannel,
 )
 from automation.orchestrator import orchestrator
+from automation.quota_guard import quota_guard
 from automation.storage import storage
+from automation.youtube_oauth import oauth_service
 
 router = APIRouter(prefix="/api/automation", tags=["automation"])
+
+
+@router.get("/quota")
+def get_quota():
+    """Retorna o status da cota diária da YouTube Data API v3 (limite 10.000 unidades)."""
+    return quota_guard.get_status()
+
+
+@router.get("/channels/{channel_id}/auth-url")
+def get_auth_url(channel_id: str, client_id: str = Query(...), redirect_uri: str = Query(...)):
+    """Gera URL de consentimento oficial do Google OAuth 2.0."""
+    url = oauth_service.generate_auth_url(client_id=client_id, redirect_uri=redirect_uri, state=channel_id)
+    return {"auth_url": url}
+
+
+@router.post("/channels/{channel_id}/oauth-callback")
+def oauth_callback(
+    channel_id: str,
+    code: str = Body(..., embed=True),
+    client_id: str = Body(..., embed=True),
+    client_secret: str = Body(..., embed=True),
+    redirect_uri: str = Body(..., embed=True),
+):
+    """Recebe o authorization code, troca por tokens e armazena criptografado em repouso."""
+    try:
+        tokens = oauth_service.exchange_code(
+            channel_id=channel_id,
+            code=code,
+            client_id=client_id,
+            client_secret=client_secret,
+            redirect_uri=redirect_uri,
+        )
+        ch = storage.get_channel(channel_id)
+        if ch:
+            ch.is_authenticated = True
+            storage.save_channel(ch)
+        return {"ok": True, "expires_at": tokens.get("expires_at")}
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=str(e))
+
+
+@router.post("/channels/{channel_id}/revoke")
+def revoke_channel(channel_id: str):
+    """Revoga os tokens do canal e remove as credenciais com segurança."""
+    revoked = oauth_service.revoke_token(channel_id)
+    ch = storage.get_channel(channel_id)
+    if ch:
+        ch.is_authenticated = False
+        storage.save_channel(ch)
+    return {"ok": True, "revoked": revoked}
+
+
+@router.patch("/channels/{channel_id}/settings")
+def update_channel_settings(channel_id: str, settings: Dict[str, Any] = Body(...)):
+    """Atualiza modo operacional (assistido/automático), orçamento diário e regras de publicação."""
+    ch = storage.get_channel(channel_id)
+    if not ch:
+        raise HTTPException(status_code=404, detail="Canal não encontrado")
+
+    if "mode" in settings and settings["mode"] in ("manual", "assisted", "automatic"):
+        ch.mode = settings["mode"]
+    if "daily_budget_usd" in settings:
+        ch.daily_budget_usd = float(settings["daily_budget_usd"])
+    if "max_videos_per_day" in settings:
+        ch.max_videos_per_day = int(settings["max_videos_per_day"])
+    if "publication_policy" in settings:
+        ch.publication_policy = settings["publication_policy"]
+    if "default_niche" in settings:
+        ch.default_niche = settings["default_niche"]
+    if "default_subniche" in settings:
+        ch.default_subniche = settings["default_subniche"]
+    if "default_format" in settings:
+        ch.default_format = settings["default_format"]
+
+    storage.save_channel(ch)
+    return {"ok": True, "channel": ch}
 
 
 @router.get("/dashboard", response_model=DashboardResponse)

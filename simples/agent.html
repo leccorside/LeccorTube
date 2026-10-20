@@ -136,6 +136,12 @@
         <span>Aprendizado IA</span>
       </button>
 
+      <!-- Indicador de Cota Diária da API YouTube -->
+      <div onclick="openQuotaModal()" class="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#111827] border border-[#1F293D] hover:border-amber-500/50 cursor-pointer text-xs text-amber-300 transition-colors" title="Monitoramento de Cota da YouTube API (10.000 pts/dia)">
+        <svg class="w-3.5 h-3.5 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+        <span id="topQuotaText">Cota: 0 / 10k (0%)</span>
+      </div>
+
       <!-- Botão Alternar para Modo Manual -->
       <a href="/simples" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#111827] border border-[#1F293D] hover:border-purple-500/50 text-xs text-slate-300 hover:text-white transition-colors" title="Abrir interface de geração manual">
         <svg class="w-3.5 h-3.5 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
@@ -549,14 +555,113 @@
     </div>
   </div>
 
-  <!-- ==================== MODAL DE CANAIS ==================== -->
+  <!-- ==================== MODAL DE CANAIS & CONFIGURAÇÃO ==================== -->
   <div id="channelModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-    <div class="bg-[#0D1322] border border-[#1A253A] rounded-2xl max-w-md w-full p-6 shadow-2xl relative">
+    <div class="bg-[#0D1322] border border-[#1A253A] rounded-2xl max-w-xl w-full p-6 shadow-2xl relative max-h-[90vh] flex flex-col">
       <div class="flex items-center justify-between pb-4 border-b border-slate-800">
-        <h3 class="text-base font-bold text-white">Canais YouTube Conectados</h3>
+        <div>
+          <h3 class="text-base font-bold text-white">Gerenciamento de Canais & Políticas</h3>
+          <p class="text-xs text-slate-400">Autenticação OAuth 2.0, modo operacional e limites</p>
+        </div>
         <button onclick="closeChannelModal()" class="w-8 h-8 rounded-lg bg-slate-800 hover:bg-slate-700 flex items-center justify-center text-slate-400 hover:text-white">✕</button>
       </div>
-      <div id="channelModalList" class="py-4 space-y-2.5 text-xs"></div>
+
+      <div class="flex-1 overflow-y-auto py-4 space-y-4 custom-scrollbar text-xs">
+        <!-- Lista de Canais -->
+        <div id="channelModalList" class="space-y-3"></div>
+
+        <!-- Formulário de Políticas do Canal Ativo -->
+        <div class="bg-[#111827] p-4 rounded-xl border border-slate-800 space-y-3">
+          <h4 class="font-bold text-slate-200 text-xs">Políticas de Publicação do Canal Ativo</h4>
+          
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label class="text-[11px] text-slate-400 font-medium">Modo Operacional</label>
+              <select id="settingChannelMode" class="w-full mt-1 bg-[#070B14] border border-slate-700 rounded-lg p-2 text-slate-200">
+                <option value="assisted">Modo Assistido (Exige Aprovação Humana)</option>
+                <option value="automatic">Modo Automático (Autorização Prévia e QA)</option>
+                <option value="manual">Modo Manual</option>
+              </select>
+            </div>
+            <div>
+              <label class="text-[11px] text-slate-400 font-medium">Política de Upload</label>
+              <select id="settingPubPolicy" class="w-full mt-1 bg-[#070B14] border border-slate-700 rounded-lg p-2 text-slate-200">
+                <option value="draft">Rascunho Interno</option>
+                <option value="schedule">Upload Privado + Agendamento ISO 8601</option>
+                <option value="publish_after_qa">Publicação Imediata após QA</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label class="text-[11px] text-slate-400 font-medium">Máx. Vídeos por Dia</label>
+              <input type="number" id="settingMaxVideos" min="1" max="10" value="3" class="w-full mt-1 bg-[#070B14] border border-slate-700 rounded-lg p-2 text-slate-200 font-mono">
+            </div>
+            <div>
+              <label class="text-[11px] text-slate-400 font-medium">Orçamento Diário (USD)</label>
+              <input type="number" id="settingBudget" min="1" max="100" value="20.0" step="5" class="w-full mt-1 bg-[#070B14] border border-slate-700 rounded-lg p-2 text-slate-200 font-mono">
+            </div>
+          </div>
+
+          <button onclick="saveChannelSettings()" class="w-full py-2 rounded-lg bg-purple-600 hover:bg-purple-500 text-white font-semibold text-xs shadow transition-colors">
+            Salvar Políticas do Canal
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== MODAL DE COTA DA API YOUTUBE ==================== -->
+  <div id="quotaModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-[#0D1322] border border-[#1A253A] rounded-2xl max-w-md w-full p-6 shadow-2xl relative">
+      <div class="flex items-center justify-between pb-4 border-b border-slate-800">
+        <div class="flex items-center gap-2">
+          <div class="w-8 h-8 rounded-lg bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+          </div>
+          <div>
+            <h3 class="text-base font-bold text-white">Cota YouTube Data API v3</h3>
+            <p class="text-xs text-slate-400">Proteção preventiva contra estouro de limites</p>
+          </div>
+        </div>
+        <button onclick="closeQuotaModal()" class="w-8 h-8 rounded-lg bg-slate-800 hover:bg-slate-700 flex items-center justify-center text-slate-400 hover:text-white">✕</button>
+      </div>
+
+      <div class="py-4 space-y-4 text-xs">
+        <div>
+          <div class="flex items-center justify-between font-mono">
+            <span class="text-slate-400">Consumo Hoje</span>
+            <span id="quotaModalNumbers" class="text-amber-400 font-bold">0 / 10.000 pts (0%)</span>
+          </div>
+          <div class="w-full bg-slate-800 rounded-full h-2.5 mt-2 overflow-hidden">
+            <div id="quotaModalBar" class="bg-amber-400 h-full rounded-full transition-all duration-500" style="width: 0%"></div>
+          </div>
+        </div>
+
+        <div class="bg-[#111827] p-3 rounded-xl border border-slate-800 space-y-1.5 text-[11px] text-slate-300">
+          <div class="flex justify-between">
+            <span class="text-slate-400">Limite Diário (Hard Cap):</span>
+            <span class="font-mono text-white">10.000 unidades</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-slate-400">Alerta de Atenção (Soft Cap):</span>
+            <span class="font-mono text-amber-400">8.000 unidades</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-slate-400">Custo por Busca (search.list):</span>
+            <span class="font-mono text-cyan-400">100 pts</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-slate-400">Custo por Upload (videos.insert):</span>
+            <span class="font-mono text-purple-400">1.600 pts</span>
+          </div>
+        </div>
+
+        <p class="text-[11px] text-slate-400 leading-relaxed">
+          O <strong>CostAndQuotaGuard</strong> suspende automaticamente novas operações antes de esgotar o limite gratuito do Google, prevenindo erros 403 e garantindo recuperação de falhas sem perda dos rascunhos.
+        </p>
+      </div>
     </div>
   </div>
 
@@ -940,13 +1045,26 @@
         const res = await fetch('/api/automation/channels');
         if (res.ok) {
           const channels = await res.json();
+          const activeChId = document.getElementById('channelSelect').value;
+          const activeCh = channels.find(c => c.id === activeChId) || channels[0];
+          
+          if (activeCh) {
+            document.getElementById('settingChannelMode').value = activeCh.mode || 'assisted';
+            document.getElementById('settingPubPolicy').value = activeCh.publication_policy || 'draft';
+            document.getElementById('settingMaxVideos').value = activeCh.max_videos_per_day || 3;
+            document.getElementById('settingBudget').value = activeCh.daily_budget_usd || 20.0;
+          }
+
           list.innerHTML = channels.map(c => `
             <div class="bg-[#111827] p-3 rounded-xl border border-slate-800 flex items-center justify-between">
               <div>
                 <p class="font-bold text-slate-200">${c.title}</p>
-                <p class="text-[10px] text-slate-400">${c.handle} • Modo: <span class="text-amber-400 font-semibold">${c.mode.toUpperCase()}</span></p>
+                <p class="text-[10px] text-slate-400">${c.handle} • Modo: <span class="text-amber-400 font-semibold">${(c.mode || 'assisted').toUpperCase()}</span> • Orçamento: $${c.daily_budget_usd}/dia</p>
               </div>
-              <span class="text-[10px] font-mono text-emerald-400 px-2 py-0.5 rounded bg-emerald-500/10 border border-emerald-500/30 font-bold">AUTORIZADO</span>
+              <div class="flex items-center gap-2">
+                <span class="text-[10px] font-mono text-emerald-400 px-2 py-0.5 rounded bg-emerald-500/10 border border-emerald-500/30 font-bold">AUTORIZADO</span>
+                <button onclick="revokeChannel('${c.id}')" class="text-[10px] text-rose-400 hover:text-rose-300 font-medium px-2 py-1 rounded bg-rose-950/40 hover:bg-rose-950/70 border border-rose-800/40" title="Revogar acesso OAuth">Revogar</button>
+              </div>
             </div>
           `).join('');
         }
@@ -956,6 +1074,76 @@
     }
     function closeChannelModal() {
       document.getElementById('channelModal').classList.add('hidden');
+    }
+
+    async function saveChannelSettings() {
+      const channelId = document.getElementById('channelSelect').value;
+      const mode = document.getElementById('settingChannelMode').value;
+      const pubPolicy = document.getElementById('settingPubPolicy').value;
+      const maxVideos = parseInt(document.getElementById('settingMaxVideos').value, 10);
+      const budget = parseFloat(document.getElementById('settingBudget').value);
+
+      try {
+        const res = await fetch(`/api/automation/channels/${channelId}/settings`, {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            mode: mode,
+            publication_policy: pubPolicy,
+            max_videos_per_day: maxVideos,
+            daily_budget_usd: budget,
+          })
+        });
+        if (res.ok) {
+          showToast(`Políticas salvas com sucesso! Modo: ${mode.toUpperCase()}`, "emerald");
+          closeChannelModal();
+          loadChannels();
+          syncDashboard();
+        } else {
+          showToast("Erro ao salvar políticas do canal.", "rose");
+        }
+      } catch (e) {
+        showToast("Erro ao conectar com o servidor.", "rose");
+      }
+    }
+
+    async function revokeChannel(channelId) {
+      if (!confirm("Tem certeza que deseja revogar o acesso OAuth deste canal?")) return;
+      try {
+        const res = await fetch(`/api/automation/channels/${channelId}/revoke`, { method: 'POST' });
+        if (res.ok) {
+          showToast("Acesso revogado com sucesso.", "amber");
+          openChannelModal();
+          loadChannels();
+        }
+      } catch (e) {
+        showToast("Erro ao revogar canal.", "rose");
+      }
+    }
+
+    // Modal e Telemetria de Quota
+    async function syncQuota() {
+      try {
+        const res = await fetch('/api/automation/quota');
+        if (res.ok) {
+          const q = await res.json();
+          document.getElementById('topQuotaText').textContent = `Cota: ${q.units_used.toLocaleString()} / 10k (${q.percent_used}%)`;
+          document.getElementById('quotaModalNumbers').textContent = `${q.units_used.toLocaleString()} / 10.000 pts (${q.percent_used}%)`;
+          const bar = document.getElementById('quotaModalBar');
+          bar.style.width = `${Math.min(100, q.percent_used)}%`;
+          bar.className = q.is_hard_cap ? "bg-rose-500 h-full rounded-full" : (q.is_soft_cap ? "bg-amber-400 h-full rounded-full" : "bg-emerald-400 h-full rounded-full");
+        }
+      } catch (e) {
+        console.warn("Erro ao obter cota da API:", e);
+      }
+    }
+
+    function openQuotaModal() {
+      syncQuota();
+      document.getElementById('quotaModal').classList.remove('hidden');
+    }
+    function closeQuotaModal() {
+      document.getElementById('quotaModal').classList.add('hidden');
     }
 
     // Toast
@@ -1008,6 +1196,7 @@
       initAgentCards();
       loadChannels();
       syncDashboard();
+      syncQuota();
 
       // Inicia SSE para atualização instantânea
       try {
@@ -1026,15 +1215,16 @@
           const payload = JSON.parse(e.data);
           applyDashboardState(payload);
         });
-        evtSource.addEventListener('batch.started', () => syncDashboard());
-        evtSource.addEventListener('batch.completed', () => syncDashboard());
-        evtSource.addEventListener('batch.stopped', () => syncDashboard());
+        evtSource.addEventListener('batch.started', () => { syncDashboard(); syncQuota(); });
+        evtSource.addEventListener('batch.completed', () => { syncDashboard(); syncQuota(); });
+        evtSource.addEventListener('batch.stopped', () => { syncDashboard(); syncQuota(); });
       } catch (e) {
         console.warn("SSE indisponível, usando polling reativo.");
       }
 
-      // Polling de garantia a cada 2.5s
+      // Polling de garantia a cada 2.5s para o dashboard e 10s para a cota
       setInterval(syncDashboard, 2500);
+      setInterval(syncQuota, 10000);
     });
   </script>
 </body>
