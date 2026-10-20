@@ -154,6 +154,34 @@ class YouTubeClient:
                     "confidence": 0.85,
                 }
             ],
+            "motivacao": [
+                {
+                    "title": "A Regra dos 2 Minutos que Destrói a Procrastinação",
+                    "topic": "Disciplina e Foco",
+                    "hook": "Se você não consegue vencer a preguiça, essa técnica neurológica vai mudar seu dia.",
+                    "demand_score": 93,
+                    "competition_score": 42,
+                    "confidence": 0.92,
+                },
+                {
+                    "title": "Como Reprogramar Sua Mente para Vencer em Silêncio",
+                    "topic": "Mentalidade e Estoicismo",
+                    "hook": "As pessoas de maior sucesso no mundo nunca contam seus planos antes da hora.",
+                    "demand_score": 95,
+                    "competition_score": 48,
+                    "confidence": 0.94,
+                }
+            ],
+            "motivacional": [
+                {
+                    "title": "A Regra dos 2 Minutos que Destrói a Procrastinação",
+                    "topic": "Disciplina e Foco",
+                    "hook": "Se você não consegue vencer a preguiça, essa técnica neurológica vai mudar seu dia.",
+                    "demand_score": 93,
+                    "competition_score": 42,
+                    "confidence": 0.92,
+                }
+            ],
         }
 
         chave_nicho = niche.lower()
