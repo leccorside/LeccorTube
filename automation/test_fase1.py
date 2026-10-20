@@ -6,11 +6,20 @@ import time
 RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, RAIZ)
 
-from fastapi.testclient import TestClient
-from simples.server import app
-from automation.quota_guard import CostAndQuotaGuard, quota_guard
-from automation.youtube_oauth import YouTubeOAuthService, oauth_service
-from automation.storage import storage
+# Isolamento: banco, cota e tokens numa pasta temporária. Precisa vir ANTES de importar a automação
+# (antes, cada execução criava lotes "Explorando IA e Robótica" em data/automation.db).
+from automation.paths import isolar_para_teste  # noqa: E402
+
+DADOS_TESTE = isolar_para_teste()
+
+from fastapi.testclient import TestClient  # noqa: E402
+from simples.server import app  # noqa: E402
+from automation.quota_guard import CostAndQuotaGuard, quota_guard  # noqa: E402
+from automation.youtube_oauth import YouTubeOAuthService, oauth_service  # noqa: E402
+from automation.storage import storage  # noqa: E402
+
+if not os.path.abspath(storage.db_path).startswith(os.path.abspath(DADOS_TESTE)):
+    sys.exit(f"ABORTADO: o teste usaria o banco real ({storage.db_path}).")
 
 
 def test_fase1_suite():
@@ -21,7 +30,7 @@ def test_fase1_suite():
 
     # 1. Teste do CostAndQuotaGuard
     print("\n--- 1. Testando CostAndQuotaGuard ---")
-    tmp_quota = os.path.join(RAIZ, "data", "test_quota_usage.json")
+    tmp_quota = os.path.join(DADOS_TESTE, "test_quota_usage.json")
     if os.path.exists(tmp_quota):
         try:
             os.remove(tmp_quota)

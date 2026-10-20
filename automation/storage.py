@@ -19,7 +19,9 @@ from automation.models import (
     YouTubeChannel,
 )
 
-DB_PATH = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "data", "automation.db")
+from automation.paths import pasta_dados  # noqa: E402
+
+DB_PATH = os.path.join(pasta_dados(), "automation.db")  # LECCORTUBE_DATA_DIR isola os testes
 
 
 class Storage:

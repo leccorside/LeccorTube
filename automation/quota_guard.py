@@ -12,8 +12,9 @@ import time
 from datetime import datetime, timezone
 from typing import Any, Dict, Optional
 
-RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-QUOTA_FILE = os.path.join(RAIZ, "data", "quota_usage.json")
+from automation.paths import pasta_dados  # noqa: E402
+
+QUOTA_FILE = os.path.join(pasta_dados(), "quota_usage.json")  # LECCORTUBE_DATA_DIR isola os testes
 
 # Custos oficiais da YouTube Data API v3 em unidades de quota por método
 API_COSTS = {

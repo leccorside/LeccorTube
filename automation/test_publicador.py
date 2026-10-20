@@ -12,6 +12,11 @@ RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, RAIZ)
 sys.path.insert(0, os.path.join(RAIZ, "tools", "diag"))
 
+# Por segurança, mesmo sem gravar nada: pasta de dados temporária (o banco real nem é aberto)
+from automation.paths import isolar_para_teste  # noqa: E402
+
+DADOS_TESTE = isolar_para_teste()
+
 from automation.agents import AnalyticsAgent, PublishingAgent  # noqa: E402
 from automation.models import AGENTS_METADATA, AgentState, VideoBrief, VideoItem  # noqa: E402
 from automation.quota_guard import quota_guard  # noqa: E402
@@ -64,7 +69,7 @@ def test_publicador():
     # 5. Nenhuma unidade de cota foi gasta
     cota_depois = quota_guard.get_status()["units_used"]
     assert cota_depois == cota_antes, (cota_antes, cota_depois)
-    print(f"[OK] cota real intacta ({cota_antes} -> {cota_depois} unidades)")
+    print(f"[OK] cota intacta ({cota_antes} -> {cota_depois} unidades, pasta de dados temporária)")
 
     print("\nTODOS OS TESTES DO PUBLICADOR PASSARAM")
 

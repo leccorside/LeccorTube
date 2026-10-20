@@ -5,8 +5,18 @@ import sys
 RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, RAIZ)
 
-from fastapi.testclient import TestClient
-from simples.server import app
+# Isolamento: banco, cota e tokens numa pasta temporária. Precisa vir ANTES de importar a automação
+# (antes, cada execução criava lotes "Explorando Computação Quântica" em data/automation.db).
+from automation.paths import isolar_para_teste  # noqa: E402
+
+DADOS_TESTE = isolar_para_teste()
+
+from fastapi.testclient import TestClient  # noqa: E402
+from simples.server import app  # noqa: E402
+from automation.storage import storage  # noqa: E402
+
+if not os.path.abspath(storage.db_path).startswith(os.path.abspath(DADOS_TESTE)):
+    sys.exit(f"ABORTADO: o teste usaria o banco real ({storage.db_path}).")
 
 def test_pipeline():
     client = TestClient(app)

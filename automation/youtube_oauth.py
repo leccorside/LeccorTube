@@ -14,9 +14,11 @@ from typing import Any, Dict, Optional
 
 import httpx
 
-RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-TOKENS_PATH = os.path.join(RAIZ, "data", "youtube_tokens.json")
-CREDENTIALS_PATH = os.path.join(RAIZ, "data", "google_credentials.json")
+from automation.paths import pasta_dados  # noqa: E402
+
+# LECCORTUBE_DATA_DIR isola os testes (não tocam nos tokens e credenciais reais)
+TOKENS_PATH = os.path.join(pasta_dados(), "youtube_tokens.json")
+CREDENTIALS_PATH = os.path.join(pasta_dados(), "google_credentials.json")
 
 # Escopos estritamente necessários para upload, gerenciamento de rascunhos e analytics
 OAUTH_SCOPES = [
