@@ -201,6 +201,11 @@ class Storage:
                 ch.max_videos_per_day, ch.daily_budget_usd, ch.created_at
             ))
 
+    def delete_channel(self, channel_id: str) -> bool:
+        with self._lock, self._get_connection() as conn:
+            cur = conn.execute("DELETE FROM channels WHERE id = ?", (channel_id,))
+            return cur.rowcount > 0
+
     # ==================== BATCHES ====================
 
     def save_batch(self, batch: Batch):

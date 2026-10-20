@@ -563,10 +563,62 @@
           <h3 class="text-base font-bold text-white">Gerenciamento de Canais & Políticas</h3>
           <p class="text-xs text-slate-400">Autenticação OAuth 2.0, modo operacional e limites</p>
         </div>
-        <button onclick="closeChannelModal()" class="w-8 h-8 rounded-lg bg-slate-800 hover:bg-slate-700 flex items-center justify-center text-slate-400 hover:text-white">✕</button>
+        <div class="flex items-center gap-2">
+          <button onclick="toggleNewChannelForm()" class="px-2.5 py-1.5 rounded-lg bg-purple-600 hover:bg-purple-500 text-white font-medium text-xs flex items-center gap-1 shadow-sm transition-colors">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+            <span>Novo Canal</span>
+          </button>
+          <button onclick="closeChannelModal()" class="w-8 h-8 rounded-lg bg-slate-800 hover:bg-slate-700 flex items-center justify-center text-slate-400 hover:text-white">✕</button>
+        </div>
       </div>
 
       <div class="flex-1 overflow-y-auto py-4 space-y-4 custom-scrollbar text-xs">
+        <!-- Formulário para Criar Novo Canal (Escondido por padrão) -->
+        <div id="newChannelCard" class="hidden bg-[#131B2E] p-4 rounded-xl border border-purple-500/40 space-y-3">
+          <div class="flex items-center justify-between">
+            <h4 class="font-bold text-purple-300 text-xs flex items-center gap-1.5">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+              Adicionar Novo Canal do YouTube
+            </h4>
+            <button onclick="toggleNewChannelForm()" class="text-slate-400 hover:text-white text-xs">✕ Fechar</button>
+          </div>
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label class="text-[11px] text-slate-400 font-medium">Nome do Canal *</label>
+              <input type="text" id="newChTitle" placeholder="Ex: Fatos Sombrios" class="w-full mt-1 bg-[#070B14] border border-slate-700 rounded-lg p-2 text-slate-200 focus:border-purple-500 outline-none">
+            </div>
+            <div>
+              <label class="text-[11px] text-slate-400 font-medium">Identificador (@handle)</label>
+              <input type="text" id="newChHandle" placeholder="Ex: @fatossombrios" class="w-full mt-1 bg-[#070B14] border border-slate-700 rounded-lg p-2 text-slate-200 focus:border-purple-500 outline-none">
+            </div>
+          </div>
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label class="text-[11px] text-slate-400 font-medium">Nicho Padrão</label>
+              <select id="newChNiche" class="w-full mt-1 bg-[#070B14] border border-slate-700 rounded-lg p-2 text-slate-200">
+                <option value="curiosidades">Curiosidades / Fatos</option>
+                <option value="tecnologia">Tecnologia & IA</option>
+                <option value="terror">Terror & Mistérios</option>
+                <option value="financas">Finanças & Dinheiro</option>
+                <option value="saude">Saúde & Bem-Estar</option>
+                <option value="historia">História & Guerras</option>
+              </select>
+            </div>
+            <div>
+              <label class="text-[11px] text-slate-400 font-medium">Modo Inicial</label>
+              <select id="newChMode" class="w-full mt-1 bg-[#070B14] border border-slate-700 rounded-lg p-2 text-slate-200">
+                <option value="assisted">Modo Assistido (Requer Aprovação)</option>
+                <option value="automatic">Modo Automático</option>
+                <option value="manual">Modo Manual</option>
+              </select>
+            </div>
+          </div>
+          <div class="flex items-center justify-end gap-2 pt-1">
+            <button onclick="toggleNewChannelForm()" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs">Cancelar</button>
+            <button onclick="saveNewChannel()" class="px-4 py-1.5 rounded-lg bg-purple-600 hover:bg-purple-500 text-white font-semibold text-xs shadow">Salvar Canal</button>
+          </div>
+        </div>
+
         <!-- Lista de Canais -->
         <div id="channelModalList" class="space-y-3"></div>
 
@@ -607,6 +659,50 @@
           <button onclick="saveChannelSettings()" class="w-full py-2 rounded-lg bg-purple-600 hover:bg-purple-500 text-white font-semibold text-xs shadow transition-colors">
             Salvar Políticas do Canal
           </button>
+        </div>
+      </div>
+    </div>
+  <!-- ==================== MODAL DE AUTORIZAÇÃO OAUTH ==================== -->
+  <div id="oauthModalBox" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-[#0D1322] border border-[#1A253A] rounded-2xl max-w-md w-full p-6 shadow-2xl relative">
+      <div class="flex items-center justify-between pb-4 border-b border-slate-800">
+        <div class="flex items-center gap-2">
+          <div class="w-8 h-8 rounded-lg bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+          </div>
+          <div>
+            <h3 class="text-base font-bold text-white">Autorizar Canal YouTube</h3>
+            <p id="oauthModalChannelTitle" class="text-xs text-purple-400 font-medium">Canal Selecionado</p>
+          </div>
+        </div>
+        <button onclick="closeOAuthModal()" class="w-8 h-8 rounded-lg bg-slate-800 hover:bg-slate-700 flex items-center justify-center text-slate-400 hover:text-white">✕</button>
+      </div>
+
+      <input type="hidden" id="oauthTargetChannelId">
+
+      <div class="py-4 space-y-4 text-xs">
+        <div class="bg-[#111827] p-3.5 rounded-xl border border-slate-800 space-y-2">
+          <h4 class="font-bold text-slate-200">1. Ativação Rápida (Recomendada)</h4>
+          <p class="text-[11px] text-slate-400">Ativa o canal imediatamente para a esteira autônoma e produção de vídeos, utilizando a conta configurada no ambiente.</p>
+          <button onclick="confirmFastAuthorize()" class="w-full mt-2 py-2 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-semibold text-xs shadow transition-colors flex items-center justify-center gap-1.5">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+            <span>Autorizar Canal Imediatamente</span>
+          </button>
+        </div>
+
+        <div class="bg-[#111827] p-3.5 rounded-xl border border-slate-800 space-y-2">
+          <h4 class="font-bold text-slate-200">2. Conexão Google Cloud OAuth 2.0</h4>
+          <p class="text-[11px] text-slate-400">Gere uma URL de consentimento oficial para autenticar com credenciais da GCP com escopo <code class="text-purple-300">youtube.upload</code>.</p>
+          
+          <div class="space-y-2 pt-1">
+            <div>
+              <label class="text-[11px] text-slate-400">Google Client ID</label>
+              <input type="text" id="oauthClientIdInput" placeholder="xxxx.apps.googleusercontent.com" class="w-full mt-1 bg-[#070B14] border border-slate-700 rounded-lg p-2 text-slate-200 font-mono text-[11px]">
+            </div>
+            <button onclick="generateGoogleAuthUrl()" class="w-full py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 font-semibold text-xs border border-slate-700 transition-colors">
+              Abrir Página de Consentimento Google
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -1036,7 +1132,75 @@
       document.getElementById('learningModal').classList.add('hidden');
     }
 
-    // Modal de Canais
+    // ==================== GERENCIAMENTO DE CANAIS & OAUTH ====================
+    function toggleNewChannelForm() {
+      const card = document.getElementById('newChannelCard');
+      card.classList.toggle('hidden');
+      if (!card.classList.contains('hidden')) {
+        document.getElementById('newChTitle').focus();
+      }
+    }
+
+    async function saveNewChannel() {
+      const title = document.getElementById('newChTitle').value.trim();
+      const handle = document.getElementById('newChHandle').value.trim();
+      const niche = document.getElementById('newChNiche').value;
+      const mode = document.getElementById('newChMode').value;
+
+      if (!title) {
+        showToast("Digite o nome do canal.", "rose");
+        return;
+      }
+
+      try {
+        const res = await fetch('/api/automation/channels', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            title: title,
+            handle: handle,
+            default_niche: niche,
+            mode: mode,
+            is_authenticated: false
+          })
+        });
+
+        if (res.ok) {
+          const data = await res.json();
+          showToast(`Canal "${data.channel.title}" cadastrado com sucesso!`, "emerald");
+          document.getElementById('newChTitle').value = '';
+          document.getElementById('newChHandle').value = '';
+          toggleNewChannelForm();
+          await loadChannels();
+          document.getElementById('channelSelect').value = data.channel.id;
+          openChannelModal();
+        } else {
+          const err = await res.json();
+          showToast(`Erro ao cadastrar canal: ${err.detail || 'Falha'}`, "rose");
+        }
+      } catch (e) {
+        showToast("Erro de comunicação ao salvar canal.", "rose");
+      }
+    }
+
+    async function deleteChannel(channelId, channelTitleEncoded) {
+      const title = decodeURIComponent(channelTitleEncoded);
+      if (!confirm(`Deseja realmente excluir o canal "${title}"?`)) return;
+
+      try {
+        const res = await fetch(`/api/automation/channels/${channelId}`, { method: 'DELETE' });
+        if (res.ok) {
+          showToast(`Canal "${title}" removido com sucesso.`, "amber");
+          await loadChannels();
+          openChannelModal();
+        } else {
+          showToast("Erro ao remover canal.", "rose");
+        }
+      } catch (e) {
+        showToast("Falha ao comunicar com o servidor.", "rose");
+      }
+    }
+
     async function openChannelModal() {
       document.getElementById('channelModal').classList.remove('hidden');
       const list = document.getElementById('channelModalList');
@@ -1055,23 +1219,43 @@
             document.getElementById('settingBudget').value = activeCh.daily_budget_usd || 20.0;
           }
 
-          list.innerHTML = channels.map(c => `
-            <div class="bg-[#111827] p-3 rounded-xl border border-slate-800 flex items-center justify-between">
-              <div>
-                <p class="font-bold text-slate-200">${c.title}</p>
-                <p class="text-[10px] text-slate-400">${c.handle} • Modo: <span class="text-amber-400 font-semibold">${(c.mode || 'assisted').toUpperCase()}</span> • Orçamento: $${c.daily_budget_usd}/dia</p>
+          if (channels.length === 0) {
+            list.innerHTML = '<p class="text-slate-400 p-3 bg-slate-900 rounded-xl text-center">Nenhum canal cadastrado. Clique em "+ Novo Canal" acima.</p>';
+            return;
+          }
+
+          list.innerHTML = channels.map(c => {
+            const isAuth = Boolean(c.is_authenticated);
+            const statusBadge = isAuth
+              ? `<span class="text-[10px] font-mono text-emerald-400 px-2 py-0.5 rounded bg-emerald-500/10 border border-emerald-500/30 font-bold">AUTORIZADO</span>`
+              : `<span class="text-[10px] font-mono text-rose-400 px-2 py-0.5 rounded bg-rose-500/10 border border-rose-500/30 font-bold">DESCONECTADO</span>`;
+            
+            const authActionBtn = isAuth
+              ? `<button onclick="revokeChannel('${c.id}')" class="text-[10px] text-rose-400 hover:text-rose-300 font-medium px-2 py-1 rounded bg-rose-950/40 hover:bg-rose-950/70 border border-rose-800/40 transition-colors" title="Revogar acesso OAuth deste canal">Revogar</button>`
+              : `<button onclick="openOAuthModal('${c.id}', '${encodeURIComponent(c.title)}')" class="text-[10px] text-emerald-400 hover:text-emerald-300 font-medium px-2.5 py-1 rounded bg-emerald-950/40 hover:bg-emerald-950/70 border border-emerald-800/40 flex items-center gap-1 transition-colors" title="Autorizar canal no Google OAuth">Conectar</button>`;
+
+            return `
+              <div class="bg-[#111827] p-3 rounded-xl border border-slate-800 flex items-center justify-between hover:border-slate-700 transition-colors">
+                <div>
+                  <p class="font-bold text-slate-200">${c.title}</p>
+                  <p class="text-[10px] text-slate-400">${c.handle || '@' + c.id} • Modo: <span class="text-amber-400 font-semibold">${(c.mode || 'assisted').toUpperCase()}</span> • Orçamento: $${c.daily_budget_usd}/dia</p>
+                </div>
+                <div class="flex items-center gap-2">
+                  ${statusBadge}
+                  ${authActionBtn}
+                  <button onclick="deleteChannel('${c.id}', '${encodeURIComponent(c.title)}')" class="text-slate-500 hover:text-rose-400 p-1 transition-colors ml-1" title="Excluir canal">
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+                  </button>
+                </div>
               </div>
-              <div class="flex items-center gap-2">
-                <span class="text-[10px] font-mono text-emerald-400 px-2 py-0.5 rounded bg-emerald-500/10 border border-emerald-500/30 font-bold">AUTORIZADO</span>
-                <button onclick="revokeChannel('${c.id}')" class="text-[10px] text-rose-400 hover:text-rose-300 font-medium px-2 py-1 rounded bg-rose-950/40 hover:bg-rose-950/70 border border-rose-800/40" title="Revogar acesso OAuth">Revogar</button>
-              </div>
-            </div>
-          `).join('');
+            `;
+          }).join('');
         }
       } catch (e) {
         list.innerHTML = '<p class="text-rose-400">Erro ao listar canais.</p>';
       }
     }
+
     function closeChannelModal() {
       document.getElementById('channelModal').classList.add('hidden');
     }
@@ -1097,7 +1281,7 @@
         if (res.ok) {
           showToast(`Políticas salvas com sucesso! Modo: ${mode.toUpperCase()}`, "emerald");
           closeChannelModal();
-          loadChannels();
+          await loadChannels();
           syncDashboard();
         } else {
           showToast("Erro ao salvar políticas do canal.", "rose");
@@ -1112,12 +1296,61 @@
       try {
         const res = await fetch(`/api/automation/channels/${channelId}/revoke`, { method: 'POST' });
         if (res.ok) {
-          showToast("Acesso revogado com sucesso.", "amber");
+          showToast("Acesso OAuth revogado com sucesso.", "amber");
+          await loadChannels();
           openChannelModal();
-          loadChannels();
+        } else {
+          showToast("Erro ao revogar canal.", "rose");
         }
       } catch (e) {
-        showToast("Erro ao revogar canal.", "rose");
+        showToast("Erro de comunicação ao revogar.", "rose");
+      }
+    }
+
+    // Modal de Conexão OAuth
+    function openOAuthModal(channelId, channelTitleEncoded) {
+      document.getElementById('oauthTargetChannelId').value = channelId;
+      document.getElementById('oauthModalChannelTitle').textContent = `Canal: ${decodeURIComponent(channelTitleEncoded)}`;
+      document.getElementById('oauthModalBox').classList.remove('hidden');
+    }
+
+    function closeOAuthModal() {
+      document.getElementById('oauthModalBox').classList.add('hidden');
+    }
+
+    async function confirmFastAuthorize() {
+      const channelId = document.getElementById('oauthTargetChannelId').value;
+      try {
+        const res = await fetch(`/api/automation/channels/${channelId}/authorize`, { method: 'POST' });
+        if (res.ok) {
+          showToast("Canal autorizado com sucesso!", "emerald");
+          closeOAuthModal();
+          await loadChannels();
+          openChannelModal();
+        } else {
+          showToast("Erro ao autorizar canal.", "rose");
+        }
+      } catch (e) {
+        showToast("Falha de conexão ao autorizar.", "rose");
+      }
+    }
+
+    async function generateGoogleAuthUrl() {
+      const channelId = document.getElementById('oauthTargetChannelId').value;
+      const clientId = document.getElementById('oauthClientIdInput').value.trim() || 'default-client.apps.googleusercontent.com';
+      const redirectUri = window.location.origin + '/api/automation/oauth/callback';
+
+      try {
+        const res = await fetch(`/api/automation/channels/${channelId}/auth-url?client_id=${encodeURIComponent(clientId)}&redirect_uri=${encodeURIComponent(redirectUri)}`);
+        if (res.ok) {
+          const data = await res.json();
+          window.open(data.auth_url, '_blank');
+          showToast("Página de consentimento do Google aberta em nova aba.", "purple");
+        } else {
+          showToast("Erro ao gerar URL de autorização.", "rose");
+        }
+      } catch (e) {
+        showToast("Erro ao conectar com serviço OAuth.", "rose");
       }
     }
 

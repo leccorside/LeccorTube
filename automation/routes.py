@@ -69,7 +69,65 @@ def revoke_channel(channel_id: str):
     if ch:
         ch.is_authenticated = False
         storage.save_channel(ch)
-    return {"ok": True, "revoked": revoked}
+    return {"ok": True, "revoked": True, "channel": ch}
+
+
+@router.post("/channels/{channel_id}/authorize")
+def authorize_channel(channel_id: str):
+    """Marca o canal como autorizado e pronto para uso."""
+    ch = storage.get_channel(channel_id)
+    if not ch:
+        raise HTTPException(status_code=404, detail="Canal não encontrado")
+    ch.is_authenticated = True
+    storage.save_channel(ch)
+    return {"ok": True, "channel": ch}
+
+
+@router.delete("/channels/{channel_id}")
+def delete_channel(channel_id: str):
+    """Exclui o canal cadastrado e revoga suas credenciais."""
+    oauth_service.revoke_token(channel_id)
+    deleted = storage.delete_channel(channel_id)
+    if not deleted:
+        raise HTTPException(status_code=404, detail="Canal não encontrado")
+    return {"ok": True, "deleted": True}
+
+
+@router.post("/channels")
+def create_channel(data: Dict[str, Any] = Body(...)):
+    """Cadastra um novo canal no LeccorTube."""
+    title = data.get("title", "").strip()
+    if not title:
+        raise HTTPException(status_code=400, detail="O título do canal é obrigatório")
+
+    import re
+    handle = data.get("handle", "").strip()
+    raw_id = data.get("id") or (handle.replace("@", "") if handle else re.sub(r"[^a-zA-Z0-9_]", "", title.lower()))
+    channel_id = raw_id.strip().lower() or f"ch_{int(time.time())}"
+
+    # Evita sobrescrever se já existir com ID diferente
+    existing = storage.get_channel(channel_id)
+    if existing:
+        channel_id = f"{channel_id}_{int(time.time()) % 1000}"
+
+    new_channel = YouTubeChannel(
+        id=channel_id,
+        title=title,
+        handle=handle if handle.startswith("@") or not handle else f"@{handle}",
+        subscribers_count=int(data.get("subscribers_count", 0)),
+        thumbnail_url=data.get("thumbnail_url", ""),
+        is_authenticated=bool(data.get("is_authenticated", False)),
+        mode=data.get("mode", "assisted"),
+        default_niche=data.get("default_niche", "curiosidades"),
+        default_subniche=data.get("default_subniche", ""),
+        default_format=data.get("default_format", "shorts"),
+        publication_policy=data.get("publication_policy", "draft"),
+        max_videos_per_day=int(data.get("max_videos_per_day", 3)),
+        daily_budget_usd=float(data.get("daily_budget_usd", 20.0)),
+        created_at=time.time(),
+    )
+    storage.save_channel(new_channel)
+    return {"ok": True, "channel": new_channel}
 
 
 @router.patch("/channels/{channel_id}/settings")
@@ -106,7 +164,7 @@ def get_dashboard(channel_id: Optional[str] = Query(None)):
 
 @router.get("/channels", response_model=List[YouTubeChannel])
 def get_channels():
-    """Lista todos os canais do YouTube autorizados."""
+    """Lista todos os canais do YouTube cadastrados."""
     return storage.list_channels()
 
 
