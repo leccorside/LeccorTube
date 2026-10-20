@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agentes & Modelos — LeccorTubeAgent</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Geist', 'Inter', 'sans-serif'], mono: ['JetBrains Mono', 'monospace'] },
+          colors: {
+            surface: { DEFAULT: '#0b0e14', sidebar: '#0d111a', card: '#111726', cardElevated: '#141d30', border: '#1c2638', borderSubtle: '#162030' },
+            brand: { purple: '#8b5cf6', cyan: '#38bdf8', emerald: '#10b981', amber: '#f59e0b', rose: '#ef4444' }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 20; vertical-align: middle; line-height: 1; }
+    .custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
+    .custom-scrollbar::-webkit-scrollbar-track { background: #0b0e15; }
+    .custom-scrollbar::-webkit-scrollbar-thumb { background: #1f293d; border-radius: 9999px; }
+    .skeleton { background: linear-gradient(90deg, #111726 25%, #162030 37%, #111726 63%); background-size: 400% 100%; animation: sk 1.4s ease infinite; }
+    @keyframes sk { 0% { background-position: 100% 50%; } 100% { background-position: 0 50%; } }
+    .lista .agente { display: grid; grid-template-columns: 300px 1fr 260px 150px; align-items: center; gap: 16px; }
+    .lista .agente .desc, .lista .agente .faz { display: none; }
+    @media (max-width: 1100px) { .lista .agente { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body class="bg-[#0b0e14] text-slate-100 font-sans min-h-screen flex antialiased selection:bg-amber-500 selection:text-black">
+
+  <!-- ===================== MENU LATERAL (compartilhado: simples/sidebar.js) ===================== -->
+  <aside id="menuLateral"></aside>
+  <script src="/ui/sidebar.js"></script>
+
+  <!-- ===================== CONTEÚDO (mesma estrutura da tela de Vídeos) ===================== -->
+  <div class="flex-1 flex flex-col min-w-0 min-h-screen bg-[#0b0e14]">
+    <header class="sticky top-0 z-30 h-14 bg-[#0a0f1d]/90 backdrop-blur-xl border-b border-[#1c2638] px-6 flex items-center justify-between gap-4">
+      <div class="flex items-center gap-2 text-[12px] font-mono text-slate-400">
+        <a href="/agent" class="hover:text-slate-200 transition-colors cursor-pointer">LeccorTubeAgent</a>
+        <span class="material-symbols-outlined text-[14px]">chevron_right</span>
+        <span class="text-amber-400 font-semibold">Agentes &amp; Modelos</span>
+      </div>
+      <div class="flex items-center gap-3">
+        <div class="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#111726] border border-[#1c2638] text-[11px] font-mono">
+          <span id="hdrDot" class="w-1.5 h-1.5 rounded-full bg-slate-500"></span>
+          <span id="hdrGpu" class="text-slate-300">—</span>
+          <span class="text-slate-600">•</span>
+          <span class="text-slate-400">ATUALIZADO</span><span id="hdrHora" class="text-emerald-400">—</span>
+        </div>
+        <a href="/agent" class="px-3.5 py-1.5 rounded-lg bg-gradient-to-r from-amber-500 to-orange-500 text-[#1a0f05] text-[13px] font-semibold flex items-center gap-1.5 hover:brightness-110 shadow-[0_0_14px_rgba(245,158,11,0.3)]">
+          <span class="material-symbols-outlined text-[17px]">bolt</span>Nova Produção
+        </a>
+      </div>
+    </header>
+
+    <main class="w-full flex-1 bg-[#0b0e14] p-6 max-w-[1720px] mx-auto space-y-6">
+      <!-- título -->
+      <section class="flex flex-wrap items-end justify-between gap-4">
+        <div class="space-y-2 max-w-[720px]">
+          <div class="flex flex-wrap items-center gap-2">
+            <span class="px-2.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-[10px] font-mono font-semibold tracking-wider uppercase flex items-center gap-1.5">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>Central de inteligência // dados reais
+            </span>
+            <span id="tagResumo" class="text-[11px] text-slate-400 font-mono">—</span>
+          </div>
+          <h1 class="text-[30px] font-bold tracking-tight text-slate-50">Agentes Autônomos &amp; Modelos de IA</h1>
+          <p class="text-[14px] text-slate-400 leading-relaxed">O que cada estação da esteira usa de verdade: modelo ou serviço, parâmetros, custo e situação. Agentes ainda <b class="text-amber-400">simulados</b> no código aparecem marcados, com o motivo.</p>
+        </div>
+        <div class="flex gap-2.5">
+          <button id="btnLatencia" class="px-4 py-2.5 rounded-lg border border-cyan-500/40 text-cyan-300 text-[13px] font-medium flex items-center gap-2 hover:bg-cyan-500/10 transition-colors">
+            <span class="material-symbols-outlined text-[18px]">monitor_heart</span>Testar latência dos serviços
+          </button>
+        </div>
+      </section>
+
+      <!-- KPIs -->
+      <section id="kpis" class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
+        <div class="skeleton h-[148px] rounded-2xl"></div><div class="skeleton h-[148px] rounded-2xl"></div>
+        <div class="skeleton h-[148px] rounded-2xl"></div><div class="skeleton h-[148px] rounded-2xl"></div>
+      </section>
+
+      <!-- filtros + serviços -->
+      <section class="rounded-2xl bg-[#0d111a] border border-[#1c2638] p-3 space-y-3">
+        <div class="flex flex-wrap items-center justify-between gap-3">
+          <div id="abas" class="flex flex-wrap gap-1"></div>
+          <div class="flex items-center gap-2">
+            <label class="relative">
+              <span class="material-symbols-outlined absolute left-2.5 top-1/2 -translate-y-1/2 text-[18px] text-slate-500">search</span>
+              <input id="busca" type="search" placeholder="Buscar agente, modelo ou serviço (ex.: Ollama, Whisper)" class="w-[380px] max-w-full pl-9 pr-3 py-2 rounded-lg bg-[#111726] border border-[#1c2638] text-[13px] text-slate-200 placeholder-slate-500 focus:outline-none focus:border-amber-500/50">
+            </label>
+            <div class="flex rounded-lg border border-[#1c2638] overflow-hidden">
+              <button id="vGrade" class="p-2 bg-[#141d30] text-cyan-400" title="Grade"><span class="material-symbols-outlined text-[18px]">grid_view</span></button>
+              <button id="vLista" class="p-2 text-slate-400 hover:text-slate-200" title="Lista"><span class="material-symbols-outlined text-[18px]">view_agenda</span></button>
+            </div>
+          </div>
+        </div>
+        <div class="flex flex-wrap items-center gap-2 px-1 pb-0.5">
+          <span class="text-[10px] text-slate-500 uppercase tracking-wider font-mono font-semibold flex items-center gap-1.5"><span class="material-symbols-outlined text-[15px] text-cyan-400">hub</span>Serviços:</span>
+          <div id="servicos" class="flex flex-wrap gap-1.5"><span class="text-[11px] text-slate-500 font-mono">verificando…</span></div>
+        </div>
+      </section>
+
+      <!-- agentes -->
+      <section id="agentes" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4"></section>
+      <p id="vazio" class="hidden text-center text-slate-500 text-[13px] py-10">Nenhum agente encontrado para essa busca.</p>
+
+      <!-- recursos + políticas -->
+      <section class="grid grid-cols-1 xl:grid-cols-3 gap-4 pb-10">
+        <div class="xl:col-span-2 rounded-2xl bg-[#111726] border border-[#1c2638] p-5">
+          <div class="flex items-center justify-between mb-4">
+            <h2 class="text-[16px] font-semibold text-slate-100 flex items-center gap-2"><span class="material-symbols-outlined text-cyan-400">memory</span>Recursos locais &amp; cotas</h2>
+            <span id="cotaReset" class="text-[11px] text-slate-500 font-mono">—</span>
+          </div>
+          <div id="recursos" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3"></div>
+        </div>
+        <div class="rounded-2xl bg-[#111726] border border-[#1c2638] p-5">
+          <div class="flex items-center justify-between mb-4">
+            <h2 class="text-[16px] font-semibold text-slate-100 flex items-center gap-2"><span class="material-symbols-outlined text-amber-400">policy</span>Políticas da esteira</h2>
+            <span class="px-2 py-0.5 rounded bg-[#141d30] text-[10px] font-mono text-slate-400">SOMENTE LEITURA</span>
+          </div>
+          <div id="politicas" class="space-y-2.5"></div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+<!-- ===================== MODAL DE DETALHES ===================== -->
+<div id="modal" class="hidden fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4" role="dialog" aria-modal="true">
+  <div class="w-full max-w-[620px] max-h-[90vh] overflow-y-auto custom-scrollbar rounded-2xl bg-[#111726] border border-[#1c2638] shadow-2xl">
+    <div class="flex items-start justify-between p-5 border-b border-[#1c2638]">
+      <div><div id="mTag" class="text-[11px] font-mono text-slate-400"></div><h3 id="mNome" class="text-[20px] font-bold text-slate-50"></h3></div>
+      <button id="mFechar" class="p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-[#141d30]" title="Fechar"><span class="material-symbols-outlined">close</span></button>
+    </div>
+    <div id="mCorpo" class="p-5 space-y-4 text-[13px]"></div>
+  </div>
+</div>
+
+<script>
+const $ = s => document.querySelector(s);
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"})[c]);
+let DADOS = null, ABA = "todos", MODO = "grade";
+try { MODO = localStorage.getItem("models_modo") || "grade"; } catch (e) {}
+
+const IMPL = {
+  real: {rot: "Real", cls: "text-emerald-400 bg-emerald-500/10 border-emerald-500/30", dot: "bg-emerald-400", card: "border-emerald-500/30"},
+  parcial: {rot: "Parcial", cls: "text-cyan-300 bg-cyan-500/10 border-cyan-500/30", dot: "bg-cyan-400", card: "border-[#1c2638]"},
+  simulado: {rot: "Simulado", cls: "text-amber-400 bg-amber-500/10 border-amber-500/30", dot: "bg-amber-400", card: "border-[#1c2638]"},
+};
+const ICONE = {research: "travel_explore", strategy: "insights", script: "edit_note", visual: "movie_filter", video: "movie",
+  audio: "graphic_eq", review: "verified_user", design: "image", publish: "cloud_upload", analytics: "monitoring"};
+
+async function carregar() {
+  $("#btnLatencia").disabled = true;
+  $("#btnLatencia").classList.add("opacity-60");
+  try {
+    const r = await fetch("/api/automation/agents-models");
+    if (!r.ok) throw new Error(`HTTP ${r.status}`);
+    DADOS = await r.json();
+    desenhar();
+  } catch (e) {
+    $("#agentes").innerHTML = `<div class="col-span-full rounded-2xl border border-rose-500/30 bg-rose-500/10 p-5 text-rose-300 text-[13px]">Não consegui carregar os agentes (${esc(e.message)}). O servidor do LeccorTube Simples (porta 7861) está no ar?</div>`;
+  }
+  $("#btnLatencia").disabled = false;
+  $("#btnLatencia").classList.remove("opacity-60");
+}
+
+function kpi(titulo, icone, cor, valor, sufixo, linha, pct, corBarra) {
+  return `<div class="rounded-2xl bg-[#111726] border border-[#1c2638] p-4 flex flex-col justify-between">
+    <div class="flex items-center justify-between"><span class="text-[10px] text-slate-400 uppercase tracking-wider font-mono font-semibold">${titulo}</span>
+      <span class="w-8 h-8 rounded-lg bg-[#141d30] flex items-center justify-center"><span class="material-symbols-outlined text-[18px] ${cor}">${icone}</span></span></div>
+    <div class="mt-2"><span class="text-[34px] font-bold text-slate-50 leading-none">${valor}</span><span class="text-[13px] text-slate-400 ml-1">${sufixo}</span></div>
+    <div class="text-[11px] font-mono text-slate-400 mt-1.5">${linha}</div>
+    <div class="h-1.5 rounded-full bg-[#0b0e14] mt-3 overflow-hidden"><div class="h-full rounded-full ${corBarra}" style="width:${Math.max(0, Math.min(100, pct))}%"></div></div>
+  </div>`;
+}
+
+function desenhar() {
+  const d = DADOS, r = d.resumo, sv = d.servicos, gpu = sv.gpu, yt = sv.youtube, cota = yt.cota || {};
+  // KPIs
+  const vramPct = gpu.online ? 100 * gpu.vram_usada_mb / gpu.vram_total_mb : 0;
+  const cotaPct = cota.percent_used || 0;
+  $("#kpis").innerHTML =
+    kpi("Agentes com IA/serviço real", "neurology", "text-cyan-400", r.real + r.parcial, `/ ${r.total}`,
+        `<span class="text-emerald-400">${r.real} real</span> • <span class="text-cyan-300">${r.parcial} parciais</span> • <span class="text-amber-400">${r.simulado} simulados</span>`,
+        100 * (r.real + r.parcial) / r.total, "bg-gradient-to-r from-emerald-400 to-cyan-400") +
+    kpi("Serviços locais no ar", "lan", "text-emerald-400", r.servicos_online, `/ ${r.servicos_total}`,
+        Object.entries(sv).filter(([k]) => k !== "youtube" && !sv[k].online).map(([, s]) => `<span class="text-rose-400">● ${esc(s.nome)} fora</span>`).join(" ") || `<span class="text-emerald-400">● todos respondendo</span>`,
+        100 * r.servicos_online / r.servicos_total, r.servicos_online === r.servicos_total ? "bg-emerald-400" : "bg-amber-400") +
+    kpi("VRAM da GPU", "memory", "text-purple-400", gpu.online ? (gpu.vram_usada_mb / 1024).toFixed(1) : "—", gpu.online ? `/ ${(gpu.vram_total_mb / 1024).toFixed(0)} GB` : "",
+        gpu.online ? `${esc(gpu.detalhe)} • ${gpu.temperatura_c} °C • uso ${gpu.uso_pct}%` : "nvidia-smi não respondeu", vramPct,
+        vramPct > 90 ? "bg-rose-400" : "bg-gradient-to-r from-purple-400 to-cyan-400") +
+    kpi("Cota YouTube hoje", "data_usage", "text-amber-400", (cota.units_used || 0).toLocaleString("pt-BR"), `/ ${(cota.daily_limit || 10000).toLocaleString("pt-BR")}`,
+        `${cotaPct}% usada • ${yt.canais_conectados}/${yt.canais_total} canal(is) com OAuth`, cotaPct,
+        cota.is_hard_cap ? "bg-rose-400" : cota.is_soft_cap ? "bg-amber-400" : "bg-emerald-400");
+
+  $("#tagResumo").innerHTML = `${r.real + r.parcial}/${r.total} agentes com motor real ou parcial • ${r.servicos_online}/${r.servicos_total} serviços no ar`;
+  // serviços
+  $("#servicos").innerHTML = Object.values(sv).map(s => `<span class="px-2 py-1 rounded-md bg-[#111726] border border-[#1c2638] text-[11px] font-mono flex items-center gap-1.5" title="${esc(s.detalhe || s.erro || "")}">
+      <span class="w-1.5 h-1.5 rounded-full ${s.online ? "bg-emerald-400" : "bg-rose-500"}"></span>
+      <span class="text-slate-300">${esc(s.nome)}:</span><span class="${s.online ? "text-emerald-400" : "text-rose-400"}">${s.online ? "no ar" : "fora"}</span>
+      <span class="text-slate-500">${s.latencia_ms} ms</span></span>`).join("");
+  // abas
+  const abas = [{id: "todos", nome: "Todos os agentes", total: d.agentes.length}, ...d.categorias];
+  $("#abas").innerHTML = abas.map(a => `<button data-aba="${a.id}" class="px-3 py-1.5 rounded-lg text-[13px] flex items-center gap-2 ${ABA === a.id ? "bg-[#141d30] text-slate-100 border border-[#1c2638]" : "text-slate-400 hover:text-slate-200"}">
+      ${esc(a.nome)}<span class="px-1.5 rounded-full bg-[#0b0e14] text-[10px] font-mono text-slate-400">${a.total}</span></button>`).join("");
+  document.querySelectorAll("[data-aba]").forEach(b => b.onclick = () => { ABA = b.dataset.aba; desenhar(); });
+  desenharAgentes();
+  desenharRecursos();
+  // topo (o menu lateral se atualiza sozinho: simples/sidebar.js)
+  $("#hdrGpu").textContent = gpu.online ? gpu.detalhe.replace("NVIDIA GeForce ", "") : "GPU indisponível";
+  const ok = r.servicos_online === r.servicos_total;
+  $("#hdrDot").className = `w-1.5 h-1.5 rounded-full ${ok ? "bg-emerald-400" : "bg-amber-400"}`;
+  $("#hdrHora").textContent = new Date(d.gerado_em * 1000).toLocaleTimeString("pt-BR");
+}
+
+function cardAgente(a) {
+  const im = IMPL[a.implementacao] || IMPL.simulado;
+  const st = a.servico_online === null ? "" : `<span class="flex items-center gap-1 text-[10px] font-mono ${a.servico_online ? "text-emerald-400" : "text-rose-400"}"><span class="w-1.5 h-1.5 rounded-full ${a.servico_online ? "bg-emerald-400" : "bg-rose-500"}"></span>${a.servico_online ? "serviço no ar" : "serviço fora"}</span>`;
+  const alerta = a.implementacao !== "real" ? `<div class="faz text-[11px] text-amber-300/90 bg-amber-500/5 border border-amber-500/20 rounded-lg px-2.5 py-1.5 leading-snug"><span class="material-symbols-outlined text-[14px] mr-1 align-[-2px]">warning</span>${esc(a.limitacao)}</div>` : "";
+  return `<article class="agente rounded-2xl bg-[#111726] border ${im.card} p-4 flex flex-col gap-3 hover:border-amber-500/30 transition-colors">
+    <div class="flex items-start justify-between gap-3">
+      <div class="flex items-start gap-3 min-w-0">
+        <span class="w-9 h-9 rounded-lg bg-[#141d30] border border-[#1c2638] flex items-center justify-center text-[11px] font-mono font-bold text-cyan-400 flex-shrink-0">#${String(a.ordem).padStart(2, "0")}</span>
+        <div class="min-w-0"><h3 class="text-[17px] font-semibold text-slate-50 leading-tight flex items-center gap-1.5"><span class="material-symbols-outlined text-[18px] text-slate-400">${ICONE[a.chave] || "smart_toy"}</span>${esc(a.nome)}</h3>
+          <div class="text-[11px] font-mono text-slate-500 mt-0.5 truncate">${esc(a.categoria_nome)}</div></div>
+      </div>
+      <span class="px-2 py-0.5 rounded-full border text-[10px] font-mono font-semibold flex items-center gap-1 flex-shrink-0 ${im.cls}"><span class="w-1.5 h-1.5 rounded-full ${im.dot}"></span>${im.rot}</span>
+    </div>
+    <p class="desc text-[13px] text-slate-400 leading-snug">${esc(a.descricao)}</p>
+    <div class="rounded-lg bg-[#0b0e14] border border-[#162030] px-3 py-2">
+      <div class="flex items-center justify-between gap-2"><span class="text-[10px] text-slate-500 uppercase tracking-wider font-mono font-semibold">Motor</span><span class="text-[10px] font-mono ${a.implementacao === "simulado" ? "text-amber-400" : "text-cyan-400"}">${esc(a.motor_tag)}</span></div>
+      <div class="text-[13px] text-slate-200 font-medium mt-0.5">${esc(a.motor)}</div>
+      <div class="mt-1">${st}</div>
+    </div>
+    <div class="grid grid-cols-3 gap-1.5">${a.parametros.map(p => `<div class="rounded-lg bg-[#0b0e14] border border-[#162030] px-2 py-1.5 text-center">
+      <div class="text-[9px] text-slate-500 uppercase tracking-wider font-mono">${esc(p.rotulo)}</div><div class="text-[12px] text-slate-200 font-mono font-semibold truncate" title="${esc(p.valor)}">${esc(p.valor)}</div></div>`).join("")}</div>
+    ${alerta}
+    <div class="flex items-center justify-between mt-auto pt-1">
+      <div><div class="text-[10px] text-slate-500 uppercase tracking-wider font-mono font-semibold">Custo</div><div class="text-[12px] text-slate-300 font-mono">${esc(a.custo)}</div></div>
+      <button data-detalhe="${a.ordem}" class="px-3 py-1.5 rounded-lg border border-cyan-500/30 text-cyan-300 text-[12px] font-medium flex items-center gap-1.5 hover:bg-cyan-500/10"><span class="material-symbols-outlined text-[16px]">info</span>Detalhes</button>
+    </div>
+  </article>`;
+}
+
+function desenharAgentes() {
+  const q = ($("#busca").value || "").trim().toLowerCase();
+  const lista = DADOS.agentes.filter(a => (ABA === "todos" || a.categoria === ABA) &&
+    (!q || [a.nome, a.motor, a.descricao, a.categoria_nome, a.implementacao, ...a.parametros.map(p => p.valor)].join(" ").toLowerCase().includes(q)));
+  const box = $("#agentes");
+  box.className = MODO === "lista" ? "lista flex flex-col gap-3" : "grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4";
+  box.innerHTML = lista.map(cardAgente).join("");
+  $("#vazio").classList.toggle("hidden", lista.length > 0);
+  document.querySelectorAll("[data-detalhe]").forEach(b => b.onclick = () => abrirDetalhe(+b.dataset.detalhe));
+  $("#vGrade").className = `p-2 ${MODO === "grade" ? "bg-[#141d30] text-cyan-400" : "text-slate-400 hover:text-slate-200"}`;
+  $("#vLista").className = `p-2 ${MODO === "lista" ? "bg-[#141d30] text-cyan-400" : "text-slate-400 hover:text-slate-200"}`;
+}
+
+function recurso(titulo, direita, corDir, valor, sufixo, pct, corBarra) {
+  return `<div class="rounded-xl bg-[#0b0e14] border border-[#162030] p-3.5">
+    <div class="flex items-center justify-between text-[12px]"><span class="text-slate-300 font-medium">${titulo}</span><span class="font-mono text-[11px] ${corDir}">${direita}</span></div>
+    <div class="mt-1.5"><span class="text-[22px] font-bold text-slate-50">${valor}</span><span class="text-[11px] text-slate-500 font-mono ml-1">${sufixo}</span></div>
+    ${pct === null ? "" : `<div class="h-1.5 rounded-full bg-[#141d30] mt-2 overflow-hidden"><div class="h-full rounded-full ${corBarra}" style="width:${Math.max(0, Math.min(100, pct))}%"></div></div>`}
+  </div>`;
+}
+
+function desenharRecursos() {
+  const d = DADOS, sv = d.servicos, cota = sv.youtube.cota || {}, gpu = sv.gpu, ol = sv.ollama, dk = d.disco;
+  const restante = (cota.remaining_units ?? 0);
+  const ops = Object.entries(cota.operations_count || {}).map(([k, v]) => `${k}: ${v}`).join(" • ") || "nenhuma operação hoje";
+  const modelos = (ol.modelos || []);
+  $("#cotaReset").textContent = `Cota do YouTube zera à meia-noite UTC • ${ops}`;
+  $("#recursos").innerHTML = [
+    recurso("YouTube Data API v3", `${Math.round(100 - (cota.percent_used || 0))}% livre`, "text-emerald-400", restante.toLocaleString("pt-BR"), "unidades restantes", 100 - (cota.percent_used || 0), "bg-emerald-400"),
+    recurso("VRAM da GPU", gpu.online ? `${Math.round(100 * gpu.vram_usada_mb / gpu.vram_total_mb)}% ocupada` : "fora", gpu.online ? "text-cyan-400" : "text-rose-400",
+      gpu.online ? ((gpu.vram_total_mb - gpu.vram_usada_mb) / 1024).toFixed(1) : "—", gpu.online ? `GB livres de ${(gpu.vram_total_mb / 1024).toFixed(0)} GB` : "", gpu.online ? 100 * gpu.vram_usada_mb / gpu.vram_total_mb : 0, "bg-gradient-to-r from-purple-400 to-cyan-400"),
+    recurso("Disco do projeto", dk ? `${Math.round(100 * dk.livre_gb / dk.total_gb)}% livre` : "—", dk && dk.livre_gb / dk.total_gb < 0.1 ? "text-rose-400" : "text-slate-400",
+      dk ? dk.livre_gb.toLocaleString("pt-BR") : "—", dk ? `GB livres de ${Math.round(dk.total_gb)} GB` : "", dk ? 100 - 100 * dk.livre_gb / dk.total_gb : 0,
+      dk && dk.livre_gb / dk.total_gb < 0.1 ? "bg-rose-400" : "bg-amber-400"),
+    recurso("Modelo dos prompts (Ollama)", ol.online ? (ol.modelo_presente ? "instalado" : "NÃO instalado") : "Ollama fora", ol.online && ol.modelo_presente ? "text-emerald-400" : "text-rose-400",
+      esc(d.modelo_prompts), modelos.length ? `${modelos.length} modelo(s) • ${modelos.reduce((s, m) => s + m.gb, 0).toFixed(1)} GB` : "nenhum modelo baixado", null),
+    recurso("Vozes de narração", sv.chatterbox.online ? "Chatterbox pronto" : "Chatterbox fora", sv.chatterbox.online ? "text-emerald-400" : "text-rose-400",
+      (sv.chatterbox.vozes || []).length, "vozes pt-BR", null),
+    recurso("Revisão da fala", sv.whisper.online ? "pronto" : "modelo ausente", sv.whisper.online ? "text-emerald-400" : "text-rose-400", "Whisper", "small · CPU", null),
+  ].join("");
+  $("#politicas").innerHTML = d.politicas.map(p => `<div class="rounded-xl bg-[#0b0e14] border border-[#162030] p-3 flex items-start gap-3">
+      <span class="material-symbols-outlined text-[20px] ${p.ativa ? "text-emerald-400" : "text-rose-400"}">${p.ativa ? "check_circle" : "cancel"}</span>
+      <div><div class="text-[13px] text-slate-200 font-medium">${esc(p.nome)}</div><div class="text-[11px] text-slate-500 leading-snug mt-0.5">${esc(p.detalhe)}</div></div></div>`).join("");
+}
+
+function abrirDetalhe(ordem) {
+  const a = DADOS.agentes.find(x => x.ordem === ordem); if (!a) return;
+  const im = IMPL[a.implementacao] || IMPL.simulado, s = a.servico ? DADOS.servicos[a.servico] : null;
+  $("#mTag").textContent = `#${String(a.ordem).padStart(2, "0")} • ${a.categoria_nome}`;
+  $("#mNome").textContent = a.nome;
+  $("#mCorpo").innerHTML = `
+    <div class="flex flex-wrap gap-2"><span class="px-2 py-0.5 rounded-full border text-[11px] font-mono font-semibold ${im.cls}">${im.rot}</span>
+      ${s ? `<span class="px-2 py-0.5 rounded-full border border-[#1c2638] text-[11px] font-mono ${s.online ? "text-emerald-400" : "text-rose-400"}">${esc(s.nome)} ${s.online ? "no ar" : "fora"} • ${s.latencia_ms} ms</span>` : ""}</div>
+    <div><div class="text-[10px] text-slate-500 uppercase tracking-wider font-mono font-semibold mb-1">Função</div><p class="text-slate-300">${esc(a.descricao)}</p></div>
+    <div><div class="text-[10px] text-slate-500 uppercase tracking-wider font-mono font-semibold mb-1">O que faz hoje</div><p class="text-slate-300">${esc(a.faz)}</p></div>
+    <div class="rounded-xl ${a.implementacao === "real" ? "bg-[#0b0e14] border border-[#162030]" : "bg-amber-500/5 border border-amber-500/25"} p-3">
+      <div class="text-[10px] uppercase tracking-wider font-mono font-semibold mb-1 ${a.implementacao === "real" ? "text-slate-500" : "text-amber-400"}">Limitações</div><p class="text-slate-300">${esc(a.limitacao)}</p></div>
+    <div><div class="text-[10px] text-slate-500 uppercase tracking-wider font-mono font-semibold mb-1.5">Motor e parâmetros</div>
+      <div class="text-slate-200 font-medium mb-2">${esc(a.motor)}</div>
+      <div class="grid grid-cols-3 gap-1.5">${a.parametros.map(p => `<div class="rounded-lg bg-[#0b0e14] border border-[#162030] px-2 py-1.5"><div class="text-[9px] text-slate-500 uppercase font-mono">${esc(p.rotulo)}</div><div class="text-[12px] text-slate-200 font-mono">${esc(p.valor)}</div></div>`).join("")}</div></div>
+    <div class="grid grid-cols-2 gap-3">
+      <div><div class="text-[10px] text-slate-500 uppercase tracking-wider font-mono font-semibold mb-1">Custo</div><div class="text-slate-300 font-mono text-[12px]">${esc(a.custo)}</div></div>
+      <div><div class="text-[10px] text-slate-500 uppercase tracking-wider font-mono font-semibold mb-1">Código</div><div class="text-slate-400 font-mono text-[11px]">${esc(a.codigo)}</div></div>
+    </div>
+    <p class="text-[11px] text-slate-500">Os parâmetros ainda não são editáveis pela tela: estão no código indicado acima (e, para o Produtor, no config.json do motor).</p>`;
+  $("#modal").classList.remove("hidden");
+}
+$("#mFechar").onclick = () => $("#modal").classList.add("hidden");
+$("#modal").onclick = e => { if (e.target.id === "modal") $("#modal").classList.add("hidden"); };
+document.addEventListener("keydown", e => { if (e.key === "Escape") $("#modal").classList.add("hidden"); });
+
+$("#busca").addEventListener("input", () => DADOS && desenharAgentes());
+$("#vGrade").onclick = () => { MODO = "grade"; try { localStorage.setItem("models_modo", MODO); } catch (e) {} DADOS && desenharAgentes(); };
+$("#vLista").onclick = () => { MODO = "lista"; try { localStorage.setItem("models_modo", MODO); } catch (e) {} DADOS && desenharAgentes(); };
+$("#btnLatencia").onclick = carregar;
+
+carregar();
+setInterval(carregar, 60000);
+</script>
+</body>
+</html>

@@ -451,6 +451,20 @@ def pagina_videos():
     return FileResponse(os.path.join(RAIZ, "simples", "videos.html"))
 
 
+@app.get("/ui/sidebar.js")
+def menu_lateral():
+    """Menu lateral compartilhado por todas as telas do LeccorTubeAgent."""
+    return FileResponse(os.path.join(RAIZ, "simples", "sidebar.js"), media_type="text/javascript",
+                        headers={"Cache-Control": "no-cache"})
+
+
+@app.get("/models")
+@app.get("/agent/models")
+def pagina_modelos():
+    """Interface de Gestão de Agentes Autônomos & Modelos de IA."""
+    return FileResponse(os.path.join(RAIZ, "simples", "models.html"))
+
+
 @app.get("/simples")
 @app.get("/manual")
 def pagina_manual():

@@ -30,6 +30,21 @@ def get_quota():
     return quota_guard.get_status()
 
 
+@router.get("/agents-models")
+def get_agents_models():
+    """Tela Agentes & Modelos: os 10 agentes com o motor real de cada um (real/parcial/simulado),
+    status e latência dos serviços locais, GPU, cota do YouTube e políticas em vigor."""
+    from automation.agents_catalog import catalogo  # importa sob demanda (faz checagens de rede)
+    return catalogo()
+
+
+@router.get("/sidebar")
+def get_sidebar():
+    """Dados do menu lateral compartilhado (simples/sidebar.js): agentes reais, vídeos e GPU."""
+    from automation.agents_catalog import resumo_menu
+    return resumo_menu()
+
+
 @router.get("/oauth/credentials")
 def get_oauth_credentials():
     """Retorna o Client ID cadastrado e a URL de redirecionamento esperada."""
