@@ -141,7 +141,7 @@ class AutomationOrchestrator:
                     brief=VideoBrief(
                         title=f"Vídeo #{i + 1}: Explorando {req.subniche or req.niche}",
                         format=req.format if req.format in ("shorts", "longos") else "shorts",
-                        narration_voice="oficial",
+                        narration_voice=req.narration_voice,
                         visual_style="anime_dark",
                     ),
                     agents=agents_states,

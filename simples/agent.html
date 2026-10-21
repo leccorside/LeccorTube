@@ -170,7 +170,7 @@
 
       <div class="flex flex-col lg:flex-row items-center justify-between gap-4">
         <!-- Parâmetros de Produção -->
-        <div class="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-5 gap-3 w-full lg:w-auto flex-1">
+        <div class="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-6 gap-3 w-full lg:w-auto flex-1">
           
           <!-- Canal YouTube -->
           <div class="flex flex-col gap-1.5">
@@ -229,6 +229,28 @@
               <button type="button" id="btnFmtLongos" class="flex-1 py-1.5 px-2 rounded-lg text-[11px] font-medium text-slate-400 hover:text-white transition-colors" onclick="setFormat('longos')">Longos</button>
               <button type="button" id="btnFmtAmbos" class="flex-1 py-1.5 px-2 rounded-lg text-[11px] font-medium text-slate-400 hover:text-white transition-colors" onclick="setFormat('ambos')">Ambos</button>
             </div>
+          </div>
+
+          <!-- Voz da narração -->
+          <div class="flex flex-col gap-1.5">
+            <label for="voiceSelect" class="text-[11px] font-medium text-slate-400 flex items-center gap-1.5">
+              <svg class="w-3.5 h-3.5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 1a3 3 0 00-3 3v8a3 3 0 006 0V4a3 3 0 00-3-3zM5 10v2a7 7 0 0014 0v-2M12 19v4m-4 0h8"/></svg>
+              Voz da narração
+            </label>
+            <div class="flex gap-1.5">
+              <div class="relative min-w-0 flex-1">
+                <select id="voiceSelect" class="w-full bg-[#111827] border border-[#1F293D] hover:border-purple-500/50 text-slate-200 text-xs rounded-xl pl-3 pr-8 py-2.5 appearance-none focus:outline-none focus:border-purple-500 transition-colors cursor-pointer font-medium">
+                  <option value="oficial">Carregando vozes…</option>
+                </select>
+                <div class="absolute right-2.5 top-3 pointer-events-none text-slate-400">
+                  <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                </div>
+              </div>
+              <button type="button" id="btnVoiceSample" onclick="toggleVoiceSample()" class="w-10 shrink-0 flex items-center justify-center rounded-xl bg-[#111827] border border-[#1F293D] text-blue-300 hover:border-blue-400/60 hover:text-blue-200 focus:outline-none focus:ring-2 focus:ring-blue-500/50 disabled:opacity-50 disabled:cursor-wait transition-colors" title="Ouvir amostra da voz" aria-label="Ouvir amostra da voz">
+                <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+              </button>
+            </div>
+            <audio id="voiceSamplePlayer" class="hidden"></audio>
           </div>
 
           <!-- Quantidade de Vídeos (1 a 20) -->
@@ -935,6 +957,70 @@
       }
     }
 
+    const VOICE_PLAY_ICON = '<svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>';
+    const VOICE_STOP_ICON = '<svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12" rx="2"/></svg>';
+    const VOICE_LOADING_ICON = '<svg class="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="9" stroke="currentColor" stroke-width="3"/><path class="opacity-90" fill="currentColor" d="M21 12a9 9 0 00-9-9v3a6 6 0 016 6h3z"/></svg>';
+
+    async function loadVoices() {
+      const sel = document.getElementById('voiceSelect');
+      const btn = document.getElementById('btnVoiceSample');
+      try {
+        const res = await fetch('/api/opcoes');
+        if (!res.ok) throw new Error('Não foi possível carregar as vozes.');
+        const data = await res.json();
+        const voices = Array.isArray(data.vozes) ? data.vozes : [];
+        const saved = localStorage.getItem('leccortubeAgentVoice') || 'oficial';
+        sel.replaceChildren(...voices.map(v => new Option(v.nome, v.id)));
+        sel.value = voices.some(v => v.id === saved) ? saved : (voices[0]?.id || 'oficial');
+        btn.disabled = voices.length === 0;
+      } catch (e) {
+        sel.replaceChildren(new Option('Voz oficial', 'oficial'));
+        btn.disabled = true;
+        showToast(e.message || 'Não foi possível carregar as vozes.', 'rose');
+      }
+    }
+
+    function stopVoiceSample() {
+      const player = document.getElementById('voiceSamplePlayer');
+      const btn = document.getElementById('btnVoiceSample');
+      player.pause();
+      player.currentTime = 0;
+      btn.innerHTML = VOICE_PLAY_ICON;
+      btn.title = 'Ouvir amostra da voz';
+      btn.setAttribute('aria-label', 'Ouvir amostra da voz');
+    }
+
+    async function toggleVoiceSample() {
+      const player = document.getElementById('voiceSamplePlayer');
+      const btn = document.getElementById('btnVoiceSample');
+      const voiceId = document.getElementById('voiceSelect').value;
+      if (!player.paused) {
+        stopVoiceSample();
+        return;
+      }
+      btn.disabled = true;
+      btn.innerHTML = VOICE_LOADING_ICON;
+      showToast('Preparando a amostra da voz… na primeira vez pode levar cerca de 1 minuto.', 'blue');
+      try {
+        const res = await fetch(`/api/vozes/amostra?id=${encodeURIComponent(voiceId)}`);
+        if (!res.ok) {
+          const error = await res.json().catch(() => ({}));
+          throw new Error(error.detail || 'Não foi possível preparar a amostra.');
+        }
+        if (player.src.startsWith('blob:')) URL.revokeObjectURL(player.src);
+        player.src = URL.createObjectURL(await res.blob());
+        await player.play();
+        btn.innerHTML = VOICE_STOP_ICON;
+        btn.title = 'Parar amostra da voz';
+        btn.setAttribute('aria-label', 'Parar amostra da voz');
+      } catch (e) {
+        btn.innerHTML = VOICE_PLAY_ICON;
+        showToast(e.message || 'Não foi possível ouvir a amostra.', 'rose');
+      } finally {
+        btn.disabled = false;
+      }
+    }
+
     function updateChannelBadge(ch) {
       if (!ch) return;
       const topTitle = document.getElementById('topChannelTitle');
@@ -1055,6 +1141,7 @@
       const niche = document.getElementById('nicheSelect').value;
       const subniche = document.getElementById('customNicheInput').value;
       const count = parseInt(document.getElementById('videoCount').value, 10) || 3;
+      const narrationVoice = document.getElementById('voiceSelect').value || 'oficial';
 
       showToast("Iniciando esteira industrial e reservando capacidade...", "emerald");
 
@@ -1068,6 +1155,7 @@
             subniche: subniche,
             format: selectedFormat,
             video_count: count,
+            narration_voice: narrationVoice,
             mode: "assisted",
           })
         });
@@ -1599,6 +1687,7 @@
     window.addEventListener('DOMContentLoaded', () => {
       initAgentCards();
       loadChannels();
+      loadVoices();
       syncDashboard();
       syncQuota();
       syncTopo();
@@ -1609,6 +1698,12 @@
         const ch = window.allChannelsCache?.find(c => c.id === selectedId);
         if (ch) updateChannelBadge(ch);
       });
+
+      document.getElementById('voiceSelect')?.addEventListener('change', (e) => {
+        localStorage.setItem('leccortubeAgentVoice', e.target.value);
+        stopVoiceSample();
+      });
+      document.getElementById('voiceSamplePlayer')?.addEventListener('ended', stopVoiceSample);
 
       // Inicia SSE para atualização instantânea
       try {

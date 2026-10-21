@@ -1,9 +1,8 @@
 """LeccorTube Simples — interface enxuta para gerar vídeos narrados em português.
 
-O usuário informa título, tipo, duração, estilo visual, texto da miniatura, roteiro e o tamanho/cor da
-legenda. O resto é fixo: a voz é sempre a voz oficial (tools/diag/narrar_pt.py, Chatterbox Multilingual
-com assets/vozes/narrador_ptbr_ref.wav), as legendas são sempre em português e todas as cenas são
-imagens animadas (sem clipes de vídeo).
+O usuário informa título, tipo, duração, estilo visual, texto da miniatura, roteiro, voz e o tamanho/cor
+da legenda. As legendas são sempre em português e todas as cenas são imagens animadas (sem clipes de
+vídeo).
 
 Por baixo, usa a API do LeccorTube (porta 7860), que precisa estar no ar (este servidor a inicia se
 não estiver). Os prompts das imagens são escritos em inglês pela IA local (Ollama).
@@ -38,6 +37,30 @@ MODELO_IA = "qwen2.5vl:7b"
 PALAVRAS_POR_SEG = 3.2  # medido na voz oficial: ~290 palavras em ~1:31
 LOG = os.path.join(RAIZ, "logs", "simples.log")
 FX_VOZ = "none"  # a voz oficial sai como na referência, sem eco
+NO_TEXT_SUFFIX = "No visible text, letters, numbers, captions, signs, logos, or watermarks."
+TEXT_VISIBLE_RX = re.compile(
+    r"\b(text|words?|letters?|numbers?|captions?|handwriting|written|writing|inscriptions?|labels?|signage)\b",
+    re.I,
+)
+
+
+def garantir_sem_texto(prompt):
+    prompt = prompt.strip()
+    if not prompt.lower().endswith(NO_TEXT_SUFFIX.lower()):
+        prompt = f"{prompt.rstrip(' .')}. {NO_TEXT_SUFFIX}"
+    return prompt
+
+
+def tem_texto_visivel(prompt):
+    conteudo = prompt.removesuffix(NO_TEXT_SUFFIX).rstrip(" .")
+    return bool(TEXT_VISIBLE_RX.search(conteudo))
+
+
+def fallback_sem_texto():
+    return garantir_sem_texto(
+        "A cinematic still conveying this moment indirectly through a blank textured surface, symbolic objects, "
+        "tense atmosphere, dramatic low light, and a character reacting with unease"
+    )
 
 # fases do botão "Gerar vídeo" e o peso de cada uma na barra geral (proporcional ao tempo típico)
 FASES = [("Na fila", 0), ("Preparando", 2), ("Criando o projeto", 2),
@@ -239,8 +262,14 @@ def escrever_prompts(titulo, cenas):
         "For EACH scene below write ONE English prompt (25 to 45 words) describing a single still picture that "
         "illustrates that scene: who is in it, where, what is happening, lighting and mood.\n"
         "Rules: give recurring characters the same short physical description every time (age, hair, clothes); "
-        "never write names alone; no text, letters or captions in the picture; violence and injuries are only "
-        "implied (shadows, silhouettes, reactions), never shown; no blood, no gore; children are never shown hurt.\n"
+        "never write names alone; violence and injuries are only implied (shadows, silhouettes, reactions), never "
+        "shown; no blood, no gore; children are never shown hurt.\n"
+        "ABSOLUTE NO-TEXT RULE: every generated picture must contain zero visible text, words, letters, numbers, "
+        "captions, handwriting, signs, labels, logos or watermarks, in any language. This rule still applies when "
+        "the narration explicitly mentions a written message, note, wall, book, screen or sign: do not depict the "
+        "writing itself; communicate the idea with an unreadable blank surface, abstract marks, objects, atmosphere "
+        "or a character's reaction. Never quote or spell the narrated phrase in the visual prompt. End EVERY prompt "
+        "with exactly: No visible text, letters, numbers, captions, signs, logos, or watermarks.\n"
         'Answer ONLY with JSON: {"s001": "prompt", "s002": "prompt", ...} using exactly these ids.\n\n'
         f"Scenes:\n{linhas}"
     )
@@ -252,8 +281,44 @@ def escrever_prompts(titulo, cenas):
         r.raise_for_status()
         dados = json.loads(r.json()["message"]["content"])
         # o modelo às vezes começa com "prompt1:" ou "s001 -"; tira esse rótulo
-        prompts = {k: re.sub(r"^\s*(prompt\s*\d*|s\d{3}|scene\s*\d*)\s*[:\-–]\s*", "", v, flags=re.I).strip()
-                   for k, v in dados.items() if isinstance(v, str) and v.strip()}
+        prompts = {}
+        for k, v in dados.items():
+            if not isinstance(v, str) or not v.strip():
+                continue
+            prompt = re.sub(r"^\s*(prompt\s*\d*|s\d{3}|scene\s*\d*)\s*[:\-–]\s*", "", v, flags=re.I).strip()
+            prompts[k] = garantir_sem_texto(prompt)
+
+        invalidos = {k: prompt for k, prompt in prompts.items() if tem_texto_visivel(prompt)}
+        if invalidos:
+            texto_por_id = {s["id"]: s["text"] for s in cenas}
+            cenas_invalidas = "\n".join(f"{k}: {texto_por_id.get(k, '')}" for k in invalidos)
+            correcao = (
+                "Rewrite the image prompts for the numbered scenes below because the first version would create "
+                "visible writing. Return JSON only. Show the meaning indirectly with a completely blank surface, "
+                "abstract non-linguistic marks, symbolic objects, atmosphere, or a character's reaction. Do not "
+                "describe text, words, letters, numbers, handwriting, writing, inscriptions, labels, signage, quotes, "
+                "or readable symbols. Never quote the narration. End every prompt with exactly: " +
+                NO_TEXT_SUFFIX + "\n\n" + cenas_invalidas
+            )
+            try:
+                rr = httpx.post(f"{OLLAMA}/api/chat", timeout=900, json={
+                    "model": MODELO_IA, "stream": False, "format": "json", "keep_alive": 0,
+                    "options": {"temperature": 0.2, "num_ctx": 4096},
+                    "messages": [{"role": "user", "content": correcao}]})
+                rr.raise_for_status()
+                corrigidos = json.loads(rr.json()["message"]["content"])
+                for k, v in corrigidos.items():
+                    if k in invalidos and isinstance(v, str) and v.strip():
+                        candidato = garantir_sem_texto(
+                            re.sub(r"^\s*(prompt\s*\d*|s\d{3}|scene\s*\d*)\s*[:\-–]\s*", "", v, flags=re.I)
+                        )
+                        if not tem_texto_visivel(candidato):
+                            prompts[k] = candidato
+            except Exception as e:
+                log(f"IA local não corrigiu {len(invalidos)} prompt(s) com texto ({e}); usando descrição segura")
+            for k in invalidos:
+                if tem_texto_visivel(prompts[k]):
+                    prompts[k] = fallback_sem_texto()
         log(f"IA local escreveu {len(prompts)}/{len(cenas)} prompts")
         return prompts
     except Exception as e:  # sem IA, o vídeo ainda sai: o app usa o texto da cena

@@ -51,12 +51,14 @@ class _Resp:
 
 def _com_ollama_falso(resposta, fn):
     pedidos = []
+    respostas = iter(resposta if isinstance(resposta, list) else [resposta])
 
     def falso(url, json=None, timeout=None):
         pedidos.append(json)
-        if isinstance(resposta, Exception):
-            raise resposta
-        return _Resp(resposta)
+        atual = next(respostas)
+        if isinstance(atual, Exception):
+            raise atual
+        return _Resp(atual)
 
     original = pw.httpx.post
     pw.httpx.post = falso
@@ -68,32 +70,49 @@ def _com_ollama_falso(resposta, fn):
 
 def test_interceptado():
     # 1. Todas as cenas: prompts da IA, rótulos ("prompt1:", "2.") removidos, pedido único com keep_alive 0
-    resp = '{"1": "prompt1: a girl in a red coat walking into a dark pine forest", "s002": "2. a red coat folded on a chair in an abandoned cabin", "3": "childish handwriting on a wooden wall, dim light"}'
+    resp = '{"1": "prompt1: a girl in a red coat walking into a dark pine forest", "s002": "2. a red coat folded on a chair in an abandoned cabin", "3": "abstract scratch marks on a blank wooden wall, dim light"}'
     v = _video()
     _, pedidos = _com_ollama_falso(resp, lambda: CreativeDirectorAgent().execute(v))
     assert len(pedidos) == 1, f"esperava 1 pedido, foram {len(pedidos)}"
     assert pedidos[0]["keep_alive"] == 0 and pedidos[0]["format"] == "json" and "keep_alive" not in pedidos[0]["options"], pedidos[0]
-    assert [s.prompt_en for s in v.brief.scenes] == ["a girl in a red coat walking into a dark pine forest",
-                                                     "a red coat folded on a chair in an abandoned cabin",
-                                                     "childish handwriting on a wooden wall, dim light"], [s.prompt_en for s in v.brief.scenes]
+    assert [s.prompt_en.removesuffix(" " + pw._NO_TEXT_SUFFIX) for s in v.brief.scenes] == [
+        "a girl in a red coat walking into a dark pine forest.",
+        "a red coat folded on a chair in an abandoned cabin.",
+        "abstract scratch marks on a blank wooden wall, dim light.",
+    ], [s.prompt_en for s in v.brief.scenes]
+    assert all(s.prompt_en.endswith(pw._NO_TEXT_SUFFIX) for s in v.brief.scenes)
+    pedido = pedidos[0]["messages"][0]["content"]
+    assert "ABSOLUTE NO-TEXT RULE" in pedido and "narration explicitly mentions a written message" in pedido
     assert "escritos pela IA" in _agente4(v).message, _agente4(v).message
     print(f"[OK] 3/3 prompts da IA, 1 pedido, keep_alive 0 no nível de cima | {_agente4(v).message}")
 
-    # 2. Parcial: a cena sem resposta fica com o genérico e a mensagem diz quantas vieram da IA
+    # 2. Se o modelo ainda pedir escrita visível, uma segunda chamada corrige só a cena infratora
+    v = _video()
+    respostas = [
+        '{"1": "a girl in a forest", "2": "a red coat on a chair", "3": "letters spell out the quoted phrase on the wall"}',
+        '{"3": "a child faces a completely blank wooden wall, frozen in fear under dim moonlight"}',
+    ]
+    _, pedidos = _com_ollama_falso(respostas, lambda: CreativeDirectorAgent().execute(v))
+    assert len(pedidos) == 2, f"esperava pedido inicial + correção, foram {len(pedidos)}"
+    assert not pw._tem_texto_visivel(v.brief.scenes[2].prompt_en), v.brief.scenes[2].prompt_en
+    assert "blank wooden wall" in v.brief.scenes[2].prompt_en
+    print("[OK] prompt que pedia letras visíveis foi corrigido antes do gerador de imagens")
+
+    # 3. Parcial: a cena sem resposta fica com o genérico e a mensagem diz quantas vieram da IA
     v = _video()
     _com_ollama_falso('{"1": "a girl in a red coat", "3": "handwriting on a wall"}', lambda: CreativeDirectorAgent().execute(v))
     assert v.brief.scenes[1].prompt_en.startswith("cinematic scene depicting"), v.brief.scenes[1].prompt_en
     assert "2/3" in _agente4(v).message, _agente4(v).message
     print(f"[OK] resposta parcial: cena 2 genérica | {_agente4(v).message}")
 
-    # 3. Ollama fora do ar: todas genéricas, mensagem avisa, o vídeo segue
+    # 4. Ollama fora do ar: todas genéricas, mensagem avisa, o vídeo segue
     v = _video()
     _com_ollama_falso(httpx.ConnectError("conexão recusada"), lambda: CreativeDirectorAgent().execute(v))
     assert all(s.prompt_en.startswith("cinematic scene depicting") for s in v.brief.scenes)
     assert "indisponível" in _agente4(v).message and _agente4(v).status == "COMPLETED", _agente4(v).message
     print(f"[OK] Ollama fora: prompts genéricos | {_agente4(v).message}")
 
-    # 4. Nunca mais o prompt fixo antigo
+    # 5. Nunca mais o prompt fixo antigo
     assert not any("cinematic dark atmospheric scene depicting" in s.prompt_en for s in v.brief.scenes)
     print("[OK] o prompt fixo antigo não aparece mais")
 
@@ -108,6 +127,8 @@ def test_real():
         print(f"  cena {s.scene_index}: {s.text_pt[:60]}…\n    -> {s.prompt_en}")
     assert "escritos pela IA" in _agente4(v).message, _agente4(v).message
     assert not any(s.prompt_en.startswith("cinematic scene depicting") for s in v.brief.scenes)
+    assert all(s.prompt_en.endswith(pw._NO_TEXT_SUFFIX) for s in v.brief.scenes)
+    assert not any(pw._tem_texto_visivel(s.prompt_en) for s in v.brief.scenes), [s.prompt_en for s in v.brief.scenes]
     carregados = httpx.get(f"{pw.OLLAMA_URL}/api/ps", timeout=5).json().get("models", [])
     assert not carregados, f"o modelo deveria ter saído da VRAM: {carregados}"
     print("[OK] prompts reais da IA para todas as cenas e modelo fora da VRAM depois (keep_alive 0)")

@@ -48,10 +48,13 @@ def test_pipeline():
         "subniche": "Computação Quântica",
         "format": "shorts",
         "video_count": 2,
+        "narration_voice": "user:Voz de teste.wav",
         "mode": "assisted"
     })
     assert r4.status_code == 200, f"Falha POST /batches: {r4.status_code}"
     batch_id = r4.json()["batch"]["id"]
+    videos = storage.list_videos_by_batch(batch_id)
+    assert videos and all(v.brief.narration_voice == "user:Voz de teste.wav" for v in videos)
     print(f"4. POST /api/automation/batches OK (Batch ID: {batch_id})")
 
     # 5. Pausar (PAUSE)

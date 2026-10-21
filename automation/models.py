@@ -230,6 +230,7 @@ class StartBatchRequest(BaseModel):
     subniche: str = ""
     format: str = "shorts"  # shorts, longos, ambos
     video_count: int = 3
+    narration_voice: str = "oficial"  # id retornado por GET /api/opcoes em vozes[]
     mode: Optional[str] = "assisted"
     publication_policy_id: Optional[str] = "draft"
     idempotency_key: Optional[str] = None
