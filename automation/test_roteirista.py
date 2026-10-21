@@ -171,7 +171,7 @@ def test_roteirista():
     assert len(pedidos_duas) == 3 and "cientistas" not in resultado["script_body"].lower()
     print("[OK] 1ª reescrita reprovada: a 2ª é aceita")
 
-    # Três respostas reprovadas: desiste com erro (o agente usa a contingência)
+    # Três respostas reprovadas: desiste com erro (o agente reprova o vídeo)
     sw.httpx.post = lambda url, json=None, timeout=None: _Resp(cientistas_json)
     try:
         sw.escrever_roteiro("A cidade subterrânea", "shorts", 58, "Uma passagem foi encontrada atrás de uma parede.")
@@ -196,16 +196,53 @@ def test_roteirista():
     def falha(url, json=None, timeout=None):
         raise sw.httpx.ConnectError("Ollama fora")
 
+    # Ollama fora: sem roteiro de contingência; o vídeo é reprovado (REJECTED) e o orquestrador não segue para o #04
     sw.httpx.post = falha
     try:
         video = _video()
         ScriptAgent().execute(video)
     finally:
         sw.httpx.post = original
-    assert "contingencia:ConnectError" in video.brief.sources_rationale["script"]
-    assert "Você não vai acreditar" not in video.brief.script_body
-    assert "Tema: arqueologia" not in video.brief.script_body, "o contexto do Pesquisador não pode ir para a narração"
-    print("[OK] falha do Ollama usa contingência honesta e identificada")
+    a3 = next(a for a in video.agents if a.order == 3)
+    assert video.status == "REJECTED" and a3.status == "FAILED", (video.status, a3.status)
+    assert "IA local indisponível (ConnectError" in a3.message and video.brief.sources_rationale["script"].startswith("Roteiro não gerado")
+    assert video.brief.script_body == "" and video.brief.description == "", "nada de texto de contingência no vídeo"
+    print(f"[OK] Ollama fora: vídeo reprovado sem roteiro | {a3.message}")
+
+    # Roteiro reprovado 3 vezes pela validação: também reprova o vídeo, com o motivo
+    sw.httpx.post = lambda url, json=None, timeout=None: _Resp(cientistas_json)
+    try:
+        video = _video()
+        ScriptAgent().execute(video)
+    finally:
+        sw.httpx.post = original
+    a3 = next(a for a in video.agents if a.order == 3)
+    assert video.status == "REJECTED" and a3.status == "FAILED" and "reprovado pela validação" in a3.message, a3.message
+    assert video.brief.script_body == ""
+    print("[OK] roteiro reprovado 3 vezes: vídeo reprovado, sem roteiro")
+
+    # Orquestrador com o Roteirista de verdade e o Ollama fora: nenhum agente depois do #03 roda
+    from automation.models import Batch
+    from automation.orchestrator import AutomationOrchestrator
+    orq, chamados = AutomationOrchestrator(), []
+
+    class _Falso:
+        def __init__(self, ordem):
+            self.ordem = ordem
+
+        def execute(self, video, *a, **k):
+            chamados.append(self.ordem)
+
+    for i, nome in enumerate(["research", "strategy", "visual", "video", "audio", "review", "design", "publish", "analytics"]):
+        setattr(orq, f"agent_{nome}", _Falso(nome))
+    sw.httpx.post = falha
+    try:
+        video = _video()
+        orq._process_video_pipeline(Batch(channel_id="teste", niche="curiosidades"), video)
+    finally:
+        sw.httpx.post = original
+    assert chamados == ["research", "strategy"] and video.status == "REJECTED", (chamados, video.status)
+    print("[OK] orquestrador: com o Roteirista sem IA, o vídeo para no #03 (sem imagens, voz e render)")
 
 
 if __name__ == "__main__":

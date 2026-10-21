@@ -93,7 +93,7 @@ class ResearchAgent(BaseAgent):
         from automation.fact_research import pesquisar_fatos
 
         # Prefere pautas com fatos: sem artigos na Wikipédia (ex.: a lenda do "Voo 513"), o Roteirista insiste nas
-        # datas da lenda, a validação reprova e o vídeo cai na contingência. Tenta até 3 pautas do sorteio.
+        # datas da lenda e a validação reprova o roteiro (e o vídeo). Tenta até 3 pautas do sorteio.
         sorteio = random.sample(oportunidades, min(3, len(oportunidades)))
         pesquisa, erro = None, None
         for i, escolha in enumerate(sorteio, 1):
@@ -152,11 +152,15 @@ class ScriptAgent(BaseAgent):
     def __init__(self):
         super().__init__(3, "script", "Roteirista")
 
-    def _reprovar(self, video: VideoItem, motivo: str, cb: Optional[Callable]):
+    def _reprovar(self, video: VideoItem, motivo: str, cb: Optional[Callable], sensivel: bool = True):
         # O orquestrador para a esteira deste vídeo quando o status é REJECTED (nada de imagem, voz nem render)
         video.status = "REJECTED"
-        video.brief.sources_rationale["script"] = f"Bloqueado por tema sensível: {motivo}"
-        self.update_agent(video, "BLOCKED", 100, f"Vídeo reprovado: tema sensível ({motivo[:120]})", "Tema sensível", cb)
+        if sensivel:
+            video.brief.sources_rationale["script"] = f"Bloqueado por tema sensível: {motivo}"
+            self.update_agent(video, "BLOCKED", 100, f"Vídeo reprovado: tema sensível ({motivo[:120]})", "Tema sensível", cb)
+        else:
+            video.brief.sources_rationale["script"] = f"Roteiro não gerado: {motivo}"
+            self.update_agent(video, "FAILED", 100, f"Vídeo reprovado: {motivo[:160]}", "Sem roteiro", cb)
 
     def execute(self, video: VideoItem, cb: Optional[Callable] = None):
         from automation import sensitive_filter
@@ -183,26 +187,12 @@ class ScriptAgent(BaseAgent):
                 duracao_segundos=video.brief.target_duration_seconds,
                 contexto_pesquisa=contexto,
             )
-            origem = "ollama"
+        except ValueError as e:
+            # Antes havia um "roteiro de contingência" neutro, e a esteira gerava imagens, voz e render de um texto
+            # sem conteúdo. Agora o vídeo é reprovado aqui e não segue (pedido do usuário em 21/10).
+            return self._reprovar(video, f"roteiro reprovado pela validação ({str(e)[:160]})", cb, sensivel=False)
         except Exception as e:
-            # A esteira continua, mas deixa explícito que usou uma contingência curta e não um roteiro da IA.
-            titulo = video.brief.title
-            hook = f"{titulo} levanta uma pergunta que merece ser examinada com cuidado."
-            # Só o título: o contexto do Pesquisador ("Fonte: …. Confiança: 88%") acabava lido na narração.
-            corpo = (f"O ponto de partida é o próprio tema: {titulo}. Sem informações verificadas adicionais, "
-                     "não é responsável transformar possibilidades em fatos. O que sabemos deve ser separado do que ainda "
-                     "precisa de confirmação, para que a história permaneça clara e honesta.")
-            cta = "Se quiser acompanhar a próxima investigação, inscreva-se no canal."
-            roteiro = {
-                "hook": hook, "body": corpo, "cta": cta, "script_body": f"{hook} {corpo} {cta}",
-                "alternative_titles": [titulo, f"O que sabemos sobre {titulo}", f"As perguntas por trás de {titulo}"],
-                "description": f"Uma análise cuidadosa sobre {titulo}, separando fatos de hipóteses.",
-                "hashtags": ["curiosidades", "investigação", "história"],
-                "tags": [titulo, "curiosidades", "investigação", "história", "documentário"],
-                "word_count": 0, "target_words": max(90, round(video.brief.target_duration_seconds * 2.3)),
-            }
-            roteiro["word_count"] = len(roteiro["script_body"].split())
-            origem = f"contingencia:{type(e).__name__} ({str(e)[:160]})"
+            return self._reprovar(video, f"IA local indisponível ({type(e).__name__}: {str(e)[:120]})", cb, sensivel=False)
 
         video.brief.script_hook = roteiro["hook"]
         video.brief.script_body = roteiro["script_body"]
@@ -214,7 +204,7 @@ class ScriptAgent(BaseAgent):
         video.brief.hashtags = roteiro["hashtags"]
         video.brief.tags = roteiro["tags"]
         video.brief.sources_rationale["script"] = (
-            f"Roteiro: {origem}; {roteiro['word_count']} palavras; alvo aproximado {roteiro['target_words']}"
+            f"Roteiro: ollama; {roteiro['word_count']} palavras; alvo aproximado {roteiro['target_words']}"
         )
         if roteiro.get("first_attempt_failures"):
             video.brief.sources_rationale["script"] += "; reescrito: " + "; ".join(roteiro["first_attempt_failures"])
@@ -227,10 +217,7 @@ class ScriptAgent(BaseAgent):
             return self._reprovar(video, "no roteiro: " + filtro["motivo"], cb)
 
         self.update_agent(video, "RUNNING", 80, f"Roteiro com {roteiro['word_count']} palavras; preparando cenas...", "Revisão estrutural", cb)
-        if origem == "ollama":
-            self.update_agent(video, "COMPLETED", 100, "Roteiro original gerado em pt-BR pela IA local", "Concluído", cb)
-        else:
-            self.update_agent(video, "COMPLETED", 100, "IA local indisponível: roteiro de contingência usado e identificado", "Contingência", cb)
+        self.update_agent(video, "COMPLETED", 100, "Roteiro original gerado em pt-BR pela IA local", "Concluído", cb)
 
 
 # ==================== 04. DIRETOR VISUAL ====================

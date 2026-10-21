@@ -160,7 +160,7 @@ def _agentes(cfg: Dict[str, Any], sv: Dict[str, Any]) -> List[Dict[str, Any]]:
         3: dict(categoria="texto", implementacao="real", servico="ollama", motor=f"Ollama · {MODELO_IA}",
                 motor_tag="IA local", params=[("Temp", "0.55"), ("Contexto", "8192"), ("Idioma", "pt-BR")],
                 custo="Local · sem custo", faz="Escreve roteiro original, gancho, CTA, títulos alternativos, descrição, hashtags e tags em JSON validado.",
-                limitacao="Usa apenas o tema e os resumos da Wikipédia recebidos do Pesquisador; sem artigos sobre a pauta, o roteiro fica genérico (não inventa dados). Se o Ollama falhar, usa uma contingência curta e sinaliza isso no vídeo."),
+                limitacao="Usa apenas o tema e os resumos da Wikipédia recebidos do Pesquisador; sem artigos sobre a pauta, o roteiro fica genérico (não inventa dados). Se o Ollama falhar ou o roteiro for reprovado 3 vezes pela validação, o vídeo é reprovado e não segue para imagens, voz e render."),
         4: dict(categoria="visual", implementacao="parcial", servico="ollama", motor=f"Ollama · {MODELO_IA}",
                 motor_tag="IA local", params=[("Temp", "0.4"), ("Estilo", "anime_dark"), ("Pedido", "1 p/ todas")],
                 custo="Local · sem custo",
