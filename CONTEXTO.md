@@ -4,6 +4,8 @@ Resumo vivo do projeto para retomar o trabalho em outra sessão, pasta ou máqui
 
 ## ▶️ Como retomar (leia primeiro)
 
+**Novo em 2026-10-21 — versão em Docker:** existe o projeto **`E:\PROJETOS\LeccorTubeAgent`**, autossuficiente (código, vozes, sons, fontes e ~20 GB de modelos copiados), que roda `/agent`, `/simples`, `/videos` e `/models` 100% em Docker (`iniciar.bat`) com um **motor de vídeo próprio** no lugar do binário Windows da porta 7860. Testado de ponta a ponta (Simples e esteira). Detalhes no `CONTEXTO.md` de lá. Os dois usam a porta 7861: rodar um de cada vez.
+
 **Situação em 2026-10-20:** o jeito de gerar vídeos é o **LeccorTube Simples** (dois cliques em `LeccorTube Simples.bat` → http://127.0.0.1:7861). Ele sobe sozinho a API do app (7860) e o Ollama se estiverem fora. Gera vídeos narrados em **pt-BR** (voz oficial ou uma das vozes escolhidas pelo usuário), com legendas em pt, só imagens animadas e som ambiente opcional. A interface original (`LECCORTUBE.exe`) continua funcionando, mas narra só em inglês. Detalhes no Histórico (2026-10-18). Pendências na seção própria.
 
 Para conferir que está tudo de pé: abrir o `.bat`, escolher uma voz, clicar em "Ouvir amostra" (as 8 vozes já têm amostra pronta) e gerar um roteiro de 2 frases (~2 min do clique ao vídeo). Log em `logs\simples.log`.
