@@ -93,10 +93,10 @@ def test_revisor():
     assert fc.conferir_unidades("chega a 85 metros", "approximately 85 m (279 ft) deep") == []
     print("[OK] número inventado por extenso e unidade trocada viram problema; unidade certa passa")
 
-    # 3. Revisor aprova roteiro fiel: DRAFT_READY, checklist com conferência real
+    # 3. Revisor aprova roteiro fiel: SCRIPT_APPROVED (roda antes das imagens), checklist com conferência real
     v = _video("A UVB-76 transmite na frequência de 4625 kHz, cerca de 25 tons por minuto, desde 1982.")
     _, pedidos = _com_ollama([TUDO_CONFIRMADO], lambda: QualityControlAgent().execute(v))
-    assert v.status == "DRAFT_READY" and v.qa.approved and v.qa.factual_confidence_high and _ag7(v).status == "COMPLETED", _ag7(v).message
+    assert v.status == "SCRIPT_APPROVED" and v.qa.approved and v.qa.factual_confidence_high and _ag7(v).status == "COMPLETED", _ag7(v).message
     assert len(pedidos) == 1 and pedidos[0]["options"]["num_predict"] == 1500 and "4625 kHz" in pedidos[0]["messages"][0]["content"]
     assert any("não são verificados" in n for n in v.qa.notes), "o checklist não pode fingir que conferiu legenda e áudio"
     print(f"[OK] roteiro fiel aprovado | {_ag7(v).message}")
@@ -117,7 +117,7 @@ def test_revisor():
     assert any(n.startswith("não está nos fatos") for n in v.qa.notes)
     v = _video("A UVB-76 transmite em 4625 kHz desde 1982 e é muito famosa.")
     _com_ollama([{"claims": [{"claim": "é muito famosa", "verdict": "not_found", "evidence": ""}]}], lambda: QualityControlAgent().execute(v))
-    assert v.status == "DRAFT_READY" and "1 observação" in _ag7(v).message, _ag7(v).message
+    assert v.status == "SCRIPT_APPROVED" and "1 observação" in _ag7(v).message, _ag7(v).message
     print("[OK] contradição reprova; afirmação fora dos fatos só vira observação")
 
     # 6. IA: JSON cortado na 1ª tentativa -> 2ª tentativa; IA fora nas duas -> só números, e o checklist diz isso
@@ -126,7 +126,7 @@ def test_revisor():
     assert len(pedidos) == 2 and v.qa.factual_confidence_high, "2ª tentativa depois do JSON cortado"
     v = _video("A UVB-76 transmite em 4625 kHz desde 1982.")
     _com_ollama([fr.httpx.ConnectError("fora"), fr.httpx.ConnectError("fora")], lambda: QualityControlAgent().execute(v))
-    assert v.status == "DRAFT_READY" and not v.qa.factual_confidence_high and "só pelos números" in _ag7(v).message, _ag7(v).message
+    assert v.status == "SCRIPT_APPROVED" and not v.qa.factual_confidence_high and "só pelos números" in _ag7(v).message, _ag7(v).message
     v = _video("A UVB-76 surgiu há três décadas.")
     _com_ollama([fr.httpx.ConnectError("fora"), fr.httpx.ConnectError("fora")], lambda: QualityControlAgent().execute(v))
     assert v.status == "REJECTED", "sem IA, a camada de números continua reprovando"
@@ -135,10 +135,11 @@ def test_revisor():
     # 7. Sem fatos (fluxo antigo): aprova sem conferir e avisa, sem chamar a IA
     v = _video("Uma lenda contada no interior.", fatos="")
     _, pedidos = _com_ollama([], lambda: QualityControlAgent().execute(v))
-    assert v.status == "DRAFT_READY" and not pedidos and not v.qa.factual_confidence_high and "sem conferência" in _ag7(v).message
+    assert v.status == "SCRIPT_APPROVED" and not pedidos and not v.qa.factual_confidence_high and "sem conferência" in _ag7(v).message
     print("[OK] sem fatos: aprovado sem conferência, com aviso")
 
-    # 8. Orquestrador: QA reprovado não passa para o Designer (#08), o Publicador (#09) nem o Analista (#10)
+    # 8. Orquestrador: o QA roda logo depois do Roteirista; reprovado, não chega às imagens (#04), à voz, ao render,
+    #    ao Designer, ao Publicador nem ao Analista — nada de GPU gasta com vídeo reprovado
     from automation.orchestrator import AutomationOrchestrator
     orq, chamados = AutomationOrchestrator(), []
 
@@ -151,10 +152,19 @@ def test_revisor():
 
     for nome in ["research", "strategy", "script", "visual", "video", "audio", "design", "publish", "analytics"]:
         setattr(orq, f"agent_{nome}", _Falso(nome))
+    revisor = QualityControlAgent()
+    orq.agent_review = type("_Espiao", (), {"execute": lambda self, video, cb=None: (chamados.append("review"), revisor.execute(video, cb))})()
+
     v = _video("A UVB-76 repete um som a cada 25 segundos.")
     _com_ollama([TUDO_CONFIRMADO], lambda: orq._process_video_pipeline(Batch(channel_id="teste", niche="terror"), v))
-    assert chamados == ["research", "strategy", "script", "visual", "video", "audio"] and v.status == "REJECTED", chamados
-    print("[OK] orquestrador: QA reprovado para antes do Designer, do Publicador e do Analista")
+    assert chamados == ["research", "strategy", "script", "review"] and v.status == "REJECTED", chamados
+    print("[OK] orquestrador: QA reprovado logo depois do Roteirista, sem imagens, voz e render")
+
+    chamados.clear()
+    v = _video("A UVB-76 transmite em 4625 kHz desde 1982.")
+    _com_ollama([TUDO_CONFIRMADO], lambda: orq._process_video_pipeline(Batch(channel_id="teste", niche="terror"), v))
+    assert chamados == ["research", "strategy", "script", "review", "visual", "video", "audio", "design", "publish", "analytics"], chamados
+    print("[OK] orquestrador: QA aprovado segue para imagens, voz, render, Designer, Publicador e Analista")
 
 
 if __name__ == "__main__":

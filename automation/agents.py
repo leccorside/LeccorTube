@@ -317,7 +317,8 @@ class QualityControlAgent(BaseAgent):
     def execute(self, video: VideoItem, cb: Optional[Callable] = None):
         # Antes aprovava sempre, com o checklist todo marcado como OK. Agora confere o título e o roteiro contra os
         # fatos da Wikipédia (fact_check): números (inclusive por extenso) e afirmações. Legenda, áudio e direitos
-        # continuam sem verificação automática, e as notas dizem isso.
+        # continuam sem verificação automática, e as notas dizem isso. O orquestrador chama este agente logo depois do
+        # Roteirista (#03), antes das imagens: vídeo reprovado não gasta GPU.
         from automation.fact_check import conferir
 
         self.update_agent(video, "RUNNING", 30, "Conferindo título e roteiro contra os fatos da Wikipédia...", "Conferência de fatos", cb)
@@ -336,12 +337,13 @@ class QualityControlAgent(BaseAgent):
             approved=r["aprovado"],
         )
         if not r["aprovado"]:
-            # REJECTED: o orquestrador não segue para o Designer nem para o Publicador; o vídeo renderizado fica no disco
+            # REJECTED: o orquestrador não segue para imagens, voz, render, Designer nem Publicador
             video.status = "REJECTED"
             self.update_agent(video, "FAILED", 100,
                               f"QA reprovado: {len(r['problemas'])} problema(s) nos fatos — {r['problemas'][0][:140]}", "Reprovado", cb)
             return
-        video.status = "DRAFT_READY"
+        # Roda antes das imagens: "roteiro aprovado", não "rascunho pronto" (o Publicador define o status final)
+        video.status = "SCRIPT_APPROVED"
         if sem_fatos:
             msg = "QA aprovado sem conferência de fatos (pauta sem artigo da Wikipédia)"
         elif not r["ia"]:

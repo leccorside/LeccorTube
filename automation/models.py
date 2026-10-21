@@ -63,8 +63,8 @@ AGENTS_METADATA = [
         "key": "review",
         "name": "Revisor QA",
         "tag": "07 • QA REVISOR",
-        "description": "Audita conformidade, legendas automáticas e direitos",
-        "detail": "Checa área segura, qualidade técnica e factual"
+        "description": "Confere o roteiro contra os fatos, antes das imagens",
+        "detail": "Números, unidades e afirmações contra a Wikipédia (roda logo depois do Roteirista)"
     },
     {
         "order": 8,

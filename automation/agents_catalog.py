@@ -182,8 +182,9 @@ def _agentes(cfg: Dict[str, Any], sv: Dict[str, Any]) -> List[Dict[str, Any]]:
                 custo="Local · sem custo",
                 faz="Confere título e roteiro contra os fatos da Wikipédia: números (inclusive por extenso) e afirmações "
                     "(a IA local marca cada uma como confirmada, contradita ou fora dos fatos). Contradição ou número "
-                    "inventado reprova o vídeo antes do Designer e do Publicador.",
-                limitacao="Roda depois do render (o tempo de GPU já foi gasto). Legendas, áudio e direitos autorais não são "
+                    "inventado reprova o vídeo. Roda logo depois do Roteirista (#03), antes das imagens: vídeo reprovado "
+                    "não gasta GPU.",
+                limitacao="Como roda antes do render, não confere o vídeo pronto: legendas, áudio e direitos autorais não são "
                           "verificados. Sem artigo da Wikipédia (fluxo antigo), aprova sem conferir. A IA de 7B pode deixar "
                           "passar distorções sutis ou marcar como contradição algo que só foi resumido."),
         8: dict(categoria="visual", implementacao="parcial", servico="motor", motor="Regra de texto + miniaturas do motor",

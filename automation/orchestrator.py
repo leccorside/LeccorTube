@@ -280,6 +280,12 @@ class AutomationOrchestrator:
             self.agent_script.execute(video, cb=on_agent_progress)
             storage.save_video(video)
 
+        # 07. Revisor QA, fora da ordem de propósito: a conferência de fatos só depende do roteiro, e roda antes das
+        # imagens para um vídeo reprovado não gastar GPU (antes rodava depois do render, ~7 min por vídeo)
+        if not check_pause_and_stop():
+            self.agent_review.execute(video, cb=on_agent_progress)
+            storage.save_video(video)
+
         # 04. Diretor Visual
         if not check_pause_and_stop():
             self.agent_visual.execute(video, cb=on_agent_progress)
@@ -295,10 +301,7 @@ class AutomationOrchestrator:
             self.agent_audio.execute(video, cb=on_agent_progress)
             storage.save_video(video)
 
-        # 07. Revisor QA
-        if not check_pause_and_stop():
-            self.agent_review.execute(video, cb=on_agent_progress)
-            storage.save_video(video)
+        # (07. Revisor QA roda logo depois do Roteirista, acima)
 
         # 08. Designer
         if not check_pause_and_stop():
