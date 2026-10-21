@@ -79,13 +79,19 @@ def _get_falso(chamadas):
     return get
 
 
-def _post_falso(pedidos, titulos=None):
+def _post_falso(pedidos, titulos=None, fora_do_tema=()):
     titulos = list(titulos or [["A lenda da loira do banheiro nas escolas brasileiras", "Outra opção qualquer"]])
 
     def post(url, json=None, timeout=None):
         pedidos.append(json)
         texto = json["messages"][0]["content"]
-        if texto.startswith("You screen topics"):
+        if texto.startswith("Video title:"):
+            titulo = texto.split('"')[1]
+            resp = {"problem": "", "unsupported": "inventado" in titulo}
+        elif texto.startswith("A YouTube channel is about"):
+            artigo = texto.split("\nArticle: ")[1].split("\n")[0]
+            resp = {"article_is_about": artigo, "off_topic": artigo in fora_do_tema}
+        elif texto.startswith("You screen topics"):
             resp = {"main_subject": "lenda", "blocked": False, "theme": ""}
         elif "alternative titles" in texto:
             resp = {"titles": titulos.pop(0) if titulos else ["x"]}
@@ -132,7 +138,15 @@ def test_interceptado():
     for fora in ("Lista de lendas urbanas", "Lendas urbanas", "Lenda já usada", "Portal:Mitos"):
         assert fora not in titulos_resumo, f"'{fora}' não devia nem ter o resumo buscado"
     assert all(h["User-Agent"].startswith("LeccorTube/") for _, _, h in chamadas)
+    assert any(x["messages"][0]["content"].startswith('A YouTube channel is about "Terror & Mistérios"') for x in ia), "checagem do tema usa o nome do nicho"
     print(f"[OK] pauta '{p['titulo']}' ({p['artigo']}, {p['visualizacoes_30d']} visualizações); bloqueado: {p['bloqueados'][0][:60]}…")
+
+    # 1b. Artigo mais lido, mas fora do tema do nicho (o caso "Swimming" em Motivação): fica o seguinte
+    p = _interceptar(_get_falso([]), _post_falso([], [["O corpo-seco: a lenda do homem rejeitado pela terra"]],
+                                                  fora_do_tema=("Lenda da loira do banheiro",)),
+                     lambda: tf.sugerir_pauta("terror"))
+    assert p["artigo"] == "pt: Corpo-seco" and p["fora_do_tema"] == ["pt: Lenda da loira do banheiro"], p
+    print("[OK] artigo fora do tema do nicho é pulado mesmo sendo o mais lido")
 
     # 2. Título: opções reprovadas (ano que não está no texto, caça-clique, caixa alta) -> 2º pedido; tudo reprovado -> nome do artigo
     ia = []
@@ -144,7 +158,16 @@ def test_interceptado():
     assert len(pedidos_titulo) == 2 and "1955" in pedidos_titulo[1]["messages"][0]["content"]
     p = _interceptar(_get_falso([]), _post_falso([], [["Você não vai acreditar"], ["CAIXA ALTA TOTAL AQUI"]]), lambda: tf.sugerir_pauta("terror"))
     assert p["titulo"] == "Lenda da loira do banheiro", p["titulo"]
-    print("[OK] título: opções inválidas pedem outras; sem opção válida fica o nome do artigo em português")
+    # título em inglês e título com afirmação sem base no texto (o caso "Bacteriófago" do Bacillus subtilis) são pulados
+    p = _interceptar(_get_falso([]), _post_falso([], [["The ghost of the school bathroom legend", "Um fantasma inventado que ataca nas escolas",
+                                                        "A loira do banheiro: a lenda das escolas brasileiras"]]), lambda: tf.sugerir_pauta("terror"))
+    assert p["titulo"] == "A loira do banheiro: a lenda das escolas brasileiras", p["titulo"]
+    # artigo só em inglês, sem título válido e sem nome em português: é pulado (não vira título em inglês)
+    art_en = {"lang": "en", "titulo": "2025 Bangkok road collapse", "resumo": "x"}
+    t = _interceptar(_get_falso([]), _post_falso([], [["Você não vai acreditar"], ["CAIXA ALTA TOTAL AQUI"]]),
+                     lambda: tf.escrever_titulo(art_en, "A road collapsed in Bangkok in 2025." + LONGO, 30))
+    assert t is None, t
+    print("[OK] título: opções inválidas (formato, idioma ou sem base no texto) pedem outras; sem opção válida fica o nome do artigo")
 
     # 3. Pesquisador: pauta da Wikipédia vira o brief, o artigo é marcado como usado e não volta no vídeo seguinte
     v1, v2 = _video(), _video()

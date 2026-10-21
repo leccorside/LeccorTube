@@ -30,21 +30,45 @@ CATEGORIAS_PATH = os.path.join(RAIZ, "automation", "categorias_nichos.json")
 PREFIXO = {"pt": "Categoria:", "en": "Category:"}
 _LISTA = re.compile(r"^(lista|listas|list|lists) (de|of)\b", re.I)
 _CAIXA_ALTA = re.compile(r"^[^a-zà-ÿ]*$")
+_FICCAO = re.compile(r"fictional|fiction|fict[ií]ci|fic[cç][aã]o|in popular culture|na cultura popular", re.I)
+# Idioma do título: "Apatheia: A Virtue Beyond Indifference" passou na 1ª versão da validação
+_PALAVRAS_PT = re.compile(r"\b(de|do|da|dos|das|que|o|os|as|um|uma|no|na|nos|nas|em|para|com|por|e|é|como|sobre|se|seu|sua|ao)\b", re.I)
+_PALAVRAS_EN = re.compile(r"\b(the|of|and|with|beyond|your|how|why|what|is|for|to|in|its|this|that|from)\b", re.I)
 CANDIDATOS = 10        # resumos buscados por pauta
 MIN_CHARS = 500        # resumo mais curto que isso não sustenta um roteiro
 MIN_CHARS_FATOS = 1000  # artigo inteiro: com 593 letras ("Space jellyfish") a IA encheu o roteiro com suposições
 MAX_CHARS_FATOS = 3000
-GENERICAS = ("você não vai acreditar", "chocante", "ninguém te contou", "ninguém sabe", "a verdade sobre")
+GENERICAS = ("você não vai acreditar", "chocante", "ninguém te contou", "ninguém sabe", "a verdade sobre",
+             "o que você não sabia")
+
+
+def _config(nicho: str) -> Dict[str, Any]:
+    try:
+        with open(CATEGORIAS_PATH, encoding="utf-8") as f:
+            cfg = json.load(f).get(nicho)
+    except (OSError, ValueError):
+        return {}
+    return cfg if isinstance(cfg, dict) else {}
 
 
 def categorias(nicho: str) -> Dict[str, List[str]]:
-    try:
-        with open(CATEGORIAS_PATH, encoding="utf-8") as f:
-            dados = json.load(f)
-    except (OSError, ValueError):
-        return {}
-    cfg = dados.get(nicho) or {}
+    cfg = _config(nicho)
     return {lang: list(cfg.get(lang, [])) for lang in ("pt", "en") if cfg.get(lang)}
+
+
+def combina_com_nicho(nome_nicho: str, descricao: str, art: Dict[str, Any], timeout: float) -> bool:
+    """A IA descarta artigos CLARAMENTE fora do tema do canal. Categorias trazem artigos tangenciais (no teste de
+    21/10 o nicho Motivação recebeu "Swimming", "Yasser Arafat" e "Pancake"), e a ordem por visualizações favorece
+    esses artigos famosos. A 1ª versão ("só serve se o assunto for do tema") reprovava quase tudo em Curiosidades e
+    Motivação; agora a pergunta é o contrário: só rejeita o que não tem nada a ver."""
+    dados = _ollama(
+        f'A YouTube channel is about "{nome_nicho}": {descricao}.\n'
+        f"Article: {art['titulo']}\nSummary: {art['resumo'][:800]}\n\n"
+        "Is this article CLEARLY off-topic for the channel? Off-topic examples: a food or recipe, a sport, a TV show "
+        "or comic character, a politician's or celebrity's biography, a place or event unrelated to the theme. If a "
+        "short video about the article could reasonably fit the theme above, it is NOT off-topic.\n"
+        'First say what the article is about. JSON only: {"article_is_about": "...", "off_topic": false}', timeout)
+    return dados.get("off_topic") is not True
 
 
 def _usados_path() -> str:
@@ -80,7 +104,8 @@ def _artigos_do_nicho(cats: Dict[str, List[str]], timeout: float) -> Dict[str, s
     for lang, cat in sorteio:
         for t in _membros(lang, cat, "page", timeout):
             artigos.setdefault(f"{lang}:{t}", cat)
-        subcats = [s.split(":", 1)[1] for s in _membros(lang, cat, "subcat", timeout)]
+        # sem subcategorias de ficção: "Fictional castaways" trouxe o personagem de série "Lucifer Morningstar"
+        subcats = [s.split(":", 1)[1] for s in _membros(lang, cat, "subcat", timeout) if not _FICCAO.search(s)]
         for sub in random.sample(subcats, min(3, len(subcats))):
             for t in _membros(lang, sub, "page", timeout):
                 artigos.setdefault(f"{lang}:{t}", cat)
@@ -152,13 +177,30 @@ def _problemas_titulo(titulo: str, fonte: str) -> List[str]:
         falhas.append("generic clickbait phrase")
     if _CAIXA_ALTA.match(titulo):
         falhas.append("all caps")
+    # nomes próprios em inglês ("Doing What Matters") podem ter 1 palavra inglesa; 2+ ou nenhuma palavra do português = outro idioma
+    if not _PALAVRAS_PT.search(titulo) or len(_PALAVRAS_EN.findall(titulo)) >= 2:
+        falhas.append("not in Brazilian Portuguese")
     inventados = [n for n in re.findall(r"\d+", titulo) if not re.search(rf"(?<!\d){n}(?!\d)", fonte)]
     if inventados:
         falhas.append("numbers not in the article: " + ", ".join(inventados))
     return falhas
 
 
-def escrever_titulo(art: Dict[str, Any], fatos: str, timeout: float) -> str:
+def _titulo_falso(titulo: str, art: Dict[str, Any], fatos: str, timeout: float) -> bool:
+    """A IA confere se o título afirma algo que o texto não diz. No teste de 21/10 o Bacillus subtilis (uma bactéria)
+    saiu como "O Bacteriófago que Revolucionou a Biologia"; as regras de formato não pegam isso."""
+    try:
+        dados = _ollama(
+            f'Video title: "{titulo}"\nWikipedia article: {art["titulo"]}\nText: {fatos[:2500]}\n\n'
+            "Does the title say anything false or not supported by the text (wrong kind of thing, wrong person, place, "
+            "claim or exaggeration such as 'revolutionized' when the text does not say so)?\n"
+            'JSON only: {"problem": "...", "unsupported": false}', timeout)
+    except Exception:
+        return False  # sem a conferência, fica a validação de formato
+    return dados.get("unsupported") is True
+
+
+def escrever_titulo(art: Dict[str, Any], fatos: str, timeout: float) -> Optional[str]:
     # 3 opções por pedido: no teste de 21/10 os títulos saíam com palavras em espanhol/inglês ("Crisis", "Biases")
     # ou inventadas ("desintegurar", "Extrapessoais"); a 1ª opção que passa na validação fica.
     nome_pt = _titulo_pt(art, timeout)
@@ -186,10 +228,14 @@ def escrever_titulo(art: Dict[str, Any], fatos: str, timeout: float) -> str:
         for t in opcoes if isinstance(opcoes, list) else [opcoes]:
             titulo = re.sub(r"\s+", " ", str(t)).strip().strip('"')
             problemas = _problemas_titulo(titulo, f"{art['titulo']} {nome_pt} {fatos}")
-            if titulo and not problemas:
+            if titulo and not problemas and not _titulo_falso(titulo, art, fatos, timeout):
                 return titulo
-            falhas += problemas
-    return nome_pt  # nome do artigo em português: sem promessa nenhuma, mas verdadeiro
+            falhas += problemas or ["a claim in the title is not supported by the text"]
+    # Reserva: o nome do artigo em português (sem promessa nenhuma, mas verdadeiro). Artigo só em inglês não tem
+    # reserva ("2025 Bangkok road collapse" virou título no teste de 21/10): None faz o #01 pular para o próximo.
+    if art["lang"] == "pt" or nome_pt != art["titulo"]:
+        return nome_pt
+    return None
 
 
 def sugerir_pauta(nicho: str, timeout: float = 60) -> Optional[Dict[str, Any]]:
@@ -215,8 +261,13 @@ def sugerir_pauta(nicho: str, timeout: float = 60) -> Optional[Dict[str, Any]]:
         c["visualizacoes_30d"] = _visualizacoes(c["lang"], c["titulo"], timeout)
     candidatos.sort(key=lambda c: -c["visualizacoes_30d"])
 
-    bloqueados = []
-    for c in candidatos[:4]:
+    bloqueados, fora_do_tema = [], []
+    cfg = _config(nicho)
+    nome_nicho, descricao = cfg.get("nome") or nicho, cfg.get("descricao") or cfg.get("nome") or nicho
+    for c in candidatos:  # até CANDIDATOS (10); a checagem de tema leva ~1 s por artigo com o modelo carregado
+        if not combina_com_nicho(nome_nicho, descricao, c, timeout):
+            fora_do_tema.append(f"{c['lang']}: {c['titulo']}")
+            continue
         filtro = sensitive_filter.verificar(c["titulo"], c["resumo"], timeout=timeout)
         if filtro["bloqueado"]:
             bloqueados.append(f"{c['lang']}: {c['titulo']} ({filtro['motivo']})")
@@ -228,8 +279,11 @@ def sugerir_pauta(nicho: str, timeout: float = 60) -> Optional[Dict[str, Any]]:
         if filtro["bloqueado"]:
             bloqueados.append(f"{c['lang']}: {c['titulo']} ({filtro['motivo']})")
             continue
+        titulo = escrever_titulo(c, fatos, timeout)
+        if not titulo:
+            continue
         return {
-            "titulo": escrever_titulo(c, fatos, timeout),
+            "titulo": titulo,
             "fatos": fatos,
             "fontes": [c["url"]] if c["url"] else [],
             "artigo": f"{c['lang']}: {c['titulo']}",
@@ -237,6 +291,8 @@ def sugerir_pauta(nicho: str, timeout: float = 60) -> Optional[Dict[str, Any]]:
             "categoria": artigos[f"{c['lang']}:{c['titulo']}"],
             "visualizacoes_30d": c["visualizacoes_30d"],
             "bloqueados": bloqueados,
+            "fora_do_tema": fora_do_tema,
             "candidatos": len(candidatos),
         }
-    raise ValueError(f"nenhum dos {len(candidatos)} candidatos passou ({len(bloqueados)} bloqueados por tema sensível)")
+    raise ValueError(f"nenhum dos {len(candidatos)} candidatos passou ({len(fora_do_tema)} fora do tema do nicho, "
+                     f"{len(bloqueados)} bloqueados por tema sensível)")

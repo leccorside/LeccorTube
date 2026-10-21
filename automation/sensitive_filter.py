@@ -9,7 +9,8 @@ Duas camadas:
    automutilação bloqueiam se aparecerem no título ou 3+ vezes no texto; menos que isso, decide a 2ª camada.
 2. IA local: o Ollama diz se o assunto **central** é um desses temas.
 
-Para mudar o que é bloqueado, editar TERMOS_BLOQUEIO, TERMOS_SUSPEITA e TEMAS_IA.
+Para mudar o que é bloqueado, editar TERMOS_BLOQUEIO, TERMOS_SUSPEITA e TEMAS_IA. Teorias da conspiração, guerras
+recentes e religião NÃO são bloqueadas: decisão do usuário em 21/10/2026 (podem virar pauta).
 """
 from __future__ import annotations
 
