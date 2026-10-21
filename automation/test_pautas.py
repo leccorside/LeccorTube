@@ -204,7 +204,14 @@ def test_interceptado():
     assert sf.verificar("Suicídio em massa", "", usar_ia=False)["bloqueado"]
     assert not sf.verificar("Cerco de Masada", "Os defensores cometeram suicídio coletivo.", usar_ia=False)["bloqueado"]
     assert not sf.verificar("Grape harvest", "The rapeseed field and the grapes.", usar_ia=False)["bloqueado"], "'rape' só como palavra inteira"
-    print("[OK] filtro por palavras-chave: bloqueia abuso/suicídio central; libera menção única e 'rapeseed'")
+    # tragédia real recente com menores (o caso Chibok): menores + violência na mesma frase + ano dos últimos 30 anos
+    chibok = "On 14 April 2014, 276 schoolgirls were kidnapped from a school in Chibok, Nigeria, by Boko Haram."
+    assert sf.verificar("Chibok schoolgirls kidnapping", chibok, usar_ia=False)["bloqueado"]
+    assert sf.verificar("Massacre de Realengo", "Em 2011, um atirador matou doze alunos. Os alunos foram assassinados na escola.", usar_ia=False)["bloqueado"]
+    assert not sf.verificar("Flautista de Hamelin", "Em 1284, as crianças da cidade desapareceram seguindo o flautista.", usar_ia=False)["bloqueado"], "lenda antiga passa"
+    assert not sf.verificar("Navio Vasa", "Afundou em 1628. Em 1961 foi resgatado; nenhuma criança estava a bordo.", usar_ia=False)["bloqueado"], "sem violência na frase dos menores"
+    assert "2014" not in sf._temas_ia() and str(__import__("datetime").date.today().year - sf.ANOS_RECENTES) in sf._temas_ia()
+    print("[OK] filtro por palavras-chave: bloqueia abuso/suicídio central e tragédia recente com menores; libera menção única, 'rapeseed' e lenda antiga")
 
     # 6. Roteirista: pauta sensível é reprovada antes de qualquer pedido de roteiro; roteiro com termo proibido também
     v = _video("Um filme sérvio", "[Wikipédia] Um filme com cenas de abuso infantil.")
