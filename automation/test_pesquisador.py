@@ -22,6 +22,14 @@ import httpx  # noqa: E402
 from automation import agents as agents_mod  # noqa: E402
 from automation import fact_research as fr  # noqa: E402
 from automation import script_writer as sw  # noqa: E402
+from automation import sensitive_filter as sf  # noqa: E402
+from automation import topic_finder as tf  # noqa: E402
+
+# Este teste cobre o fluxo antigo (título pronto + pesquisa de fatos); o fluxo novo por categorias e o filtro de
+# temas sensíveis com IA estão em test_pautas.py
+tf.categorias = lambda nicho: {}
+_verificar = sf.verificar
+sf.verificar = lambda t, x, usar_ia=True, timeout=60: _verificar(t, x, usar_ia=False)
 from automation.agents import ResearchAgent, ScriptAgent  # noqa: E402
 from automation.models import AGENTS_METADATA, AgentState, VideoBrief, VideoItem  # noqa: E402
 

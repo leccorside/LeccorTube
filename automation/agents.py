@@ -56,13 +56,40 @@ class ResearchAgent(BaseAgent):
         super().__init__(1, "research", "Pesquisador")
 
     def execute(self, video: VideoItem, niche: str, subniche: str, cb: Optional[Callable] = None):
-        self.update_agent(video, "RUNNING", 20, "Varrendo tendências e consultas em alta...", "Buscando referências", cb)
-        time.sleep(1)
+        from automation import topic_finder
+
+        # Artigo primeiro, título depois (categorias da Wikipédia do nicho). Subnicho digitado pelo usuário é um
+        # assunto específico que as categorias não cobrem: vai direto para o fluxo antigo.
+        aviso = ""
+        if not subniche:
+            self.update_agent(video, "RUNNING", 20, "Sorteando artigos das categorias do nicho na Wikipédia...", "Buscando pauta", cb)
+            try:
+                pauta = topic_finder.sugerir_pauta(niche)
+            except Exception as e:
+                pauta, aviso = None, f"pautas da Wikipédia indisponíveis ({type(e).__name__}: {str(e)[:80]}); "
+            if pauta:
+                topic_finder.marcar_usado(pauta["chave"])
+                video.brief.opportunity_id = f"wiki-{pauta['chave']}"
+                video.brief.title = pauta["titulo"]
+                video.brief.research_facts = pauta["fatos"]
+                video.brief.research_sources = pauta["fontes"]
+                video.brief.sources_rationale["research"] = (
+                    f"Tema: {pauta['categoria']}. Wikipédia: {pauta['artigo']} "
+                    f"({pauta['visualizacoes_30d']} visualizações em 30 dias)"
+                    + (f". Bloqueados por tema sensível: {'; '.join(pauta['bloqueados'])}" if pauta["bloqueados"] else "")
+                )
+                self.update_agent(video, "COMPLETED", 100,
+                                  f"Pauta do artigo '{pauta['artigo']}' ({pauta['categoria']}, {pauta['visualizacoes_30d']} visualizações/30 dias)",
+                                  "Concluído", cb)
+                return
+        self._fluxo_antigo(video, niche, subniche, aviso, cb)
+
+    def _fluxo_antigo(self, video: VideoItem, niche: str, subniche: str, aviso: str, cb: Optional[Callable] = None):
+        """Título pronto (catálogo fixo ou busca do YouTube) e fatos procurados depois: só para nicho sem
+        categorias, subnicho personalizado ou falha do fluxo novo."""
+        self.update_agent(video, "RUNNING", 40, aviso + "Buscando pautas prontas...", "Buscando referências", cb)
 
         oportunidades = youtube_client.search_trending_opportunities(niche, subniche)
-        self.update_agent(video, "RUNNING", 65, "Analisando lacunas de conteúdo e retenção...", "Avaliando concorrência", cb)
-        time.sleep(1)
-
         from automation.fact_research import pesquisar_fatos
 
         # Prefere pautas com fatos: sem artigos na Wikipédia (ex.: a lenda do "Voo 513"), o Roteirista insiste nas
@@ -96,7 +123,7 @@ class ResearchAgent(BaseAgent):
         else:
             msg = f"Pauta '{titulo}...': nenhuma das {len(sorteio)} pautas tentadas tem artigo na Wikipédia; o roteiro terá só o tema"
 
-        self.update_agent(video, "COMPLETED", 100, msg, "Concluído", cb)
+        self.update_agent(video, "COMPLETED", 100, aviso + "fluxo antigo: " + msg if aviso else msg, "Concluído", cb)
 
 
 # ==================== 02. ESTRATEGISTA ====================
@@ -125,8 +152,25 @@ class ScriptAgent(BaseAgent):
     def __init__(self):
         super().__init__(3, "script", "Roteirista")
 
+    def _reprovar(self, video: VideoItem, motivo: str, cb: Optional[Callable]):
+        # O orquestrador para a esteira deste vídeo quando o status é REJECTED (nada de imagem, voz nem render)
+        video.status = "REJECTED"
+        video.brief.sources_rationale["script"] = f"Bloqueado por tema sensível: {motivo}"
+        self.update_agent(video, "BLOCKED", 100, f"Vídeo reprovado: tema sensível ({motivo[:120]})", "Tema sensível", cb)
+
     def execute(self, video: VideoItem, cb: Optional[Callable] = None):
+        from automation import sensitive_filter
         from automation.script_writer import escrever_roteiro
+
+        # Filtro de temas sensíveis antes do roteiro (o #01 já filtra as pautas da Wikipédia; aqui cobre também o
+        # fluxo antigo e pautas montadas à mão). Ollama fora: fica só a camada de palavras-chave.
+        self.update_agent(video, "RUNNING", 10, "Conferindo a pauta no filtro de temas sensíveis...", "Filtro de temas", cb)
+        try:
+            filtro = sensitive_filter.verificar(video.brief.title, video.brief.research_facts)
+        except Exception:
+            filtro = sensitive_filter.verificar(video.brief.title, video.brief.research_facts, usar_ia=False)
+        if filtro["bloqueado"]:
+            return self._reprovar(video, filtro["motivo"], cb)
 
         self.update_agent(video, "RUNNING", 20, "Escrevendo um roteiro original com a IA local...", "Estrutura narrativa", cb)
         contexto = video.brief.sources_rationale.get("research", "")
@@ -174,6 +218,13 @@ class ScriptAgent(BaseAgent):
         )
         if roteiro.get("first_attempt_failures"):
             video.brief.sources_rationale["script"] += "; reescrito: " + "; ".join(roteiro["first_attempt_failures"])
+
+        # O roteiro pronto também passa pelas palavras-chave (sem IA): a IA pode ter puxado um tema que a pauta não tinha
+        filtro = sensitive_filter.verificar(" ".join(video.brief.alternative_titles),
+                                            " ".join([video.brief.script_body, video.brief.description, *video.brief.tags]),
+                                            usar_ia=False)
+        if filtro["bloqueado"]:
+            return self._reprovar(video, "no roteiro: " + filtro["motivo"], cb)
 
         self.update_agent(video, "RUNNING", 80, f"Roteiro com {roteiro['word_count']} palavras; preparando cenas...", "Revisão estrutural", cb)
         if origem == "ollama":

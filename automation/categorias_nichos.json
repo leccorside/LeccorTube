@@ -1,0 +1,41 @@
+{
+  "_leia_me": "Categorias da Wikipédia de onde o Pesquisador (#01) tira as pautas de cada nicho (fluxo 'artigo primeiro, título depois'). Nomes sem o prefixo 'Categoria:'/'Category:'. Todas conferidas na Wikipédia em 21/10/2026 (existem e têm artigos). Também entram as subcategorias de 1º nível. Nicho sem entrada aqui (ou 'custom') usa o fluxo antigo. Status: PROPOSTA, aguardando aprovação do usuário.",
+  "terror": {
+    "nome": "Terror & Mistérios",
+    "pt": ["Lendas urbanas", "Criptídeos", "Fantasmas", "Fenômenos paranormais", "Mistérios"],
+    "en": ["Urban legends", "Ghost ships", "Cryptids", "Internet mysteries", "Numbers stations",
+           "Mass disappearances", "Unexplained disappearances", "Unidentified flying objects"]
+  },
+  "curiosidades": {
+    "nome": "Curiosidades do Mundo",
+    "pt": ["Ilusões ópticas", "Extremófilos", "Recordes mundiais", "Fenômenos naturais", "Cidades subterrâneas"],
+    "en": ["Underground cities", "Extremophiles", "Optical illusions", "Sinkholes", "Unsolved problems in biology", "Geysers"]
+  },
+  "tecnologia": {
+    "nome": "Tecnologia & IA",
+    "pt": ["Computação quântica", "Sondas espaciais", "Vírus de computador", "Supercomputadores", "Robótica"],
+    "en": ["Software bugs", "Lost inventions", "Cancelled spacecraft", "Brain–computer interface", "Neuroprosthetics",
+           "Computer worms", "Humanoid robots"]
+  },
+  "financas": {
+    "nome": "Finanças & Negócios",
+    "pt": ["Crises financeiras", "Fraudes financeiras", "Escândalos financeiros", "Hiperinflação"],
+    "en": ["Pyramid and Ponzi schemes", "Economic bubbles", "Stock market crashes", "Accounting scandals", "Hyperinflation",
+           "Behavioral finance"]
+  },
+  "motivacao": {
+    "nome": "Motivação e Desenvolvimento Pessoal",
+    "pt": ["Vieses cognitivos", "Estoicismo", "Hábitos"],
+    "en": ["Cognitive biases", "Psychology experiments", "Stoicism", "Time management", "Habits"]
+  },
+  "historia": {
+    "nome": "História & Guerras",
+    "pt": ["Cercos"],
+    "en": ["Shipwrecks", "Treasure", "Ancient Egyptian pyramids", "Archaeological sites"]
+  },
+  "saude": {
+    "nome": "Saúde & Bem-Estar",
+    "pt": ["Sono", "Fisiologia humana"],
+    "en": ["Sleep", "Human physiology", "History of medicine"]
+  }
+}

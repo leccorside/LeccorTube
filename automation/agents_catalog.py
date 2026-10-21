@@ -140,19 +140,19 @@ def _agentes(cfg: Dict[str, Any], sv: Dict[str, Any]) -> List[Dict[str, Any]]:
     w, h = cfg.get("image_width", "?"), cfg.get("image_height", "?")
     enc = cfg.get("encoder", "auto")
     vozes_n = len(sv["chatterbox"].get("vozes", []))
-    cota = "100 un. de cota por busca" if chave else "Sem custo (catálogo local)"
     a = {
-        1: dict(categoria="texto", implementacao="parcial", servico="youtube",
-                motor=("YouTube Data API v3 · search.list" if chave else "Catálogo fixo de pautas por nicho") + " + Wikipédia",
-                motor_tag="YouTube API" if chave else "Sem chave de API",
-                params=[("Região", "BR"), ("Fatos", "Wikipédia pt/en"), ("Artigos", "até 3")], custo=cota,
-                faz=f"Sorteia até 3 pautas e fica com a primeira que tem fatos na Wikipédia: o Ollama ({MODELO_IA}) descreve "
-                    "o assunto, sugere os artigos, dá nota a cada um e confere os melhores um a um; os resumos aprovados, "
-                    "com as URLs, vão para o Roteirista e para a descrição do vídeo.",
-                limitacao="A pauta vem de "
-                + ("resultados da API do YouTube." if chave else "uma lista fixa de títulos por nicho (não há chave da API do YouTube configurada).")
-                + " A conferência é conservadora: pautas vagas (\"A Regra dos 2 Minutos\") ou lendas sem artigo (\"Voo 513\") "
-                  "ficam sem fatos e o roteiro sai genérico. O filtro é um modelo pequeno: as fontes ficam na descrição para conferir."),
+        1: dict(categoria="texto", implementacao="parcial", servico="ollama",
+                motor=f"Wikipédia (categorias do nicho) + Ollama · {MODELO_IA}",
+                motor_tag="Artigo primeiro",
+                params=[("Fonte", "Wikipédia pt/en"), ("Demanda", "visualizações 30 dias"), ("Filtro", "temas sensíveis")],
+                custo="Sem custo (APIs públicas da Wikimedia)",
+                faz="Sorteia artigos das categorias da Wikipédia do nicho (automation/categorias_nichos.json), fica com o mais "
+                    "lido nos últimos 30 dias que passa no filtro de temas sensíveis e tem fatos suficientes, e a IA local "
+                    "escreve o título só com o que está no artigo. O texto do artigo vai para o Roteirista e a URL para a descrição.",
+                limitacao="Títulos e roteiros vêm de um modelo de 7B: às vezes saem com erro de grafia, palavra em inglês ou "
+                          "promessa exagerada (\"a teoria que revolucionou o pensamento\"); revisar antes de publicar. Números "
+                          "escritos por extenso (\"três dias\") escapam da checagem de números. Nicho sem categorias ou com "
+                          "subnicho personalizado usa o fluxo antigo (" + ("busca da API do YouTube" if chave else "catálogo fixo") + ")."),
         2: dict(categoria="texto", implementacao="simulado", servico=None, motor="Regras fixas (sem IA)",
                 motor_tag="Sem modelo", params=[("Shorts", "58 s"), ("Longos", "180 s"), ("Score", "aleatório")],
                 custo="Sem custo", faz="Define o formato (Shorts ou longo) e a duração alvo a partir das preferências do canal.",

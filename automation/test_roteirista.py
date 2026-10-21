@@ -11,6 +11,12 @@ from automation.paths import isolar_para_teste  # noqa: E402
 DADOS_TESTE = isolar_para_teste()
 
 from automation import script_writer as sw  # noqa: E402
+from automation import sensitive_filter as sf  # noqa: E402
+
+# O filtro de temas sensíveis (testado em test_pautas.py) fica só nas palavras-chave aqui: a camada de IA faria um
+# pedido a mais ao Ollama interceptado e mudaria a contagem de pedidos do roteiro
+_verificar = sf.verificar
+sf.verificar = lambda t, x, usar_ia=True, timeout=60: _verificar(t, x, usar_ia=False)
 from automation.agents import ScriptAgent  # noqa: E402
 from automation.models import AGENTS_METADATA, AgentState, VideoBrief, VideoItem  # noqa: E402
 

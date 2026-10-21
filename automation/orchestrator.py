@@ -225,6 +225,9 @@ class AutomationOrchestrator:
 
             # Executa as 10 estações sequenciais no vídeo
             self._process_video_pipeline(batch, video)
+            if video.status == "REJECTED":
+                storage.log_event(batch.id, video.id, None, "VIDEO_REJECTED",
+                                  video.brief.sources_rationale.get("script", "Vídeo reprovado"))
 
             if video.status in ("PUBLISHED", "DRAFT_READY", "AWAITING_APPROVAL", "LEARNING_RECORDED"):
                 batch.produced_count += 1
@@ -245,7 +248,8 @@ class AutomationOrchestrator:
 
         def check_pause_and_stop():
             self._pause_event.wait()
-            return self._stop_requested
+            # Vídeo reprovado (ex.: tema sensível no Roteirista) não segue para imagem, voz, render nem publicação
+            return self._stop_requested or video.status == "REJECTED"
 
         def on_agent_progress(order: int, key: str, status: str, progress: int, message: str, step: Optional[str]):
             # Callback disparado a cada atualização de agente
