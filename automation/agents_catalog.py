@@ -177,10 +177,15 @@ def _agentes(cfg: Dict[str, Any], sv: Dict[str, Any]) -> List[Dict[str, Any]]:
                 motor_tag="Voz local", params=[("Exag.", "0.4"), ("CFG", "0.3"), ("Temp", "0.5")],
                 custo="Local · sem custo", faz=f"Narração em pt-BR com {vozes_n} voz(es) de referência, revisão pelo Whisper e som ambiente a −18 LUFS.",
                 limitacao="A narração, a revisão e o som ambiente rodam dentro do Produtor (#05); este agente só registra a etapa."),
-        7: dict(categoria="qa", implementacao="simulado", servico=None, motor="Checklist fixo", motor_tag="Sem verificação",
-                params=[("Legendas", "não checa"), ("Áudio", "não checa"), ("Resultado", "aprova")], custo="Sem custo",
-                faz="Registra um checklist de qualidade no vídeo.",
-                limitacao="Aprova sempre: todos os itens do checklist vêm marcados como OK, sem nenhuma verificação real."),
+        7: dict(categoria="qa", implementacao="parcial", servico="ollama", motor=f"Conferência de fatos · Ollama · {MODELO_IA}",
+                motor_tag="Checa fatos", params=[("Fatos", "números + afirmações"), ("Legendas", "não checa"), ("Áudio", "não checa")],
+                custo="Local · sem custo",
+                faz="Confere título e roteiro contra os fatos da Wikipédia: números (inclusive por extenso) e afirmações "
+                    "(a IA local marca cada uma como confirmada, contradita ou fora dos fatos). Contradição ou número "
+                    "inventado reprova o vídeo antes do Designer e do Publicador.",
+                limitacao="Roda depois do render (o tempo de GPU já foi gasto). Legendas, áudio e direitos autorais não são "
+                          "verificados. Sem artigo da Wikipédia (fluxo antigo), aprova sem conferir. A IA de 7B pode deixar "
+                          "passar distorções sutis ou marcar como contradição algo que só foi resumido."),
         8: dict(categoria="visual", implementacao="parcial", servico="motor", motor="Regra de texto + miniaturas do motor",
                 motor_tag="Sem IA", params=[("Variantes", "3 (A/B/C)"), ("Texto", "≤ 24 letras"), ("Palavras", "3")],
                 custo="Local · sem custo", faz="Define o texto da miniatura; o motor gera as 3 variantes no Export.",

@@ -28,12 +28,13 @@ MAX_VERIFICAR = 4  # artigos do pré-filtro conferidos um a um (~2–3 s cada co
 MAX_CHARS_ARTIGO = 1500
 
 
-def _ollama(pedido: str, timeout: float) -> Dict[str, Any]:
+def _ollama(pedido: str, timeout: float, max_tokens: int = 1500) -> Dict[str, Any]:
     r = httpx.post(f"{OLLAMA_URL}/api/chat", timeout=timeout, json={
         "model": MODELO_IA, "stream": False, "format": "json",
         # O Roteirista (#03) usa o modelo logo depois; o Diretor Visual (#04) o descarrega antes do ComfyUI.
         "keep_alive": "2m",
-        "options": {"temperature": 0.1, "num_ctx": 8192},
+        # num_predict: no modo JSON o modelo às vezes gera sem parar (3 pedidos do QA estouraram 120 s em 21/10)
+        "options": {"temperature": 0.1, "num_ctx": 8192, "num_predict": max_tokens},
         "messages": [{"role": "user", "content": pedido}]})
     r.raise_for_status()
     dados = json.loads(r.json()["message"]["content"])

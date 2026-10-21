@@ -182,6 +182,17 @@ def test_roteirista():
         sw.httpx.post = original
     print("[OK] três respostas reprovadas: erro claro")
 
+    # Autoridade citada que está nos fatos em inglês ("historians") não reprova (reprovou o roteiro do fogo grego)
+    historiadores = json.dumps(dict(sem_ponto, body="Os historiadores debatem a fórmula do fogo grego. " + sem_ponto["body"]), ensure_ascii=False)
+    sw.httpx.post = lambda url, json=None, timeout=None: _Resp(historiadores)
+    try:
+        resultado = sw.escrever_roteiro("O fogo grego", "shorts", 58, "Historians still debate the composition of Greek fire.")
+    finally:
+        sw.httpx.post = original
+    falhas = resultado.get("first_attempt_failures") or []
+    assert "historiadores" in resultado["script_body"] and not any("authorities" in f for f in falhas), falhas
+    print("[OK] 'historiadores' no roteiro com 'historians' nos fatos em inglês não reprova")
+
     # 1ª resposta malformada (só 2 hashtags; visto no teste real: contingência em 2 s): conta como tentativa e reescreve
     malformada = json.dumps(dict(sem_ponto, hashtags=["a", "b"]), ensure_ascii=False)
     respostas = iter([malformada, sem_ponto_json])

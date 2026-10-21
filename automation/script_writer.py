@@ -30,6 +30,19 @@ def _frase(texto: str) -> str:
     return texto if texto[-1] in ".!?…" else texto + "."
 
 
+# Autoridade citada no roteiro (pt) -> radicais que contam como fonte nos fatos, que quase sempre vêm da Wikipédia em
+# inglês: "historiadores" reprovava o roteiro do fogo grego com "historians" nos fatos (teste de 21/10).
+AUTORIDADES = {
+    "pesquisadores": ("pesquisador", "researcher"), "especialistas": ("especialista", "expert", "specialist"),
+    "cientistas": ("cientista", "scientist"), "historiadores": ("historiador", "historian"),
+    "arqueólogos": ("arqueólog", "archaeolog", "archeolog"), "estudos": ("estudo", "study", "studies"),
+}
+
+
+def _autoridade_na_fonte(autoridade: str, contexto_lower: str) -> bool:
+    return any(r in contexto_lower for r in AUTORIDADES[autoridade])
+
+
 def escrever_roteiro(
     titulo: str,
     formato: str,
@@ -111,7 +124,7 @@ def escrever_roteiro(
 
         for campo in ("hook", "body", "cta"):
             texto = resultado[campo]
-            if any(x in texto.lower() and x not in contexto_lower for x in grupos.split("|")):
+            if any(x in texto.lower() and not _autoridade_na_fonte(x, contexto_lower) for x in grupos.split("|")):
                 novo = padrao.sub(troca, texto)
                 if novo != texto:
                     resultado[campo] = novo
@@ -131,8 +144,7 @@ def escrever_roteiro(
             falhas.append(f"too long ({n} words; maximum {maximo + 5})")
         narracao = resultado["script_body"].lower()
         contexto_lower = contexto_pesquisa.lower()
-        autoridades = ("pesquisadores", "especialistas", "cientistas", "historiadores", "arqueólogos", "estudos")
-        indevidas = [x for x in autoridades if x in narracao and x not in contexto_lower]
+        indevidas = [x for x in AUTORIDADES if x in narracao and not _autoridade_na_fonte(x, contexto_lower)]
         if indevidas:
             falhas.append("unsupported authorities or studies: " + ", ".join(indevidas))
         genericas = ("você não vai acreditar", "verdade chocante", "ninguém te contou")

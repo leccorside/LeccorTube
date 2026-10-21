@@ -315,22 +315,40 @@ class QualityControlAgent(BaseAgent):
         super().__init__(7, "review", "Revisor QA")
 
     def execute(self, video: VideoItem, cb: Optional[Callable] = None):
-        self.update_agent(video, "RUNNING", 40, "Auditando legendas na área segura e integridade de áudio...", "Auditoria de QA", cb)
-        time.sleep(1)
+        # Antes aprovava sempre, com o checklist todo marcado como OK. Agora confere o título e o roteiro contra os
+        # fatos da Wikipédia (fact_check): números (inclusive por extenso) e afirmações. Legenda, áudio e direitos
+        # continuam sem verificação automática, e as notas dizem isso.
+        from automation.fact_check import conferir
 
-        qa = QAChecklist(
-            video_integrity=True,
-            subtitles_safe_zone=True,
-            audio_loudness_ok=True,
-            no_copyright_violation=True,
-            no_misleading_metadata=True,
-            factual_confidence_high=True,
-            notes=["Legendas legíveis e contrastantes", "Áudio sem cortes de fala", "Diretrizes de conteúdo verificadas"],
-            approved=True,
+        self.update_agent(video, "RUNNING", 30, "Conferindo título e roteiro contra os fatos da Wikipédia...", "Conferência de fatos", cb)
+        b = video.brief
+        r = conferir(b.title, b.script_body, b.research_facts, titulo_pauta=b.sources_rationale.get("research", ""))
+        sem_fatos = not b.research_facts.strip()
+        notas = ([f"PROBLEMA: {p}" for p in r["problemas"]] + r["observacoes"]
+                 + [f"Afirmações conferidas pela IA: {sum(a['verdict'] == 'supported' for a in r['afirmacoes'])} confirmadas, "
+                    f"{sum(a['verdict'] == 'contradicted' for a in r['afirmacoes'])} contraditas, "
+                    f"{sum(a['verdict'] == 'not_found' for a in r['afirmacoes'])} fora dos fatos"] * bool(r["ia"])
+                 + ["Legendas, áudio e direitos autorais não são verificados automaticamente"])
+        video.qa = QAChecklist(
+            no_misleading_metadata=r["aprovado"],  # o título entra na conferência junto com o roteiro
+            factual_confidence_high=r["aprovado"] and r["ia"] and not sem_fatos,
+            notes=notas,
+            approved=r["aprovado"],
         )
-        video.qa = qa
+        if not r["aprovado"]:
+            # REJECTED: o orquestrador não segue para o Designer nem para o Publicador; o vídeo renderizado fica no disco
+            video.status = "REJECTED"
+            self.update_agent(video, "FAILED", 100,
+                              f"QA reprovado: {len(r['problemas'])} problema(s) nos fatos — {r['problemas'][0][:140]}", "Reprovado", cb)
+            return
         video.status = "DRAFT_READY"
-        self.update_agent(video, "COMPLETED", 100, "QA Aprovado • Pronto para rascunho / publicação", "Concluído", cb)
+        if sem_fatos:
+            msg = "QA aprovado sem conferência de fatos (pauta sem artigo da Wikipédia)"
+        elif not r["ia"]:
+            msg = "QA aprovado só pelos números (IA indisponível para conferir as afirmações)"
+        else:
+            msg = f"QA aprovado: fatos conferidos ({len(r['observacoes'])} observação(ões))"
+        self.update_agent(video, "COMPLETED", 100, msg, "Concluído", cb)
 
 
 # ==================== 08. DESIGNER ====================
