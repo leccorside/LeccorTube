@@ -63,12 +63,40 @@ class ResearchAgent(BaseAgent):
         self.update_agent(video, "RUNNING", 65, "Analisando lacunas de conteúdo e retenção...", "Avaliando concorrência", cb)
         time.sleep(1)
 
-        escolha = random.choice(oportunidades)
+        from automation.fact_research import pesquisar_fatos
+
+        # Prefere pautas com fatos: sem artigos na Wikipédia (ex.: a lenda do "Voo 513"), o Roteirista insiste nas
+        # datas da lenda, a validação reprova e o vídeo cai na contingência. Tenta até 3 pautas do sorteio.
+        sorteio = random.sample(oportunidades, min(3, len(oportunidades)))
+        pesquisa, erro = None, None
+        for i, escolha in enumerate(sorteio, 1):
+            self.update_agent(video, "RUNNING", 65 + 10 * i, f"Buscando fatos na Wikipédia: '{escolha.get('title', '')[:35]}...'", "Pesquisa factual", cb)
+            try:
+                pesquisa = pesquisar_fatos(escolha.get("title", video.brief.title), escolha.get("topic", subniche or niche))
+            except Exception as e:  # Wikipédia ou Ollama fora: tentar outra pauta não adianta
+                pesquisa, erro = None, e
+                break
+            if pesquisa["fatos"]:
+                break
+        if not (pesquisa and pesquisa["fatos"]):
+            escolha = sorteio[0]
+
         video.brief.opportunity_id = f"opp-{int(time.time())}"
         video.brief.title = escolha.get("title", video.brief.title)
-        video.brief.sources_rationale["research"] = f"Fonte: {escolha.get('topic', niche)}. Confiança: {escolha.get('confidence', 0.88)*100:.0f}%"
+        video.brief.sources_rationale["research"] = f"Tema: {escolha.get('topic', subniche or niche)}"
+        titulo = video.brief.title[:35]
+        if pesquisa and pesquisa["fatos"]:
+            video.brief.research_facts = pesquisa["fatos"]
+            video.brief.research_sources = pesquisa["fontes"]
+            video.brief.sources_rationale["research"] += ". Wikipédia: " + "; ".join(pesquisa["artigos"])
+            msg = f"Pauta '{titulo}...' com fatos de {len(pesquisa['artigos'])} artigo(s) da Wikipédia"
+        elif erro:
+            video.brief.sources_rationale["research"] += f". Pesquisa factual indisponível ({type(erro).__name__})"
+            msg = f"Pauta '{titulo}...': pesquisa na Wikipédia indisponível ({type(erro).__name__}); o roteiro terá só o tema"
+        else:
+            msg = f"Pauta '{titulo}...': nenhuma das {len(sorteio)} pautas tentadas tem artigo na Wikipédia; o roteiro terá só o tema"
 
-        self.update_agent(video, "COMPLETED", 100, f"Oportunidade selecionada: '{video.brief.title[:35]}...'", "Concluído", cb)
+        self.update_agent(video, "COMPLETED", 100, msg, "Concluído", cb)
 
 
 # ==================== 02. ESTRATEGISTA ====================
@@ -102,6 +130,8 @@ class ScriptAgent(BaseAgent):
 
         self.update_agent(video, "RUNNING", 20, "Escrevendo um roteiro original com a IA local...", "Estrutura narrativa", cb)
         contexto = video.brief.sources_rationale.get("research", "")
+        if video.brief.research_facts:
+            contexto += "\n\nResearch notes (Wikipedia summaries):\n" + video.brief.research_facts
         try:
             roteiro = escrever_roteiro(
                 titulo=video.brief.title,
@@ -128,13 +158,15 @@ class ScriptAgent(BaseAgent):
                 "word_count": 0, "target_words": max(90, round(video.brief.target_duration_seconds * 2.3)),
             }
             roteiro["word_count"] = len(roteiro["script_body"].split())
-            origem = f"contingencia:{type(e).__name__}"
+            origem = f"contingencia:{type(e).__name__} ({str(e)[:160]})"
 
         video.brief.script_hook = roteiro["hook"]
         video.brief.script_body = roteiro["script_body"]
         video.brief.script_cta = roteiro["cta"]
         video.brief.alternative_titles = roteiro["alternative_titles"]
         video.brief.description = roteiro["description"]
+        if video.brief.research_sources:  # atribuição exigida pela licença da Wikipédia (CC BY-SA) e para conferir
+            video.brief.description += "\n\nFontes:\n" + "\n".join(video.brief.research_sources)
         video.brief.hashtags = roteiro["hashtags"]
         video.brief.tags = roteiro["tags"]
         video.brief.sources_rationale["script"] = (

@@ -176,6 +176,17 @@ def test_roteirista():
         sw.httpx.post = original
     print("[OK] três respostas reprovadas: erro claro")
 
+    # 1ª resposta malformada (só 2 hashtags; visto no teste real: contingência em 2 s): conta como tentativa e reescreve
+    malformada = json.dumps(dict(sem_ponto, hashtags=["a", "b"]), ensure_ascii=False)
+    respostas = iter([malformada, sem_ponto_json])
+    sw.httpx.post = lambda url, json=None, timeout=None: _Resp(next(respostas))
+    try:
+        resultado = sw.escrever_roteiro("A cidade subterrânea", "shorts", 58, "Uma passagem foi encontrada atrás de uma parede.")
+    finally:
+        sw.httpx.post = original
+    assert any("invalid answer" in f for f in resultado["first_attempt_failures"]), resultado["first_attempt_failures"]
+    print("[OK] resposta malformada vira tentativa reprovada e é reescrita")
+
     def falha(url, json=None, timeout=None):
         raise sw.httpx.ConnectError("Ollama fora")
 

@@ -55,6 +55,9 @@ def escrever_roteiro(
         "or vague claims about researchers, investigations, secrets, or evidence.\n"
         "- Never invent dates, people, institutions, studies, statistics, quotations, or claims. Use only the supplied "
         "topic and research context. When a claim is uncertain, clearly frame it as possibility, legend, or open question.\n"
+        "- Research notes, when present, are Wikipedia summaries picked automatically and may include an article about "
+        "a broader field or a different subject with a similar name. Use only facts about the exact subject of the "
+        "title. If the notes show the title's premise is a legend, hoax or exaggeration, tell it as such.\n"
         "- The body must progress through distinct ideas without repetition. The CTA must be one short final sentence.\n"
         "- Do not mention the visual style, prompts, AI, narrator, narration, script, or these instructions.\n"
         "- Provide exactly 3 useful alternative titles, 3 to 5 hashtags without #, and 5 to 10 search tags, all in "
@@ -142,10 +145,20 @@ def escrever_roteiro(
             falhas.append("numbers or dates not in the title or research context: " + ", ".join(inventados))
         return falhas
 
-    resultado = gerar(pedido, 0.55)
-    falhas = problemas(resultado)
-    if not falhas:
-        return resultado
+    def tentar(instrucoes: str, temperatura: float):
+        # Resposta malformada (JSON inválido, campo faltando, poucas hashtags) conta como tentativa reprovada; antes
+        # ela ia direto para a contingência, sem reescrita (visto no teste de 21/10: contingência em 2 s).
+        # Erro de conexão com o Ollama não é ValueError e sobe para o agente.
+        try:
+            return gerar(instrucoes, temperatura), []
+        except ValueError as e:  # json.JSONDecodeError também é ValueError
+            return None, [f"invalid answer ({e})"]
+
+    resultado, falhas = tentar(pedido, 0.55)
+    if resultado is not None:
+        falhas = problemas(resultado)
+        if not falhas:
+            return resultado
     primeiras = falhas
     # Até 2 reescritas: no teste real de 21/10 a 1ª resposta foi reprovada em 5 de 5 pedidos (fatos inventados ou
     # tamanho) e a 1ª reescrita em 1 de 3; com o modelo já carregado, cada pedido leva ~6 s.
@@ -157,7 +170,9 @@ def escrever_roteiro(
             "the supplied research context. Do not write any number, year or date that does not appear in the title or "
             "the research context. Rewrite from scratch and return only the required JSON."
         )
-        resultado = gerar(correcao, 0.35)
+        resultado, falhas = tentar(correcao, 0.35)
+        if resultado is None:
+            continue
         resultado["first_attempt_failures"] = primeiras
         ajustes = neutralizar_autoridades(resultado)
         if ajustes:

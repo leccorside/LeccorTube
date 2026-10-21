@@ -143,12 +143,16 @@ def _agentes(cfg: Dict[str, Any], sv: Dict[str, Any]) -> List[Dict[str, Any]]:
     cota = "100 un. de cota por busca" if chave else "Sem custo (catálogo local)"
     a = {
         1: dict(categoria="texto", implementacao="parcial", servico="youtube",
-                motor="YouTube Data API v3 · search.list" if chave else "Catálogo fixo de pautas por nicho",
+                motor=("YouTube Data API v3 · search.list" if chave else "Catálogo fixo de pautas por nicho") + " + Wikipédia",
                 motor_tag="YouTube API" if chave else "Sem chave de API",
-                params=[("Região", "BR"), ("Idioma", "pt"), ("Resultados", "6")], custo=cota,
-                faz="Busca vídeos públicos do nicho na API do YouTube (quando há chave) e escolhe uma pauta.",
-                limitacao="A escolha da pauta é aleatória entre os resultados; sem chave de API, sorteia de uma lista fixa de títulos por nicho."
-                + ("" if chave else " Hoje não há chave da API configurada.")),
+                params=[("Região", "BR"), ("Fatos", "Wikipédia pt/en"), ("Artigos", "até 3")], custo=cota,
+                faz=f"Sorteia até 3 pautas e fica com a primeira que tem fatos na Wikipédia: o Ollama ({MODELO_IA}) descreve "
+                    "o assunto, sugere os artigos, dá nota a cada um e confere os melhores um a um; os resumos aprovados, "
+                    "com as URLs, vão para o Roteirista e para a descrição do vídeo.",
+                limitacao="A pauta vem de "
+                + ("resultados da API do YouTube." if chave else "uma lista fixa de títulos por nicho (não há chave da API do YouTube configurada).")
+                + " A conferência é conservadora: pautas vagas (\"A Regra dos 2 Minutos\") ou lendas sem artigo (\"Voo 513\") "
+                  "ficam sem fatos e o roteiro sai genérico. O filtro é um modelo pequeno: as fontes ficam na descrição para conferir."),
         2: dict(categoria="texto", implementacao="simulado", servico=None, motor="Regras fixas (sem IA)",
                 motor_tag="Sem modelo", params=[("Shorts", "58 s"), ("Longos", "180 s"), ("Score", "aleatório")],
                 custo="Sem custo", faz="Define o formato (Shorts ou longo) e a duração alvo a partir das preferências do canal.",
@@ -156,7 +160,7 @@ def _agentes(cfg: Dict[str, Any], sv: Dict[str, Any]) -> List[Dict[str, Any]]:
         3: dict(categoria="texto", implementacao="real", servico="ollama", motor=f"Ollama · {MODELO_IA}",
                 motor_tag="IA local", params=[("Temp", "0.55"), ("Contexto", "8192"), ("Idioma", "pt-BR")],
                 custo="Local · sem custo", faz="Escreve roteiro original, gancho, CTA, títulos alternativos, descrição, hashtags e tags em JSON validado.",
-                limitacao="Usa apenas o contexto recebido do Pesquisador; sem pesquisa factual suficiente, não deve inventar dados. Se o Ollama falhar, usa uma contingência curta e sinaliza isso no vídeo."),
+                limitacao="Usa apenas o tema e os resumos da Wikipédia recebidos do Pesquisador; sem artigos sobre a pauta, o roteiro fica genérico (não inventa dados). Se o Ollama falhar, usa uma contingência curta e sinaliza isso no vídeo."),
         4: dict(categoria="visual", implementacao="parcial", servico="ollama", motor=f"Ollama · {MODELO_IA}",
                 motor_tag="IA local", params=[("Temp", "0.4"), ("Estilo", "anime_dark"), ("Pedido", "1 p/ todas")],
                 custo="Local · sem custo",

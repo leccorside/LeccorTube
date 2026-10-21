@@ -170,6 +170,8 @@ class VideoBrief(BaseModel):
     target_duration_seconds: int = 60
     estimated_cost_usd: float = 0.15
     sources_rationale: Dict[str, str] = Field(default_factory=dict)
+    research_facts: str = ""  # trechos da Wikipédia escolhidos pelo Pesquisador (#01), contexto do Roteirista (#03)
+    research_sources: List[str] = Field(default_factory=list)  # URLs dos artigos usados
 
 
 class QAChecklist(BaseModel):
