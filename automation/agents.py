@@ -98,34 +98,56 @@ class ScriptAgent(BaseAgent):
         super().__init__(3, "script", "Roteirista")
 
     def execute(self, video: VideoItem, cb: Optional[Callable] = None):
-        self.update_agent(video, "RUNNING", 25, "Estruturando gancho de abertura (primeiros 3 segundos)...", "Hook narrativo", cb)
-        time.sleep(1)
+        from automation.script_writer import escrever_roteiro
 
-        titulo = video.brief.title
-        # Gera narrativa magnética em português do Brasil
-        hook = f"Você não vai acreditar no que foi descoberto recentemente sobre {titulo.lower()}."
-        corpo = (
-            f"{hook} Pesquisadores e investigadores encontraram evidências de que fatos surpreendentes foram mantidos em segredo por anos. "
-            f"O que parecia apenas uma teoria distante tornou-se realidade documentada diante dos nossos olhos. "
-            f"Cada detalhe dessa história desafia completamente o que aprendemos até hoje."
+        self.update_agent(video, "RUNNING", 20, "Escrevendo um roteiro original com a IA local...", "Estrutura narrativa", cb)
+        contexto = video.brief.sources_rationale.get("research", "")
+        try:
+            roteiro = escrever_roteiro(
+                titulo=video.brief.title,
+                formato=video.brief.format,
+                duracao_segundos=video.brief.target_duration_seconds,
+                contexto_pesquisa=contexto,
+            )
+            origem = "ollama"
+        except Exception as e:
+            # A esteira continua, mas deixa explícito que usou uma contingência curta e não um roteiro da IA.
+            titulo = video.brief.title
+            hook = f"{titulo} levanta uma pergunta que merece ser examinada com cuidado."
+            # Só o título: o contexto do Pesquisador ("Fonte: …. Confiança: 88%") acabava lido na narração.
+            corpo = (f"O ponto de partida é o próprio tema: {titulo}. Sem informações verificadas adicionais, "
+                     "não é responsável transformar possibilidades em fatos. O que sabemos deve ser separado do que ainda "
+                     "precisa de confirmação, para que a história permaneça clara e honesta.")
+            cta = "Se quiser acompanhar a próxima investigação, inscreva-se no canal."
+            roteiro = {
+                "hook": hook, "body": corpo, "cta": cta, "script_body": f"{hook} {corpo} {cta}",
+                "alternative_titles": [titulo, f"O que sabemos sobre {titulo}", f"As perguntas por trás de {titulo}"],
+                "description": f"Uma análise cuidadosa sobre {titulo}, separando fatos de hipóteses.",
+                "hashtags": ["curiosidades", "investigação", "história"],
+                "tags": [titulo, "curiosidades", "investigação", "história", "documentário"],
+                "word_count": 0, "target_words": max(90, round(video.brief.target_duration_seconds * 2.3)),
+            }
+            roteiro["word_count"] = len(roteiro["script_body"].split())
+            origem = f"contingencia:{type(e).__name__}"
+
+        video.brief.script_hook = roteiro["hook"]
+        video.brief.script_body = roteiro["script_body"]
+        video.brief.script_cta = roteiro["cta"]
+        video.brief.alternative_titles = roteiro["alternative_titles"]
+        video.brief.description = roteiro["description"]
+        video.brief.hashtags = roteiro["hashtags"]
+        video.brief.tags = roteiro["tags"]
+        video.brief.sources_rationale["script"] = (
+            f"Roteiro: {origem}; {roteiro['word_count']} palavras; alvo aproximado {roteiro['target_words']}"
         )
-        cta = "Se você quer continuar desvendando a verdade antes de todo mundo, inscreva-se no canal agora mesmo."
+        if roteiro.get("first_attempt_failures"):
+            video.brief.sources_rationale["script"] += "; reescrito: " + "; ".join(roteiro["first_attempt_failures"])
 
-        video.brief.script_hook = hook
-        video.brief.script_body = f"{corpo} {cta}"
-        video.brief.script_cta = cta
-        video.brief.alternative_titles = [
-            f"O Segredo Oculto Por Trás de {titulo[:30]}",
-            f"A Verdade Chocante Sobre {titulo[:30]}",
-            f"{titulo}: O Que Ninguém Te Contou",
-        ]
-        video.brief.description = f"{corpo}\n\nInscreva-se para mais investigações e análises profundas."
-        video.brief.hashtags = ["shorts", "curiosidades", "fatos", "historia"]
-        video.brief.tags = ["mistérios", "ciência", "descobertas", "documentário", "tecnologia"]
-
-        self.update_agent(video, "RUNNING", 75, "Roteiro dividido em cenas sincronizadas...", "Divisão de cenas", cb)
-        time.sleep(1)
-        self.update_agent(video, "COMPLETED", 100, "Roteiro completo gerado em pt-BR com Hook e CTA", "Concluído", cb)
+        self.update_agent(video, "RUNNING", 80, f"Roteiro com {roteiro['word_count']} palavras; preparando cenas...", "Revisão estrutural", cb)
+        if origem == "ollama":
+            self.update_agent(video, "COMPLETED", 100, "Roteiro original gerado em pt-BR pela IA local", "Concluído", cb)
+        else:
+            self.update_agent(video, "COMPLETED", 100, "IA local indisponível: roteiro de contingência usado e identificado", "Contingência", cb)
 
 
 # ==================== 04. DIRETOR VISUAL ====================
