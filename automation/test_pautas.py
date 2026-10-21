@@ -31,7 +31,8 @@ LONGO = " Ela foi registrada pela primeira vez em 1912 e reaparece em relatos de
 # Categoria falsa "Lendas urbanas" (pt) com artigos que testam cada descarte
 MEMBROS = {
     ("Categoria:Lendas urbanas", "page"): ["Lenda da loira do banheiro", "Lista de lendas urbanas", "Lendas urbanas",
-                                          "Esboço curto", "Lenda já usada", "Caso proibido", "Portal:Mitos"],
+                                          "Esboço curto", "Lenda já usada", "Caso proibido", "Portal:Mitos",
+                                          "Capitão do filme"],
     ("Categoria:Lendas urbanas", "subcat"): ["Categoria:Lendas do Brasil"],
     ("Categoria:Lendas do Brasil", "page"): ["Corpo-seco"],
     ("Categoria:Lendas do Brasil", "subcat"): [],
@@ -42,8 +43,16 @@ RESUMOS = {
     "Esboço curto": "Texto curto demais.",
     "Lenda já usada": "Uma lenda que já virou vídeo." + LONGO,
     "Caso proibido": "Um caso de abuso infantil investigado pela polícia." + LONGO,
+    "Capitão do filme": "O capitão é o vilão de uma série de filmes de piratas." + LONGO,
 }
-VIEWS = {"Lenda da loira do banheiro": 900, "Corpo-seco": 300, "Caso proibido": 5000, "Lenda já usada": 9999}
+VIEWS = {"Lenda da loira do banheiro": 900, "Corpo-seco": 300, "Caso proibido": 5000, "Lenda já usada": 9999,
+         "Capitão do filme": 7000}
+# Categorias dos artigos (personagem de ficção x lenda que também tem categoria de ficção, como o Saci)
+CATEGORIAS_ARTIGO = {
+    "Capitão do filme": ["Personagens de filmes", "Vilões fictícios"],
+    "Corpo-seco": ["Lendas do Brasil", "Personagens fictícios do Brasil"],
+    "Lenda da loira do banheiro": ["Lendas urbanas", "Fantasmas"],
+}
 TEXTO_COMPLETO = ("A loira do banheiro é uma lenda urbana brasileira." + LONGO * 2 + "\n\n== Origem ==\nA história surgiu em "
                   "escolas nos anos 1980.\n\n== Ver também ==\nOutras lendas.\n\n== Referências ==\nLivro X.")
 
@@ -70,6 +79,9 @@ def _get_falso(chamadas):
         if params.get("list") == "categorymembers":
             membros = MEMBROS.get((params["cmtitle"], params["cmtype"]), [])
             return _Resp({"query": {"categorymembers": [{"title": t, "ns": 100 if t.startswith("Portal:") else (14 if t.startswith("Categoria:") else 0)} for t in membros]}})
+        if params.get("prop") == "categories":
+            t = params["titles"]
+            return _Resp({"query": {"pages": [{"title": t, "categories": [{"title": "Categoria:" + c} for c in CATEGORIAS_ARTIGO.get(t, [])]}]}})
         if params.get("prop") == "langlinks":
             return _Resp({"query": {"pages": [{"title": params["titles"], "langlinks": []}]}})
         titulos = params["titles"].split("|")
@@ -139,6 +151,11 @@ def test_interceptado():
         assert fora not in titulos_resumo, f"'{fora}' não devia nem ter o resumo buscado"
     assert all(h["User-Agent"].startswith("LeccorTube/") for _, _, h in chamadas)
     assert any(x["messages"][0]["content"].startswith('A YouTube channel is about "Terror & Mistérios"') for x in ia), "checagem do tema usa o nome do nicho"
+    # o mais lido ("Capitão do filme", 7.000) é personagem de ficção sem categoria de lenda: descartado sem gastar o Ollama
+    assert p["ficcao"] == ["pt: Capitão do filme (Personagens de filmes)"], p["ficcao"]
+    assert not any("Capitão do filme" in x["messages"][0]["content"] for x in ia)
+    assert all(tf._LISTA.match(t) for t in ("Lista de lendas", "Lista das cidades mais populosas do mundo", "List of ghosts"))
+    assert not tf._LISTA.match("Listas negras na história"), "só 'Lista(s) de/do/da…' no começo"
     print(f"[OK] pauta '{p['titulo']}' ({p['artigo']}, {p['visualizacoes_30d']} visualizações); bloqueado: {p['bloqueados'][0][:60]}…")
 
     # 1b. Artigo mais lido, mas fora do tema do nicho (o caso "Swimming" em Motivação): fica o seguinte
@@ -179,7 +196,7 @@ def test_interceptado():
     assert "pt:Lenda da loira do banheiro" in tf.usados()
     _interceptar(_get_falso([]), _post_falso([], [["O corpo-seco: a lenda do homem rejeitado pela terra"]]),
                  lambda: ResearchAgent().execute(v2, "terror", ""))
-    assert "Corpo-seco" in v2.brief.sources_rationale["research"], v2.brief.sources_rationale["research"]
+    assert "Corpo-seco" in v2.brief.sources_rationale["research"], "lenda com categoria de ficção (como o Saci) continua valendo"
     print(f"[OK] Pesquisador usa a pauta da Wikipédia e não repete artigo: 2º vídeo = {v2.brief.title}")
 
     # 4. Nicho sem categorias e subnicho personalizado: fluxo antigo (catálogo), sem chamar as categorias

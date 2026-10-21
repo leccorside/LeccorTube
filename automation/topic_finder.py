@@ -28,9 +28,15 @@ from automation.paths import RAIZ, pasta_dados
 
 CATEGORIAS_PATH = os.path.join(RAIZ, "automation", "categorias_nichos.json")
 PREFIXO = {"pt": "Categoria:", "en": "Category:"}
-_LISTA = re.compile(r"^(lista|listas|list|lists) (de|of)\b", re.I)
+_LISTA = re.compile(r"^(lista|listas|list|lists) (de|do|da|dos|das|of)\b", re.I)  # "Lista das cidades…" passava
 _CAIXA_ALTA = re.compile(r"^[^a-zà-ÿ]*$")
 _FICCAO = re.compile(r"fictional|fiction|fict[ií]ci|fic[cç][aã]o|in popular culture|na cultura popular", re.I)
+# Categorias do próprio artigo: personagem de ficção tem "Fictional…"/"…characters"/"Personagens…" e nenhuma de
+# folclore. Lendas também podem ter categorias de ficção (flautista de Hamelin, Saci, John Titor), mas sempre têm
+# alguma de folclore/lenda. "mythological" e não "mythology": o Shazam tem "Mercury (mythology)".
+_CAT_FICCAO = re.compile(r"\bfictional\b|fict[ií]ci[oa]s?\b|\bcharacters\b|^personagens\b", re.I)
+_CAT_LENDA = re.compile(r"folklore|folclore|legend|lenda|cryptid|cript[ií]de|ghost|fantasma|supersti|mytholog(ical|y\b(?!\)))|"
+                        r"mitol[oó]gic|fairy tale|contos de fadas", re.I)
 # Idioma do título: "Apatheia: A Virtue Beyond Indifference" passou na 1ª versão da validação
 _PALAVRAS_PT = re.compile(r"\b(de|do|da|dos|das|que|o|os|as|um|uma|no|na|nos|nas|em|para|com|por|e|é|como|sobre|se|seu|sua|ao)\b", re.I)
 _PALAVRAS_EN = re.compile(r"\b(the|of|and|with|beyond|your|how|why|what|is|for|to|in|its|this|that|from)\b", re.I)
@@ -56,6 +62,21 @@ def categorias(nicho: str) -> Dict[str, List[str]]:
     return {lang: list(cfg.get(lang, [])) for lang in ("pt", "en") if cfg.get(lang)}
 
 
+def personagem_ficticio(art: Dict[str, Any], timeout: float) -> Optional[str]:
+    """Categoria de ficção do artigo quando ele é sobre um personagem fictício (sem nenhuma categoria de folclore ou
+    lenda); None caso contrário. Pendência de 21/10: "Davy Jones (Pirates of the Caribbean)" entrou em Curiosidades
+    por uma subcategoria sem "ficção" no nome, e a checagem de tema da IA não o barrou."""
+    try:
+        r = _wiki(art["lang"], {"action": "query", "prop": "categories", "clshow": "!hidden", "cllimit": "max",
+                                "titles": art["titulo"]}, timeout)
+        cats = [c["title"].split(":", 1)[1] for c in r["query"]["pages"][0].get("categories", [])]
+    except Exception:
+        return None  # sem as categorias, fica a checagem de tema da IA
+    if any(_CAT_LENDA.search(c) for c in cats):
+        return None
+    return next((c for c in cats if _CAT_FICCAO.search(c)), None)
+
+
 def combina_com_nicho(nome_nicho: str, descricao: str, art: Dict[str, Any], timeout: float) -> bool:
     """A IA descarta artigos CLARAMENTE fora do tema do canal. Categorias trazem artigos tangenciais (no teste de
     21/10 o nicho Motivação recebeu "Swimming", "Yasser Arafat" e "Pancake"), e a ordem por visualizações favorece
@@ -64,8 +85,9 @@ def combina_com_nicho(nome_nicho: str, descricao: str, art: Dict[str, Any], time
     dados = _ollama(
         f'A YouTube channel is about "{nome_nicho}": {descricao}.\n'
         f"Article: {art['titulo']}\nSummary: {art['resumo'][:800]}\n\n"
-        "Is this article CLEARLY off-topic for the channel? Off-topic examples: a food or recipe, a sport, a TV show "
-        "or comic character, a politician's or celebrity's biography, a place or event unrelated to the theme. If a "
+        "Is this article CLEARLY off-topic for the channel? Off-topic examples: a food or recipe, a sport, a fictional "
+        "character from a film, TV series, comic, book or game, a politician's or celebrity's biography, a place or "
+        "event unrelated to the theme. Folk legends and urban legends are not fictional characters. If a "
         "short video about the article could reasonably fit the theme above, it is NOT off-topic.\n"
         'First say what the article is about. JSON only: {"article_is_about": "...", "off_topic": false}', timeout)
     return dados.get("off_topic") is not True
@@ -261,10 +283,14 @@ def sugerir_pauta(nicho: str, timeout: float = 60) -> Optional[Dict[str, Any]]:
         c["visualizacoes_30d"] = _visualizacoes(c["lang"], c["titulo"], timeout)
     candidatos.sort(key=lambda c: -c["visualizacoes_30d"])
 
-    bloqueados, fora_do_tema = [], []
+    bloqueados, fora_do_tema, ficcao = [], [], []
     cfg = _config(nicho)
     nome_nicho, descricao = cfg.get("nome") or nicho, cfg.get("descricao") or cfg.get("nome") or nicho
     for c in candidatos:  # até CANDIDATOS (10); a checagem de tema leva ~1 s por artigo com o modelo carregado
+        cat_ficcao = personagem_ficticio(c, timeout)
+        if cat_ficcao:
+            ficcao.append(f"{c['lang']}: {c['titulo']} ({cat_ficcao})")
+            continue
         if not combina_com_nicho(nome_nicho, descricao, c, timeout):
             fora_do_tema.append(f"{c['lang']}: {c['titulo']}")
             continue
@@ -292,7 +318,8 @@ def sugerir_pauta(nicho: str, timeout: float = 60) -> Optional[Dict[str, Any]]:
             "visualizacoes_30d": c["visualizacoes_30d"],
             "bloqueados": bloqueados,
             "fora_do_tema": fora_do_tema,
+            "ficcao": ficcao,
             "candidatos": len(candidatos),
         }
-    raise ValueError(f"nenhum dos {len(candidatos)} candidatos passou ({len(fora_do_tema)} fora do tema do nicho, "
-                     f"{len(bloqueados)} bloqueados por tema sensível)")
+    raise ValueError(f"nenhum dos {len(candidatos)} candidatos passou ({len(ficcao)} personagens de ficção, "
+                     f"{len(fora_do_tema)} fora do tema do nicho, {len(bloqueados)} bloqueados por tema sensível)")
